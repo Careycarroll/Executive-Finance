@@ -6,6 +6,7 @@
   <title>Executive Finance Interactive</title>
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/learn.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -18,10 +19,18 @@
         <span>&#128200;</span>
         <span>Executive Finance</span>
       </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link">Learn</a>
+        <a href="/pages/apply/" class="site-header__nav-link">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link">Glossary</a>
+      </nav>
     </div>
   </header>
 
   <main>
+
+    <!-- HERO -->
     <section class="landing-hero">
       <div class="container">
         <h1 class="landing-hero__title">Finance for Executives</h1>
@@ -30,7 +39,31 @@
           Build intuition for valuation, capital structure, and financial decision making
           through hands-on tools and worked examples.
         </p>
+        <div class="landing-progress" id="landing-progress">
+          <div class="landing-progress__bar">
+            <div class="landing-progress__fill" id="progress-fill" style="width:0%"></div>
+          </div>
+          <div class="landing-progress__label" id="progress-label">0 of 18 chapters complete</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PATH CARDS -->
+    <section class="landing-paths-section">
+      <div class="container">
         <div class="landing-paths">
+          <a href="/pages/formulas.html" class="landing-path-card landing-path-card--formulas">
+            <div class="landing-path-card__icon">&#128221;</div>
+            <div class="landing-path-card__title">Formulas</div>
+            <div class="landing-path-card__desc">All 32 textbook formulas with KaTeX rendering and chapter references</div>
+            <div class="landing-path-card__cta">View Formulas &rarr;</div>
+          </a>
+          <a href="/pages/glossary.html" class="landing-path-card landing-path-card--glossary">
+            <div class="landing-path-card__icon">&#128196;</div>
+            <div class="landing-path-card__title">Glossary</div>
+            <div class="landing-path-card__desc">All textbook notations and key terms in one searchable reference</div>
+            <div class="landing-path-card__cta">View Glossary &rarr;</div>
+          </a>
           <a href="/pages/learn/" class="landing-path-card landing-path-card--learn">
             <div class="landing-path-card__icon">&#128218;</div>
             <div class="landing-path-card__title">Learn</div>
@@ -44,14 +77,9 @@
             <div class="landing-path-card__cta">Start Analyzing &rarr;</div>
           </a>
         </div>
-        <div class="landing-progress" id="landing-progress">
-          <div class="landing-progress__bar">
-            <div class="landing-progress__fill" id="progress-fill" style="width:0%"></div>
-          </div>
-          <div class="landing-progress__label" id="progress-label">0 of 18 chapters complete</div>
-        </div>
       </div>
     </section>
+
   </main>
 
   <script type="module" src="/js/core/main.js"></script>

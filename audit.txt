@@ -1,1 +1,4 @@
-agent_prompt.txt: 330 lines, 14,878 bytes
+=== collapsed rules ===
+0
+=== line count ===
+     278 /Users/careycarroll/Github Projects/Executive-Finance/css/learn.css

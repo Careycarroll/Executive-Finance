@@ -1,1 +1,278 @@
 /* learn.css -- chapter styles added per chapter */
+
+/* =================================================================
+   FORMULAS PAGE
+   ================================================================= */
+
+.formula-part-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-5);
+  padding-top: var(--space-6);
+  border-top: 2px solid var(--color-gray-200);
+}
+.formula-part-badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.formula-part-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin: 0;
+}
+.formula-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.formula-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.formula-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(26,54,93,0.08);
+}
+.formula-card--open {
+  border-color: var(--color-primary);
+}
+.formula-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+.formula-card__num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.formula-card__meta {
+  flex: 1;
+}
+.formula-card__title {
+  font-weight: 700;
+  font-size: var(--font-size-base);
+  color: var(--color-gray-900);
+  margin-bottom: 2px;
+}
+.formula-card__ref {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+}
+.formula-card__toggle {
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-400);
+  padding: var(--space-1);
+}
+.formula-card__body {
+  padding: 0 var(--space-4) var(--space-2) var(--space-4);
+  border-top: 1px solid var(--color-gray-100);
+}
+.formula-card__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  line-height: 1.6;
+  margin: var(--space-3) 0 var(--space-2);
+}
+.formula-card__katex {
+  padding: var(--space-4) 0;
+  overflow-x: auto;
+  text-align: center;
+}
+.formula-card__notes {
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  background: var(--color-gray-50);
+  border-top: 1px solid var(--color-gray-100);
+}
+.formula-card__notes p {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* =================================================================
+   LANDING PAGE
+   ================================================================= */
+
+.landing-hero {
+  padding: var(--space-16) 0 var(--space-12);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #2d5a9e 100%);
+  color: white;
+}
+.landing-paths-section {
+  background: var(--color-gray-50);
+  padding: var(--space-10) 0 var(--space-12);
+  border-bottom: 1px solid var(--color-gray-200);
+}
+.landing-hero__title {
+  font-size: var(--font-size-4xl);
+  font-weight: 800;
+  color: white;
+  margin-bottom: var(--space-4);
+  line-height: 1.1;
+}
+.landing-hero__subtitle {
+  font-size: var(--font-size-lg);
+  color: rgba(255,255,255,0.85);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: var(--space-10);
+}
+.landing-paths {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+@media (max-width: 900px) {
+  .landing-paths { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 500px) {
+  .landing-paths { grid-template-columns: 1fr; }
+}
+.landing-path-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  text-decoration: none;
+  color: var(--color-gray-800);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.landing-path-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 16px rgba(26,54,93,0.12);
+  transform: translateY(-2px);
+}
+.landing-path-card--learn    { border-top: 3px solid var(--color-accent); }
+.landing-path-card--apply    { border-top: 3px solid #34d399; }
+.landing-path-card--formulas { border-top: 3px solid #60a5fa; }
+.landing-path-card--glossary { border-top: 3px solid #c084fc; }
+.landing-path-card__icon {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-1);
+}
+.landing-path-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.landing-path-card__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  line-height: 1.5;
+  flex: 1;
+}
+.landing-path-card__cta {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-top: var(--space-2);
+}
+.landing-progress {
+  max-width: 400px;
+}
+.landing-progress__bar {
+  height: 6px;
+  background: rgba(255,255,255,0.20);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+.landing-progress__fill {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+.landing-progress__label {
+  font-size: var(--font-size-sm);
+  color: rgba(255,255,255,0.70);
+}
+
+/* =================================================================
+   LEARN INDEX PAGE
+   ================================================================= */
+
+.chapter-part-header {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-gray-500);
+  padding: var(--space-4) 0 var(--space-2);
+  border-bottom: 1px solid var(--color-gray-200);
+  margin-bottom: var(--space-3);
+  margin-top: var(--space-6);
+}
+.chapter-part-header:first-child { margin-top: 0; }
+.chapter-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: var(--color-gray-800);
+  margin-bottom: var(--space-2);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.chapter-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(26,54,93,0.08);
+}
+.chapter-card--complete {
+  border-color: var(--color-success);
+  background: #f0fdf4;
+}
+.chapter-card__num {
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-gray-500);
+  min-width: 44px;
+}
+.chapter-card__title {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-gray-800);
+}
+.chapter-card__badge {
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-success);
+}
