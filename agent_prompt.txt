@@ -1,3 +1,330 @@
 # Executive Finance Interactive -- Agent Prompt
 
-(to be written)
+You are a code agent for the Executive Finance Interactive project. This is a Vite-based
+multi-page web application that teaches Finance for Executives: Managing for Value Creation
+(6th Edition, Hawawini and Viallet) through interactive tools.
+
+---
+
+## Project Context
+
+Goal: Build a comprehensive interactive learning companion covering all 18 chapters of
+Finance for Executives. Students learn concepts chapter by chapter (Learn section), then
+apply them to real financial decisions (Analyze section). A dedicated Formulas page
+provides KaTeX-rendered reference equations for all 32 textbook formulas.
+
+Live site: https://careycarroll.github.io/Executive-Finance/
+Repo: ~/Github Projects/Executive-Finance/
+Stack: Vite 7, vanilla JS (ES modules), CSS custom properties, KaTeX, vite-plugin-pwa
+
+---
+
+## Architecture
+
+### Three Sections
+- Learn -- 18 chapter pages (pages/learn/ch01.html through ch18.html).
+  Each page: hero, learning objectives, 3-5 interactive tools, show-work panels,
+  key terms panel, chapter complete marker.
+- Analyze -- scenario pages (pages/analyze/*.html). Each scenario applies concepts
+  from multiple chapters to a real financial decision.
+- Reference -- pages/formulas.html (32 KaTeX equations) and pages/glossary.html
+  (textbook notations and key terms).
+
+### File Structure
+
+    pages/learn/          One HTML per chapter (ch01.html through ch18.html)
+    pages/analyze/        One HTML per scenario
+    pages/formulas.html   All 32 textbook formulas with KaTeX
+    pages/glossary.html   Notations and key terms
+    js/core/              main.js, progress-tracker.js
+    js/components/        randomizer.js, journal-entry.js, show-work.js (all built)
+    js/charts/            chart-core.js, cvp-chart.js, scatter-chart.js, roc-chart.js (all built)
+    js/learn/             index.js, ch01-ch18.js (not yet built)
+    js/analyze/           Not yet built
+    css/base.css          Full custom property system (built)
+    css/components.css    Shared UI components (built)
+    css/learn.css         Learn section styles (empty -- add per chapter)
+
+### Key Patterns
+- Vite multi-page -- vite.config.js auto-discovers all HTML files in pages/learn/
+  and pages/analyze/
+- Base path -- process.env.NODE_ENV === 'production' ? '/Executive-Finance/' : '/'
+- Progress tracking -- js/core/progress-tracker.js uses localStorage.
+  Import markChapterComplete, isChapterComplete, resetChapter, getProgress.
+- Randomizer -- js/components/randomizer.js.
+  Call initRandomizer(buttonId, fields, onRandomize?) on any tool with numeric inputs.
+- Show Work -- js/components/show-work.js.
+  Call renderShowWork(containerEl, steps, options) after any calculation.
+- Journal Entry -- js/components/journal-entry.js.
+  Call renderJournalEntry(containerEl, entries, options).
+- Canvas charts -- chart-core.js provides base Chart class.
+  All charts: crosshair, tooltip, click-to-pin, scroll-to-zoom, drag-to-pan,
+  double-click-to-reset.
+- KaTeX -- installed as a dependency for formula rendering across chapter tools
+  and the formulas reference page.
+- Chapter nav -- every chapter page has both a previous chapter link and a next
+  chapter link in the hero nav.
+- Cross-page data sharing -- use sessionStorage to pass calculated results between
+  chapter pages when needed.
+
+### CSS Design System
+All custom properties defined in css/base.css (copied from Managerial-Accounting):
+- Colors: --color-primary (#1a365d navy), --color-accent (#c8973a gold),
+  semantic colors (success/warning/danger/info), gray scale
+- Spacing: --space-1 through --space-16
+- Typography: --font-sans (Inter), --font-mono (JetBrains Mono),
+  --font-size-xs through --font-size-4xl
+- Shadows, radii, transitions all defined
+- Max widths use min() for responsive scaling
+
+---
+
+## Textbook Reference
+
+Source: Hawawini, G. and Viallet, C. -- Finance for Executives: Managing for Value
+Creation, 6th Edition. Cengage Learning, 2019.
+
+### 32 Textbook Formulas (pages/formulas.html)
+
+1.  Discount factor (Ch. 2, eq. 2.3) -- DF = 1/(1+k)^T
+2.  Present value (Ch. 2) -- PV = sum of CF_t * DF_t
+3.  Present value of a perpetuity (Ch. 2, eq. 2.6) -- PV = CF/k
+4.  Present value of a growing perpetuity (Ch. 2, eq. 2.9) -- PV = CF1/(k-g)
+5.  Present value of an annuity (Ch. 2, eq. 2.11) -- PV = CF * ADF
+6.  Sharpe ratio (Ch. 3, eq. 3.8) -- Sharpe = (E(Ri) - RF) / sigma_i
+7.  Beta coefficient (Ch. 3, eq. 3.11) -- beta = Cov(Ri,RM) / Var(RM)
+8.  CAPM (Ch. 3, eq. 3.13a) -- E(Ri) = RF + [E(RM) - RF] * beta_i
+9.  Invested capital (Ch. 4, eq. 4.5) -- IC = Cash + WCR + Net fixed assets
+10. Capital employed (Ch. 4, eq. 4.6) -- CE = ST debt + LT debt + Equity
+11. Working capital requirement (Ch. 4, eq. 4.7) -- WCR = (AR + Inv + Prepaid) - (AP + Accruals)
+12. EBITDA (Ch. 4, eq. 4.10) -- EBITDA = EBIT + Depreciation + Amortization
+13. Free cash flow (Ch. 4, eq. 4.15) -- FCF = EBIT(1-Tc) + Dep - DWCR - CAPEX
+14. Return on equity (Ch. 6, eq. 6.1) -- ROE = EAT / Owners equity
+15. ROIC before tax (Ch. 6, eq. 6.4) -- ROIC_BT = EBIT / IC = (EBIT/Sales) * (Sales/IC)
+16. Structure of ROE (Ch. 6, eq. 6.9) -- ROE = (EBIT/Sales) * (Sales/IC) * (EBT/EBIT) * (IC/Equity) * (EAT/EBT)
+17. Self-sustainable growth rate (Ch. 6, eq. 6.12) -- SGR = Retention rate * ROE
+18. Net present value (Ch. 7) -- NPV = -CF0 + sum of CFt/(1+k)^t
+19. Bond price (Ch. 10, eq. 10.2) -- P = sum of CP/(1+y)^t + F/(1+y)^T
+20. Share price (Ch. 10, eq. 10.9) -- P = sum of DPS_t/(1+kE)^t
+21. Constant dividend growth model (Ch. 10, eq. 10.10) -- P = DPS1/(kE - g)
+22. Enterprise value and equity value (Ch. 10, eq. 10.13)
+23. Equity (levered) beta (Ch. 12, eq. 12.6) -- beta_equity = beta_asset * (1 + D/E)
+24. WACC (Ch. 12, eq. 12.12) -- WACC = kD(1-Tc)*D/(E+D) + kE*E/(E+D)
+25. Interest tax shield (Ch. 13, eq. 13.3) -- ITS = Tc * kD * D
+26. Market value of levered firm (Ch. 13, eq. 13.4) -- VL = VU + PV(ITS)
+27. Market value at risk (Ch. 15, eq. 15.1) -- MVR = Value reduction * Probability
+28. Put-call parity (Ch. 16, eq. 16.5) -- P0 = C0 + Xe^(-RF*T) - S0
+29. Black-Scholes call and put (Ch. 16, eq. 16.6 and 16.7)
+30. Market value added (Ch. 18, eq. 18.1) -- MVA = Market value of capital - Capital employed
+31. ROIC (Ch. 18) -- ROIC = NOPAT / IC = EBIT(1-Tc) / IC
+32. Economic value added (Ch. 18, eq. 18.6) -- EVA = (ROIC - WACC) * IC
+
+### Chapter Dependencies
+- Ch. 2 (Time Value) is prerequisite for Ch. 7, 8, 9, 10, 12, 13, 14, 17
+- Ch. 3 (Risk and Return) is prerequisite for Ch. 12
+- Ch. 4 (Financial Statements) is prerequisite for Ch. 5, 6
+- Ch. 7 (NPV) is prerequisite for Ch. 8, 9, 14, 17
+- Ch. 12 (Cost of Capital) is prerequisite for Ch. 13, 14
+- Ch. 10 (Bonds and Stocks) introduces bond and stock valuation used in Ch. 12, 14
+
+### Build Priority Order
+1. pages/formulas.html -- standalone reference, no JS dependencies
+2. Ch. 1 -- Overview (foundation, introduces all key concepts)
+3. Ch. 2 -- Time Value of Money (prerequisite for most chapters)
+4. Ch. 7 -- NPV Rule (core decision tool, most referenced)
+5. Ch. 4 -- Financial Statements (prerequisite for Ch. 5, 6)
+6. Remaining chapters in textbook order
+
+---
+
+## Learn Page Template
+
+Every chapter page follows this structure. Use the Managerial-Accounting ch09.html
+as the reference implementation.
+
+HTML structure:
+    Header with site-header (logo + nav)
+    Hero section (page__hero) with chapter nav (prev + All Chapters + position + next)
+    Learning Objectives card (objectives-card card)
+    Tool 1 of N... Tool N of N (alternating learn-section / learn-section--alt)
+    Key Terms grid (key-terms-grid -- populated by JS)
+    Chapter Complete card with mark-complete button and next chapter link
+    script type=module src=/js/learn/chXX.js
+
+HTML rules:
+    No placeholder output divs in HTML. JS creates and appends all output elements dynamically.
+    Only inputs, labels, buttons, and static structure belong in HTML.
+    Output divs created in JS using getOrCreate(id, tag, className, parent) pattern.
+    Chapter nav must include both previous chapter link AND next chapter link.
+    Never use apostrophes inside single-quoted JS strings -- causes MIME errors.
+    Use ohrate-grid for input grids (matches existing CSS).
+    Use form-group / form-label / form-input for all form elements.
+    Use tool-header__label / tool-header__title / tool-header__desc for tool headers.
+    Use card class on tool wrapper divs.
+    Use ch9-section-label for input group separators.
+
+JS file pattern:
+    import { markChapterComplete, isChapterComplete, resetChapter } from '/js/core/progress-tracker.js';
+    import { initRandomizer } from '/js/components/randomizer.js';
+    import { renderShowWork } from '/js/components/show-work.js';
+    DATA constants at top
+    const fmt = n => '$' + Math.round(n).toLocaleString();
+    const fmtPct = n => (n * 100).toFixed(1) + '%';
+    function getOrCreate(id, tag, className, parent) -- helper for dynamic output elements
+    One init function per tool
+    Every numeric tool gets a randomizer button and a show-work panel
+    KEY_TERMS array + initKeyTerms() -- expandable click-to-reveal cards
+    initChapterComplete() wires mark-complete button and injects reset button after completion
+    document.addEventListener('DOMContentLoaded', () => { init all tools });
+
+---
+
+## Component Reference
+
+### initRandomizer(buttonId, fields, onRandomize?)
+    fields: [{ id, min, max, step, integer?, constraint? }]
+    constraint: 'lessThan:otherId' or 'greaterThan:otherId'
+    onRandomize: callback fired after all fields are set (use to trigger calculate)
+
+### renderShowWork(containerEl, steps, options?)
+    steps: [{ label, formula, values, result, highlight?, note?, step? }]
+    options: { title, defaultOpen, id }
+    highlight: true = blue background, marks key result
+    Always call after output is rendered, never before
+
+### renderJournalEntry(containerEl, entries, options?)
+    entries: [{ account, debit, credit, indent }]
+    options: { title, subtitle, showTotals, balanced }
+
+### KEY_TERMS pattern
+    const KEY_TERMS = [{ term, definition }];
+    function initKeyTerms() {
+      const grid = document.getElementById('key-terms-grid');
+      KEY_TERMS.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'key-term';
+        div.setAttribute('role', 'button');
+        div.innerHTML = '<div class="key-term__word">' + item.term + '</div>'
+          + '<p class="key-term__definition">' + item.definition + '</p>';
+        div.addEventListener('click', () => div.classList.toggle('key-term--open'));
+        grid.appendChild(div);
+      });
+    }
+
+### getOrCreate(id, tag, className, parent)
+    const el = document.getElementById(id) || (() => {
+      const e = document.createElement(tag || 'div');
+      e.id = id;
+      if (className) e.className = className;
+      if (parent) parent.appendChild(e);
+      return e;
+    })();
+
+---
+
+## What's Built
+
+### Completed
+- index.html -- landing page with Learn/Analyze two-path navigation
+- pages/learn/index.html -- chapter grid stub
+- css/base.css -- full design system (copied from Managerial-Accounting)
+- css/components.css -- shared UI components (copied)
+- css/learn.css -- empty, chapter styles added per chapter
+- js/core/main.js -- landing page entry point (copied)
+- js/core/progress-tracker.js -- localStorage progress tracking (copied)
+- js/components/randomizer.js -- universal input randomizer (copied)
+- js/components/show-work.js -- step-by-step calculation renderer (copied)
+- js/components/journal-entry.js -- journal entry renderer (copied)
+- js/charts/chart-core.js -- base Chart class with full interaction layer (copied)
+- js/charts/cvp-chart.js -- CVP line chart (copied)
+- js/charts/scatter-chart.js -- scatter plot with regression overlay (copied)
+- js/charts/roc-chart.js -- ROC curve chart (copied)
+
+### Not Yet Built
+- pages/formulas.html -- 32 KaTeX equations reference page
+- pages/glossary.html -- notations and key terms
+- pages/learn/ch01.html through ch18.html -- 18 chapter pages
+- pages/analyze/*.html -- scenario pages
+- js/learn/index.js -- chapter grid renderer
+- js/learn/ch01.js through ch18.js -- chapter tools
+- js/analyze/ -- scenario logic
+
+---
+
+## Development Rules
+
+Discovery first. Before touching unfamiliar files, run discovery commands to map
+current state. Never assume file contents.
+
+Always audit before building. Clear audit.txt first:
+    > audit.txt && { commands; } >> audit.txt && echo audit.txt written
+
+File creation. Always use python3 for all file writes. Never use heredocs for JS
+or CSS -- they break on backticks and special characters.
+
+CSS writing rule. Never write CSS inside a Python triple-quoted string passed via
+<< heredoc. The terminal collapses newlines between closing braces and the next
+selector, producing broken output like }.next-rule {. Instead, write CSS as a
+Python list of strings and join with newline:
+
+    lines = [
+        '.my-class {',
+        '  color: red;',
+        '}',
+        '.next-class {',
+        '  color: blue;',
+        '}',
+    ]
+    with open(path, 'w') as f:
+        f.write('\n'.join(lines) + '\n')
+
+Always verify CSS after writing:
+    grep -c '}\.'' css/learn.css
+Zero means clean. Non-zero means collapsed rules.
+
+Terminal commands only. All changes delivered as executable zsh commands.
+
+No inline comments in zsh. Do not put # comment lines inside command blocks.
+
+No placeholder divs in HTML. JS creates all output elements dynamically via
+getOrCreate pattern.
+
+No apostrophes in single-quoted JS strings. Use double quotes for strings
+containing apostrophes, or escape them.
+
+ls -R works. find does not. Use ls -R for directory listing.
+
+Kill dev server:
+    lsof -ti :5173,:5174,:5175,:5176 | xargs kill -9 2>/dev/null; pkill -9 -f vite 2>/dev/null; echo done
+
+Commit after each chapter. One commit per completed chapter page.
+Message format:
+    feat: Chapter N -- Title
+    - pages/learn/chNN.html: what is in it
+    - js/learn/chNN.js: tools built
+    - css changes if any
+
+Python3 for all file verification:
+    python3 -c "
+    import os
+    path = os.path.expanduser('~/Github Projects/Executive-Finance/file.js')
+    with open(path) as f: lines = f.readlines()
+    for i, l in enumerate(lines, 1):
+        if 'search term' in l: print(i, l.rstrip())
+    "
+
+Check for syntax errors before testing in browser:
+    node --input-type=module < js/learn/chXX.js 2>&1 | head -20
+    (Module not found errors are expected and OK -- syntax errors are not)
+
+Pipe all audit output to audit.txt:
+    { command1; echo '---'; command2; } > audit.txt 2>&1 && cat audit.txt
+
+---
+
+## Completed Phases
+
+Phase 0 -- Foundation (May 2026)
+Repo created. Scaffold copied from Managerial-Accounting project. CSS design system,
+shared JS components, chart library, vite config, PWA setup, landing page, learn
+index stub. README and agent prompt written.
