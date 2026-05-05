@@ -1,0 +1,55 @@
+=== root ===
+agent_prompt.txt
+audit.txt
+css
+js
+package-lock.json
+package.json
+pages
+public
+vite.config.js
+---
+=== js ===
+apply
+charts
+components
+core
+data
+engine
+learn
+
+/Users/careycarroll/Github Projects/Executive-Finance/js//apply:
+
+/Users/careycarroll/Github Projects/Executive-Finance/js//charts:
+chart-core.js
+cvp-chart.js
+roc-chart.js
+scatter-chart.js
+
+/Users/careycarroll/Github Projects/Executive-Finance/js//components:
+journal-entry.js
+randomizer.js
+show-work.js
+
+/Users/careycarroll/Github Projects/Executive-Finance/js//core:
+main.js
+progress-tracker.js
+
+/Users/careycarroll/Github Projects/Executive-Finance/js//data:
+
+/Users/careycarroll/Github Projects/Executive-Finance/js//engine:
+
+/Users/careycarroll/Github Projects/Executive-Finance/js//learn:
+---
+=== css ===
+base.css
+components.css
+learn.css
+---
+=== pages ===
+apply
+learn
+
+/Users/careycarroll/Github Projects/Executive-Finance/pages//apply:
+
+/Users/careycarroll/Github Projects/Executive-Finance/pages//learn:
