@@ -1,4 +1,1 @@
-=== line count ===
-     507 /Users/careycarroll/Github Projects/Executive-Finance/css/learn.css
-=== collapsed rules ===
-0
+README.md: 191 lines, 7,290 bytes

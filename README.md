@@ -17,7 +17,9 @@ Creation, 6th Edition. Cengage Learning, 2019.
 Build a comprehensive interactive learning companion covering all 18 chapters of
 Finance for Executives. Students learn concepts chapter by chapter (Learn section),
 then apply them to real financial decisions (Analyze section). A dedicated Formulas
-page provides KaTeX-rendered reference equations for all 32 textbook formulas.
+page provides KaTeX-rendered reference equations for all 32 textbook formulas, and
+a Glossary page covers all 400+ textbook terms with search, chapter filter, and
+definition highlighting.
 
 ---
 
@@ -42,6 +44,15 @@ page provides KaTeX-rendered reference equations for all 32 textbook formulas.
 
 ---
 
+## Reference Pages -- Completed
+
+| Page | Description | Status |
+|---|---|---|
+| pages/formulas.html | All 32 textbook formulas with KaTeX rendering, search, part filter, notes toggle, highlight, sticky search, back-to-top | Complete |
+| pages/glossary.html | 400+ textbook terms A-Z with search, chapter filter, definition toggle, highlight, alpha nav color states, sticky search, back-to-top | Complete |
+
+---
+
 ## Learn Section -- Chapter Status
 
 | # | Chapter | Status | Tools |
@@ -54,7 +65,7 @@ page provides KaTeX-rendered reference equations for all 32 textbook formulas.
 | 6 | Analyzing Profitability, Risk, and Growth | Not started | |
 | 7 | Using the Net Present Value Rule | Not started | |
 | 8 | Alternatives to the Net Present Value Rule | Not started | |
-| 9 | Identifying and Estimating a Project's Cash Flows | Not started | |
+| 9 | Identifying and Estimating a Project Cash Flows | Not started | |
 | 10 | Valuing Bonds and Stocks | Not started | |
 | 11 | Raising Capital and Paying Out Cash | Not started | |
 | 12 | Estimating the Cost of Capital | Not started | |
@@ -64,15 +75,6 @@ page provides KaTeX-rendered reference equations for all 32 textbook formulas.
 | 16 | Understanding Forward, Futures, and Options | Not started | |
 | 17 | Making International Business Decisions | Not started | |
 | 18 | Managing for Value Creation | Not started | |
-
----
-
-## Reference Section
-
-| Page | Description | Status |
-|---|---|---|
-| pages/formulas.html | All 32 textbook formulas with KaTeX rendering, chapter references, and interactive calculators | Not started |
-| pages/glossary.html | Full glossary of terms and notations from the textbook | Not started |
 
 ---
 
@@ -93,6 +95,7 @@ page provides KaTeX-rendered reference equations for all 32 textbook formulas.
 
 ## Shared Components
 
+Copied from Managerial-Accounting project -- all components are reusable:
 
 | Component | File | Status |
 |-----------|------|--------|
@@ -156,15 +159,18 @@ Zero means clean. Non-zero means collapsed rules that need a targeted str.replac
 
 ## Development Roadmap
 
-Phase 0 -- Foundation (May 2026)
+Phase 0 -- Foundation (May 2026) -- Complete
 Scaffold copied from Managerial-Accounting. CSS design system, shared components,
 chart library, vite config, PWA setup, landing page, learn index stub.
+README and agent prompt written.
 
-Phase 1 -- Formulas and Glossary Pages
-pages/formulas.html with all 32 KaTeX-rendered equations and chapter references.
-pages/glossary.html with all textbook notations and key terms.
+Phase 1 -- Reference Pages (May 2026) -- Complete
+pages/formulas.html with all 32 KaTeX-rendered equations, search, part filter,
+highlight, sticky search, back-to-top, part nav color states.
+pages/glossary.html with all 400+ textbook terms, search, chapter filter,
+definition toggle, highlight, alpha nav color states, sticky search, back-to-top.
 
-Phase 2 -- Learn Section Part I (Chapters 1-3)
+Phase 2 -- Learn Section Part I (Chapters 1-3) -- In Progress
 Ch. 1 (Overview), Ch. 2 (Time Value of Money), Ch. 3 (Risk and Return).
 
 Phase 3 -- Learn Section Part II (Chapters 4-6)
