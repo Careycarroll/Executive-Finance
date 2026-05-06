@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glossary &middot; Executive Finance Interactive</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/learn.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>&#128200;</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link">Learn</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link site-header__nav-link--active">Glossary</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="page__hero">
+      <div class="container">
+        <h1 class="page__hero-title">Glossary</h1>
+        <p class="page__hero-subtitle">
+          All terms from Hawawini and Viallet, Finance for Executives, 6th Edition.
+          Click any term to expand its definition. Chapter references shown in parentheses.
+        </p>
+        <div class="glossary-controls">
+          <input class="glossary-search" type="text" id="glossary-search"
+            placeholder="Search terms..." autocomplete="off" />
+          <select class="glossary-chapter-filter" id="glossary-chapter-filter">
+            <option value="">All Chapters</option>
+          </select>
+          <button class="btn btn--secondary btn--sm" id="glossary-clear" style="display:none;">Clear</button>
+        </div>
+        <label class="glossary-def-toggle">
+          <input type="checkbox" id="glossary-search-defs" />
+          <span>Search definitions too</span>
+        </label>
+        <div class="glossary-alpha" id="glossary-alpha"></div>
+      </div>
+    </section>
+
+    <section class="learn-section">
+      <div class="container container--tool">
+        <div id="glossary-count" class="glossary-count"></div>
+        <div id="glossary-body"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="/js/learn/glossary.js"></script>
+</body>
+</html>
