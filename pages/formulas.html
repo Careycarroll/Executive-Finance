@@ -37,11 +37,33 @@
           All 32 textbook formulas from Hawawini and Viallet, Finance for Executives, 6th Edition.
           Click any formula card to expand the full definition, notation, and chapter reference.
         </p>
+        <div class="glossary-controls">
+          <input class="glossary-search" type="text" id="formula-search"
+            placeholder="Search formulas..." autocomplete="off" />
+          <select class="glossary-chapter-filter" id="formula-part-filter">
+            <option value="">All Parts</option>
+            <option value="1">Part I: Financial Concepts</option>
+            <option value="2">Part II: Business Performance</option>
+            <option value="3">Part III: Investment Decisions</option>
+            <option value="4">Part IV: Financing Decisions</option>
+            <option value="5">Part V: Business Decisions</option>
+          </select>
+          <button class="btn btn--secondary btn--sm" id="formula-clear" style="display:none;">Clear</button>
+        </div>
+        <label class="glossary-def-toggle">
+          <input type="checkbox" id="formula-search-notes" />
+          <span>Search notes and descriptions too</span>
+        </label>
+        <div class="formula-part-nav" id="formula-part-nav"></div>
       </div>
     </section>
 
+    <div class="container container--tool" style="padding-top:var(--space-4);">
+      <div class="glossary-count" id="formula-count"></div>
+    </div>
+
     <!-- PART I: Financial Concepts and Techniques -->
-    <section class="learn-section learn-section--alt">
+    <section class="learn-section learn-section--alt" id="formula-section-1">
       <div class="container container--tool">
         <div class="formula-part-header">
           <span class="formula-part-badge">Part I</span>
@@ -51,6 +73,7 @@
       </div>
     </section>
 
+    <span id="formula-section-2"></span>
     <!-- PART II: Assessing Business Performance -->
     <section class="learn-section">
       <div class="container container--tool">
@@ -62,6 +85,7 @@
       </div>
     </section>
 
+    <span id="formula-section-3"></span>
     <!-- PART III: Making Investment Decisions -->
     <section class="learn-section learn-section--alt">
       <div class="container container--tool">
@@ -73,6 +97,7 @@
       </div>
     </section>
 
+    <span id="formula-section-4"></span>
     <!-- PART IV: Making Financing Decisions -->
     <section class="learn-section">
       <div class="container container--tool">
@@ -84,6 +109,7 @@
       </div>
     </section>
 
+    <span id="formula-section-5"></span>
     <!-- PART V: Making Business Decisions -->
     <section class="learn-section learn-section--alt">
       <div class="container container--tool">

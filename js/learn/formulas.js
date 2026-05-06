@@ -279,6 +279,10 @@ function renderFormula(f) {
   card.setAttribute('role', 'button');
   card.setAttribute('tabindex', '0');
   card.setAttribute('aria-expanded', 'false');
+  card.dataset.part      = String(f.part);
+  card.dataset.origTitle = f.title;
+  card.dataset.origDesc  = f.desc;
+  card.dataset.origNotes = f.notes;
 
   const katexEl = document.createElement('div');
   katexEl.className = 'formula-card__katex';
@@ -326,6 +330,199 @@ function renderFormula(f) {
   return card;
 }
 
+// ── Search and filter helpers ─────────────────────────────────────────────────
+
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function highlightText(text, q) {
+  if (!q) return text;
+  const re = new RegExp('(' + escapeRegex(q) + ')', 'gi');
+  return text.replace(re, '<mark class="glossary-highlight">$1</mark>');
+}
+
+function getFormulaFilters() {
+  const q           = (document.getElementById('formula-search')?.value || '').trim().toLowerCase();
+  const part        = (document.getElementById('formula-part-filter')?.value || '');
+  const searchNotes = document.getElementById('formula-search-notes')?.checked || false;
+  return { q, part, searchNotes };
+}
+
+function filterFormulas() {
+  const { q, part, searchNotes } = getFormulaFilters();
+  const cards = document.querySelectorAll('.formula-card');
+  let visibleCount = 0;
+
+  cards.forEach(card => {
+    const cardPart  = card.dataset.part  || '';
+    const origTitle = card.dataset.origTitle || '';
+    const origDesc  = card.dataset.origDesc  || '';
+    const origNotes = card.dataset.origNotes || '';
+    const titleLow  = origTitle.toLowerCase();
+    const descLow   = origDesc.toLowerCase();
+    const notesLow  = origNotes.toLowerCase();
+
+    const matchPart = !part || cardPart === part;
+    const matchQ    = !q
+      || titleLow.includes(q)
+      || (searchNotes && (descLow.includes(q) || notesLow.includes(q)));
+    const match = matchPart && matchQ;
+
+    card.classList.toggle('formula-card--hidden', !match);
+
+    // Update highlights
+    const titleEl = card.querySelector('.formula-card__title');
+    const descEl  = card.querySelector('.formula-card__desc');
+    const notesEl = card.querySelector('.formula-card__notes p');
+
+    if (titleEl) titleEl.innerHTML = highlightText(origTitle, q);
+    if (descEl)  descEl.innerHTML  = searchNotes ? highlightText(origDesc, q)  : origDesc;
+    if (notesEl) notesEl.innerHTML = searchNotes ? highlightText(origNotes, q) : origNotes;
+
+    // Auto-expand if match is in notes/desc but not title
+    if (match && q && searchNotes && !titleLow.includes(q)) {
+      const body    = card.querySelector('.formula-card__body');
+      const notesDiv = card.querySelector('.formula-card__notes');
+      const chevron = card.querySelector('.formula-card__toggle');
+      if (body)    body.style.display    = 'block';
+      if (notesDiv) notesDiv.style.display = 'block';
+      if (chevron) chevron.innerHTML     = '&#9650;';
+      card.setAttribute('aria-expanded', 'true');
+      card.classList.add('formula-card--open');
+    }
+
+    if (match) visibleCount++;
+  });
+
+  // Show/hide part sections
+  [1, 2, 3, 4, 5].forEach(p => {
+    const grid    = document.getElementById('formulas-part-' + p);
+    const section = grid ? grid.closest('section') : null;
+    if (!section) return;
+    const hasVisible = grid && [...grid.querySelectorAll('.formula-card')]
+      .some(c => !c.classList.contains('formula-card--hidden'));
+    section.style.display = hasVisible ? '' : 'none';
+  });
+
+  updateFormulaCount(visibleCount);
+  updatePartNav();
+}
+
+function updateFormulaCount(n) {
+  const el = document.getElementById('formula-count');
+  if (el) el.textContent = n + ' formula' + (n !== 1 ? 's' : '');
+}
+
+function updatePartNav() {
+  const links = document.querySelectorAll('.formula-part-nav__link');
+  links.forEach(link => {
+    const part = link.dataset.part;
+    const grid = document.getElementById('formulas-part-' + part);
+    if (!grid) return;
+    const hasVisible = [...grid.querySelectorAll('.formula-card')]
+      .some(c => !c.classList.contains('formula-card--hidden'));
+    link.classList.toggle('glossary-alpha__link--active', hasVisible);
+    link.classList.toggle('glossary-alpha__link--inactive', !hasVisible);
+  });
+}
+
+function buildPartNav() {
+  const nav = document.getElementById('formula-part-nav');
+  if (!nav) return;
+  const parts = [
+    { num: '1', label: 'Part I' },
+    { num: '2', label: 'Part II' },
+    { num: '3', label: 'Part III' },
+    { num: '4', label: 'Part IV' },
+    { num: '5', label: 'Part V' },
+  ];
+  parts.forEach(p => {
+    const a = document.createElement('a');
+    a.className = 'glossary-alpha__link formula-part-nav__link';
+    a.href = '#formula-section-' + p.num;
+    a.dataset.part = p.num;
+    a.textContent = p.label;
+    nav.appendChild(a);
+  });
+}
+
+function initFormulaSearch() {
+  const input      = document.getElementById('formula-search');
+  const clearBtn   = document.getElementById('formula-clear');
+  const partFilter = document.getElementById('formula-part-filter');
+  const notesToggle = document.getElementById('formula-search-notes');
+  if (!input) return;
+
+  const showClear = () => {
+    clearBtn.style.display = (input.value.trim() || partFilter?.value) ? 'inline-flex' : 'none';
+  };
+
+  input.addEventListener('input', () => { showClear(); filterFormulas(); });
+  if (partFilter)   partFilter.addEventListener('change',  () => { showClear(); filterFormulas(); });
+  if (notesToggle)  notesToggle.addEventListener('change', () => filterFormulas());
+
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    if (partFilter) partFilter.value = '';
+    clearBtn.style.display = 'none';
+    filterFormulas();
+    input.focus();
+  });
+}
+
+function initFormulaBackToTop() {
+  const btn = document.createElement('button');
+  btn.id = 'formula-back-to-top';
+  btn.className = 'back-to-top';
+  btn.innerHTML = '&#8679;';
+  btn.title = 'Back to top';
+  btn.setAttribute('aria-label', 'Back to top');
+  document.body.appendChild(btn);
+
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('back-to-top--visible', window.scrollY > 400);
+  });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+function initFormulaStickySearch() {
+  const hero = document.querySelector('.page__hero');
+  if (!hero) return;
+
+  const sticky = document.createElement('div');
+  sticky.className = 'glossary-sticky-search';
+  sticky.innerHTML = '<div class="container">'
+    + '<input class="glossary-search glossary-search--sticky" type="text" '
+    + 'id="formula-search-sticky" placeholder="Search formulas..." autocomplete="off" />'
+    + '</div>';
+  document.body.insertBefore(sticky, document.querySelector('main'));
+
+  const stickyInput = document.getElementById('formula-search-sticky');
+  const mainInput   = document.getElementById('formula-search');
+
+  const observer = new IntersectionObserver(entries => {
+    sticky.classList.toggle('glossary-sticky-search--visible', !entries[0].isIntersecting);
+  }, { threshold: 0 });
+  observer.observe(hero);
+
+  stickyInput.addEventListener('input', () => {
+    mainInput.value = stickyInput.value;
+    document.getElementById('formula-clear').style.display =
+      stickyInput.value.trim() ? 'inline-flex' : 'none';
+    filterFormulas();
+  });
+
+  mainInput.addEventListener('input', () => {
+    stickyInput.value = mainInput.value;
+  });
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+
 document.addEventListener('DOMContentLoaded', () => {
   [1, 2, 3, 4, 5].forEach(part => {
     const grid = document.getElementById('formulas-part-' + part);
@@ -334,4 +531,11 @@ document.addEventListener('DOMContentLoaded', () => {
       grid.appendChild(renderFormula(f));
     });
   });
+
+  buildPartNav();
+  initFormulaSearch();
+  initFormulaBackToTop();
+  initFormulaStickySearch();
+  updateFormulaCount(FORMULAS.length);
+  updatePartNav();
 });
