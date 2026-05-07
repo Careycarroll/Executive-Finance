@@ -57,7 +57,7 @@ definition highlighting.
 
 | # | Chapter | Status | Tools |
 |---|---------|--------|-------|
-| 1 | Financial Management and Value Creation: An Overview | Not started | |
+| 1 | Financial Management and Value Creation: An Overview | Complete | Managerial Balance Sheet Builder, Income Statement Analyzer, Cash Flow Statement Builder, Value Creation Analyzer, NPV and IRR Decision Tool |
 | 2 | The Time Value of Money | Not started | |
 | 3 | Risk and Return | Not started | |
 | 4 | Interpreting Financial Statements | Not started | |
@@ -171,7 +171,7 @@ pages/glossary.html with all 400+ textbook terms, search, chapter filter,
 definition toggle, highlight, alpha nav color states, sticky search, back-to-top.
 
 Phase 2 -- Learn Section Part I (Chapters 1-3) -- In Progress
-Ch. 1 (Overview), Ch. 2 (Time Value of Money), Ch. 3 (Risk and Return).
+Ch. 1 (Overview) -- Complete. Ch. 2 (Time Value of Money), Ch. 3 (Risk and Return) -- Not started.
 
 Phase 3 -- Learn Section Part II (Chapters 4-6)
 Ch. 4 (Financial Statements), Ch. 5 (Operational Efficiency), Ch. 6 (Profitability).
