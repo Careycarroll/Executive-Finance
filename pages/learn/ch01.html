@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Chapter 1: Financial Management and Value Creation: An Overview" />
+  <title>Ch. 1 &middot; Financial Management and Value Creation</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/learn.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>&#128200;</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link">Glossary</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="page__hero">
+      <div class="container">
+        <div class="chapter-nav">
+          <div style="display:flex;gap:var(--space-4);align-items:center;">
+            <a href="/pages/learn/" class="chapter-nav__back">&larr; All Chapters</a>
+          </div>
+          <div class="chapter-nav__position">
+            <span>Chapter 1 of 18</span>
+            <a href="/pages/learn/ch02.html" class="chapter-nav__next">Ch. 2 &rarr;</a>
+          </div>
+        </div>
+        <div class="chapter-hero__meta">
+          <span class="chapter-badge chapter-badge--concept">Part I</span>
+          <span class="chapter-hero__number">Chapter 1</span>
+        </div>
+        <h1 class="page__hero-title">Financial Management and Value Creation</h1>
+        <p class="page__hero-subtitle">
+          Before making any business decision, ask the Key Question:
+          will this decision create value? Learn to measure value creation
+          with NPV, read financial statements, and determine whether a firm
+          is creating or destroying value.
+        </p>
+        <div class="chapter-hero__progress" id="ch01-progress-indicator">
+          <span class="chapter-hero__progress-label" id="ch01-status">Not started</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEARNING OBJECTIVES -->
+    <section class="learn-section">
+      <div class="container container--tool">
+        <div class="objectives-card card">
+          <h2 class="objectives-card__title">Learning Objectives</h2>
+          <ol class="objectives-list">
+            <li>Understand the objective of financial management: value creation</li>
+            <li>Apply the fundamental finance principle using net present value (NPV)</li>
+            <li>Understand the role of financial markets as sources of capital and processors of information</li>
+            <li>Understand the firm business cycle and the self-sustainable growth rate</li>
+            <li>Read and interpret the balance sheet and the managerial balance sheet</li>
+            <li>Read and interpret the income statement</li>
+            <li>Estimate cash flows and understand the statement of cash flows</li>
+            <li>Measure and understand business risk and financial risk</li>
+            <li>Measure firm profitability using ROE and ROIC</li>
+            <li>Determine whether a firm has created value by comparing ROIC to WACC</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOL 1: Managerial Balance Sheet Builder -->
+    <section class="learn-section learn-section--alt">
+      <div class="container container--tool">
+        <div class="tool-header">
+          <div class="tool-header__label">Tool 1 of 5</div>
+          <h2 class="tool-header__title">Managerial Balance Sheet Builder</h2>
+          <p class="tool-header__desc">
+            The managerial balance sheet restructures the standard balance sheet to reveal
+            how much capital is truly invested in the business and where it comes from.
+            Working Capital Requirement (WCR) nets out operating liabilities from operating
+            assets, showing the net investment needed to run the firm.
+          </p>
+        </div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);">
+            <h3 style="font-size:var(--font-size-base);font-weight:700;margin:0;">Balance Sheet Inputs</h3>
+            <div style="display:flex;gap:var(--space-3);">
+              <button class="btn btn--secondary btn--sm" id="t1-load-hlc">Load HLC Data</button>
+              <button class="btn btn--secondary btn--sm" id="t1-randomize">&#127922; Randomize</button>
+            </div>
+          </div>
+
+          <p class="ch9-section-label">Current Assets</p>
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t1-cash">Cash and Equivalents</label>
+              <input class="form-input" type="number" id="t1-cash" value="100" min="0" step="10" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t1-ar">Accounts Receivable</label>
+              <input class="form-input" type="number" id="t1-ar" value="150" min="0" step="10" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t1-inv">Inventories</label>
+              <input class="form-input" type="number" id="t1-inv" value="250" min="0" step="10" />
+            </div>
+          </div>
+
+          <p class="ch9-section-label" style="margin-top:var(--space-4);">Non-Current Assets</p>
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t1-nfa">Net Fixed Assets</label>
+              <input class="form-input" type="number" id="t1-nfa" value="600" min="0" step="10" />
+            </div>
+          </div>
+
+          <p class="ch9-section-label" style="margin-top:var(--space-4);">Liabilities</p>
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t1-ap">Accounts Payable</label>
+              <input class="form-input" type="number" id="t1-ap" value="100" min="0" step="10" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t1-std">Short-Term Debt</label>
+              <input class="form-input" type="number" id="t1-std" value="200" min="0" step="10" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t1-ltd">Long-Term Debt</label>
+              <input class="form-input" type="number" id="t1-ltd" value="300" min="0" step="10" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t1-equity">Owners Equity</label>
+              <input class="form-input" type="number" id="t1-equity" value="500" min="0" step="10" />
+            </div>
+          </div>
+
+          <button class="btn btn--primary" id="t1-calculate" style="margin-top:var(--space-4);">Build Balance Sheets &rarr;</button>
+          <div id="t1-output"></div>
+          <div id="t1-show-work"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOL 2: Income Statement Analyzer -->
+    <section class="learn-section">
+      <div class="container container--tool">
+        <div class="tool-header">
+          <div class="tool-header__label">Tool 2 of 5</div>
+          <h2 class="tool-header__title">Income Statement Analyzer</h2>
+          <p class="tool-header__desc">
+            The income statement shows how sales revenue flows through expenses to produce
+            profit for shareholders. EBIT measures operating profitability before financing
+            costs. EAT is what belongs to shareholders. ROE and ROIC measure how efficiently
+            the firm uses its capital.
+          </p>
+        </div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);">
+            <h3 style="font-size:var(--font-size-base);font-weight:700;margin:0;">Income Statement Inputs</h3>
+            <div style="display:flex;gap:var(--space-3);">
+              <button class="btn btn--secondary btn--sm" id="t2-load-hlc">Load HLC Data</button>
+              <button class="btn btn--secondary btn--sm" id="t2-randomize">&#127922; Randomize</button>
+            </div>
+          </div>
+
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t2-sales">Sales Revenue</label>
+              <input class="form-input" type="number" id="t2-sales" value="1000" min="0" step="50" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t2-opex">Operating Expenses (excl. depreciation)</label>
+              <input class="form-input" type="number" id="t2-opex" value="700" min="0" step="50" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t2-dep">Depreciation Expense</label>
+              <input class="form-input" type="number" id="t2-dep" value="60" min="0" step="5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t2-interest">Interest Expense</label>
+              <input class="form-input" type="number" id="t2-interest" value="40" min="0" step="5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t2-tax-rate">Corporate Tax Rate (%)</label>
+              <input class="form-input" type="number" id="t2-tax-rate" value="50" min="0" max="100" step="5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t2-payout">Dividend Payout Ratio (%)</label>
+              <input class="form-input" type="number" id="t2-payout" value="50" min="0" max="100" step="5" />
+            </div>
+          </div>
+
+          <p class="ch9-section-label" style="margin-top:var(--space-4);">Capital Base (for ROE and ROIC)</p>
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t2-equity">Owners Equity</label>
+              <input class="form-input" type="number" id="t2-equity" value="500" min="1" step="10" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t2-ic">Invested Capital</label>
+              <input class="form-input" type="number" id="t2-ic" value="1000" min="1" step="10" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="font-size:var(--font-size-xs);color:var(--color-gray-500);">
+                Or pull from Tool 1
+              </label>
+              <button class="btn btn--secondary btn--sm" id="t2-pull-t1" style="margin-top:var(--space-2);">
+                &#8595; Pull from Tool 1
+              </button>
+            </div>
+          </div>
+
+          <button class="btn btn--primary" id="t2-calculate" style="margin-top:var(--space-4);">Analyze Income Statement &rarr;</button>
+          <div id="t2-output"></div>
+          <div id="t2-show-work"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOL 3: Cash Flow Statement Builder -->
+    <section class="learn-section learn-section--alt">
+      <div class="container container--tool">
+        <div class="tool-header">
+          <div class="tool-header__label">Tool 3 of 5</div>
+          <h2 class="tool-header__title">Cash Flow Statement Builder</h2>
+          <p class="tool-header__desc">
+            Profit is not cash. The statement of cash flows reconciles accounting profit
+            to actual cash movements by separating operating, investing, and financing
+            activities. A firm that consistently fails to generate cash from operations
+            is headed for trouble regardless of reported profits.
+          </p>
+        </div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);">
+            <h3 style="font-size:var(--font-size-base);font-weight:700;margin:0;">Cash Flow Inputs</h3>
+            <div style="display:flex;gap:var(--space-3);">
+              <button class="btn btn--secondary btn--sm" id="t3-load-hlc">Load HLC Data</button>
+              <button class="btn btn--secondary btn--sm" id="t3-randomize">&#127922; Randomize</button>
+            </div>
+          </div>
+
+          <p class="ch9-section-label">Operating Activities</p>
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t3-eat">Earnings After Tax (EAT)</label>
+              <input class="form-input" type="number" id="t3-eat" value="100" step="10" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t3-dep">Add: Depreciation Expense</label>
+              <input class="form-input" type="number" id="t3-dep" value="60" min="0" step="5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t3-dwcr">Less: Increase in WCR</label>
+              <input class="form-input" type="number" id="t3-dwcr" value="30" step="5" />
+            </div>
+          </div>
+
+          <p class="ch9-section-label" style="margin-top:var(--space-4);">Investing Activities</p>
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t3-capex">Capital Expenditures (CAPEX)</label>
+              <input class="form-input" type="number" id="t3-capex" value="120" min="0" step="10" />
+            </div>
+          </div>
+
+          <p class="ch9-section-label" style="margin-top:var(--space-4);">Financing Activities</p>
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t3-new-debt">New Borrowings</label>
+              <input class="form-input" type="number" id="t3-new-debt" value="50" step="10" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t3-dividends">Dividend Payments</label>
+              <input class="form-input" type="number" id="t3-dividends" value="50" min="0" step="10" />
+            </div>
+          </div>
+
+          <p class="ch9-section-label" style="margin-top:var(--space-4);">Opening Position</p>
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t3-opening-cash">Opening Cash Balance</label>
+              <input class="form-input" type="number" id="t3-opening-cash" value="100" min="0" step="10" />
+            </div>
+          </div>
+
+          <button class="btn btn--primary" id="t3-calculate" style="margin-top:var(--space-4);">Build Cash Flow Statement &rarr;</button>
+          <div id="t3-output"></div>
+          <div id="t3-show-work"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOL 4: Value Creation Analyzer -->
+    <section class="learn-section">
+      <div class="container container--tool">
+        <div class="tool-header">
+          <div class="tool-header__label">Tool 4 of 5</div>
+          <h2 class="tool-header__title">Value Creation Analyzer</h2>
+          <p class="tool-header__desc">
+            A firm creates value only when its return on invested capital (ROIC) exceeds
+            its weighted average cost of capital (WACC). The difference -- the return spread --
+            multiplied by invested capital gives Economic Value Added (EVA): the dollar
+            amount of value created or destroyed in the period.
+          </p>
+        </div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);">
+            <h3 style="font-size:var(--font-size-base);font-weight:700;margin:0;">ROIC and WACC Inputs</h3>
+            <div style="display:flex;gap:var(--space-3);">
+              <button class="btn btn--secondary btn--sm" id="t4-load-hlc">Load HLC Data</button>
+              <button class="btn btn--secondary btn--sm" id="t4-randomize">&#127922; Randomize</button>
+            </div>
+          </div>
+
+          <p class="ch9-section-label">Operating Performance</p>
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t4-ebit">EBIT</label>
+              <input class="form-input" type="number" id="t4-ebit" value="240" min="0" step="10" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t4-tax-rate">Corporate Tax Rate (%)</label>
+              <input class="form-input" type="number" id="t4-tax-rate" value="50" min="0" max="100" step="5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t4-ic">Invested Capital</label>
+              <input class="form-input" type="number" id="t4-ic" value="1000" min="1" step="50" />
+            </div>
+          </div>
+
+          <p class="ch9-section-label" style="margin-top:var(--space-4);">Cost of Capital</p>
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t4-ke">Cost of Equity (%)</label>
+              <input class="form-input" type="number" id="t4-ke" value="12" min="0" max="50" step="0.5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t4-kd">Cost of Debt (pre-tax, %)</label>
+              <input class="form-input" type="number" id="t4-kd" value="8" min="0" max="30" step="0.5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t4-equity-weight">Equity Weight (%)</label>
+              <input class="form-input" type="number" id="t4-equity-weight" value="50" min="0" max="100" step="5" />
+            </div>
+          </div>
+
+          <button class="btn btn--primary" id="t4-calculate" style="margin-top:var(--space-4);">Analyze Value Creation &rarr;</button>
+          <div id="t4-output"></div>
+          <div id="t4-show-work"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOL 5: NPV and IRR Decision Tool -->
+    <section class="learn-section learn-section--alt">
+      <div class="container container--tool">
+        <div class="tool-header">
+          <div class="tool-header__label">Tool 5 of 5</div>
+          <h2 class="tool-header__title">NPV and IRR Decision Tool</h2>
+          <p class="tool-header__desc">
+            The fundamental finance principle in action. A proposal creates value only if
+            its NPV is positive -- meaning the present value of future cash flows exceeds
+            the initial outlay. The IRR is the discount rate that makes NPV equal to zero.
+            Accept if IRR exceeds the cost of capital.
+          </p>
+        </div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);">
+            <h3 style="font-size:var(--font-size-base);font-weight:700;margin:0;">Investment Inputs</h3>
+            <div style="display:flex;gap:var(--space-3);">
+              <button class="btn btn--secondary btn--sm" id="t5-load-nmc">Load NMC Self-Test</button>
+              <button class="btn btn--secondary btn--sm" id="t5-randomize">&#127922; Randomize</button>
+            </div>
+          </div>
+
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t5-outlay">Initial Cash Outlay (CF&#8320;)</label>
+              <input class="form-input" type="number" id="t5-outlay" value="95" min="0" step="5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t5-wacc">Cost of Capital / WACC (%)</label>
+              <input class="form-input" type="number" id="t5-wacc" value="10.5" min="0" max="50" step="0.5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t5-shares">Shares Outstanding (optional)</label>
+              <input class="form-input" type="number" id="t5-shares" value="50" min="0" step="1" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t5-share-price">Current Share Price (optional)</label>
+              <input class="form-input" type="number" id="t5-share-price" value="40" min="0" step="1" />
+            </div>
+          </div>
+
+          <p class="ch9-section-label" style="margin-top:var(--space-4);">Expected Cash Flows (up to 5 years)</p>
+          <div class="ohrate-grid">
+            <div class="form-group">
+              <label class="form-label" for="t5-cf1">Year 1 Cash Flow</label>
+              <input class="form-input" type="number" id="t5-cf1" value="111.4" step="5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t5-cf2">Year 2 Cash Flow (0 if none)</label>
+              <input class="form-input" type="number" id="t5-cf2" value="0" step="5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t5-cf3">Year 3 Cash Flow (0 if none)</label>
+              <input class="form-input" type="number" id="t5-cf3" value="0" step="5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t5-cf4">Year 4 Cash Flow (0 if none)</label>
+              <input class="form-input" type="number" id="t5-cf4" value="0" step="5" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="t5-cf5">Year 5 Cash Flow (0 if none)</label>
+              <input class="form-input" type="number" id="t5-cf5" value="0" step="5" />
+            </div>
+          </div>
+
+          <button class="btn btn--primary" id="t5-calculate" style="margin-top:var(--space-4);">Calculate NPV and IRR &rarr;</button>
+          <div id="t5-output"></div>
+          <div id="t5-show-work"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY TERMS -->
+    <section class="learn-section">
+      <div class="container container--tool">
+        <div class="tool-header">
+          <h2 class="tool-header__title">Key Terms</h2>
+          <p class="tool-header__desc">Click any term to see its definition.</p>
+        </div>
+        <div class="key-terms-grid" id="key-terms-grid"></div>
+      </div>
+    </section>
+
+    <!-- CHAPTER COMPLETE -->
+    <section class="learn-section learn-section--alt">
+      <div class="container container--tool">
+        <div class="chapter-complete card" id="chapter-complete">
+          <div class="chapter-complete__icon">&#9989;</div>
+          <h2 class="chapter-complete__title">Chapter 1 Complete</h2>
+          <p class="chapter-complete__desc">
+            You can now build and interpret the managerial balance sheet, analyze an
+            income statement to compute ROE and ROIC, construct a statement of cash flows,
+            determine whether a firm is creating or destroying value using the ROIC vs WACC
+            framework, and apply the NPV and IRR rules to investment decisions.
+          </p>
+          <div class="chapter-complete__actions">
+            <button class="btn btn--primary" id="mark-complete-btn">Mark as Complete</button>
+            <a href="/pages/learn/ch02.html" class="btn btn--secondary">Next: Ch. 2 &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="/js/learn/ch01.js"></script>
+</body>
+</html>

@@ -1,1 +1,2 @@
-README.md: 191 lines, 7,290 bytes
+37:      <div class="sw-step__number">Step ${s.step}</div>
+63:        <span class="sw-toggle__icon">📐</span>

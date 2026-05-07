@@ -12,7 +12,7 @@ const CHAPTERS = [
   { id: 'ch06', num: 6,  title: 'Analyzing Profitability, Risk, and Growth',              part: 'II' },
   { id: 'ch07', num: 7,  title: 'Using the Net Present Value Rule',                       part: 'III' },
   { id: 'ch08', num: 8,  title: 'Alternatives to the Net Present Value Rule',             part: 'III' },
-  { id: 'ch09', num: 9,  title: 'Identifying and Estimating a Project's Cash Flows',     part: 'III' },
+  { id: 'ch09', num: 9,  title: 'Identifying and Estimating a Project Cash Flows',     part: 'III' },
   { id: 'ch10', num: 10, title: 'Valuing Bonds and Stocks',                               part: 'IV' },
   { id: 'ch11', num: 11, title: 'Raising Capital and Paying Out Cash',                    part: 'IV' },
   { id: 'ch12', num: 12, title: 'Estimating the Cost of Capital',                         part: 'IV' },
