@@ -1,0 +1,7 @@
+# .github/CODEOWNERS
+# Solo project — Carey owns everything. Kept for future-you when
+# collaborators or automation are added.
+
+*           @Careycarroll
+/docs/      @Careycarroll
+/concepts/  @Careycarroll
