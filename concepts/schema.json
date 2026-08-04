@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://careycarroll.github.io/Executive-Finance/concepts/schema.json",
+  "title": "Executive-Finance Concept Registry",
+  "description": "Schema for concepts/registry.json. Every concept page in the app is generated from one entry in this file. See ADR-0002.",
+  "type": "object",
+  "required": ["version", "concepts"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Semver of the registry format. Bump when schema changes in a breaking way.",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "concepts": {
+      "type": "array",
+      "description": "The list of concept entries. Each entry becomes one page.",
+      "items": { "$ref": "#/definitions/concept" }
+    }
+  },
+  "definitions": {
+    "concept": {
+      "type": "object",
+      "required": ["id", "domain", "title", "tier", "sources", "template"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "kebab-case, unique, stable. Used in URLs and cross-references.",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["corpfin", "invest", "deriv", "fsa", "tax", "macro", "risk", "behav"],
+          "description": "Primary domain. Drives grouping on the concept index page."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Display title as it appears on the page."
+        },
+        "tier": {
+          "type": "string",
+          "enum": ["core", "reference"],
+          "description": "Core = deep treatment, usually interactive. Reference = short page."
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Books that treat this concept. Exactly one must have primary=true.",
+          "items": { "$ref": "#/definitions/source" }
+        },
+        "template": {
+          "type": "string",
+          "enum": ["formula", "explainer", "interactive"],
+          "description": "Which page template renders this entry."
+        },
+        "component": {
+          "type": "string",
+          "description": "Required when template=interactive. Component ID from the toolbox.",
+          "enum": [
+            "cash-flow-chart",
+            "payoff-diagram",
+            "sensitivity-panel",
+            "fs-reformulator",
+            "greeks-visualizer",
+            "frontier-plotter",
+            "monte-carlo",
+            "yield-curve",
+            "binomial-tree",
+            "multiples-table",
+            "correlation-heatmap",
+            "decision-tree"
+          ]
+        },
+        "defaults": {
+          "type": "object",
+          "description": "Initial config passed to the component. Shape depends on component. Not validated here beyond being an object.",
+          "additionalProperties": true
+        },
+        "prose_ref": {
+          "type": "string",
+          "description": "Path to markdown file with long-form content, relative to repo root.",
+          "pattern": "^concepts/prose/[a-z0-9-]+\\.md$"
+        },
+        "examples": {
+          "type": "array",
+          "description": "Optional named scenarios that load into the component (interactive template only).",
+          "items": { "$ref": "#/definitions/example" }
+        },
+        "related": {
+          "type": "array",
+          "description": "Cross-references to other concept IDs. Referential integrity checked by validator.",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "template": { "const": "interactive" } } },
+          "then": { "required": ["component", "defaults"] }
+        },
+        {
+          "if": { "properties": { "template": { "enum": ["formula", "explainer"] } } },
+          "then": {
+            "not": { "required": ["component"] }
+          }
+        }
+      ]
+    },
+    "source": {
+      "type": "object",
+      "required": ["book"],
+      "additionalProperties": false,
+      "properties": {
+        "book": {
+          "type": "string",
+          "description": "Book ID from books.json, or the literal 'external' for Reference-tier pages sourced from online material.",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "chapters": {
+          "type": "array",
+          "description": "Chapter identifiers within the book. Strings to allow forms like '15', '19', 'Mod. 5'.",
+          "items": { "type": "string" }
+        },
+        "primary": {
+          "type": "boolean",
+          "description": "Exactly one source per concept must be primary. Enforced by validator."
+        }
+      }
+    },
+    "example": {
+      "type": "object",
+      "required": ["label", "config"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string" },
+        "config": { "type": "object", "additionalProperties": true }
+      }
+    }
+  }
+}

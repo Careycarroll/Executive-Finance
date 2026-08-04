@@ -1,0 +1,104 @@
+{
+  "version": "1.0.0",
+  "books": [
+    {
+      "id": "hawawini",
+      "title": "Finance for Executives",
+      "authors": ["Gabriel Hawawini", "Claude Viallet"],
+      "edition": "6e",
+      "isbn": "9781473749245",
+      "role": "Corporate finance spine",
+      "domains": ["corpfin", "risk"]
+    },
+    {
+      "id": "bodie",
+      "title": "Investments (ISE)",
+      "authors": ["Zvi Bodie", "Alex Kane", "Alan Marcus"],
+      "edition": "12e",
+      "isbn": "9781260571158",
+      "role": "Investments / portfolio theory",
+      "domains": ["invest", "behav", "macro"]
+    },
+    {
+      "id": "hull",
+      "title": "Options, Futures and Other Derivatives",
+      "authors": ["John C. Hull"],
+      "edition": "11e",
+      "isbn": "9789356062559",
+      "role": "Derivatives theory",
+      "domains": ["deriv", "risk"]
+    },
+    {
+      "id": "natenberg",
+      "title": "Option Volatility & Pricing",
+      "authors": ["Sheldon Natenberg"],
+      "edition": "2e",
+      "isbn": "9780071818780",
+      "role": "Options / volatility (applied)",
+      "domains": ["deriv"]
+    },
+    {
+      "id": "natenberg-wb",
+      "title": "Option Volatility & Pricing Workbook",
+      "authors": ["Sheldon Natenberg"],
+      "edition": null,
+      "isbn": "9781260116946",
+      "role": "Practice for Natenberg",
+      "domains": ["deriv"]
+    },
+    {
+      "id": "sinclair",
+      "title": "Positional Option Trading",
+      "authors": ["Euan Sinclair"],
+      "edition": null,
+      "isbn": "9781119583530",
+      "role": "Advanced options strategy",
+      "domains": ["deriv"]
+    },
+    {
+      "id": "penman",
+      "title": "Financial Statement Analysis and Security Valuation",
+      "authors": ["Stephen H. Penman"],
+      "edition": null,
+      "isbn": "9780073127132",
+      "role": "FSA + valuation (primary)",
+      "domains": ["fsa"]
+    },
+    {
+      "id": "easton",
+      "title": "Financial Statement Analysis and Valuation",
+      "authors": ["Peter D. Easton"],
+      "edition": null,
+      "isbn": "9781618531049",
+      "role": "FSA + valuation (applied)",
+      "domains": ["fsa"]
+    },
+    {
+      "id": "lundholm-sloan",
+      "title": "Equity Valuation and Analysis w/ eVal",
+      "authors": ["Russell Lundholm", "Richard Sloan"],
+      "edition": null,
+      "isbn": "9780073526898",
+      "role": "Equity valuation, modeling",
+      "domains": ["fsa"]
+    },
+    {
+      "id": "scholes-wolfson",
+      "title": "Taxes and Business Strategy",
+      "authors": ["Myron Scholes", "Mark Wolfson", "Merle Erickson"],
+      "edition": null,
+      "isbn": "9781618533210",
+      "role": "Business tax",
+      "domains": ["tax"]
+    },
+    {
+      "id": "external",
+      "title": "External sources",
+      "authors": [],
+      "edition": null,
+      "isbn": null,
+      "role": "Placeholder for Reference-tier concepts sourced from publicly available online material (Street of Walls, WSO, FRED, ULI, etc.).",
+      "domains": ["macro", "behav"]
+    }
+  ]
+}
