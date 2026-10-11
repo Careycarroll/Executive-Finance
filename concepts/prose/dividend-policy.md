@@ -16,3 +16,4 @@ Dividend policy governs how a firm distributes excess operating cash flow back t
 
 ## Notes for future-me
 Always distinguish between payout *level* (how much cash is returned) and payout *form* (dividends vs buybacks). Buybacks provide management with optionality during downturns, whereas initiating or raising a regular quarterly cash dividend creates an implicit contract that the market punishes heavily if broken.
+

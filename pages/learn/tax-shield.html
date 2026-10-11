@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tax Shields and After-Tax Cost of Debt — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--tax">tax</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Tax Shields and After-Tax Cost of Debt</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Myron Scholes Ch. 4</span>
+          <span class="concept-hero__citation-secondary">· also: Gabriel Hawawini Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Because interest expense on debt is tax-deductible for corporations, issuing debt creates an interest tax shield that reduces the firm&#39;s total tax bill. This tax subsidy reduces the effective after-tax cost of debt capital below the nominal borrowing coupon rate, creating the classical Modigliani-Miller Proposition II tax advantage of leverage.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="r_d^{\text{after-tax}} = r_d \times (1 - t_c)
+\quad \text{and} \quad
+\text{Annual Tax Shield} = \text{Interest Expense} \times t_c = (D \times r_d) \times t_c">
+            r_d^{\text{after-tax}} = r_d \times (1 - t_c)
+\quad \text{and} \quad
+\text{Annual Tax Shield} = \text{Interest Expense} \times t_c = (D \times r_d) \times t_c
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>r_d</strong>: Pre-tax nominal borrowing rate / yield to maturity on debt.</li>
+<li><strong>t_c</strong>: Marginal corporate income tax rate.</li>
+<li><strong>r_d^{\text{after-tax}}</strong>: Effective after-tax borrowing cost entering the WACC calculation.</li>
+<li><strong>D</strong>: Nominal market value of outstanding debt.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A corporation borrows $10,000,000 at an 8.0% annual interest rate ($r_d = 0.08$) and faces a combined corporate marginal tax rate of 25% ($t_c = 0.25$):</p>
+<ul>
+<li><strong>Annual Interest Expense:</strong> $$10,000,000 \times 0.08 = $800,000$</li>
+<li><strong>Annual Tax Savings (Shield):</strong> $$800,000 \times 0.25 = $200,000$</li>
+<li><strong>Effective After-Tax Cost:</strong> $0.08 \times (1 - 0.25) = 6.0%$</li>
+<li><strong>Net Cash Outflow:</strong> $$800,000 - $200,000 = $600,000$</li>
+</ul>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Estimating WACC and capital structure tradeoffs.</li>
+<li><strong>When not to use / Caveats:</strong> Section 163(j) caps net interest deductions at 30% of adjusted taxable income (EBITDA / EBIT). If a company is already generating low taxable income or NOLs, the marginal tax shield is zero.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>The tax shield only has value if the company actually generates taxable income to shelter! In financial distress, interest deductions become worthless precisely when debt service burdens are most dangerous.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/entity-choice.html" class="related-chip">
+          <span>Entity Choice (C-Corp, S-Corp, LLC, Partnership)</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+
+        <a href="/pages/learn/tvm.html" class="related-chip">
+          <span>Time Value of Money</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
