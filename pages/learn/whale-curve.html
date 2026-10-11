@@ -69,20 +69,67 @@
 <li><strong>X-Axis:</strong> Cumulative percentage of customers, ranked from highest profit contribution to lowest (1% to 100%).</li>
 <li><strong>Y-Axis:</strong> Cumulative operating profit as a percentage of total company profit.</li>
 </ul>
-<pre><code>Cumulative
-Profit %
-  ▲
-  │            /▔▔▔▔▔▔▔▔▔▔▔\  &lt;-- Peak: 200%–250% of Total Profit
-  │           /             \
-  │          /               \
-100% ───────/                 \────── Reported Profit (100%)
-  │        /
-  │       /
-  0% ────/────────────────────────────────────────►
-         Top 20%       Middle 70%      Bottom 10%
-        (Profitable)   (Break-Even)   (Loss-Makers)
+<div style="margin: 1.5rem 0; padding: 1rem; background: #ffffff; border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+  <svg viewBox="0 0 720 380" width="100%" height="auto" style="display: block; font-family: var(--font-sans);">
+    <!-- Background Zones -->
+    <!-- Top 20% Zone (Green/Value Creators) -->
+    <rect x="70" y="40" width="130" height="260" fill="#f0fff4" opacity="0.8" />
+    <!-- Middle 70% Zone (Neutral/Break-even) -->
+    <rect x="200" y="40" width="420" height="260" fill="#f7fafc" opacity="0.8" />
+    <!-- Bottom 10% Zone (Red/Profit Bleeders) -->
+    <rect x="620" y="40" width="70" height="260" fill="#fff5f5" opacity="0.8" /><pre><code>&lt;!-- Grid lines --&gt;
+&lt;line x1=&quot;70&quot; y1=&quot;300&quot; x2=&quot;690&quot; y2=&quot;300&quot; stroke=&quot;#cbd5e1&quot; stroke-width=&quot;1.5&quot; /&gt;
+&lt;line x1=&quot;70&quot; y1=&quot;180&quot; x2=&quot;690&quot; y2=&quot;180&quot; stroke=&quot;#94a3b8&quot; stroke-width=&quot;1.5&quot; stroke-dasharray=&quot;5,5&quot; /&gt;
+&lt;line x1=&quot;70&quot; y1=&quot;65&quot; x2=&quot;690&quot; y2=&quot;65&quot; stroke=&quot;#e2e8f0&quot; stroke-width=&quot;1&quot; stroke-dasharray=&quot;3,3&quot; /&gt;
+
+&lt;!-- Vertical Zone Separators --&gt;
+&lt;line x1=&quot;200&quot; y1=&quot;40&quot; x2=&quot;200&quot; y2=&quot;300&quot; stroke=&quot;#cbd5e1&quot; stroke-width=&quot;1&quot; stroke-dasharray=&quot;2,2&quot; /&gt;
+&lt;line x1=&quot;620&quot; y1=&quot;40&quot; x2=&quot;620&quot; y2=&quot;300&quot; stroke=&quot;#cbd5e1&quot; stroke-width=&quot;1&quot; stroke-dasharray=&quot;2,2&quot; /&gt;
+
+&lt;!-- 100% Reported Profit Label --&gt;
+&lt;text x=&quot;75&quot; y=&quot;174&quot; fill=&quot;#64748b&quot; font-size=&quot;12&quot; font-weight=&quot;600&quot;&gt;100% (Reported Profit Baseline)&lt;/text&gt;
+&lt;text x=&quot;75&quot; y=&quot;59&quot; fill=&quot;#94a3b8&quot; font-size=&quot;11&quot; font-weight=&quot;500&quot;&gt;225% Peak&lt;/text&gt;
+&lt;text x=&quot;75&quot; y=&quot;294&quot; fill=&quot;#94a3b8&quot; font-size=&quot;11&quot; font-weight=&quot;500&quot;&gt;0%&lt;/text&gt;
+
+&lt;!-- The Whale Curve Line --&gt;
+&lt;path d=&quot;M 70 300 C 110 200, 155 65, 200 65 L 620 70 C 640 85, 665 150, 690 180&quot; 
+      fill=&quot;none&quot; stroke=&quot;#1a365d&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot; /&gt;
+
+&lt;!-- Peak Annotation Marker --&gt;
+&lt;circle cx=&quot;200&quot; cy=&quot;65&quot; r=&quot;5&quot; fill=&quot;#2b6cb0&quot; /&gt;
+&lt;rect x=&quot;145&quot; y=&quot;18&quot; width=&quot;130&quot; height=&quot;24&quot; rx=&quot;12&quot; fill=&quot;#1a365d&quot; /&gt;
+&lt;text x=&quot;210&quot; y=&quot;34&quot; fill=&quot;#ffffff&quot; font-size=&quot;11&quot; font-weight=&quot;700&quot; text-anchor=&quot;middle&quot;&gt;Peak: ~225% Profit&lt;/text&gt;
+
+&lt;!-- Final Reported Point Marker --&gt;
+&lt;circle cx=&quot;690&quot; cy=&quot;180&quot; r=&quot;5&quot; fill=&quot;#c53030&quot; /&gt;
+&lt;rect x=&quot;580&quot; y=&quot;195&quot; width=&quot;115&quot; height=&quot;22&quot; rx=&quot;4&quot; fill=&quot;#c53030&quot; /&gt;
+&lt;text x=&quot;637&quot; y=&quot;210&quot; fill=&quot;#ffffff&quot; font-size=&quot;10&quot; font-weight=&quot;700&quot; text-anchor=&quot;middle&quot;&gt;100% Net Profit&lt;/text&gt;
+
+&lt;!-- Zone Banners / Labels at bottom --&gt;
+&lt;g transform=&quot;translate(70, 312)&quot;&gt;
+  &lt;!-- Zone 1 --&gt;
+  &lt;rect x=&quot;10&quot; y=&quot;5&quot; width=&quot;110&quot; height=&quot;42&quot; rx=&quot;6&quot; fill=&quot;#c6f6d5&quot; /&gt;
+  &lt;text x=&quot;65&quot; y=&quot;22&quot; fill=&quot;#22543d&quot; font-size=&quot;11&quot; font-weight=&quot;700&quot; text-anchor=&quot;middle&quot;&gt;Top 20% Accounts&lt;/text&gt;
+  &lt;text x=&quot;65&quot; y=&quot;38&quot; fill=&quot;#276749&quot; font-size=&quot;10&quot; font-weight=&quot;500&quot; text-anchor=&quot;middle&quot;&gt;Generate +225%&lt;/text&gt;
+
+  &lt;!-- Zone 2 --&gt;
+  &lt;rect x=&quot;230&quot; y=&quot;5&quot; width=&quot;180&quot; height=&quot;42&quot; rx=&quot;6&quot; fill=&quot;#edf2f7&quot; /&gt;
+  &lt;text x=&quot;320&quot; y=&quot;22&quot; fill=&quot;#2d3748&quot; font-size=&quot;11&quot; font-weight=&quot;700&quot; text-anchor=&quot;middle&quot;&gt;Middle 70% Accounts&lt;/text&gt;
+  &lt;text x=&quot;320&quot; y=&quot;38&quot; fill=&quot;#4a5568&quot; font-size=&quot;10&quot; font-weight=&quot;500&quot; text-anchor=&quot;middle&quot;&gt;Break-Even (~0% Net)&lt;/text&gt;
+
+  &lt;!-- Zone 3 --&gt;
+  &lt;rect x=&quot;555&quot; y=&quot;5&quot; width=&quot;60&quot; height=&quot;42&quot; rx=&quot;6&quot; fill=&quot;#fed7d7&quot; /&gt;
+  &lt;text x=&quot;585&quot; y=&quot;22&quot; fill=&quot;#742a2a&quot; font-size=&quot;11&quot; font-weight=&quot;700&quot; text-anchor=&quot;middle&quot;&gt;Bottom 10%&lt;/text&gt;
+  &lt;text x=&quot;585&quot; y=&quot;38&quot; fill=&quot;#9b2c2c&quot; font-size=&quot;10&quot; font-weight=&quot;500&quot; text-anchor=&quot;middle&quot;&gt;Erode -125%&lt;/text&gt;
+&lt;/g&gt;
+
+&lt;!-- X-axis Label --&gt;
+&lt;text x=&quot;380&quot; y=&quot;375&quot; fill=&quot;#64748b&quot; font-size=&quot;12&quot; font-weight=&quot;600&quot; text-anchor=&quot;middle&quot;&gt;
+  Cumulative % of Customers (Ranked from Most to Least Profitable) →
+&lt;/text&gt;
 </code></pre>
-<h3>Strategic Levers for Managing the Bleeders:</h3>
+  </svg>
+</div><h3>Strategic Levers for Managing the Bleeders:</h3>
 <ol>
 <li><strong>Unbundle and Reprice:</strong> Charge explicitly for rush shipping, small order sizes, and bespoke packaging rather than bundling them into base pricing.</li>
 <li><strong>Process Standardization:</strong> Migrate high-maintenance customers to automated electronic ordering and standardized SKU catalogs.</li>
