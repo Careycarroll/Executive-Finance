@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real vs. Nominal Returns — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--macro">macro</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Real vs. Nominal Returns</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 5</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Nominal returns measure the growth of raw dollars; real returns measure the growth of your actual purchasing power after adjusting for inflation. When inflation is elevated, high nominal interest rates can mask negative real purchasing power gains. The Fisher Equation mathematically separates the two.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="1 + R = (1 + r)(1 + i)
+\implies r = \frac{1 + R}{1 + i} - 1 \approx R - i">
+            1 + R = (1 + r)(1 + i)
+\implies r = \frac{1 + R}{1 + i} - 1 \approx R - i
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>R</strong>: Nominal rate of return.</li>
+<li><strong>r</strong>: Real rate of return (purchasing power growth).</li>
+<li><strong>i</strong>: Rate of inflation (measured via CPI / PCE deflator).</li>
+<li><strong>R - i</strong>: Standard first-order Fisher approximation (valid when rates are small).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>An investor earns a 7.0% nominal return ($R = 0.07$) on a Treasury note during a year where consumer prices inflate by 4.0% ($i = 0.04$):</p>
+<ul>
+<li><strong>Exact Fisher Calculation:</strong> $r = \frac{1 + 0.07}{1 + 0.04} - 1 = \frac{1.07}{1.04} - 1 \approx 2.885%$</li>
+<li><strong>Approximation:</strong> $r \approx 0.07 - 0.04 = 3.0%$</li>
+</ul>
+<p>The investor&#39;s true real wealth growth is 2.88%, not the headline 7.0%.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Multi-decade retirement planning, long-term infrastructure discounting, TIPS pricing, and macroeconomic asset allocation.</li>
+<li><strong>When not to use / Caveats:</strong> Do not mix real cash flows with nominal discount rates in DCF models! If cash flows are projected with inflation, use the nominal WACC; if cash flows are in constant dollars, use the real WACC.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>The Fisher effect implies that when expected inflation rises, nominal yields must rise point-for-point to preserve required real yields. The biggest silent destroyer of long-duration fixed income is unanticipated inflation.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/tvm.html" class="related-chip">
+          <span>Time Value of Money</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

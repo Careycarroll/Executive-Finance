@@ -1,0 +1,185 @@
+{
+  "tvm": {
+    "title": "Time Value of Money",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "2"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "5"
+        ]
+      }
+    ]
+  },
+  "dividend-policy": {
+    "title": "Dividend Policy and Payout",
+    "domain": "corpfin",
+    "tier": "reference",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "13"
+        ],
+        "primary": true
+      }
+    ]
+  },
+  "market-efficiency": {
+    "title": "Market Efficiency (EMH Forms)",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "11"
+        ],
+        "primary": true
+      }
+    ]
+  },
+  "black-scholes": {
+    "title": "Black-Scholes Option Pricing",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "15"
+        ],
+        "primary": true
+      },
+      {
+        "book": "natenberg",
+        "chapters": [
+          "5"
+        ]
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "21"
+        ]
+      }
+    ]
+  },
+  "reformulated-bs": {
+    "title": "Reformulated Balance Sheet",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "penman",
+        "chapters": [
+          "8"
+        ],
+        "primary": true
+      },
+      {
+        "book": "easton",
+        "chapters": [
+          "Mod. 3"
+        ]
+      }
+    ]
+  },
+  "dupont": {
+    "title": "DuPont Analysis",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "easton",
+        "chapters": [
+          "Mod. 5"
+        ],
+        "primary": true
+      },
+      {
+        "book": "penman",
+        "chapters": [
+          "11"
+        ]
+      }
+    ]
+  },
+  "entity-choice": {
+    "title": "Entity Choice (C-Corp, S-Corp, LLC, Partnership)",
+    "domain": "tax",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "scholes-wolfson",
+        "chapters": [
+          "4",
+          "5"
+        ],
+        "primary": true
+      }
+    ]
+  },
+  "tax-shield": {
+    "title": "Tax Shields and After-Tax Cost of Debt",
+    "domain": "tax",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "scholes-wolfson",
+        "chapters": [
+          "4"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "var": {
+    "title": "Value at Risk (VaR)",
+    "domain": "risk",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "22"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "5"
+        ]
+      }
+    ]
+  },
+  "inflation": {
+    "title": "Real vs. Nominal Returns",
+    "domain": "macro",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "5"
+        ],
+        "primary": true
+      }
+    ]
+  }
+}

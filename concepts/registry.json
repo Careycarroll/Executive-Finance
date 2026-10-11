@@ -1,4 +1,161 @@
 {
   "version": "1.0.0",
-  "concepts": []
+  "concepts": [
+    {
+      "id": "tvm",
+      "domain": "corpfin",
+      "title": "Time Value of Money",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["2"], "primary": true },
+        { "book": "bodie", "chapters": ["5"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/tvm.md",
+      "related": ["black-scholes", "inflation", "tax-shield"]
+    },
+    {
+      "id": "dividend-policy",
+      "domain": "corpfin",
+      "title": "Dividend Policy and Payout",
+      "tier": "reference",
+      "sources": [
+        { "book": "hawawini", "chapters": ["13"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/dividend-policy.md",
+      "related": ["tvm", "entity-choice"]
+    },
+    {
+      "id": "market-efficiency",
+      "domain": "invest",
+      "title": "Market Efficiency (EMH Forms)",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["11"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/market-efficiency.md",
+      "related": ["black-scholes"]
+    },
+    {
+      "id": "black-scholes",
+      "domain": "deriv",
+      "title": "Black-Scholes Option Pricing",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["15"], "primary": true },
+        { "book": "natenberg", "chapters": ["5"] },
+        { "book": "bodie", "chapters": ["21"] }
+      ],
+      "template": "interactive",
+      "component": "sensitivity-panel",
+      "defaults": {
+        "spot": 100,
+        "strike": 100,
+        "rate": 0.05,
+        "vol": 0.20,
+        "time": 1.0
+      },
+      "examples": [
+        {
+          "label": "At-the-Money 1Y",
+          "config": { "spot": 100, "strike": 100, "rate": 0.05, "vol": 0.20, "time": 1.0 }
+        },
+        {
+          "label": "Deep In-the-Money",
+          "config": { "spot": 120, "strike": 100, "rate": 0.05, "vol": 0.20, "time": 0.5 }
+        },
+        {
+          "label": "High Volatility Spike",
+          "config": { "spot": 100, "strike": 100, "rate": 0.05, "vol": 0.60, "time": 0.25 }
+        }
+      ],
+      "prose_ref": "concepts/prose/black-scholes.md",
+      "related": ["tvm", "var"]
+    },
+    {
+      "id": "reformulated-bs",
+      "domain": "fsa",
+      "title": "Reformulated Balance Sheet",
+      "tier": "core",
+      "sources": [
+        { "book": "penman", "chapters": ["8"], "primary": true },
+        { "book": "easton", "chapters": ["Mod. 3"] }
+      ],
+      "template": "interactive",
+      "component": "fs-reformulator",
+      "defaults": {
+        "operatingAssets": 1000,
+        "operatingLiabilities": 300,
+        "financialLiabilities": 400,
+        "financialAssets": 50
+      },
+      "prose_ref": "concepts/prose/reformulated-bs.md",
+      "related": ["dupont"]
+    },
+    {
+      "id": "dupont",
+      "domain": "fsa",
+      "title": "DuPont Analysis",
+      "tier": "core",
+      "sources": [
+        { "book": "easton", "chapters": ["Mod. 5"], "primary": true },
+        { "book": "penman", "chapters": ["11"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/dupont.md",
+      "related": ["reformulated-bs"]
+    },
+    {
+      "id": "entity-choice",
+      "domain": "tax",
+      "title": "Entity Choice (C-Corp, S-Corp, LLC, Partnership)",
+      "tier": "core",
+      "sources": [
+        { "book": "scholes-wolfson", "chapters": ["4", "5"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/entity-choice.md",
+      "related": ["tax-shield"]
+    },
+    {
+      "id": "tax-shield",
+      "domain": "tax",
+      "title": "Tax Shields and After-Tax Cost of Debt",
+      "tier": "core",
+      "sources": [
+        { "book": "scholes-wolfson", "chapters": ["4"], "primary": true },
+        { "book": "hawawini", "chapters": ["12"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/tax-shield.md",
+      "related": ["entity-choice", "tvm"]
+    },
+    {
+      "id": "var",
+      "domain": "risk",
+      "title": "Value at Risk (VaR)",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["22"], "primary": true },
+        { "book": "bodie", "chapters": ["5"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/var.md",
+      "related": ["black-scholes"]
+    },
+    {
+      "id": "inflation",
+      "domain": "macro",
+      "title": "Real vs. Nominal Returns",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["5"], "primary": true }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/inflation.md",
+      "related": ["tvm"]
+    }
+  ]
 }

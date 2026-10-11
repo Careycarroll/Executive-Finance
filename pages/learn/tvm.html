@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Time Value of Money — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--corpfin">corpfin</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Time Value of Money</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Gabriel Hawawini Ch. 2</span>
+          <span class="concept-hero__citation-secondary">· also: Zvi Bodie Ch. 5</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>A dollar received today is worth more than a dollar received tomorrow because a dollar today can be invested to earn a positive return, and because inflation erodes future purchasing power. Every valuation model across corporate finance and investments is built on this foundation: converting cash flows across disparate points in time into a common denominator today.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="PV = \sum_{t=1}^{T} \frac{CF_t}{(1 + r)^t}">
+            PV = \sum_{t=1}^{T} \frac{CF_t}{(1 + r)^t}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>PV</strong>: Present Value — the current worth of a future stream of cash flows discounted at rate $r$.</li>
+<li><strong>CF_t</strong>: Cash Flow at time $t$ — the nominal dollar amount expected at period $t$.</li>
+<li><strong>r</strong>: Discount Rate / Opportunity Cost of Capital — the expected rate of return for an investment of equivalent risk.</li>
+<li><strong>t</strong>: Period index ($1, 2, \dots, T$).</li>
+<li><strong>T</strong>: Terminal period of the horizon.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>Suppose an investment promises to pay $1,000 in 1 year, $2,000 in 2 years, and $3,000 in 3 years. If the relevant opportunity cost of capital is 8% ($r = 0.08$):</p>
+<ul>
+<li>$PV_1 = \frac{1000}{1.08^1} = $925.93$</li>
+<li>$PV_2 = \frac{2000}{1.08^2} = $1,714.68$</li>
+<li>$PV_3 = \frac{3000}{1.08^3} = $2,381.50$</li>
+<li><strong>Total PV</strong> $= 925.93 + 1714.68 + 2381.50 = $5,022.11$</li>
+</ul>
+<p>If the asset is offered for less than $5,022.11 today, it generates positive economic net present value (NPV).</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Whenever comparing capital allocations, pricing securities (bonds, annuities, mortgages), or analyzing capital expenditure decisions.</li>
+<li><strong>When not to use / Caveats:</strong> Do not use a constant single discount rate $r$ when the term structure of interest rates is sharply upward-sloping or inverted; use tenor-specific spot rates $\left(r_t\right)$ or forward rates instead.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Always remember: discounting is division by $(1+r)^t$, compounding is multiplication by $(1+r)^t$. If you ever find yourself struggling to build intuition on complex structured products or exotic debt schedules, collapse the problem back into discrete cash flow streams and discount them period by period.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/black-scholes.html" class="related-chip">
+          <span>Black-Scholes Option Pricing</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/inflation.html" class="related-chip">
+          <span>Real vs. Nominal Returns</span>
+          <span class="badge badge-domain--macro" style="font-size: 0.65rem; padding: 1px 5px;">macro</span>
+        </a>
+
+        <a href="/pages/learn/tax-shield.html" class="related-chip">
+          <span>Tax Shields and After-Tax Cost of Debt</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

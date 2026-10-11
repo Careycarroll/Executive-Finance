@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Black-Scholes Option Pricing — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Black-Scholes Option Pricing</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 15</span>
+          <span class="concept-hero__citation-secondary">· also: Sheldon Natenberg Ch. 5 · Zvi Bodie Ch. 21</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The Black-Scholes-Merton model prices European options by constructing a continuously rebalanced, risk-free replicating portfolio of the underlying stock and a cash borrowing. Because this delta-hedged portfolio has zero exposure to infinitesimal price movements, it must earn the risk-free rate to prevent arbitrage. The option price depends on five variables: spot price, strike price, risk-free rate, time to maturity, and volatility. Noticeably absent: the expected growth rate (drift) of the underlying stock.</p>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;spot&quot;:100,&quot;strike&quot;:100,&quot;rate&quot;:0.05,&quot;vol&quot;:0.2,&quot;time&quot;:1}">At-the-Money 1Y</button>
+<button type="button" class="preset-btn" data-config="{&quot;spot&quot;:120,&quot;strike&quot;:100,&quot;rate&quot;:0.05,&quot;vol&quot;:0.2,&quot;time&quot;:0.5}">Deep In-the-Money</button>
+<button type="button" class="preset-btn" data-config="{&quot;spot&quot;:100,&quot;strike&quot;:100,&quot;rate&quot;:0.05,&quot;vol&quot;:0.6,&quot;time&quot;:0.25}">High Volatility Spike</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="sensitivity-panel" data-defaults="{&quot;spot&quot;:100,&quot;strike&quot;:100,&quot;rate&quot;:0.05,&quot;vol&quot;:0.2,&quot;time&quot;:1}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="C = S_0 N(d_1) - K e^{-r T} N(d_2)">
+              C = S_0 N(d_1) - K e^{-r T} N(d_2)
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>C</strong>: European Call Option Price.</li>
+<li><strong>S_0</strong>: Current Spot Price of the underlying asset.</li>
+<li><strong>K</strong>: Strike Price of the option.</li>
+<li><strong>r</strong>: Continuously compounded annual risk-free interest rate.</li>
+<li><strong>T</strong>: Time to expiration in years.</li>
+<li><strong>N(x)</strong>: Cumulative standard normal distribution function $\Phi(x)$.</li>
+<li><strong>d_1</strong>: $\frac{\ln(S_0 / K) + (r + \frac{1}{2}\sigma^2)T}{\sigma \sqrt{T}}$</li>
+<li><strong>d_2</strong>: $d_1 - \sigma \sqrt{T}$</li>
+<li><strong>\sigma</strong>: Volatility of logarithmic returns of the underlying asset.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>The genius of Black-Scholes is <em>risk-neutral pricing</em>. You do not need to estimate the subjective expected return of the stock because you can hedge away the underlying risk using Delta shares $N(d_1)$. In practice, realized returns have fat tails (jump risk) and implied volatility forms a smile/skew across strikes, violating log-normal diffusion assumptions, but BSM remains the ubiquitous quoting convention across global derivatives desks.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/tvm.html" class="related-chip">
+          <span>Time Value of Money</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/var.html" class="related-chip">
+          <span>Value at Risk (VaR)</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

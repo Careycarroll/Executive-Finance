@@ -3,25 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learn -- Executive Finance Interactive</title>
+  <title>Concepts Reference — Executive Finance</title>
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/components.css" />
-  <link rel="stylesheet" href="/css/learn.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body>
 
+  
   <header class="site-header" role="banner">
     <div class="site-header__inner">
       <a href="/" class="site-header__logo">
-        <span>&#128200;</span>
+        <span>📈</span>
         <span>Executive Finance</span>
       </a>
-      <nav class="site-header__nav" role="navigation">
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
         <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
-        <a href="/pages/apply/" class="site-header__nav-link">Analyze</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
       </nav>
     </div>
   </header>
@@ -29,13 +33,221 @@
   <main>
     <section class="page__hero">
       <div class="container">
-        <h1 class="page__hero-title">All Chapters</h1>
-        <p class="page__hero-subtitle">Finance for Executives, 6th Edition -- 18 chapters</p>
+        <div class="page__hero-label">Interactive Reference</div>
+        <h1 class="page__hero-title">Concepts Library</h1>
+        <p class="page__hero-subtitle" style="max-width: 650px;">
+          Personal reference library covering corporate finance, valuation, investments, and derivatives.
+          Organized by concept, driven by interactive tools, with notes for future-me.
+        </p>
       </div>
     </section>
-    <section class="learn-section">
+
+    <section class="concept-content">
       <div class="container">
-        <div id="chapter-grid"></div>
+        
+    <div class="concept-filter-bar">
+      <div class="filter-group">
+        <span class="filter-group__label">Tier:</span>
+        <button type="button" class="filter-btn filter-btn--active" data-filter-type="tier" data-filter-value="all">All Tiers</button>
+        <button type="button" class="filter-btn" data-filter-type="tier" data-filter-value="core">Core Only</button>
+        <button type="button" class="filter-btn" data-filter-type="tier" data-filter-value="reference">Reference Only</button>
+      </div>
+      <div class="filter-group">
+        <span class="filter-group__label">Domain:</span>
+        <button type="button" class="filter-btn filter-btn--active" data-filter-type="domain" data-filter-value="all">All Domains</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="corpfin">Corporate Finance</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="invest">Investments</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="deriv">Derivatives</button>
+      </div>
+    </div>
+        
+      <section class="domain-section" data-domain="corpfin">
+        <div class="domain-section__header">
+          <h2 class="domain-section__title">
+            <span class="badge badge-domain--corpfin">corpfin</span>
+            <span>Corporate Finance & Foundations</span>
+          </h2>
+          <span class="domain-section__count">2 concepts</span>
+        </div>
+        <div class="concept-grid">
+          
+        <a href="/pages/learn/tvm.html" class="concept-card" data-tier="core">
+          <div class="concept-card__header">
+            <span class="badge badge-tier--core">core</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
+          </div>
+          <div class="concept-card__title">Time Value of Money</div>
+          <div class="concept-card__source">
+            Primary: <strong>Gabriel Hawawini Ch. 2</strong>
+          </div>
+        </a>
+
+        <a href="/pages/learn/dividend-policy.html" class="concept-card" data-tier="reference">
+          <div class="concept-card__header">
+            <span class="badge badge-tier--reference">reference</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
+          </div>
+          <div class="concept-card__title">Dividend Policy and Payout</div>
+          <div class="concept-card__source">
+            Primary: <strong>Gabriel Hawawini Ch. 13</strong>
+          </div>
+        </a>
+        </div>
+      </section>
+      <section class="domain-section" data-domain="fsa">
+        <div class="domain-section__header">
+          <h2 class="domain-section__title">
+            <span class="badge badge-domain--fsa">fsa</span>
+            <span>Financial Statement Analysis</span>
+          </h2>
+          <span class="domain-section__count">2 concepts</span>
+        </div>
+        <div class="concept-grid">
+          
+        <a href="/pages/learn/reformulated-bs.html" class="concept-card" data-tier="core">
+          <div class="concept-card__header">
+            <span class="badge badge-tier--core">core</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
+          </div>
+          <div class="concept-card__title">Reformulated Balance Sheet</div>
+          <div class="concept-card__source">
+            Primary: <strong>Stephen H. Penman Ch. 8</strong>
+          </div>
+        </a>
+
+        <a href="/pages/learn/dupont.html" class="concept-card" data-tier="core">
+          <div class="concept-card__header">
+            <span class="badge badge-tier--core">core</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
+          </div>
+          <div class="concept-card__title">DuPont Analysis</div>
+          <div class="concept-card__source">
+            Primary: <strong>Peter D. Easton Ch. Mod. 5</strong>
+          </div>
+        </a>
+        </div>
+      </section>
+      <section class="domain-section" data-domain="invest">
+        <div class="domain-section__header">
+          <h2 class="domain-section__title">
+            <span class="badge badge-domain--invest">invest</span>
+            <span>Investments & Fixed Income</span>
+          </h2>
+          <span class="domain-section__count">1 concept</span>
+        </div>
+        <div class="concept-grid">
+          
+        <a href="/pages/learn/market-efficiency.html" class="concept-card" data-tier="core">
+          <div class="concept-card__header">
+            <span class="badge badge-tier--core">core</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
+          </div>
+          <div class="concept-card__title">Market Efficiency (EMH Forms)</div>
+          <div class="concept-card__source">
+            Primary: <strong>Zvi Bodie Ch. 11</strong>
+          </div>
+        </a>
+        </div>
+      </section>
+      <section class="domain-section" data-domain="deriv">
+        <div class="domain-section__header">
+          <h2 class="domain-section__title">
+            <span class="badge badge-domain--deriv">deriv</span>
+            <span>Derivatives & Options</span>
+          </h2>
+          <span class="domain-section__count">1 concept</span>
+        </div>
+        <div class="concept-grid">
+          
+        <a href="/pages/learn/black-scholes.html" class="concept-card" data-tier="core">
+          <div class="concept-card__header">
+            <span class="badge badge-tier--core">core</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
+          </div>
+          <div class="concept-card__title">Black-Scholes Option Pricing</div>
+          <div class="concept-card__source">
+            Primary: <strong>John C. Hull Ch. 15</strong>
+          </div>
+        </a>
+        </div>
+      </section>
+      <section class="domain-section" data-domain="risk">
+        <div class="domain-section__header">
+          <h2 class="domain-section__title">
+            <span class="badge badge-domain--risk">risk</span>
+            <span>Risk Management</span>
+          </h2>
+          <span class="domain-section__count">1 concept</span>
+        </div>
+        <div class="concept-grid">
+          
+        <a href="/pages/learn/var.html" class="concept-card" data-tier="core">
+          <div class="concept-card__header">
+            <span class="badge badge-tier--core">core</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
+          </div>
+          <div class="concept-card__title">Value at Risk (VaR)</div>
+          <div class="concept-card__source">
+            Primary: <strong>John C. Hull Ch. 22</strong>
+          </div>
+        </a>
+        </div>
+      </section>
+      <section class="domain-section" data-domain="tax">
+        <div class="domain-section__header">
+          <h2 class="domain-section__title">
+            <span class="badge badge-domain--tax">tax</span>
+            <span>Business Taxation</span>
+          </h2>
+          <span class="domain-section__count">2 concepts</span>
+        </div>
+        <div class="concept-grid">
+          
+        <a href="/pages/learn/entity-choice.html" class="concept-card" data-tier="core">
+          <div class="concept-card__header">
+            <span class="badge badge-tier--core">core</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
+          </div>
+          <div class="concept-card__title">Entity Choice (C-Corp, S-Corp, LLC, Partnership)</div>
+          <div class="concept-card__source">
+            Primary: <strong>Myron Scholes Ch. 4, 5</strong>
+          </div>
+        </a>
+
+        <a href="/pages/learn/tax-shield.html" class="concept-card" data-tier="core">
+          <div class="concept-card__header">
+            <span class="badge badge-tier--core">core</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
+          </div>
+          <div class="concept-card__title">Tax Shields and After-Tax Cost of Debt</div>
+          <div class="concept-card__source">
+            Primary: <strong>Myron Scholes Ch. 4</strong>
+          </div>
+        </a>
+        </div>
+      </section>
+      <section class="domain-section" data-domain="macro">
+        <div class="domain-section__header">
+          <h2 class="domain-section__title">
+            <span class="badge badge-domain--macro">macro</span>
+            <span>Macro & Rates</span>
+          </h2>
+          <span class="domain-section__count">1 concept</span>
+        </div>
+        <div class="concept-grid">
+          
+        <a href="/pages/learn/inflation.html" class="concept-card" data-tier="core">
+          <div class="concept-card__header">
+            <span class="badge badge-tier--core">core</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
+          </div>
+          <div class="concept-card__title">Real vs. Nominal Returns</div>
+          <div class="concept-card__source">
+            Primary: <strong>Zvi Bodie Ch. 5</strong>
+          </div>
+        </a>
+        </div>
+      </section>
       </div>
     </section>
   </main>

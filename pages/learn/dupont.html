@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DuPont Analysis — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">DuPont Analysis</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Peter D. Easton Ch. Mod. 5</span>
+          <span class="concept-hero__citation-secondary">· also: Stephen H. Penman Ch. 11</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>DuPont analysis deconstructs Return on Equity (ROE) into operational efficiency, asset utilization, and financial leverage. Instead of evaluating ROE in a vacuum, DuPont isolates <em>how</em> management generated the return: by commanding strong profit margins, by rapidly turning over its asset base, or by gearing up with borrowed leverage.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="\text{ROE} = \left(\frac{\text{Net Income}}{\text{Sales}}\right) \times \left(\frac{\text{Sales}}{\text{Assets}}\right) \times \left(\frac{\text{Assets}}{\text{Equity}}\right)">
+            \text{ROE} = \left(\frac{\text{Net Income}}{\text{Sales}}\right) \times \left(\frac{\text{Sales}}{\text{Assets}}\right) \times \left(\frac{\text{Assets}}{\text{Equity}}\right)
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>Net Margin</strong> $\left(\frac{\text{Net Income}}{\text{Sales}}\right)$: Operating profitability; cents of profit kept per dollar of revenue.</li>
+<li><strong>Asset Turnover</strong> $\left(\frac{\text{Sales}}{\text{Assets}}\right)$: Capital efficiency; dollars of revenue generated per dollar of assets deployed.</li>
+<li><strong>Financial Leverage Multiplier</strong> $\left(\frac{\text{Assets}}{\text{Equity}}\right)$: Leverage degree; ratio of total assets funded per dollar of shareholder equity.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>Company A and Company B both report a 15% ROE:</p>
+<ul>
+<li><strong>Company A:</strong> Margin = 10%, Turnover = 1.5, Leverage = 1.0 $\implies \text{ROE} = 0.10 \times 1.5 \times 1.0 = 15%$. (High margin, zero debt).</li>
+<li><strong>Company B:</strong> Margin = 2%, Turnover = 1.5, Leverage = 5.0 $\implies \text{ROE} = 0.02 \times 1.5 \times 5.0 = 15%$. (Thin margin, heavy financial leverage).</li>
+</ul>
+<p>Company A generates high-quality organic returns; Company B is a highly levered low-margin operator vulnerable to debt rollover shocks.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Cross-sectional peer comparison and multi-year trend analysis to pinpoint the root driver of ROE inflections.</li>
+<li><strong>When not to use / Caveats:</strong> Standard DuPont blends operating assets and financial assets inside the denominator. For clean operating alpha analysis, use Penman&#39;s RNOA decomposition instead.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Leverage is a double-edged sword: it amplifies ROE on the way up, but drives insolvency on the way down. Never praise an increasing ROE until you verify that Asset Turnover or Profit Margin drove it, not the Equity Multiplier.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/reformulated-bs.html" class="related-chip">
+          <span>Reformulated Balance Sheet</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

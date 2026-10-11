@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Value at Risk (VaR) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--risk">risk</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Value at Risk (VaR)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 22</span>
+          <span class="concept-hero__citation-secondary">· also: Zvi Bodie Ch. 5</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Value at Risk (VaR) answers a concrete question for risk managers and regulators: <em>What is the maximum dollar loss expected over a given time horizon at a specified confidence level?</em> Rather than expressing risk as an abstract standard deviation ($\sigma$), VaR condenses multi-asset portfolio risk into a single currency metric that senior leadership can understand.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="\text{VaR}_{(1-\alpha), T} = \Pi_0 \times \left( - \mu \Delta t + z_{\alpha} \, \sigma \sqrt{\Delta t} \right)">
+            \text{VaR}_{(1-\alpha), T} = \Pi_0 \times \left( - \mu \Delta t + z_{\alpha} \, \sigma \sqrt{\Delta t} \right)
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>\Pi_0</strong>: Portfolio current market value.</li>
+<li><strong>\alpha</strong>: Significance level (e.g., $1%$, implying $99%$ confidence).</li>
+<li><strong>z_{\alpha}</strong>: Critical value from the standard normal distribution ($z_{0.05} \approx 1.645$, $z_{0.01} \approx 2.326$).</li>
+<li><strong>\sigma</strong>: Annualized portfolio volatility.</li>
+<li><strong>\Delta t</strong>: Holding period in years ($T$).</li>
+<li><strong>\mu</strong>: Expected return (frequently assumed to be zero over daily intervals).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A trading desk holds a $10,000,000 equity portfolio with annual volatility $\sigma = 20%$. What is the 1-day 99% VaR assuming 252 trading days per year?</p>
+<ul>
+<li><strong>1-Day Volatility:</strong> $\sigma_{1\text{d}} = 0.20 \times \sqrt{\frac{1}{252}} \approx 1.2599%$</li>
+<li><strong>99% Normal Quantile:</strong> $z = 2.326$</li>
+<li><strong>1-Day 99% VaR:</strong> $$10,000,000 \times (2.326 \times 0.012599) = $293,053$</li>
+</ul>
+<p>There is only a 1% chance that the desk loses more than $293,053 on any given day under normal conditions.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Regulatory capital requirements (Basel accords), daily limit-setting, and risk monitoring.</li>
+<li><strong>When not to use / Caveats:</strong> VaR is completely blind to tail shape beyond the cutoff percentile! It tells you <em>if</em> you lose more than $293k, but not <em>how much</em> (could be $300k or $5M). For tail severity, use Expected Shortfall (CVaR).</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>David Li&#39;s Gaussian copula and standard parametric VaR failed in 2008 because correlations spike toward 1.0 during liquidity crises and real-world returns have fat tails. Always pair VaR with historical stress testing.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/black-scholes.html" class="related-chip">
+          <span>Black-Scholes Option Pricing</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

@@ -4,7 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "generate": "node scripts/generate-pages.js",
+    "predev": "npm run generate",
     "dev": "vite",
+    "prebuild": "npm run generate",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
@@ -21,7 +24,8 @@
     "vitest": "^4.1.10"
   },
   "dependencies": {
-    "katex": "^0.16.45"
+    "katex": "^0.16.45",
+    "marked": "^18.1.0"
   },
   "description": "Interactive learning companion for Finance for Executives 6th Edition"
 }

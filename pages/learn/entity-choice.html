@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entity Choice (C-Corp, S-Corp, LLC, Partnership) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--tax">tax</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Entity Choice (C-Corp, S-Corp, LLC, Partnership)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Myron Scholes Ch. 4, 5</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Entity Choice (C-Corp, S-Corp, LLC, Partnership)</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><ul>
+<li><strong>C-Corporation:</strong> Separate legal and tax taxpayer. Entity pays corporate income tax ($t_c = 21%$ federal). Dividends and share repurchases pay capital gains/qualified dividend rates ($t_{cg} \le 20% + \text{NIIT}$). Double tax, but allows Qualified Small Business Stock (QSBS / Section 1202) capital gains exemptions and institutional VC investment.</li>
+<li><strong>S-Corporation:</strong> Pass-through tax status with corporate limited liability. Avoids entity-level double tax. Strict statutory caps: maximum 100 shareholders, only US individuals/trusts, only one class of stock permitted (disqualifies institutional preferred equity).</li>
+<li><strong>LLC / Partnership:</strong> Pass-through flexibility. Profits and losses allocate according to the operating agreement, not rigid share count. Substantial flexibility for debt basis adjustments (Section 752).</li>
+</ul>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Myth 1: &quot;Pass-through entities always result in lower total tax than C-corps.&quot;</strong><br><em>Reality:</em> If high-growth business profits are 100% retained and reinvested inside the entity rather than distributed, the 21% flat corporate tax rate can be significantly lower than high personal marginal tax brackets (up to 37% + state).</li>
+<li><strong>Myth 2: &quot;An LLC cannot issue equity to venture capitalists.&quot;</strong><br><em>Reality:</em> It can, but standard institutional VCs typically mandate converting to a Delaware C-Corp prior to Series A funding to avoid pass-through tax filing complexities for tax-exempt LP investors.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Always remember the Scholes-Wolfson three-way rule for tax planning: Effective tax planning considers taxes to <strong>all parties</strong>, <strong>all taxes</strong> (explicit income, payroll, state, implicit asset prices), and <strong>all costs</strong> (non-tax organizational and agency costs).</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/tax-shield.html" class="related-chip">
+          <span>Tax Shields and After-Tax Cost of Debt</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
