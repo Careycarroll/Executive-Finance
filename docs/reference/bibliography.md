@@ -19,6 +19,7 @@ under `sources[].book`.
 | easton          | Financial Statement Analysis and Valuation          | Easton                            | —       | 9781618531049 | FSA + valuation (applied)      |
 | lundholm-sloan  | Equity Valuation and Analysis w/ eVal               | Lundholm & Sloan                  | —       | 9780073526898 | Equity valuation, modeling     |
 | scholes-wolfson | Taxes and Business Strategy                         | Scholes, Wolfson, Erickson et al. | —       | 9781618533210 | Business tax                   |
+| kaplan-anderson | Time-Driven Activity-Based Costing                  | Kaplan & Anderson                 | —       | 9781422101711 | Strategic profitability & TDABC|
 
 ## Notes on Selection
 

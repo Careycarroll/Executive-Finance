@@ -156,6 +156,19 @@
       "template": "formula",
       "prose_ref": "concepts/prose/inflation.md",
       "related": ["tvm"]
+    },
+    {
+      "id": "whale-curve",
+      "domain": "fsa",
+      "title": "Customer Profitability and the Whale Curve",
+      "tier": "core",
+      "sources": [
+        { "book": "kaplan-anderson", "chapters": ["5"], "primary": true },
+        { "book": "easton", "chapters": ["Mod. 4"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/whale-curve.md",
+      "related": ["dupont", "reformulated-bs"]
     }
   ]
 }

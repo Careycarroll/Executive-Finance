@@ -45,6 +45,7 @@ Book IDs match `docs/reference/bibliography.md`.
 | lease-accounting | easton Mod. 10 | — |
 | stock-comp | easton Mod. 9 | — |
 | deferred-tax-fsa | easton Mod. 10 | scholes-wolfson Ch. 3 |
+| whale-curve | kaplan-anderson Ch. 5 | easton Mod. 4 |
 
 ## Valuation
 

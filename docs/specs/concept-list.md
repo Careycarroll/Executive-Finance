@@ -59,6 +59,7 @@ The master list of concepts the app covers. Each concept becomes one entry in
 | lease-accounting | Lease accounting | Reference | Easton |
 | stock-comp | Stock-based compensation | Reference | Easton |
 | deferred-tax-fsa | Deferred taxes on the financial statements | Reference | Easton |
+| whale-curve | Customer profitability and the whale curve | Core | Kaplan/Anderson |
 
 ## 4. Valuation (fsa)
 

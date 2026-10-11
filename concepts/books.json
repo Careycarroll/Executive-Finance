@@ -92,6 +92,15 @@
       "domains": ["tax"]
     },
     {
+      "id": "kaplan-anderson",
+      "title": "Time-Driven Activity-Based Costing",
+      "authors": ["Robert S. Kaplan", "Steven R. Anderson"],
+      "edition": null,
+      "isbn": "9781422101711",
+      "role": "Strategic profitability & capacity costing",
+      "domains": ["fsa", "corpfin"]
+    },
+    {
       "id": "external",
       "title": "External sources",
       "authors": [],

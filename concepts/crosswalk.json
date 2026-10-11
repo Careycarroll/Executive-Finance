@@ -181,5 +181,25 @@
         "primary": true
       }
     ]
+  },
+  "whale-curve": {
+    "title": "Customer Profitability and the Whale Curve",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "kaplan-anderson",
+        "chapters": [
+          "5"
+        ],
+        "primary": true
+      },
+      {
+        "book": "easton",
+        "chapters": [
+          "Mod. 4"
+        ]
+      }
+    ]
   }
 }
