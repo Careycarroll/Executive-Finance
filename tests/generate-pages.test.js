@@ -4,6 +4,8 @@ import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
+import { execSync } from 'node:child_process';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..');
 
@@ -14,6 +16,7 @@ describe('generate-pages output verification', () => {
   let registry;
 
   beforeAll(() => {
+    execSync('node scripts/generate-pages.js', { cwd: repoRoot });
     registry = loadJson('concepts/registry.json');
   });
 
@@ -66,3 +69,4 @@ describe('generate-pages output verification', () => {
     expect(bibHtml).toContain('Financial Statement Analysis and Security Valuation');
   });
 });
+

@@ -58,5 +58,19 @@
         ]
       }
     ]
+  },
+  "dividend-policy": {
+    "title": "Dividend Policy and Payout",
+    "domain": "corpfin",
+    "tier": "reference",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "13"
+        ],
+        "primary": true
+      }
+    ]
   }
 }

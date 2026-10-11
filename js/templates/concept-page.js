@@ -3,8 +3,9 @@
  * Handles collapsible drawers, KaTeX rendering, and tool mounting.
  */
 import katex from 'katex';
+import renderMathInElement from 'katex/contrib/auto-render';
 
-// Render KaTeX for any element with data-katex or .concept-formula-katex
+// Render KaTeX for explicit elements and inline math in markdown prose
 function renderMath() {
   document.querySelectorAll('[data-katex]').forEach(el => {
     const tex = el.getAttribute('data-katex');
@@ -18,6 +19,24 @@ function renderMath() {
       console.warn('KaTeX render error:', err);
     }
   });
+
+  const content = document.querySelector('.concept-content');
+  if (content) {
+    try {
+      renderMathInElement(content, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\[', right: '\\]', display: true }
+        ],
+        ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+        throwOnError: false
+      });
+    } catch (err) {
+      console.warn('KaTeX auto-render error:', err);
+    }
+  }
 }
 
 // Collapsible sections

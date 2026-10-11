@@ -20,3 +20,4 @@ EMH is historically categorized into three nested forms based on the definition 
 
 ## Notes for future-me
 Gross alpha vs. Net alpha is the crucial real-world distinction (Grossman-Stiglitz paradox). If markets were 100% efficient, nobody would spend money collecting information; but if nobody collects information, markets cannot be efficient. Markets are therefore *near-efficient* up to the cost of gathering and processing information and executing trades.
+

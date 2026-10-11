@@ -61,6 +61,18 @@
       ],
       "prose_ref": "concepts/prose/black-scholes.md",
       "related": ["tvm"]
+    },
+    {
+      "id": "dividend-policy",
+      "domain": "corpfin",
+      "title": "Dividend Policy and Payout",
+      "tier": "reference",
+      "sources": [
+        { "book": "hawawini", "chapters": ["13"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/dividend-policy.md",
+      "related": ["tvm"]
     }
   ]
 }

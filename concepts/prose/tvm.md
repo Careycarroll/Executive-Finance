@@ -28,3 +28,4 @@ If the asset is offered for less than \$5,022.11 today, it generates positive ec
 
 ## Notes for future-me
 Always remember: discounting is division by $(1+r)^t$, compounding is multiplication by $(1+r)^t$. If you ever find yourself struggling to build intuition on complex structured products or exotic debt schedules, collapse the problem back into discrete cash flow streams and discount them period by period.
+

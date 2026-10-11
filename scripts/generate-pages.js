@@ -428,7 +428,7 @@ function generateIndexHtml() {
       const citations = formatCitations(c.sources);
       const tierBadge = `<span class="badge ${c.tier === 'core' ? 'badge-tier--core' : 'badge-tier--reference'}">${c.tier}</span>`;
       return `
-        <a href="/pages/learn/${c.id}.html" class="concept-card">
+        <a href="/pages/learn/${c.id}.html" class="concept-card" data-tier="${c.tier}">
           <div class="concept-card__header">
             ${tierBadge}
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">${c.template}</span>
@@ -441,7 +441,7 @@ function generateIndexHtml() {
     }).join('\n');
 
     sectionsHtml += `
-      <section class="domain-section">
+      <section class="domain-section" data-domain="${domain}">
         <div class="domain-section__header">
           <h2 class="domain-section__title">
             <span class="badge badge-domain--${domain}">${domain}</span>
@@ -454,6 +454,23 @@ function generateIndexHtml() {
         </div>
       </section>`;
   }
+
+  const filterBarHtml = `
+    <div class="concept-filter-bar">
+      <div class="filter-group">
+        <span class="filter-group__label">Tier:</span>
+        <button type="button" class="filter-btn filter-btn--active" data-filter-type="tier" data-filter-value="all">All Tiers</button>
+        <button type="button" class="filter-btn" data-filter-type="tier" data-filter-value="core">Core Only</button>
+        <button type="button" class="filter-btn" data-filter-type="tier" data-filter-value="reference">Reference Only</button>
+      </div>
+      <div class="filter-group">
+        <span class="filter-group__label">Domain:</span>
+        <button type="button" class="filter-btn filter-btn--active" data-filter-type="domain" data-filter-value="all">All Domains</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="corpfin">Corporate Finance</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="invest">Investments</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="deriv">Derivatives</button>
+      </div>
+    </div>`;
 
   if (registry.concepts.length === 0) {
     sectionsHtml = `
@@ -498,12 +515,13 @@ function generateIndexHtml() {
 
     <section class="concept-content">
       <div class="container">
+        ${filterBarHtml}
         ${sectionsHtml}
       </div>
     </section>
   </main>
 
-  <script type="module" src="/js/core/main.js"></script>
+  <script type="module" src="/js/learn/index.js"></script>
 </body>
 </html>`;
 }
@@ -611,3 +629,4 @@ writeFileSync(resolve(refDir, 'bibliography.html'), generateBibliographyHtml(), 
 generateCrosswalkJson();
 
 console.log(`✅ Generated ${generatedCount} concept page(s), learn index, bibliography, and crosswalk.json.`);
+

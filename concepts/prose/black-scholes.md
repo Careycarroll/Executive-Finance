@@ -19,3 +19,4 @@ C = S_0 N(d_1) - K e^{-r T} N(d_2)
 
 ## Notes for future-me
 The genius of Black-Scholes is *risk-neutral pricing*. You do not need to estimate the subjective expected return of the stock because you can hedge away the underlying risk using Delta shares $N(d_1)$. In practice, realized returns have fat tails (jump risk) and implied volatility forms a smile/skew across strikes, violating log-normal diffusion assumptions, but BSM remains the ubiquitous quoting convention across global derivatives desks.
+

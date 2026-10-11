@@ -45,17 +45,33 @@
     <section class="concept-content">
       <div class="container">
         
-      <section class="domain-section">
+    <div class="concept-filter-bar">
+      <div class="filter-group">
+        <span class="filter-group__label">Tier:</span>
+        <button type="button" class="filter-btn filter-btn--active" data-filter-type="tier" data-filter-value="all">All Tiers</button>
+        <button type="button" class="filter-btn" data-filter-type="tier" data-filter-value="core">Core Only</button>
+        <button type="button" class="filter-btn" data-filter-type="tier" data-filter-value="reference">Reference Only</button>
+      </div>
+      <div class="filter-group">
+        <span class="filter-group__label">Domain:</span>
+        <button type="button" class="filter-btn filter-btn--active" data-filter-type="domain" data-filter-value="all">All Domains</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="corpfin">Corporate Finance</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="invest">Investments</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="deriv">Derivatives</button>
+      </div>
+    </div>
+        
+      <section class="domain-section" data-domain="corpfin">
         <div class="domain-section__header">
           <h2 class="domain-section__title">
             <span class="badge badge-domain--corpfin">corpfin</span>
             <span>Corporate Finance & Foundations</span>
           </h2>
-          <span class="domain-section__count">1 concept</span>
+          <span class="domain-section__count">2 concepts</span>
         </div>
         <div class="concept-grid">
           
-        <a href="/pages/learn/tvm.html" class="concept-card">
+        <a href="/pages/learn/tvm.html" class="concept-card" data-tier="core">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -65,9 +81,20 @@
             Primary: <strong>Gabriel Hawawini Ch. 2</strong>
           </div>
         </a>
+
+        <a href="/pages/learn/dividend-policy.html" class="concept-card" data-tier="reference">
+          <div class="concept-card__header">
+            <span class="badge badge-tier--reference">reference</span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
+          </div>
+          <div class="concept-card__title">Dividend Policy and Payout</div>
+          <div class="concept-card__source">
+            Primary: <strong>Gabriel Hawawini Ch. 13</strong>
+          </div>
+        </a>
         </div>
       </section>
-      <section class="domain-section">
+      <section class="domain-section" data-domain="invest">
         <div class="domain-section__header">
           <h2 class="domain-section__title">
             <span class="badge badge-domain--invest">invest</span>
@@ -77,7 +104,7 @@
         </div>
         <div class="concept-grid">
           
-        <a href="/pages/learn/market-efficiency.html" class="concept-card">
+        <a href="/pages/learn/market-efficiency.html" class="concept-card" data-tier="core">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -89,7 +116,7 @@
         </a>
         </div>
       </section>
-      <section class="domain-section">
+      <section class="domain-section" data-domain="deriv">
         <div class="domain-section__header">
           <h2 class="domain-section__title">
             <span class="badge badge-domain--deriv">deriv</span>
@@ -99,7 +126,7 @@
         </div>
         <div class="concept-grid">
           
-        <a href="/pages/learn/black-scholes.html" class="concept-card">
+        <a href="/pages/learn/black-scholes.html" class="concept-card" data-tier="core">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -115,6 +142,6 @@
     </section>
   </main>
 
-  <script type="module" src="/js/core/main.js"></script>
+  <script type="module" src="/js/learn/index.js"></script>
 </body>
 </html>
