@@ -5,16 +5,24 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 function getPageInputs() {
   const inputs = { main: resolve(__dirname, 'index.html') };
-  const dirs = ['pages/learn', 'pages/apply'];
-  dirs.forEach(dir => {
+  function scan(dir) {
     if (!existsSync(dir)) return;
-    readdirSync(dir)
-      .filter(f => f.endsWith('.html'))
-      .forEach(f => {
-        const name = dir.replace('pages/', '').replace('/', '-') + '-' + f.replace('.html', '');
-        inputs[name] = resolve(__dirname, dir, f);
-      });
-  });
+    const entries = readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        scan(fullPath);
+      } else if (entry.isFile() && entry.name.endsWith('.html')) {
+        const key = fullPath
+          .replace(resolve(__dirname), '')
+          .replace(/^[\\/]/, '')
+          .replace(/\.html$/, '')
+          .replace(/[\\/]/g, '-');
+        inputs[key] = fullPath;
+      }
+    }
+  }
+  scan(resolve(__dirname, 'pages'));
   return inputs;
 }
 

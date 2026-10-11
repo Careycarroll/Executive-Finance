@@ -1,4 +1,66 @@
 {
   "version": "1.0.0",
-  "concepts": []
+  "concepts": [
+    {
+      "id": "tvm",
+      "domain": "corpfin",
+      "title": "Time Value of Money",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["2"], "primary": true },
+        { "book": "bodie", "chapters": ["5"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/tvm.md",
+      "related": ["black-scholes"]
+    },
+    {
+      "id": "market-efficiency",
+      "domain": "invest",
+      "title": "Market Efficiency (EMH Forms)",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["11"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/market-efficiency.md",
+      "related": []
+    },
+    {
+      "id": "black-scholes",
+      "domain": "deriv",
+      "title": "Black-Scholes Option Pricing",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["15"], "primary": true },
+        { "book": "natenberg", "chapters": ["5"] },
+        { "book": "bodie", "chapters": ["21"] }
+      ],
+      "template": "interactive",
+      "component": "sensitivity-panel",
+      "defaults": {
+        "spot": 100,
+        "strike": 100,
+        "rate": 0.05,
+        "vol": 0.20,
+        "time": 1.0
+      },
+      "examples": [
+        {
+          "label": "At-the-Money 1Y",
+          "config": { "spot": 100, "strike": 100, "rate": 0.05, "vol": 0.20, "time": 1.0 }
+        },
+        {
+          "label": "Deep In-the-Money",
+          "config": { "spot": 120, "strike": 100, "rate": 0.05, "vol": 0.20, "time": 0.5 }
+        },
+        {
+          "label": "High Volatility Spike",
+          "config": { "spot": 100, "strike": 100, "rate": 0.05, "vol": 0.60, "time": 0.25 }
+        }
+      ],
+      "prose_ref": "concepts/prose/black-scholes.md",
+      "related": ["tvm"]
+    }
+  ]
 }

@@ -1,0 +1,62 @@
+{
+  "tvm": {
+    "title": "Time Value of Money",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "2"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "5"
+        ]
+      }
+    ]
+  },
+  "market-efficiency": {
+    "title": "Market Efficiency (EMH Forms)",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "11"
+        ],
+        "primary": true
+      }
+    ]
+  },
+  "black-scholes": {
+    "title": "Black-Scholes Option Pricing",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "15"
+        ],
+        "primary": true
+      },
+      {
+        "book": "natenberg",
+        "chapters": [
+          "5"
+        ]
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "21"
+        ]
+      }
+    ]
+  }
+}
