@@ -73,6 +73,26 @@
       }
     ]
   },
+  "strategy-spread-vertical": {
+    "title": "Vertical Spreads (Bull and Bear Spreads)",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "natenberg",
+        "chapters": [
+          "11"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hull",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
   "reformulated-bs": {
     "title": "Reformulated Balance Sheet",
     "domain": "fsa",

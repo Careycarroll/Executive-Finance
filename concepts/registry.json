@@ -10,7 +10,30 @@
         { "book": "hawawini", "chapters": ["2"], "primary": true },
         { "book": "bodie", "chapters": ["5"] }
       ],
-      "template": "formula",
+      "template": "interactive",
+      "component": "cash-flow-chart",
+      "defaults": {
+        "periods": 10,
+        "cash_flows": [-1000, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200],
+        "discount_rate": 0.10,
+        "growth_rate": 0.00,
+        "show_pv": true,
+        "show_cumulative": true
+      },
+      "examples": [
+        {
+          "label": "10-Year Annuity ($200/yr)",
+          "config": { "discount_rate": 0.10, "growth_rate": 0.00 }
+        },
+        {
+          "label": "High Discount Rate (18%)",
+          "config": { "discount_rate": 0.18, "growth_rate": 0.00 }
+        },
+        {
+          "label": "Growing Inflows (+5%/yr)",
+          "config": { "discount_rate": 0.10, "growth_rate": 0.05 }
+        }
+      ],
       "prose_ref": "concepts/prose/tvm.md",
       "related": ["black-scholes", "inflation", "tax-shield"]
     },
@@ -72,7 +95,66 @@
         }
       ],
       "prose_ref": "concepts/prose/black-scholes.md",
-      "related": ["tvm", "var"]
+      "related": ["tvm", "var", "strategy-spread-vertical"]
+    },
+    {
+      "id": "strategy-spread-vertical",
+      "domain": "deriv",
+      "title": "Vertical Spreads (Bull and Bear Spreads)",
+      "tier": "core",
+      "sources": [
+        { "book": "natenberg", "chapters": ["11"], "primary": true },
+        { "book": "hull", "chapters": ["12"] }
+      ],
+      "template": "interactive",
+      "component": "payoff-diagram",
+      "defaults": {
+        "spot": 100,
+        "legs": [
+          { "type": "call", "strike": 100, "premium": 5, "qty": 1 },
+          { "type": "call", "strike": 110, "premium": 2, "qty": -1 }
+        ],
+        "show_current_value": true,
+        "vol": 0.20,
+        "rate": 0.05,
+        "time_to_expiry": 0.25
+      },
+      "examples": [
+        {
+          "label": "Bull Call Spread (100/110)",
+          "config": {
+            "spot": 100,
+            "legs": [
+              { "type": "call", "strike": 100, "premium": 5, "qty": 1 },
+              { "type": "call", "strike": 110, "premium": 2, "qty": -1 }
+            ],
+            "time_to_expiry": 0.25
+          }
+        },
+        {
+          "label": "Bear Put Spread (100/90)",
+          "config": {
+            "spot": 100,
+            "legs": [
+              { "type": "put", "strike": 100, "premium": 5, "qty": 1 },
+              { "type": "put", "strike": 90, "premium": 2, "qty": -1 }
+            ],
+            "time_to_expiry": 0.25
+          }
+        },
+        {
+          "label": "Long Call (Single Leg)",
+          "config": {
+            "spot": 100,
+            "legs": [
+              { "type": "call", "strike": 100, "premium": 5, "qty": 1 }
+            ],
+            "time_to_expiry": 0.25
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/strategy-spread-vertical.md",
+      "related": ["black-scholes", "var"]
     },
     {
       "id": "reformulated-bs",
@@ -89,8 +171,45 @@
         "operatingAssets": 1000,
         "operatingLiabilities": 300,
         "financialLiabilities": 400,
-        "financialAssets": 50
+        "financialAssets": 50,
+        "operatingIncome": 140,
+        "netFinancialExpense": 24
       },
+      "examples": [
+        {
+          "label": "Standard Firm (Penman Golden)",
+          "config": {
+            "operatingAssets": 1000,
+            "operatingLiabilities": 300,
+            "financialLiabilities": 400,
+            "financialAssets": 50,
+            "operatingIncome": 140,
+            "netFinancialExpense": 24
+          }
+        },
+        {
+          "label": "High Operating Leverage",
+          "config": {
+            "operatingAssets": 1400,
+            "operatingLiabilities": 400,
+            "financialLiabilities": 600,
+            "financialAssets": 50,
+            "operatingIncome": 220,
+            "netFinancialExpense": 35
+          }
+        },
+        {
+          "label": "Net Cash / Negative NFO",
+          "config": {
+            "operatingAssets": 800,
+            "operatingLiabilities": 200,
+            "financialLiabilities": 100,
+            "financialAssets": 250,
+            "operatingIncome": 120,
+            "netFinancialExpense": 5
+          }
+        }
+      ],
       "prose_ref": "concepts/prose/reformulated-bs.md",
       "related": ["dupont"]
     },

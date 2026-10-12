@@ -63,7 +63,13 @@
 
       <div class="tool-mount-wrapper">
         
-        <div id="tool-mount" class="tool-mount-container" data-component="fs-reformulator" data-defaults="{&quot;operatingAssets&quot;:1000,&quot;operatingLiabilities&quot;:300,&quot;financialLiabilities&quot;:400,&quot;financialAssets&quot;:50}">
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;operatingAssets&quot;:1000,&quot;operatingLiabilities&quot;:300,&quot;financialLiabilities&quot;:400,&quot;financialAssets&quot;:50,&quot;operatingIncome&quot;:140,&quot;netFinancialExpense&quot;:24}">Standard Firm (Penman Golden)</button>
+<button type="button" class="preset-btn" data-config="{&quot;operatingAssets&quot;:1400,&quot;operatingLiabilities&quot;:400,&quot;financialLiabilities&quot;:600,&quot;financialAssets&quot;:50,&quot;operatingIncome&quot;:220,&quot;netFinancialExpense&quot;:35}">High Operating Leverage</button>
+<button type="button" class="preset-btn" data-config="{&quot;operatingAssets&quot;:800,&quot;operatingLiabilities&quot;:200,&quot;financialLiabilities&quot;:100,&quot;financialAssets&quot;:250,&quot;operatingIncome&quot;:120,&quot;netFinancialExpense&quot;:5}">Net Cash / Negative NFO</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="fs-reformulator" data-defaults="{&quot;operatingAssets&quot;:1000,&quot;operatingLiabilities&quot;:300,&quot;financialLiabilities&quot;:400,&quot;financialAssets&quot;:50,&quot;operatingIncome&quot;:140,&quot;netFinancialExpense&quot;:24}">
           <!-- Interactive tool mounts here -->
         </div>
       </div>

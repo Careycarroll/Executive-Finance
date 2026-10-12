@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vertical Spreads (Bull and Bear Spreads) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Vertical Spreads (Bull and Bear Spreads)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 11</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>A vertical spread involves buying and selling options of the same class (calls or puts) and same expiration date, but at different strike prices. Vertical spreads define both maximum profit and maximum risk up front. Instead of buying naked options and fighting relentless time decay (negative Theta) and volatility crush, a vertical spread finances a portion of the long option premium by selling a further out-of-the-money option.</p>
+<p>In a <strong>Bull Call Spread</strong>, you buy a lower strike call $K_1$ and sell a higher strike call $K_2$. You cap your upside above $K_2$ in exchange for a significantly reduced upfront net debit and lower breakeven hurdle. In a <strong>Bear Put Spread</strong>, you buy a higher strike put $K_2$ and sell a lower strike put $K_1$, profiting from moderate downside while capping risk to the net premium paid.</p>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;call&quot;,&quot;strike&quot;:100,&quot;premium&quot;:5,&quot;qty&quot;:1},{&quot;type&quot;:&quot;call&quot;,&quot;strike&quot;:110,&quot;premium&quot;:2,&quot;qty&quot;:-1}],&quot;time_to_expiry&quot;:0.25}">Bull Call Spread (100/110)</button>
+<button type="button" class="preset-btn" data-config="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;put&quot;,&quot;strike&quot;:100,&quot;premium&quot;:5,&quot;qty&quot;:1},{&quot;type&quot;:&quot;put&quot;,&quot;strike&quot;:90,&quot;premium&quot;:2,&quot;qty&quot;:-1}],&quot;time_to_expiry&quot;:0.25}">Bear Put Spread (100/90)</button>
+<button type="button" class="preset-btn" data-config="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;call&quot;,&quot;strike&quot;:100,&quot;premium&quot;:5,&quot;qty&quot;:1}],&quot;time_to_expiry&quot;:0.25}">Long Call (Single Leg)</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="payoff-diagram" data-defaults="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;call&quot;,&quot;strike&quot;:100,&quot;premium&quot;:5,&quot;qty&quot;:1},{&quot;type&quot;:&quot;call&quot;,&quot;strike&quot;:110,&quot;premium&quot;:2,&quot;qty&quot;:-1}],&quot;show_current_value&quot;:true,&quot;vol&quot;:0.2,&quot;rate&quot;:0.05,&quot;time_to_expiry&quot;:0.25}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\text{Max Profit (Debit Spread)} = (K_2 - K_1) - \text{Net Debit}$$
+$$\text{Max Loss} = \text{Net Debit Paid}$$
+$$\text{Breakeven (Bull Call)} = K_1 + \text{Net Debit}">
+              \text{Max Profit (Debit Spread)} = (K_2 - K_1) - \text{Net Debit}$$
+$$\text{Max Loss} = \text{Net Debit Paid}$$
+$$\text{Breakeven (Bull Call)} = K_1 + \text{Net Debit}
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>K_1</strong>: Lower strike price.</li>
+<li><strong>K_2</strong>: Higher strike price.</li>
+<li><strong>Net Debit</strong>: Upfront cost paid to establish the spread ($\text{Premium Paid} - \text{Premium Received}$).</li>
+<li><strong>Width</strong>: Spread width between strikes ($K_2 - K_1$).</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Directional betting with naked long options is a negative expected value game for most retail traders because implied volatility is systematically priced at a premium over realized volatility (the Volatility Risk Premium). Vertical spreads soften this drag. When implied volatility is high, vertical spreads are far more resilient to volatility crush than outright long calls or puts because the short leg is also short Vega, insulating your position against sudden IV collapse.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/black-scholes.html" class="related-chip">
+          <span>Black-Scholes Option Pricing</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/var.html" class="related-chip">
+          <span>Value at Risk (VaR)</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

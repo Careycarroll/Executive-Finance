@@ -5,7 +5,7 @@ Standard GAAP/IFRS balance sheets group assets and liabilities by liquidity (cur
 
 ## Structure
 $$\text{NOA} = \text{Operating Assets} - \text{Operating Liabilities}$$
-$$\text{NFO} = \text{Financial Assets} - \text{Financial Liabilities}$$
+$$\text{NFO} = \text{Financial Liabilities} - \text{Financial Assets}$$
 $$\text{Common Shareholders' Equity (CSE)} = \text{NOA} - \text{NFO}$$
 
 - **Operating Assets:** Cash needed for operations, Accounts Receivable, Inventory, PPE.

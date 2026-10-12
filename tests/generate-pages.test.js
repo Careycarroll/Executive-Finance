@@ -34,10 +34,10 @@ describe('generate-pages output verification', () => {
   });
 
   it('renders formula template with KaTeX math block', () => {
-    const tvmHtml = loadText('pages/learn/tvm.html');
-    expect(tvmHtml).toContain('data-katex=');
-    expect(tvmHtml).toContain('Variable Glossary');
-    expect(tvmHtml).toContain('Worked Numerical Example');
+    const dupontHtml = loadText('pages/learn/dupont.html');
+    expect(dupontHtml).toContain('data-katex=');
+    expect(dupontHtml).toContain('Variable Glossary');
+    expect(dupontHtml).toContain('Worked Numerical Example');
   });
 
   it('renders explainer template with overview and common misconceptions', () => {
@@ -52,6 +52,15 @@ describe('generate-pages output verification', () => {
     expect(bsHtml).toContain('data-component="sensitivity-panel"');
     expect(bsHtml).toContain('data-defaults=');
     expect(bsHtml).toContain('At-the-Money 1Y');
+
+    const tvmHtml = loadText('pages/learn/tvm.html');
+    expect(tvmHtml).toContain('data-component="cash-flow-chart"');
+
+    const spreadHtml = loadText('pages/learn/strategy-spread-vertical.html');
+    expect(spreadHtml).toContain('data-component="payoff-diagram"');
+
+    const penmanHtml = loadText('pages/learn/reformulated-bs.html');
+    expect(penmanHtml).toContain('data-component="fs-reformulator"');
   });
 
   it('generates domain-grouped learn index.html', () => {
