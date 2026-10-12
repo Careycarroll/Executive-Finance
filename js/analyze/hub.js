@@ -3,7 +3,12 @@
  */
 
 import { listSnapshots } from './snapshots.js';
-import { fetchSECData, parseUploadedCompanyFacts, resolveSECLinks } from './sec-api.js';
+import {
+  fetchSECData,
+  parseUploadedCompanyFacts,
+  parseUploadedIXBRLOrXML,
+  resolveSECLinks
+} from './sec-api.js';
 import { fetchStockData, getApiKeys, saveApiKey } from './api-manager.js';
 import {
   getActiveCompany,
@@ -124,14 +129,14 @@ export function mountTargetBanner(container, onChange) {
           </div>
 
           <div class="analyze-data-box">
-            <div class="analyze-data-box__title">3. Upload SEC <code>CIK.json</code> or Snapshot JSON</div>
+            <div class="analyze-data-box__title">3. Upload SEC Filing (<code>.json</code>, <code>.htm</code>, <code>.xml</code>)</div>
             <div class="analyze-data-box__desc">
-              Works 100% offline without a proxy: drop any SEC EDGAR <code>CIK##########.json</code> file or exported company JSON.
+              Upload SEC <code>CIK##########.json</code> (5-yr API), or in the SEC 10-K viewer click <strong>Menu &rarr; Open as HTML (<code>.htm</code>) / Open XBRL Instance (<code>.xml</code>)</strong>, save, and drop it here:
             </div>
-            <input type="file" accept=".json" id="upload-sec-json-input" class="analyze-input" style="width:100%; margin-bottom:8px;" />
+            <input type="file" accept=".json,.htm,.html,.xml" id="upload-sec-json-input" class="analyze-input" style="width:100%; margin-bottom:8px;" />
             <div class="analyze-inline-form" style="margin-bottom:6px;">
-              <input type="text" class="analyze-input" id="sec-cik-helper-input" placeholder="Ticker or CIK (e.g. NVDA, 0001045810)" />
-              <button type="button" class="btn btn--secondary btn--sm" id="sec-open-cik-json-btn" title="Open raw SEC XBRL CIK.json in a new tab to save and upload">
+              <input type="text" class="analyze-input" id="sec-cik-helper-input" placeholder="Paste SEC URL, Ticker (IQV), or CIK (0001478242)" />
+              <button type="button" class="btn btn--secondary btn--sm" id="sec-open-cik-json-btn" title="Open raw 5-year SEC XBRL CIK.json in a new tab to save (Cmd/Ctrl+S) and upload">
                 Get CIK.json &nearr;
               </button>
             </div>
@@ -248,14 +253,14 @@ export function mountTargetBanner(container, onChange) {
           window.open(res.edgarSearchUrl, '_blank', 'noopener,noreferrer');
           setStatus(
             query
-              ? `"${query.toUpperCase()}" isn't in the built-in shortcut list—opened SEC EDGAR Search so you can copy its 10-digit CIK and paste it above.`
+              ? `"${query.toUpperCase()}" isn't in the built-in shortcut list—opened SEC EDGAR Search so you can copy its 10-digit CIK or URL and paste it above.`
               : 'Opened SEC EDGAR Company Search in a new tab.'
           );
         }
       });
     }
 
-    // File Upload
+    // File Upload (.json, .htm, .html, .xml)
     const fileInput = container.querySelector('#upload-sec-json-input');
     if (fileInput) {
       fileInput.addEventListener('change', async (e) => {
@@ -263,15 +268,21 @@ export function mountTargetBanner(container, onChange) {
         if (!file) return;
         try {
           const text = await file.text();
-          const json = JSON.parse(text);
-          const data = json.facts
-            ? parseUploadedCompanyFacts(json, file.name.replace(/\.json$/i, ''))
-            : json;
+          const trimmed = text.trim();
+          let data;
+          if (/\.(htm|html|xml)$/i.test(file.name) || trimmed.startsWith('<')) {
+            data = parseUploadedIXBRLOrXML(text, file.name);
+          } else {
+            const json = JSON.parse(text);
+            data = json.facts
+              ? parseUploadedCompanyFacts(json, file.name.replace(/\.json$/i, ''))
+              : json;
+          }
           setActiveCompany(data);
           render();
           if (onChange) onChange(data);
         } catch (err) {
-          setStatus(`Invalid JSON file: ${err.message}`, true);
+          setStatus(`Upload error: ${err.message}`, true);
         }
       });
     }
