@@ -107,7 +107,7 @@
       "edition": null,
       "isbn": null,
       "role": "Placeholder for Reference-tier concepts sourced from publicly available online material (Street of Walls, WSO, FRED, ULI, etc.).",
-      "domains": ["macro", "behav"]
+      "domains": ["macro", "behav", "corpfin", "invest", "fsa"]
     }
   ]
 }

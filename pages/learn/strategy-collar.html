@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Option Strategy: The Collar (Zero-Cost Risk Reversal) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Option Strategy: The Collar (Zero-Cost Risk Reversal)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 13</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Option Strategy: The Collar (Zero-Cost Risk Reversal Hedge)</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Payoff Mechanics &amp; Greek Profile</h3>
+<p>$$\text{Terminal Collar Value } (V_T) = S_T + \max(K_P - S_T, 0) - \max(S_T - K_C, 0) - (P_0 - C_0)$$</p>
+<pre><code>Expiration Payoff Diagram of a Stock Collar
+Portfolio Value
+     ▲
+$115 ┼─────────────────────────────────── ╭─────────  Max Value Cap = K_C ($115)
+     │                                  ╱
+$100 ┼ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─╱─ ─ ─ ─ ─ ─ ─  Initial Stock S_0 ($100)
+     │                              ╱
+ $90 ┼───────────────────────╯                        Min Value Floor = K_P ($90)
+     │
+     └───────────────────────┬────────┬───┬─────────► Stock Price at Expiry (S_T)
+                         K_P=$90  S_0=$100 K_C=$115
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Mathematical Formula (Zero-Cost Collar)</th>
+<th>Worked Example ($S_0 = $100, K_P = $90, K_C = $115$)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Net Upfront Premium</strong></td>
+<td>$P_0 - C_0 = $0$</td>
+<td>Put costs $$3.50$; Short Call collects $$3.50 \implies \mathbf{$0.00}$.</td>
+</tr>
+<tr>
+<td><strong>Maximum Downside Loss</strong></td>
+<td>$S_0 - K_P + \text{Net Debit}$</td>
+<td>Capped strictly at $$100 - $90 = \mathbf{-$10.00\text{ (-10%)}}$, even if stock drops to $$0$!</td>
+</tr>
+<tr>
+<td><strong>Maximum Upside Gain</strong></td>
+<td>$K_C - S_0 - \text{Net Debit}$</td>
+<td>Capped at $$115 - $100 = \mathbf{+$15.00\text{ (+15%)}}$.</td>
+</tr>
+<tr>
+<td><strong>Net Greek Profile</strong></td>
+<td><strong>Positive Delta</strong> ($+0.30$ to $+0.50$), <strong>Near-Zero Gamma, Theta, and Vega!</strong></td>
+<td>Because you are Long 1 OTM Put and Short 1 OTM Call, $\Gamma, \Theta, \mathcal{V}$ largely cancel out near spot!</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;A Zero-Cost Collar is completely free.&quot;</strong><br><em>Reality:</em> It costs zero <em>cash</em> upfront, but its <strong>opportunity cost</strong> is relinquishing all upside above $K_C$. Furthermore, because of <strong>Negative Equity Volatility Skew</strong> (OTM puts have much higher implied volatility than OTM calls), to get a $10%$ OTM put for &quot;free,&quot; you often have to cap your upside at only $+6%$ or $+7%$! Wait to put on collars when skew is relatively flat, or accept a small net debit to keep a wider upside cap.</li>
+<li><strong>Misconception 2: &quot;Putting a tight collar around a low-basis stock is always tax-free.&quot;</strong><br><em>Reality:</em> Under <strong>IRC Section 1259 (Constructive Sales Rules)</strong>, if an executive puts on a collar that is too tight (eliminating substantially all risk of loss <em>and</em> opportunity for gain), the IRS treats the collar as an immediate <strong>Constructive Sale</strong> on Day 1, triggering immediate capital gains tax on the entire unrealized appreciation! Tax counsel generally requires maintaining at least a $15%–20%$ band width between $K_P$ and $K_C$ to avoid constructive sale treatment.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>The Collar is the premier tool for <strong>Executive Concentrated Stock Wealth Management</strong>:
+If you hold $$20\text{M}$ of low-basis company stock after an IPO or M&amp;A lockup and cannot sell shares without triggering massive capital gains taxes or negative insider-selling signals:</p>
+<ol>
+<li>Structure a <strong>12-Month Wide Collar</strong> (e.g., $85%$ Put Floor / $120%$ Call Cap) that complies with IRC §1259 and §1092 (Straddle Rules).</li>
+<li>Pledge the collared stock—which now has a guaranteed minimum liquidation value of $85%$—as collateral for a low-interest <strong>Prepaid Variable Forward (PVF)</strong> or securities-backed credit line, unlocking liquid cash at SOFR $+ 100\text{ bps}$ with zero immediate capital gains tax!</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/strategy-protective-put.html" class="related-chip">
+          <span>Protective Put Strategy</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/strategy-covered-call.html" class="related-chip">
+          <span>Covered Call Strategy</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/vol-skew.html" class="related-chip">
+          <span>Volatility Skew, Smile & Fat Tails</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

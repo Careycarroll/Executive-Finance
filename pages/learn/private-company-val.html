@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Private Company Valuation Adjustments (DLOM & Control) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Private Company Valuation Adjustments (DLOM & Control)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Russell Lundholm Ch. 12</span>
+          <span class="concept-hero__citation-secondary">· also: Peter D. Easton Ch. Mod. 14</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Private Company Valuation Adjustments (DLOM &amp; Control)</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Levels of Value Framework</h3>
+<pre><code>The Four Levels of Corporate Valuation
+┌────────────────────────────────────────────────────────┐
+│ Level 1: Synergistic Strategic Value (Highest)         │
+│ • Control Value + Buyer-Specific M&amp;A Synergies         │
+│ • Benchmark: Precedent Strategic M&amp;A Multiples         │
+└───────────────────────────┬────────────────────────────┘
+                            │ Less: Strategic Synergies
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Level 2: Controlling Standalone Value                  │
+│ • 100% control over cash flows, capital structure, CEO │
+│ • Benchmark: Standalone DCF of Optimal Cash Flows      │
+└───────────────────────────┬────────────────────────────┘
+                            │ Less: Discount for Lack of Control (DLOC: 15%-25%)
+                            │ (or Plus: Control Premium of 20%-35% from Level 3)
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Level 3: Marketable Minority Value                     │
+│ • Liquid stock, zero board control                     │
+│ • Benchmark: Publicly Traded Peer Multiples (S&amp;P 500)  │
+└───────────────────────────┬────────────────────────────┘
+                            │ Less: Discount for Lack of Marketability (DLOM: 15%-35%)
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Level 4: Non-Marketable Minority Value (Lowest)        │
+│ • Illiquid private shares + zero voting control        │
+│ • Benchmark: Private minority stake / 409A Common Val  │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+<p>###Multiplicative Discount Math (Never Add Discounts Linearly!)
+DLOC and DLOM are applied sequentially (multiplicatively), never added together:
+$$\text{Combined Discount} = 1 - \left[ (1 - \text{DLOC}) \times (1 - \text{DLOM}) \right]$$
+$$\text{Relationship Between Control Premium (CP) and DLOC: } \text{DLOC} = 1 - \frac{1}{1 + \text{CP}}$$
+<em>(Example: A $25%$ Control Premium implies a $\text{DLOC} = 1 - \frac{1}{1.25} = 20.0%$).</em></p>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;If DLOC is 20% and DLOM is 30%, the total valuation discount is 50%.&quot;</strong><br><em>Reality:</em> Discounts apply sequentially to the remaining value base: $1 - (1 - 0.20)(1 - 0.30) = 1 - (0.80 \times 0.70) = 1 - 0.56 = 44.0%$, not $50%$.</li>
+<li><strong>Misconception 2: &quot;You should apply a Control Premium to every DCF valuation when buying a company.&quot;</strong><br><em>Reality:</em> Look at the cash flows you modeled in the DCF! If your DCF model <em>already</em> includes optimized margins, post-deal synergies, and optimal capital structure, your DCF output is <strong>already at Level 1 / Level 2 (Control Value)</strong>! Slapping an additional 30% Control Premium on top of an optimized DCF double-counts control and causes massive overpayment.</li>
+<li><strong>Misconception 3: &quot;Private company financials can be used directly without owner normalization.&quot;</strong><br><em>Reality:</em> Private business owners routinely run personal expenses (vehicles, travel, family salaries, above-market rent on owner-owned real estate) through the income statement to minimize taxes, or pay themselves below-market salaries. Always normalize private EBITDA for <strong>Fair Market Executive Compensation</strong> and arm&#39;s-length rent before applying any valuation model.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>How to estimate the <strong>Discount for Lack of Marketability (DLOM)</strong> rigorously without guessing:</p>
+<ol>
+<li><strong>Restricted Stock Studies / Pre-IPO Studies:</strong> Empirical price discounts observed on restricted Rule 144 stock placements compared to freely traded shares ($15%-30%$).</li>
+<li><strong>Option-Pricing DLOM Models (Chaffe / Finnerty / Longstaff):</strong> Model the cost of illiquidity as the value of an <strong>At-the-Money Put Option</strong> (or Asian lookback put) with time to expiration equal to the expected years until a liquidity event ($T$) and volatility equal to peer stock volatility ($\sigma$). Higher volatility and longer lock-up horizons mathematically justify a larger DLOM.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/multiples.html" class="related-chip">
+          <span>Relative Valuation & Comparable Multiples</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/dcf.html" class="related-chip">
+          <span>Discounted Cash Flow Valuation (Enterprise vs Equity)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/vc-mechanics.html" class="related-chip">
+          <span>Venture Capital Stages & Term Sheet Mechanics</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

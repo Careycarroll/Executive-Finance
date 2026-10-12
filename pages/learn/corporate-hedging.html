@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corporate Hedging Strategy & Risk Governance — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--risk">risk</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Corporate Hedging Strategy & Risk Governance</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Gabriel Hawawini Ch. 15</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 3</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Corporate Hedging Strategy &amp; Risk Governance</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Executive Hedging Decision Matrix</h3>
+<table>
+<thead>
+<tr>
+<th>Corporate Exposure Scenario</th>
+<th>Optimal Hedging Action</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>High Leverage / Tight Debt Covenants</strong></td>
+<td>Hedge Aggressively ($75%-100%$)</td>
+<td>Cash flow shock could trigger technical default, bankruptcy costs, or fire-sale asset liquidations.</td>
+</tr>
+<tr>
+<td><strong>High R&amp;D / Growth CapEx Pipeline</strong></td>
+<td>Hedge Operating Cash Flows</td>
+<td>Guarantees internal funding for strategic investments without issuing dilutive equity in downturns.</td>
+</tr>
+<tr>
+<td><strong>Zero Debt + Massive Cash Reserves</strong></td>
+<td>Minimal Financial Hedging</td>
+<td>Balance sheet acts as a natural buffer; save derivative transaction spreads and margin lock-ups.</td>
+</tr>
+<tr>
+<td><strong>Competitors Pass Costs to Customers</strong></td>
+<td>Do Not Over-Hedge Fixed Prices</td>
+<td>If raw material prices fall and you locked in high fixed forward prices while unhedged competitors cut retail prices, your margins collapse!</td>
+</tr>
+</tbody></table>
+<pre><code>Natural Operational Hedges vs. Financial Derivative Hedges
+┌────────────────────────────────────────────────────────┐
+│ Step 1: Operational / Natural Hedging (Zero Friction)  │
+│ • Match currency of costs to currency of revenues      │
+│ • Build multi-region manufacturing plants              │
+│ • Include raw material price escalators in B2B contracts│
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Step 2: Balance Sheet Hedging                          │
+│ • Issue Euro-denominated debt to fund European assets  │
+│ • Match debt maturity duration to asset cash duration  │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Step 3: Derivative Hedging (Residual Net Exposure Only)│
+│ • Use Forwards/Swaps for certain contractual exposures │
+│ • Use Options (Caps/Floors) for uncertain/contingent   │
+│   exposures (e.g., pending M&amp;A bids, competitive pricing)│
+└────────────────────────────────────────────────────────┘
+</code></pre>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;The treasury department should be evaluated as a profit center.&quot;</strong><br><em>Reality:</em> Treating corporate treasury as a profit center is one of the fastest ways to destroy a corporation (e.g., Procter &amp; Gamble 1994 derivatives scandal, Metallgesellschaft). The goal of hedging is <strong>variance reduction and cash flow certainty</strong>, not beating the market.</li>
+<li><strong>Misconception 2: &quot;If our hedge lost money this quarter, the hedging decision was a mistake.&quot;</strong><br><em>Reality:</em> If a hedge loses money on settlement, it means the underlying commercial business made an offsetting windfall gain! Evaluating a hedge in isolation from the underlying operational exposure is like complaining that your house didn&#39;t burn down after paying fire insurance.</li>
+<li><strong>Misconception 3: &quot;Forwards are always better than options because forwards cost zero upfront premium.&quot;</strong><br><em>Reality:</em> Forwards lock in a symmetric obligation. If you hedge a <em>contingent</em> exposure (like bidding on a foreign acquisition) with an FX forward and the deal falls through, you are left holding a massive naked speculative currency position! Always hedge contingent exposures with <strong>Options</strong>, never Forwards.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Establish three ironclad rules in your Board Risk Committee charter:</p>
+<ol>
+<li><strong>Net Across the Enterprise First:</strong> Never allow Division A to pay bank spreads to buy EUR/USD forwards while Division B pays bank spreads to sell EUR/USD forwards. Centralize all exposures in a single global treasury netting center and hedge only the <strong>net residual exposure</strong>.</li>
+<li><strong>Watch Liquidity Margin Calls (The Metallgesellschaft Trap):</strong> Never hedge long-term illiquid physical assets with short-term rolling futures unless you have massive credit lines to fund daily variation margin calls. A mismatch between cash margin outflows today and physical asset inflows 5 years from now can bankrupt a solvent company.</li>
+<li><strong>Match Instrument to Exposure:</strong> Certain cash flow $\to$ Forward/Swap. Uncertain or competitive cash flow $\to$ Option Cap/Floor.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/hedging-fx.html" class="related-chip">
+          <span>Foreign Exchange Hedging Strategies</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+
+        <a href="/pages/learn/hedging-ir.html" class="related-chip">
+          <span>Interest Rate Risk & Duration Gaps</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+
+        <a href="/pages/learn/scenario-analysis.html" class="related-chip">
+          <span>Scenario Analysis & Stress Testing</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

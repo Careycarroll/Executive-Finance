@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lease Accounting (ASC 842 / IFRS 16) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Lease Accounting (ASC 842 / IFRS 16)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Peter D. Easton Ch. Mod. 10</span>
+          <span class="concept-hero__citation-secondary">· also: Stephen H. Penman Ch. 13</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Lease Accounting (ASC 842 / IFRS 16)</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>US GAAP (ASC 842) vs. IFRS 16 Income Statement &amp; Cash Flow Divergence</h3>
+<table>
+<thead>
+<tr>
+<th>Accounting Dimension</th>
+<th>US GAAP — Finance Lease</th>
+<th>US GAAP — Operating Lease</th>
+<th>IFRS 16 — All Leases</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Balance Sheet</strong></td>
+<td>ROU Asset + Lease Liability</td>
+<td>ROU Asset + Lease Liability</td>
+<td>ROU Asset + Lease Liability</td>
+</tr>
+<tr>
+<td><strong>Income Statement Expense</strong></td>
+<td>Split into <strong>Amortization</strong> (in D&amp;A) + <strong>Interest Expense</strong></td>
+<td>Single straight-line <strong>Lease Expense</strong> inside Operating Expenses (SG&amp;A/COGS)</td>
+<td>Split into <strong>Amortization</strong> (in D&amp;A) + <strong>Interest Expense</strong></td>
+</tr>
+<tr>
+<td><strong>Expense Profile Over Time</strong></td>
+<td>Front-loaded (higher interest in early years)</td>
+<td>Constant straight-line expense each year</td>
+<td>Front-loaded (higher interest in early years)</td>
+</tr>
+<tr>
+<td><strong>EBITDA Impact</strong></td>
+<td><strong>Higher EBITDA</strong> (both amortization and interest are excluded from EBITDA!)</td>
+<td><strong>Lower EBITDA</strong> (full lease rent is deducted inside operating expenses)</td>
+<td><strong>Higher EBITDA</strong> (all lease costs are excluded from EBITDA!)</td>
+</tr>
+<tr>
+<td><strong>Cash Flow Statement</strong></td>
+<td>Interest in Operating CF; Principal in Financing CF</td>
+<td>100% of lease payment inside Operating Cash Flow</td>
+<td>Interest in Operating/Financing; Principal in Financing CF</td>
+</tr>
+</tbody></table>
+<p>$$\text{Lease Liability}<em>0 = \sum</em>{t=1}^T \frac{\text{Lease Payment}<em>t}{(1 + r</em>{\text{IBR}})^t}$$</p>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;A European retailer with a 15% EBITDA margin is more profitable than a US competitor with a 10% EBITDA margin.&quot;</strong><br><em>Reality:</em> Under IFRS 16, the European retailer classifies all store rents as depreciation and interest—completely removing store rent from EBITDA! Under US GAAP ASC 842, the US retailer&#39;s store leases are Operating Leases, so 100% of store rent reduces EBITDA. Comparing raw EV/EBITDA between US GAAP and IFRS companies without adjustment is a classic valuation error. Use <strong>EBITDAR</strong> (EBITDA before Rent) or treat all operating leases as debt across both standards.</li>
+<li><strong>Misconception 2: &quot;ROU Assets are tangible property that can be liquidated to pay creditors.&quot;</strong><br><em>Reality:</em> An ROU Asset is merely a contractual right to occupy space contingent on paying rent. In bankruptcy, ROU assets cannot be sold like owned real estate unless the lease contract is significantly below current market rent.</li>
+<li><strong>Misconception 3: &quot;Signing a 1-year renewable lease avoids balance sheet capitalization.&quot;</strong><br><em>Reality:</em> If the lessee has a significant economic incentive to exercise renewal options (e.g., expensive custom leasehold improvements installed in the building), ASC 842 requires including the renewal periods in the capitalized lease liability.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>When negotiating bank credit facilities or analyzing lease-heavy industries (airlines, retail, data centers, logistics):</p>
+<ol>
+<li><strong>Standardize on EBITDAR:</strong> Always compute $\text{EV} / \text{EBITDAR}$ where Enterprise Value includes capitalized operating lease liabilities on the balance sheet.</li>
+<li><strong>Audit Debt Covenant Definitions:</strong> Ensure your corporate credit agreement explicitly specifies <strong>&quot;Frozen GAAP&quot;</strong> or excludes ASC 842 Operating Lease Liabilities from the definition of &quot;Total Funded Debt.&quot; Otherwise, signing a new 10-year headquarters office lease will artificially spike your $\text{Net Debt} / \text{EBITDA}$ covenant ratio!</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/reformulated-bs.html" class="related-chip">
+          <span>Reformulated Balance Sheet</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/cost-of-debt.html" class="related-chip">
+          <span>Cost of Debt (Pre-Tax & After-Tax)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/comparables.html" class="related-chip">
+          <span>Selecting Comparables & Peer Benchmarking</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

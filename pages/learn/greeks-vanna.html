@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greeks: Vanna (Volatility-Spot Cross-Sensitivity) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Greeks: Vanna (Volatility-Spot Cross-Sensitivity)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 11</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Greeks: Vanna (Volatility-Spot Cross-Sensitivity)</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Black-Scholes Formula &amp; Sign Profile Across Moneyness</h3>
+<p>$$\text{Vanna} = -e^{-q\tau} \cdot \phi(d_1) \cdot \frac{d_2}{\sigma} = \frac{\mathcal{V}}{S} \left( 1 - \frac{d_1}{\sigma \sqrt{\tau}} \right)$$</p>
+<pre><code>Vanna Profile Across Strike Moneyness (Long Option Position)
+Vanna
+  +  │         ╭───────╮
+     │        ╱         ╲         OTM Calls (S &lt; K, d2 &lt; 0):
+     │       ╱           ╲        Vanna is POSITIVE (+)
+  0 ─┼──────┼─────────────┼──────┬────────────────────────► Spot Price (S)
+     │                   Strike  │        ╲           ╱
+     │                    (ATM)  │         ╲         ╱
+  -  │                           │          ╰───────╯
+                                    ITM Calls / OTM Puts (S &gt; K, d2 &gt; 0):
+                                    Vanna is NEGATIVE (-)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option Position</th>
+<th>Moneyness</th>
+<th>Vanna Sign</th>
+<th>What Happens When Implied Vol Drops ($\Delta \sigma &lt; 0$)?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Long OTM Call</strong> ($S &lt; K$)</td>
+<td>Out-of-the-Money</td>
+<td><strong>Positive ($+$)</strong></td>
+<td>Call Delta <strong>drops</strong> toward $0.00$.</td>
+</tr>
+<tr>
+<td><strong>Long OTM Put</strong> ($S &gt; K$)</td>
+<td>Out-of-the-Money</td>
+<td><strong>Negative ($-$)</strong></td>
+<td>Put Delta becomes <strong>less negative</strong> (moves from $-0.30$ toward $0.00$).</td>
+</tr>
+<tr>
+<td><strong>At-The-Money</strong> ($S \approx K$)</td>
+<td>At-the-Money</td>
+<td><strong>Near Zero ($\approx 0$)</strong></td>
+<td>Delta stays anchored near $\pm 0.50$ regardless of vol shifts.</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;If I buy an OTM Put to hedge a stock market crash, my Delta depends only on how far the S&amp;P 500 falls.&quot;</strong><br><em>Reality:</em> When the S&amp;P 500 drops $-5%$, implied volatility (VIX) typically surges $+10$ points simultaneously. Because an OTM Put has negative Vanna ($\partial \Delta / \partial \sigma &lt; 0$), the volatility spike makes the put&#39;s Delta <strong>much more negative</strong>, supercharging your downside protection! Conversely, when the market recovers and VIX crushes downward, Vanna rapidly drains the put&#39;s negative Delta.</li>
+<li><strong>Misconception 2: &quot;Vanna is only relevant for exotic barrier options.&quot;</strong><br><em>Reality:</em> While Vanna is the primary driver of the <strong>Volatility Skew (Smile)</strong> in exotic pricing (via the Vanna-Volga method), Vanna flows from massive institutional S&amp;P 500 OTM put hedging are one of the largest drivers of equity market rallies after macroeconomic events (such as FOMC meetings or CPI releases). When an event passes and implied volatility crushes, dealers who are short OTM puts must buy back billions in short S&amp;P 500 futures hedges (&quot;The Vanna Rally&quot;).</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Understand the link between <strong>Vanna and the Volatility Skew</strong>:</p>
+<ul>
+<li>Why do equity index OTM puts trade at a massive implied volatility premium over OTM calls (Negative Skew)? Because spot and volatility are negatively correlated ($\rho_{S,\sigma} \approx -0.75$).</li>
+<li>In a market sell-off, long OTM puts benefit from both <strong>Gamma</strong> (spot falling) and <strong>Vanna</strong> (vol spiking simultaneously). Market makers charge a steeper implied volatility price upfront for OTM puts to compensate for this adverse Vanna-Gamma covariance.</li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/greeks-delta.html" class="related-chip">
+          <span>Delta Sensitivity & Directional Hedge Ratio</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/greeks-vega.html" class="related-chip">
+          <span>Vega Volatility Exposure</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/vol-skew.html" class="related-chip">
+          <span>Volatility Skew, Smile & Fat Tails</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

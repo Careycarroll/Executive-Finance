@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real Options in Capital Budgeting — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--corpfin">corpfin</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Real Options in Capital Budgeting</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Gabriel Hawawini Ch. 16</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 35</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Real Options in Capital Budgeting</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Four Core Archetypes of Real Options</h3>
+<table>
+<thead>
+<tr>
+<th>Real Option Archetype</th>
+<th>Financial Derivative Analogy</th>
+<th>Strategic Corporate Application</th>
+<th>Key Valuation Driver</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Option to Delay / Defer</strong></td>
+<td>American Call Option ($S = \text{PV of Project}, K = \text{CapEx}$)</td>
+<td>Holding undeveloped land, patent rights, or offshore drilling leases</td>
+<td>High volatility increases option value; waiting resolves uncertainty.</td>
+</tr>
+<tr>
+<td><strong>Option to Expand / Stage</strong></td>
+<td>Call Option on Phase 2 ($S = \text{PV of Phase 2}, K = \text{Phase 2 CapEx}$)</td>
+<td>Multi-stage venture funding, modular factory expansion, initial overseas beachhead</td>
+<td>Small pilot investment creates right to capture multi-billion upside.</td>
+</tr>
+<tr>
+<td><strong>Option to Abandon</strong></td>
+<td>American Put Option ($S = \text{PV of Project}, K = \text{Salvage/Sale Value}$)</td>
+<td>Licensing agreements with termination clauses, plant equipment with liquid resale market</td>
+<td>Creates hard downside floor, cutting left-tail ruin risk.</td>
+</tr>
+<tr>
+<td><strong>Option to Switch</strong></td>
+<td>Margrabe Exchange Option</td>
+<td>Dual-fuel power plants (switching gas vs oil), flexible manufacturing tooling</td>
+<td>Spreads between input/output commodities create operational arbitrage.</td>
+</tr>
+</tbody></table>
+<pre><code>Static NPV vs Real Options Decision Framework
+┌────────────────────────────────────────────────────────┐
+│ Phase 1 Pilot Investment: CapEx = $5M, Static NPV = -$2M│
+│ Traditional DCF says: &quot;REJECT PROJECT&quot;                 │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Real Options Perspective:                              │
+│ Phase 1 buys a Call Option on Phase 2 Expansion:       │
+│ • If demand is High (30% prob): Invest $30M, PV = $70M │
+│ • If demand is Low (70% prob): Abandon, Loss capped at $5M│
+│ Expected Real Option Value = $10.5M                    │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Strategic NPV = -$2.0M + $10.5M = +$8.5M               │
+│ Executive Decision: &quot;APPROVE PILOT&quot;                    │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;Real options can be valued mechanically using the Black-Scholes formula.&quot;</strong><br><em>Reality:</em> Black-Scholes requires continuous trading of the underlying asset and a riskless arbitrage replicating portfolio. Real corporate assets (factories, patents, mines) are non-traded, illiquid, and subject to discrete jumps and competitive preemption. Binomial lattices or decision trees with decision-event nodes are far safer and more transparent in board presentations.</li>
+<li><strong>Misconception 2: &quot;Real options theory is an excuse for bad managers to justify negative-NPV pet projects.&quot;</strong><br><em>Reality:</em> While deal advocates sometimes cite &quot;strategic option value&quot; to rescue bad deals, genuine real options require an explicit, enforceable operational mechanism. If management does not have the discipline or contractual right to abandon or scale the project based on measurable criteria, no real option exists.</li>
+<li><strong>Misconception 3: &quot;High uncertainty always destroys project value.&quot;</strong><br><em>Reality:</em> In a rigid project, uncertainty is pure downside risk. In a staged project with an option to abandon, downside is capped at the pilot cost while upside remains unbounded. Greater volatility actually <em>expands</em> the value of managerial flexibility.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>&quot;Buy the option, not the asset.&quot;
+When facing profound technological or regulatory uncertainty, never commit 100% of the project CapEx upfront. Structure corporate capital investments as a series of staged options:</p>
+<ol>
+<li>Pay a small initial entry fee (a pilot, joint venture, or minority equity stake) to acquire privileged data and proprietary rights.</li>
+<li>Maintain strict discipline to pull the plug if early operational milestones fail.</li>
+<li>If uncertainty is extreme, remember that <strong>the option to wait has positive value</strong>. Delaying a major investment by 6 months until market standards clarify is often far more profitable than rushing to claim an ill-defined first-mover advantage.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/capital-budgeting.html" class="related-chip">
+          <span>Capital Budgeting & Capital Allocation Decisions</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/npv-irr.html" class="related-chip">
+          <span>Net Present Value and Internal Rate of Return</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/binomial-pricing.html" class="related-chip">
+          <span>Binomial Option Pricing Model</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

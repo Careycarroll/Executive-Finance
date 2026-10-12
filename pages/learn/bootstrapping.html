@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bootstrapping the Zero-Coupon Spot Curve — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Bootstrapping the Zero-Coupon Spot Curve</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 14, 15</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 4</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Bootstrapping the Zero-Coupon Spot Curve</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Sequential Bootstrapping Algorithm</h3>
+<p>Every coupon bond can be viewed as a portfolio of independent zero-coupon strips. Given known spot rates $z_1, z_2, \dots, z_{T-1}$ for earlier periods and the market price $P_T$ of a $T$-period bond paying coupon $C$ and par value $M$:</p>
+<p>$$P_T = \underbrace{\frac{C}{(1 + z_1)^1} + \frac{C}{(1 + z_2)^2} + \cdots + \frac{C}{(1 + z_{T-1})^{T-1}}}_{\text{Discounted at Already-Bootstrapped Spot Rates}} + \frac{C + M}{(1 + z_T)^T}$$</p>
+<p>Solving directly for the unknown $T$-period spot rate $z_T$:
+$$z_T = \left( \frac{C + M}{P_T - \sum_{t=1}^{T-1} \frac{C}{(1 + z_t)^t}} \right)^{1/T} - 1$$</p>
+<pre><code>Worked 3-Year Bootstrapping Walkthrough (Annual Coupons, Par = $100)
+┌────────────────────────────────────────────────────────┐
+│ Observed Market Bonds:                                 │
+│ • 1-Year Zero-Coupon Bill: Yield = 4.00% → z_1 = 4.00% │
+│ • 2-Year 5.0% Coupon Par Bond: Price = $100.00         │
+│ • 3-Year 6.0% Coupon Par Bond: Price = $100.00         │
+├────────────────────────────────────────────────────────┤
+│ Step 1: Bootstrap 2-Year Spot Rate (z_2)               │
+│   100 = 5 / (1.04)^1 + 105 / (1 + z_2)^2               │
+│   100 = 4.8077 + 105 / (1 + z_2)^2                     │
+│   (1 + z_2)^2 = 105 / 95.1923 = 1.10303                │
+│   → z_2 = (1.10303)^(1/2) - 1 = 5.025%                 │
+├────────────────────────────────────────────────────────┤
+│ Step 2: Bootstrap 3-Year Spot Rate (z_3)               │
+│   100 = 6/(1.04)^1 + 6/(1.05025)^2 + 106/(1 + z_3)^3   │
+│   100 = 5.7692 + 5.4396 + 106 / (1 + z_3)^3            │
+│   (1 + z_3)^3 = 106 / 88.7912 = 1.19381                │
+│   → z_3 = (1.19381)^(1/3) - 1 = 6.083%                 │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>Extracting Implied Forward Rates ($f_{t-1, t}$)</h3>
+<p>Once the spot curve is bootstrapped, implied forward interest rates between any two future dates $t_1$ and $t_2$ follow directly:
+$$(1 + z_{t_2})^{t_2} = (1 + z_{t_1})^{t_1} \cdot (1 + f_{t_1, t_2})^{t_2 - t_1}$$</p>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;The Par Yield Curve and the Zero-Coupon Spot Curve are identical.&quot;</strong><br><em>Reality:</em> Because of the <strong>Coupon Effect</strong>, when the yield curve is upward-sloping, the Zero-Coupon Spot Curve lies <em>above</em> the Par Coupon Yield Curve ($z_3 = 6.083% &gt; y_3 = 6.00%$). When the yield curve is inverted (downward-sloping), the Zero-Coupon Spot Curve lies <em>below</em> the Par Yield Curve. They only coincide when the yield curve is completely flat.</li>
+<li><strong>Misconception 2: &quot;You can price an interest rate swap using standard bond YTM.&quot;</strong><br><em>Reality:</em> Pricing interest rate swaps, cross-currency swaps, or corporate bond spreads over the Treasury curve (the <strong>Z-Spread / Zero-Volatility Spread</strong>) requires discounting each cash flow off the bootstrapped zero-coupon spot curve.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>In corporate bond issuance and fixed-income analysis, always request the <strong>Z-Spread (Zero-Volatility Spread)</strong> rather than the simplistic nominal <strong>G-Spread</strong> (spread over a single interpolated benchmark Treasury yield). The Z-Spread measures the constant basis-point spread added to every point along the entire bootstrapped Treasury spot curve required to equate the present value of a corporate bond&#39;s cash flows to its market price—capturing the full shape of the term structure.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/yield-curve.html" class="related-chip">
+          <span>Yield Curve and Term Structure of Interest Rates</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/bond-pricing.html" class="related-chip">
+          <span>Bond Pricing Mechanics</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/ytm.html" class="related-chip">
+          <span>Yield to Maturity and Spot Yields</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

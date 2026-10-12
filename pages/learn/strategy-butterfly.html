@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Option Strategy: The Butterfly Spread — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Option Strategy: The Butterfly Spread</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 13</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Option Strategy: The Butterfly Spread</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Payoff Geometry &amp; Risk-Reward Equations</h3>
+<p>For a Long Call Butterfly with equidistant wing width $W = K_2 - K_1 = K_3 - K_2$ entered for a small Net Debit ($D_{\text{net}}$):</p>
+<pre><code>Expiration Payoff Diagram of a Long Butterfly Spread
+    P&amp;L
+     ▲
++$4  ┼───────────────────────▲───────────────────────  Max Profit = W - Debit (+$4.00)
+     │                      ╱ ╲                        at S_T = K_2 ($100)
+     │                     ╱   ╲
+ $0 ─┼────────────────────┼─────┼────────────────────► Underlying Price at Expiry (S_T)
+-$1 ─┼─────────────╯     96     104    ╰─────────────  Max Loss = Net Debit (-$1.00)
+                 K_1=$95  K_2=$100  K_3=$105
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Strategy Parameter</th>
+<th>Formula</th>
+<th>Worked Example ($95 / 100 / 105$ Call Fly for $$1.00$ Debit)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Net Initial Cost (Max Loss)</strong></td>
+<td>$D_{\text{net}} = C(K_1) - 2C(K_2) + C(K_3)$</td>
+<td><strong>$$1.00$</strong> per share (strictly capped if $S_T \le $95$ or $S_T \ge $105$).</td>
+</tr>
+<tr>
+<td><strong>Maximum Profit</strong></td>
+<td>$\text{Wing Width } (W) - D_{\text{net}}$</td>
+<td>$$5.00 - $1.00 = \mathbf{$4.00}$ per share ($4:1$ reward-to-risk at $S_T = $100$).</td>
+</tr>
+<tr>
+<td><strong>Lower Breakeven</strong></td>
+<td>$K_1 + D_{\text{net}}$</td>
+<td>$$95 + $1.00 = \mathbf{$96.00}$.</td>
+</tr>
+<tr>
+<td><strong>Upper Breakeven</strong></td>
+<td>$K_3 - D_{\text{net}}$</td>
+<td>$$105 - $1.00 = \mathbf{$104.00}$.</td>
+</tr>
+<tr>
+<td><strong>Greek Profile (Near $K_2$)</strong></td>
+<td>$\Delta \approx 0, \quad \mathbf{\Theta &gt; 0}, \quad \mathbf{\Gamma &lt; 0}, \quad \mathbf{\mathcal{V} &lt; 0}$</td>
+<td>Earns positive Theta and short-Vega profit near the body $K_2$; flips to positive Gamma/negative Theta outside the wings!</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;A $4:1$ reward-to-risk ratio means the Butterfly starts doubling in value two weeks before expiration.&quot;</strong><br><em>Reality:</em> Because the Long Options at $K_1$ and $K_3$ decay at almost the same rate as the Short Options at $K_2$ early in the trade, a Butterfly&#39;s mark-to-market price barely moves until the <strong>final 5 to 10 days before expiration</strong>! Do not buy 60-day Butterflies expecting rapid Theta profits; Butterflies are inherently short-dated pin-targeting vehicles.</li>
+<li><strong>Misconception 2: &quot;Call Butterflies and Put Butterflies require the same cash outlay.&quot;</strong><br><em>Reality:</em> When targeting a price <em>below</em> current spot ($K_2 &lt; S_0$), using <strong>Out-of-the-Money Puts</strong> (a Put Butterfly) avoids dealing with wide bid-ask spreads and early-exercise assignment risk on Deep In-the-Money Calls. Always build your Butterfly using <strong>Out-of-the-Money options</strong> (Put Fly for downside targets; Call Fly for upside targets; Iron Fly for ATM targets).</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Use <strong>Directional OTM Butterflies</strong> as a low-cost alternative to Vertical Spreads when Implied Volatility is extremely high:</p>
+<ul>
+<li>If a stock is at $$100$ ahead of an earnings report with $80%$ IV, buying a $$105/$110$ Bull Call Spread is expensive due to elevated Vega.</li>
+<li>Instead, buying a <strong>$100 / 110 / 120$ OTM Call Butterfly</strong> sells two units of overpriced $110$ volatility, cutting your upfront cost by $60%$ while delivering up to $6\times-8\times$ payoff if the stock rallies moderately to your $$110$ target and volatility crushes after earnings!</li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/strategy-condor.html" class="related-chip">
+          <span>Option Strategy: The Iron Condor</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/strategy-spread-vertical.html" class="related-chip">
+          <span>Vertical Spreads (Bull and Bear Spreads)</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/greeks-gamma.html" class="related-chip">
+          <span>Gamma Curvature & Convexity Risk</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

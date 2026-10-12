@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Option Strategy: The Iron Condor — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Option Strategy: The Iron Condor</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 13</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Option Strategy: The Iron Condor</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Payoff Geometry &amp; Risk-Reward Equations</h3>
+<p>Assuming equal wing widths ($W = K_2 - K_1 = K_4 - K_3$) and initial Net Credit received ($C_{\text{net}}$):</p>
+<pre><code>Expiration Payoff Diagram of a Short Iron Condor
+    P&amp;L
+     ▲
+ +$2 ┼─────────────╭───────────────────╮─────────────  Max Profit = Net Credit (+$2)
+     │            ╱                     ╲
+  $0 ┼───────────┼───────────────────────────┼───────► Underlying Price at Expiry (S_T)
+     │          ╱  K_2               K_3  ╲
+ -$3 ┼─────────╯                           ╰─────────  Max Loss = Wing Width - Credit (-$3)
+             K_1                           K_4
+             ├───┤                       ├───┤
+           Put Spread                 Call Spread
+           (Width $5)                 (Width $5)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Strategy Parameter</th>
+<th>Formula</th>
+<th>Worked Example ($S_0 = $100$; Strikes $85/90/110/115$, Credit $=$2.00$)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Maximum Profit</strong></td>
+<td>$\text{Net Credit Received } (C_{\text{net}})$</td>
+<td><strong>$$2.00$</strong> per share (achieved if $$90 \le S_T \le $110$ at expiry).</td>
+</tr>
+<tr>
+<td><strong>Maximum Loss</strong></td>
+<td>$\text{Wing Width } (W) - C_{\text{net}}$</td>
+<td>$$5.00 - $2.00 = \mathbf{$3.00}$ per share (if $S_T \le $85$ or $S_T \ge $115$).</td>
+</tr>
+<tr>
+<td><strong>Lower Breakeven</strong></td>
+<td>$K_2 - C_{\text{net}}$</td>
+<td>$$90 - $2.00 = \mathbf{$88.00}$.</td>
+</tr>
+<tr>
+<td><strong>Upper Breakeven</strong></td>
+<td>$K_3 + C_{\text{net}}$</td>
+<td>$$110 + $2.00 = \mathbf{$112.00}$.</td>
+</tr>
+<tr>
+<td><strong>Greek Profile (Inside Tent)</strong></td>
+<td>$\Delta \approx 0, \quad \mathbf{\Theta &gt; 0}, \quad \mathbf{\Gamma &lt; 0}, \quad \mathbf{\mathcal{V} &lt; 0}$</td>
+<td>Positive time decay (collects rent daily); loses when volatility spikes or spot breaks out.</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;Because an Iron Condor consists of two vertical spreads with $5 width each, my broker requires $10 of margin.&quot;</strong><br><em>Reality:</em> The underlying stock <strong>cannot be below $$85$ and above $$115$ at the exact same time</strong> on expiration day! Because only one side can ever lose at expiration, options exchanges only require margin for <strong>one single wing width</strong> ($W = $5.00$), minus the $$2.00$ credit collected, resulting in a maximum capital requirement of just <strong>$$3.00$</strong>!</li>
+<li><strong>Misconception 2: &quot;You should hold an Iron Condor all the way to expiration day to collect 100% of the credit.&quot;</strong><br><em>Reality:</em> Holding a short Iron Condor into the final week before expiration is a notorious retail mistake. In the final 7 days, <strong>Gamma explodes</strong>: a $1.5%$ afternoon move in the stock can swing the Condor from $+80%$ profit to $-100%$ max loss, and <strong>Pin Risk</strong> between $K_1$ and $K_2$ can leave you assigned on 100 shares of stock over the weekend with your protective wing expired! Professional traders systematically take profits at <strong>$50%$ of max credit</strong> or exit at 14–21 days to expiration.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>How to structure high-expectancy Iron Condors:</p>
+<ol>
+<li><strong>Enter Only When IV Rank Is High ($&gt;50$th Percentile):</strong> You are net short Vega ($\mathcal{V} &lt; 0$). Entering when implied volatility is elevated gives you a structural tailwind as volatility mean-reverts downward, allowing you to hit $50%$ profit in half the time.</li>
+<li><strong>Respect Skew When Selecting Strikes:</strong> Select short strikes by <strong>Option Delta</strong> (e.g., selling the $16\Delta$ Put and the $16\Delta$ Call for an $\approx 68%$ probability of profit), not by equal dollar distance from spot. Because of negative equity skew, the $16\Delta$ Put will be much further below spot than the $16\Delta$ Call is above spot.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/strategy-spread-vertical.html" class="related-chip">
+          <span>Vertical Spreads (Bull and Bear Spreads)</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/strategy-straddle.html" class="related-chip">
+          <span>Long Straddle Strategy</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/strategy-butterfly.html" class="related-chip">
+          <span>Option Strategy: The Butterfly Spread</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

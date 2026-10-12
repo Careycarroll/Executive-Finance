@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greeks: Charm (Delta Bleed / DdeltaDtime) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Greeks: Charm (Delta Bleed / DdeltaDtime)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 11</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Greeks: Charm (Delta Bleed / DdeltaDtime)</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Black-Scholes Formula &amp; Expiration Convergence Profile</h3>
+<p>$$\text{Charm (with respect to time passing } t\text{)} = -e^{-q\tau} \left[ \phi(d_1) \frac{2(r - q)\tau - d_2 \sigma \sqrt{\tau}}{2 \tau \sigma \sqrt{\tau}} \mp q N(\pm d_1) \right]$$</p>
+<pre><code>How Option Delta Evolves as Time Approaches Expiration (Stock Price Flat)
+Delta (Δ)
+ 1.00 ┼─────────────────────────────────────────── ↗ 1.00 (ITM Call: Δ rises)
+      │                                     ↗ ↗
+ 0.75 ┼──────────────────────────────── ↗ ↗
+      │
+ 0.50 ┼────────────────────────────────────────────────── (ATM Call: Δ ≈ 0.50)
+      │
+ 0.25 ┼──────────────────────────────── ↘ ↘
+      │                                     ↘ ↘
+ 0.00 ┼─────────────────────────────────────────── ↘ 0.00 (OTM Call: Δ bleeds)
+      └───────────┬───────────────┬───────────────┬──────► Time Passing (t → T)
+               30 Days         15 Days          Expiry
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option Moneyness</th>
+<th>Daily Delta Change as Time Passes</th>
+<th>Impact on Delta-Neutral Hedger</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Long OTM Call ($\Delta = +0.25$)</strong></td>
+<td>Delta <strong>Decreases</strong> toward $0.00$</td>
+<td>Position becomes progressively less long over the weekend; hedger must buy underlying shares to stay delta-neutral.</td>
+</tr>
+<tr>
+<td><strong>Long ITM Call ($\Delta = +0.75$)</strong></td>
+<td>Delta <strong>Increases</strong> toward $+1.00$</td>
+<td>Position becomes progressively longer delta over the weekend; hedger must sell underlying shares to stay neutral.</td>
+</tr>
+<tr>
+<td><strong>Long OTM Put ($\Delta = -0.25$)</strong></td>
+<td>Delta <strong>Moves toward $0.00$</strong> (becomes less negative)</td>
+<td>Bearish hedge loses its protective punch every day the market trades sideways!</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;If I buy OTM puts to hedge my equity portfolio, my hedge ratio stays constant unless the market moves.&quot;</strong><br><em>Reality:</em> Because of <strong>Charm</strong>, an Out-of-the-Money protective put loses Delta every single day that the market trades sideways! A 30-day $5%$ OTM put starts with a $-0.30$ Delta; after three quiet weeks of flat market prices, its Delta bleeds down to $-0.08$. When a sudden crash occurs in Week 4, your portfolio is barely hedged until the market drops far enough to re-engage the strike.</li>
+<li><strong>Misconception 2: &quot;Charm is negligible compared to Gamma.&quot;</strong><br><em>Reality:</em> During the final 5 trading days before a major monthly options expiration (OpEx), Charm becomes enormous. Market makers who are short millions of OTM calls (from covered-call ETFs and retail flow) watch those calls bleed Delta toward zero every hour—forcing dealers to systematically unwind (buy back) their short stock hedges, creating the well-documented <strong>&quot;OpEx Charm Drift&quot;</strong> rally in equity indices.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Always monitor <strong>Weekend Charm</strong> when managing an options book or institutional equity hedge:
+On Friday afternoon, institutional desks calculate their <strong>Monday Morning Delta</strong> (assuming 72 hours of Charm bleed over the weekend). If your portfolio protection relies on short-dated OTM puts, never let them enter the final 14 days to expiration—roll your protective hedges out to 60–90 days before Charm erodes both your Theta value and your Delta protection.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/greeks-delta.html" class="related-chip">
+          <span>Delta Sensitivity & Directional Hedge Ratio</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/greeks-theta.html" class="related-chip">
+          <span>Theta Time Decay</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/delta-hedging.html" class="related-chip">
+          <span>Dynamic Delta Hedging & Rebalancing Costs</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

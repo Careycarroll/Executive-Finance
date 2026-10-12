@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Option Strategy: Ratio Spreads & Backspreads — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Option Strategy: Ratio Spreads & Backspreads</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 14</span>
+          <span class="concept-hero__citation-secondary">· also: Euan Sinclair Ch. 4</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Option Strategy: Ratio Spreads &amp; Backspreads</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Payoff Comparison: $1 \times 2$ Put Ratio Spread vs. $1 \times 2$ Call Backspread</h3>
+<pre><code>Expiration Payoff of a 1x2 Put Ratio Spread (Long 1 $95 Put / Short 2 $90 Puts for +$1.00 Credit)
+    P&amp;L
+     ▲
++$6  ┼───────────────────▲────────────────────────────────  Max Profit at S_T = K_2 ($90):
+     │                  ╱ ╲                                 ($95 - $90) + $1 Credit = +$6.00
++$1  ─────────────────┼───┼─────────► Stock Price (S_T)   Above $95: Keep +$1.00 Credit!
+     │               ╱     $95
+ $0 ─┼──────────────┼─────────────────────────────────────  Downside Breakeven = $84.00
+     │             ╱ $84  $90
+     │            ↙ (Uncapped Naked Short Put Risk below $84!)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Strategy Archetype</th>
+<th>Construction (Example)</th>
+<th>Greek Profile</th>
+<th>Ideal Volatility Skew Regime</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Put Ratio Spread ($1 \times 2$)</strong></td>
+<td>Buy 1 $95\text{P}$ / Sell 2 $90\text{P}$ (for Net Credit)</td>
+<td>$-\Gamma, \quad +\Theta, \quad -\mathcal{V}$</td>
+<td><strong>Steep Negative Put Skew:</strong> The two $90$ Puts trade at much higher IV than the $95$ Put, funding the spread for a credit!</td>
+</tr>
+<tr>
+<td><strong>Call Ratio Spread ($1 \times 2$)</strong></td>
+<td>Buy 1 $105\text{C}$ / Sell 2 $110\text{C}$ (for Net Credit)</td>
+<td>$-\Gamma, \quad +\Theta, \quad -\mathcal{V}$</td>
+<td><strong>Commodity / Call Skew:</strong> Overpriced upside calls finance a moderate bullish participation zone.</td>
+</tr>
+<tr>
+<td><strong>Call Backspread ($1 \times 2$)</strong></td>
+<td>Sell 1 $100\text{C}$ / Buy 2 $105\text{C}$ (for Zero Cost)</td>
+<td>$+\Gamma, \quad -\Theta, \quad +\mathcal{V}$</td>
+<td><strong>Low Implied Vol + Flat Skew:</strong> Cheap upside convexity with zero loss if the market crashes downward.</td>
+</tr>
+<tr>
+<td><strong>Put Backspread ($1 \times 2$)</strong></td>
+<td>Sell 1 $100\text{P}$ / Buy 2 $95\text{P}$</td>
+<td>$+\Gamma, \quad -\Theta, \quad +\mathcal{V}$</td>
+<td><strong>Pre-Crisis Complacency:</strong> Portfolio crash tail hedge that costs nothing if the stock rallies above $100$.</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;A Put Ratio Spread entered for a net credit is a low-risk trade because you can&#39;t lose if the stock goes up.&quot;</strong><br><em>Reality:</em> While you keep the $$1.00$ credit if the stock rallies, below the lower breakeven ($2 K_2 - K_1 - \text{Credit}$) you are <strong>naked short a put</strong>! During a market crash or overnight bankruptcy gap, a $1 \times 2$ Put Ratio Spread suffers catastrophic losses combined with exploding implied volatility (short Vega). Only enter a Put Ratio Spread if you are <strong>100% willing and capitalized to take physical ownership of the stock</strong> at the effective breakeven price ($K_{\text{eff}} = $84$).</li>
+<li><strong>Misconception 2: &quot;Backspreads are better than buying naked calls or puts.&quot;</strong><br><em>Reality:</em> In a $1 \times 2$ Call Backspread (Short 1 $100\text{C}$ / Long 2 $105\text{C}$), there is a <strong>&quot;Valley of Death&quot;</strong> right at $S_T = $105$ where you suffer maximum loss ($$5.00$). If the stock rallies gently and pins at $$105$ on expiration day, your directional call was right—yet you lose the maximum possible amount on the trade!</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>How institutional equity managers use the <strong>Stock Repair Strategy (a $1 \times 2$ Call Ratio Spread)</strong>:
+Suppose you bought 100 shares of a high-quality stock at $$100$, and it dropped to $$80$ ($-$20$ unrealized loss). Instead of waiting years for a $+25%$ rally back to $$100$ or doubling down with new cash:</p>
+<ol>
+<li>Keep your 100 shares at $$80$.</li>
+<li><strong>Buy 1 ATM $$80$ Call</strong> and <strong>Sell 2 OTM $$90$ Calls</strong> for <strong>$$0.00$ net cost</strong> (a $1 \times 2$ Call Ratio Spread).</li>
+<li>Because you already own 100 shares of stock, the extra short $$90$ Call is <strong>100% covered</strong> (zero naked upside risk!).</li>
+<li>Now, if the stock merely recovers halfway to <strong>$$90$</strong>, you earn $$10$ on your stock plus $$10$ on your $$80/$90$ call spread—<strong>breaking even completely at $$90$ instead of $$100$</strong> for zero out-of-pocket cash!</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/vol-skew.html" class="related-chip">
+          <span>Volatility Skew, Smile & Fat Tails</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/strategy-spread-vertical.html" class="related-chip">
+          <span>Vertical Spreads (Bull and Bear Spreads)</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/greeks-gamma.html" class="related-chip">
+          <span>Gamma Curvature & Convexity Risk</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

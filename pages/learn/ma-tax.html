@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M&A Tax Structuring (Asset vs. Stock vs. §338(h)(10)) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--tax">tax</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">M&A Tax Structuring (Asset vs. Stock vs. §338(h)(10))</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Myron Scholes Ch. 13, 14</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>M&amp;A Tax Structuring (Asset vs. Stock vs. §338(h)(10))</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Four Primary M&amp;A Tax Architectures</h3>
+<table>
+<thead>
+<tr>
+<th>Deal Structure</th>
+<th>Buyer Tax Basis in Target Assets</th>
+<th>Tax Impact on Seller(s)</th>
+<th>Legal Liability &amp; Contract Transfer</th>
+<th>Optimal Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1. Taxable Stock Purchase</strong></td>
+<td><strong>Carryover Basis</strong> (No step-up; zero §197 goodwill tax amortization).</td>
+<td><strong>Single layer of tax:</strong> Target shareholders pay LTCG ($20%$) on stock gain.</td>
+<td>Simple: Buyer steps into ownership of legal entity; contracts stay intact.</td>
+<td>Buying a standalone C-Corp where double taxation makes an asset sale prohibitive.</td>
+</tr>
+<tr>
+<td><strong>2. Taxable Asset Purchase</strong></td>
+<td><strong>Full Step-Up to Fair Market Value</strong> (15-year §197 goodwill amortization!).</td>
+<td><strong>Double Taxation for C-Corp:</strong> Target C-Corp pays $21%$ tax on asset gain, <em>then</em> shareholders pay $20%$ tax on liquidating distribution!</td>
+<td>Complex: Requires re-titling every deed, contract, license, and permit.</td>
+<td>Buying a division/subsidiary or a pass-through LLC/S-Corp (only 1 tax layer).</td>
+</tr>
+<tr>
+<td><strong>3. IRC §338(h)(10) / §336(e) Election</strong></td>
+<td><strong>Full Step-Up to Fair Market Value</strong> (treated as an Asset Purchase for tax!).</td>
+<td><strong>Single layer of tax</strong> (if target is an S-Corp or $80%$-owned C-Corp subsidiary).</td>
+<td><strong>Best of Both Worlds:</strong> Legally a simple Stock Purchase, taxed as an Asset Purchase!</td>
+<td>Acquiring an S-Corporation or a corporate subsidiary spin-out.</td>
+</tr>
+<tr>
+<td><strong>4. Tax-Free Reorganization (IRC §368 A, B, C)</strong></td>
+<td><strong>Carryover Basis</strong> (No step-up).</td>
+<td><strong>Tax Deferred:</strong> Target shareholders receive Buyer Stock with zero immediate tax!</td>
+<td>Continuity of Interest (COI) requires $\ge 40%-80%$ stock consideration.</td>
+<td>Public-to-public stock mergers where sellers want tax deferral.</td>
+</tr>
+</tbody></table>
+<p>$$\text{Present Value of §197 Goodwill Tax Shield (15-Year Straight Line)} = \sum_{t=1}^{15} \frac{(\text{Step-Up Amount} / 15) \cdot t_{\text{corp}}}{(1 + r)^t}$$</p>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;Goodwill created in an M&amp;A acquisition is never tax-deductible.&quot;</strong><br><em>Reality:</em> While goodwill is never amortized on <em>GAAP financial statements</em>, in a <strong>Taxable Asset Purchase or §338(h)(10) election</strong>, acquired goodwill and intangible assets are <strong>100% tax-deductible straight-line over 15 years under IRC Section 197</strong>! In a Taxable Stock Purchase (without a §338 election), acquired goodwill is <em>not</em> tax-deductible.</li>
+<li><strong>Misconception 2: &quot;Buyers should always demand a §338(h)(10) election when buying a standalone C-Corporation.&quot;</strong><br><em>Reality:</em> First, a §338(h)(10) election is only legally permitted when buying an <strong>S-Corporation</strong> or an <strong>$80%+$-owned subsidiary of a parent corporation</strong>. For a standalone C-Corp, the equivalent is a regular <strong>§338(g) election</strong>, which triggers an immediate $21%$ corporate tax bill on the entire asset gain today just to get 15 years of future $21%$ deductions—which is almost always <strong>value-destructive</strong> in present-value terms unless the target has massive expiring Net Operating Losses (NOLs) to absorb the gain!</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>When acquiring an S-Corporation or corporate subsidiary, <strong>always model the §338(h)(10) Tax Gross-Up</strong>:</p>
+<ol>
+<li>Calculate the Present Value of the 15-year §197 tax amortization shield created for you (the Buyer) by the basis step-up.</li>
+<li>Calculate the incremental tax cost to the Sellers (often tiny, caused only by ordinary income recapture on depreciated equipment vs capital gains).</li>
+<li>Offer to <strong>reimburse (&quot;Gross Up&quot;) the Sellers in cash</strong> for their incremental tax cost plus a $20%$ sweetener! You secure tens of millions in net present value tax shields while leaving the sellers happier after tax.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/ma-mechanics.html" class="related-chip">
+          <span>M&A Deal Mechanics & Accretion/Dilution</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/deferred-tax.html" class="related-chip">
+          <span>Deferred Taxes & Net Operating Losses</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+
+        <a href="/pages/learn/entity-choice.html" class="related-chip">
+          <span>Entity Choice (C-Corp, S-Corp, LLC, Partnership)</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

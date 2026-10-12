@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exotic Options Overview (Barrier, Asian, Digital, Lookback) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Exotic Options Overview (Barrier, Asian, Digital, Lookback)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 26</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Exotic Options Overview (Barrier, Asian, Digital, Lookback)</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Five Canonical Families of Exotic Derivatives</h3>
+<table>
+<thead>
+<tr>
+<th>Exotic Option Class</th>
+<th>Payoff / Path Mechanism</th>
+<th>Why Corporate Treasuries &amp; Traders Use It</th>
+<th>Pricing &amp; Greek Behavior</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1. Asian Options (Average Price)</strong></td>
+<td>Payoff depends on the <strong>arithmetic or geometric average price</strong> ($\bar{S}$) over the contract period: $\max(\bar{S} - K, 0)$.</td>
+<td>Ideal for hedging continuous monthly FX revenues or commodity purchases across a fiscal year.</td>
+<td><strong>Cheaper than vanilla</strong> because averaging dampens volatility ($\sigma_{\text{avg}} \approx \sigma / \sqrt{3}$). Prevents manipulation on expiration day.</td>
+</tr>
+<tr>
+<td><strong>2. Barrier Options (Knock-In / Knock-Out)</strong></td>
+<td>Option either ceases to exist (<strong>Knock-Out</strong>) or springs into existence (<strong>Knock-In</strong>) if spot $S_t$ touches a barrier level $H$.</td>
+<td>Cuts hedging premium by $40%+$ if the hedger has a firm view that prices won&#39;t breach $H$.</td>
+<td><strong>Discontinuous Greeks:</strong> Gamma and Vega explode to infinity near the barrier $H$, creating extreme dealer hedging risk.</td>
+</tr>
+<tr>
+<td><strong>3. Binary / Digital Options</strong></td>
+<td>Pays a fixed lump sum $$Q$ if $S_T &gt; K$ (<strong>Cash-or-Nothing</strong>), or $$0$ otherwise.</td>
+<td>Used in structured retail notes, event prediction markets, and executive bonus triggers.</td>
+<td>Delta and Gamma invert near expiry; replicates an infinitely tight vertical call spread.</td>
+</tr>
+<tr>
+<td><strong>4. Lookback Options</strong></td>
+<td>Holder buys at the <strong>lowest price</strong> ($S_{\min}$) or sells at the <strong>highest price</strong> ($S_{\max}$) achieved during the option&#39;s life.</td>
+<td>Eliminates market-timing regret (&quot;perfect hindsight&quot;).</td>
+<td><strong>Extremely expensive</strong> upfront premium; rarely cost-effective for corporate hedging.</td>
+</tr>
+<tr>
+<td><strong>5. Compound &amp; Rainbow Options</strong></td>
+<td><strong>Compound:</strong> An option on an option (e.g., Call on a Call).<br><strong>Rainbow:</strong> Payoff depends on 2+ correlated assets.</td>
+<td>Used for phased R&amp;D projects, M&amp;A bidding contingencies, and dual-commodity power generation spreads.</td>
+<td>Requires multi-dimensional Monte Carlo or bivariate normal copulas; highly sensitive to correlation ($\rho$).</td>
+</tr>
+</tbody></table>
+<p>$$\text{In-Out Parity (European Barrier Options): } C_{\text{Vanilla}} = C_{\text{Up-and-In}} + C_{\text{Up-and-Out}}$$</p>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;A Knock-Out Option is a safe, cheap substitute for a standard protective put.&quot;</strong><br><em>Reality:</em> Consider a Down-and-Out Put with strike $K = $100$ and knock-out barrier $H = $80$. It protects you against a gentle decline from $$100$ to $$81$, <strong>but the exact moment a market crash hits $$80$, your insurance policy vanishes into thin air</strong> right when you need it most! Never use knock-out barriers in the direction of your catastrophic tail risk.</li>
+<li><strong>Misconception 2: &quot;Binary (Digital) options are easy to delta-hedge near expiration.&quot;</strong><br><em>Reality:</em> One hour before expiration, if the stock is at $$99.99$ on a $$100.00$ binary option paying $$1,000,000$, a $$0.02$ tick changes the payout from $$0$ to $$1,000,000$. The theoretical Delta exceeds $50,000,000$, making continuous delta-hedging impossible (&quot;pin risk on steroids&quot;). Dealers hedge binaries by over-hedging with tight vanilla vertical spreads.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>For corporate currency and commodity hedging, <strong>Asian Options are the gold standard; Barrier Options are usually a trap</strong>:</p>
+<ul>
+<li><strong>Always favor Asian Options:</strong> A multinational corporation does not earn 100% of its European revenue on December 31 at 4:00 PM—it earns revenue smoothly every week of the year. Hedging annual foreign cash flows with a single Asian Average-Rate Option is $35%+$ cheaper than buying a vanilla option and matches your actual cash flow timing.</li>
+<li><strong>Avoid Complex Structured Notes:</strong> When an investment bank pitches a &quot;Zero-Cost Structured FX Accumulator&quot; or &quot;Target Redemption Forward (TARF)&quot; loaded with knock-out barriers, walk away. Those structures give you small gains in calm markets and saddle you with $2\times$ leveraged losses when currencies break out.</li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/monte-carlo.html" class="related-chip">
+          <span>Monte Carlo Simulation</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+
+        <a href="/pages/learn/black-scholes.html" class="related-chip">
+          <span>Black-Scholes Option Pricing</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/corporate-hedging.html" class="related-chip">
+          <span>Corporate Hedging Strategy & Risk Governance</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

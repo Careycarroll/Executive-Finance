@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Market Index Construction Mechanics — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Market Index Construction Mechanics</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 2</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Market Index Construction Mechanics</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Three Primary Index Weighting Methodologies</h3>
+<table>
+<thead>
+<tr>
+<th>Weighting Methodology</th>
+<th>Mathematical Weight of Stock $i$</th>
+<th>Canonical Examples</th>
+<th>Structural Characteristics &amp; Biases</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1. Price-Weighted</strong></td>
+<td>$w_i = \frac{P_i}{\sum_{j=1}^N P_j}$</td>
+<td>Dow Jones Industrial Average (DJIA), Nikkei 225</td>
+<td><strong>Archaic &amp; Arbitrary:</strong> A stock trading at $400/share has $10\times$ the index impact of a stock trading at $40/share, regardless of how large or small the actual company is! Stock splits require adjusting the <strong>Dow Divisor</strong>.</td>
+</tr>
+<tr>
+<td><strong>2. Market-Cap Weighted (Float-Adjusted)</strong></td>
+<td>$w_i = \frac{P_i \cdot Q_{i,\text{float}}}{\sum_{j=1}^N P_j \cdot Q_{j,\text{float}}}$</td>
+<td>S&amp;P 500, NASDAQ-100, Russell 2000, MSCI World</td>
+<td><strong>Macro-Consistent &amp; Self-Rebalancing:</strong> Weights reflect true economic capital capacity. Zero turnover required when stock prices move (weights adjust automatically with price). Prone to concentration in mega-cap bubbles.</td>
+</tr>
+<tr>
+<td><strong>3. Equal-Weighted</strong></td>
+<td>$w_i = \frac{1}{N}$</td>
+<td>S&amp;P 500 Equal Weight (RSP)</td>
+<td><strong>Contrarian Factor Tilt:</strong> Assigns $0.20%$ weight to every S&amp;P 500 company. Requires quarterly rebalancing: systematically <strong>sells recent winners and buys recent losers</strong>, creating a structural Small-Cap and Value factor tilt (at the cost of higher turnover and capital gains tax).</td>
+</tr>
+</tbody></table>
+<pre><code>Free-Float Adjustment in Modern Market-Cap Indices
+┌────────────────────────────────────────────────────────┐
+│ Total Shares Outstanding × Share Price = Total Mkt Cap │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Subtract Locked-Up Non-Tradable Shares:                │
+│ • Government sovereign ownership stakes                │
+│ • Controlling founder/family insider blocks            │
+│ • Cross-held corporate treasury shares                 │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ = Investable Free-Float Market Capitalization          │
+│ (Ensures index ETFs only buy shares that actually trade)│
+└────────────────────────────────────────────────────────┘
+</code></pre>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;A 2-for-1 stock split changes a company&#39;s weight in the S&amp;P 500.&quot;</strong><br><em>Reality:</em> In a market-cap-weighted index like the S&amp;P 500, a 2-for-1 stock split doubles the share count ($2Q$) and halves the share price ($P/2$), leaving total market capitalization ($P \times Q$) and index weight completely unchanged! However, in a <strong>price-weighted index</strong> like the Dow Jones Industrial Average, a 2-for-1 split cuts the stock&#39;s index weight in half!</li>
+<li><strong>Misconception 2: &quot;The S&amp;P 500 is a purely mechanical list of the 500 largest US companies.&quot;</strong><br><em>Reality:</em> Unlike the Russell 1000 (which is strictly rules-based by market cap rank), the <strong>S&amp;P 500 is selected by an S&amp;P Index Committee</strong> and imposes strict qualitative and quantitative screens, including requiring positive cumulative GAAP earnings over the trailing four quarters and minimum public float liquidity.</li>
+<li><strong>Misconception 3: &quot;Bond indices work just like stock indices.&quot;</strong><br><em>Reality:</em> Market-cap-weighted fixed income indices (like the Bloomberg US Aggregate Bond Index) suffer from the <strong>&quot;Bums Problem&quot;</strong>: the corporations or governments that issue the most debt receive the largest weight in the index! Passive bond investors automatically allocate the most capital to the most heavily indebted borrowers.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>When benchmarking your corporate stock performance or designing executive Long-Term Incentive Plan (LTIP) Relative Total Shareholder Return (rTSR) hurdles:</p>
+<ul>
+<li>Never compare a mid-cap operating company against a top-heavy, mega-cap-dominated index without checking <strong>equal-weighted vs. cap-weighted divergence</strong>. In years where 5 mega-cap tech stocks drive 70% of the cap-weighted S&amp;P 500 return, 80% of healthy operating businesses will appear to &quot;underperform the market.&quot;</li>
+<li>Use an <strong>Equal-Weighted Industry Peer Index</strong> for executive rTSR performance share vesting so management is rewarded for outperforming true operational peers rather than penalized for not being a trillion-dollar monopoly.</li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/active-vs-passive.html" class="related-chip">
+          <span>Active vs. Passive Management & Alpha</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/diversification.html" class="related-chip">
+          <span>Diversification and Portfolio Risk</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/capm.html" class="related-chip">
+          <span>Capital Asset Pricing Model (CAPM)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

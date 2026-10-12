@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>American Options & Early Exercise Mechanics — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">American Options & Early Exercise Mechanics</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 11</span>
+          <span class="concept-hero__citation-secondary">· also: Sheldon Natenberg Ch. 15</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>American Options &amp; Early Exercise Mechanics</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Three Laws of Optimal Early Exercise</h3>
+<table>
+<thead>
+<tr>
+<th>Option Type</th>
+<th>Optimal Early Exercise Rule</th>
+<th>Mathematical &amp; Economic Proof</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1. American Call on Non-Dividend Stock ($D = 0$)</strong></td>
+<td><strong>NEVER exercise early!</strong> ($C_{\text{Amer}} = C_{\text{Euro}}$)</td>
+<td>Since $C \ge S_t - K e^{-r(T-t)} &gt; S_t - K$, the market price of the call is strictly greater than its exercise payoff $S_t - K$. Selling the call in the open market always yields more cash than exercising it! Furthermore, delaying exercise earns interest on the strike cash $K$ and retains downside protection if the stock crashes.</td>
+</tr>
+<tr>
+<td><strong>2. American Call on Dividend-Paying Stock ($D &gt; 0$)</strong></td>
+<td><strong>Exercise only immediately prior to an Ex-Dividend Date</strong> if the dividend exceeds forfeited interest and time value.</td>
+<td>On the ex-dividend date, the stock price drops by $D$. It is optimal to exercise right before the ex-dividend date only if $D &gt; K \left(1 - e^{-r\Delta t}\right)$ plus remaining put insurance value.</td>
+</tr>
+<tr>
+<td><strong>3. American Put on Any Stock</strong></td>
+<td><strong>Can be optimal to exercise early at any time</strong> if sufficiently Deep In-The-Money!</td>
+<td>A put&#39;s maximum payoff is capped at $K$ (if $S \to 0$). If a stock drops to $$0.50$ on a $$100$ strike put, the put cannot gain much more intrinsic value, and waiting delays receiving the $$100$ cash. Exercising immediately collects $$99.50$ cash today to earn risk-free interest $r \cdot K$.</td>
+</tr>
+</tbody></table>
+<p>$$\text{Early Exercise Premium} = V_{\text{American}} - V_{\text{European}} \ge 0$$</p>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;If my American call option on a non-dividend tech stock has doubled in value, I should exercise it to lock in profits.&quot;</strong><br><em>Reality:</em> Never exercise an in-the-money call on a non-dividend stock before expiration—<strong>sell the call option in the market instead</strong>! If a $100 strike call is trading at $25 while the stock is at $122, exercising gives you $22 of equity value and throws $3.00 of extrinsic time value straight into the trash.</li>
+<li><strong>Misconception 2: &quot;High interest rates reduce the incentive to exercise American puts early.&quot;</strong><br><em>Reality:</em> High interest rates <em>increase</em> the incentive to exercise deep-in-the-money American puts early! Exercising a put hands you cash ($K$) today; when risk-free rates are $5%+$, getting that cash immediately to invest in Treasury bills is highly valuable.</li>
+<li><strong>Misconception 3: &quot;Put-Call Parity holds as an exact equality for American options.&quot;</strong><br><em>Reality:</em> Exact Put-Call Parity ($C + K e^{-rT} = P + S_0$) only holds for European options. For American options, it is replaced by inequality bounds: $S_0 - K \le C_{\text{Amer}} - P_{\text{Amer}} \le S_0 - K e^{-rT}$.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>If you are trading <strong>Covered Calls</strong> or <strong>Vertical Call Spreads</strong> on dividend-paying equities, watch out for <strong>Dividend Assignment Risk</strong>:
+If your short call is in-the-money the afternoon before the stock goes ex-dividend, and the remaining extrinsic time value of the corresponding put is less than the upcoming cash dividend ($P_{\text{extrinsic}} &lt; D$), institutional arbitrageurs will <strong>automatically exercise your short call overnight</strong> to capture the dividend! Close or roll in-the-money short calls the day <em>before</em> the ex-dividend date to avoid unexpected short-stock dividend liabilities.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/binomial-pricing.html" class="related-chip">
+          <span>Binomial Option Pricing Model</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/black-scholes.html" class="related-chip">
+          <span>Black-Scholes Option Pricing</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/put-call-parity.html" class="related-chip">
+          <span>Put-Call Parity and Synthetic Equivalence</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Active vs. Passive Management & Alpha — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Active vs. Passive Management & Alpha</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 11, 24</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Active vs. Passive Management &amp; Alpha</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Evaluating Active Portfolio Skill: Alpha, Information Ratio &amp; Grinold&#39;s Fundamental Law</h3>
+<p>$$\text{Jensen&#39;s Alpha: } \alpha_P = (R_P - r_f) - \beta_P (R_M - r_f)$$</p>
+<p>$$\text{Information Ratio (IR): } \text{IR} = \frac{\alpha_P}{\sigma(e_P)} = \frac{\text{Active Return}}{\text{Tracking Error}}$$</p>
+<p>$$\text{Grinold&#39;s Fundamental Law of Active Management: } \text{IR} \approx \text{IC} \cdot \sqrt{\text{BR}}$$</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Definition</th>
+<th>Institutional Benchmark</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Jensen&#39;s Alpha ($\alpha_P$)</strong></td>
+<td>Risk-adjusted excess return over the CAPM or multi-factor benchmark.</td>
+<td>Positive after fees in $&lt;15%$ of public equity mutual funds over 10-year horizons.</td>
+</tr>
+<tr>
+<td><strong>Tracking Error ($\sigma(e_P)$)</strong></td>
+<td>Standard deviation of the difference between portfolio return and benchmark return ($R_P - R_B$).</td>
+<td>Index funds: $&lt;0.05%$. Core active: $2%-4%$. Concentrated high-conviction: $6%-10%$.</td>
+</tr>
+<tr>
+<td><strong>Information Coefficient ($\text{IC}$)</strong></td>
+<td>Correlation between the manager&#39;s forecasted returns and actual realized returns (Skill).</td>
+<td>Top-decile quant/fundamental managers achieve $\text{IC} \approx 0.05 - 0.10$.</td>
+</tr>
+<tr>
+<td><strong>Breadth ($\text{BR}$)</strong></td>
+<td>Number of independent active investment bets taken per year.</td>
+<td>Explains why high-frequency quant funds (low IC, huge Breadth) achieve high IR.</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;If a manager beat the S&amp;P 500 by 3% per year for 5 years, they have proven alpha.&quot;</strong><br><em>Reality:</em> In 90% of cases, excess return is simply <strong>disguised factor beta</strong> (leverage on high-beta tech stocks, small-cap tilt, or illiquidity premium), not true security-selection alpha! Moreover, $t\text{-stat} = \text{IR} \times \sqrt{T}$. If a manager has an Information Ratio of $0.50$, it takes $T = (2.0 / 0.50)^2 = \mathbf{16\text{ years}}$ of track record to prove at the $95%$ confidence level ($t = 2.0$) that their performance is skill rather than luck!</li>
+<li><strong>Misconception 2: &quot;If everyone switches to passive index funds, markets will stop working.&quot;</strong><br><em>Reality:</em> This is the <strong>Grossman-Stiglitz Paradox (1980)</strong>. Markets do not need 90% of participants to be active price-discoverers; a small, hyper-competitive core of institutional hedge funds and informed specialists is sufficient to keep prices near fundamental value.</li>
+<li><strong>Misconception 3: &quot;Passive indexing works equally well in all asset classes.&quot;</strong><br><em>Reality:</em> While US Large-Cap Equities (S&amp;P 500) are hyper-efficient ($&gt;90%$ of active funds lose over 15 years), less liquid, fragmented markets with high information asymmetry—such as distressed credit, lower-middle-market private equity, micro-cap equities, and direct real estate—offer structural pockets where skilled active operators generate persistent net alpha.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Construct your personal and corporate endowment portfolios using <strong>Core-Satellite Architecture</strong>:</p>
+<ol>
+<li><strong>The Core (75%–85% of liquid capital):</strong> Allocate to ultra-low-cost, tax-efficient passive index ETFs (charging $0.03%-0.07%$ expense ratios). Never pay a mutual fund manager $1.00%$ ($100\text{ bps}$) for &quot;closet indexing&quot; (low tracking error to the S&amp;P 500).</li>
+<li><strong>The Satellites (15%–25% of capital):</strong> Deploy active risk budgets strictly into private markets, direct operational businesses, or specialized strategies where you possess proprietary informational edge, structural tax advantages, or active governance control.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/market-efficiency.html" class="related-chip">
+          <span>Market Efficiency (EMH Forms)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/capm.html" class="related-chip">
+          <span>Capital Asset Pricing Model (CAPM)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/performance-attribution.html" class="related-chip">
+          <span>Performance Attribution (Brinson-Fachler Model)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
