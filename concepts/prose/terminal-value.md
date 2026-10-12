@@ -58,3 +58,4 @@ A 3.31% perpetual growth rate exceeds projected long-term US GDP growth ($2.0\%-
 Beware the **"Terminal Year Reinvestment Distortion"**: In year $T$, models frequently show high growth (e.g., 10% revenue growth) but show CapEx equal to Depreciation and zero working capital changes! In reality, if a company grows at $g$ in perpetuity, it MUST reinvest capital to support that growth:
 $$\text{Reinvestment Rate} = \frac{g}{\text{RONIC}}$$
 If you assume a 3% perpetual growth rate and a 10% Return on New Invested Capital (RONIC), the firm MUST reinvest $30\%$ of its NOPAT every year ($3\% / 10\% = 30\%$). If your model assumes $g = 3\%$ but gives the company 100% free cash flow conversion, you are creating phantom value out of thin air.
+

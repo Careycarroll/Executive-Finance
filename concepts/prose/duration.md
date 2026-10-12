@@ -35,3 +35,4 @@ Duration is a linear first-order approximation. For tiny rate movements ($\pm 10
 To price large interest rate shocks accurately, always combine Modified Duration with **Convexity**:
 $$\frac{\Delta P}{P} \approx -D^* \cdot \Delta y + \frac{1}{2} \cdot \text{Convexity} \cdot (\Delta y)^2$$
 Without the convexity adjustment, corporate hedging programs will over-hedge rate hikes and leave portfolios under-protected.
+

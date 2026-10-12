@@ -48,3 +48,4 @@ Notice that YTM ($10.0\%$) consists of two components:
 
 ## Notes for Future-Me
 YTM is a promised yield, not an expected yield! If a distressed high-yield bond trades at 50 cents on the dollar with a quoted YTM of 28%, that 28% yield is only realized if the company miraculously pays every single coupon on time and repays par at maturity without restructuring. If there is a 40% probability of default and a 30% recovery rate, the **Expected Yield** is far lower than 28%. Never confuse contractual YTM with risk-adjusted expected return.
+

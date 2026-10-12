@@ -48,3 +48,4 @@ Direct check: $(0.40 \times 4.0\%) + (0.60 \times 10.0\%) = 1.6\% + 6.0\% = 7.60
 
 ## Notes for Future-Me
 Tobin's Separation Theorem is liberating for executive asset management: you do not need to create customized portfolios of 500 different stock picks for every different risk profile in your family office or corporate pension. You find the single best tangency portfolio that maximizes Sharpe Ratio once, and then dial risk up or down simply by blending it with cash or borrowing leverage.
+

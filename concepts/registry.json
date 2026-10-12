@@ -1042,6 +1042,513 @@
       "template": "formula",
       "prose_ref": "concepts/prose/credit-spreads.md",
       "related": ["bond-pricing", "ytm", "cost-of-debt"]
+    },
+    {
+      "id": "forwards-futures",
+      "domain": "deriv",
+      "title": "Forwards vs. Futures Mechanics",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["2", "3"], "primary": true },
+        { "book": "bodie", "chapters": ["22"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/forwards-futures.md",
+      "related": ["futures-pricing", "swaps-ir", "duration-hedging"]
+    },
+    {
+      "id": "futures-pricing",
+      "domain": "deriv",
+      "title": "Cost of Carry and Futures Pricing",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["5"], "primary": true },
+        { "book": "bodie", "chapters": ["22"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/futures-pricing.md",
+      "related": ["forwards-futures", "put-call-parity", "yield-curve"]
+    },
+    {
+      "id": "put-call-parity",
+      "domain": "deriv",
+      "title": "Put-Call Parity and Synthetic Equivalence",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["11"], "primary": true },
+        { "book": "natenberg", "chapters": ["3"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/put-call-parity.md",
+      "related": ["black-scholes", "strategy-covered-call", "strategy-protective-put"]
+    },
+    {
+      "id": "binomial-pricing",
+      "domain": "deriv",
+      "title": "Binomial Option Pricing Model",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["13"], "primary": true },
+        { "book": "natenberg", "chapters": ["15"] }
+      ],
+      "template": "interactive",
+      "component": "binomial-tree",
+      "defaults": {
+        "s0": 100,
+        "strike": 100,
+        "rate": 0.05,
+        "vol": 0.20,
+        "steps": 3,
+        "option_type": "call",
+        "exercise_style": "european"
+      },
+      "examples": [
+        {
+          "label": "3-Step ATM European Call",
+          "config": {
+            "s0": 100,
+            "strike": 100,
+            "rate": 0.05,
+            "vol": 0.20,
+            "steps": 3,
+            "option_type": "call",
+            "exercise_style": "european"
+          }
+        },
+        {
+          "label": "American Put Early Exercise",
+          "config": {
+            "s0": 70,
+            "strike": 100,
+            "rate": 0.10,
+            "vol": 0.20,
+            "steps": 4,
+            "option_type": "put",
+            "exercise_style": "american"
+          }
+        },
+        {
+          "label": "High Volatility Call (50% Vol)",
+          "config": {
+            "s0": 100,
+            "strike": 100,
+            "rate": 0.05,
+            "vol": 0.50,
+            "steps": 3,
+            "option_type": "call",
+            "exercise_style": "european"
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/binomial-pricing.md",
+      "related": ["black-scholes", "greeks-delta", "put-call-parity"]
+    },
+    {
+      "id": "swaps-ir",
+      "domain": "deriv",
+      "title": "Interest Rate Swaps and Comparative Advantage",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["7"], "primary": true },
+        { "book": "bodie", "chapters": ["23"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/swaps-ir.md",
+      "related": ["forwards-futures", "yield-curve", "duration-hedging"]
+    },
+    {
+      "id": "greeks-delta",
+      "domain": "deriv",
+      "title": "Delta Sensitivity & Directional Hedge Ratio",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["19"], "primary": true },
+        { "book": "natenberg", "chapters": ["6"] }
+      ],
+      "template": "interactive",
+      "component": "greeks-visualizer",
+      "defaults": {
+        "greek": "delta",
+        "spot": 100,
+        "strike": 100,
+        "rate": 0.05,
+        "vol": 0.20,
+        "time_to_expiry": 1.0,
+        "option_type": "call"
+      },
+      "examples": [
+        {
+          "label": "At-the-Money 1Y Call",
+          "config": {
+            "greek": "delta",
+            "spot": 100,
+            "strike": 100,
+            "rate": 0.05,
+            "vol": 0.20,
+            "time_to_expiry": 1.0,
+            "option_type": "call"
+          }
+        },
+        {
+          "label": "Deep In-the-Money Call (Delta ~ 0.9)",
+          "config": {
+            "greek": "delta",
+            "spot": 130,
+            "strike": 100,
+            "rate": 0.05,
+            "vol": 0.20,
+            "time_to_expiry": 0.5,
+            "option_type": "call"
+          }
+        },
+        {
+          "label": "Out-of-the-Money Put (Delta ~ -0.2)",
+          "config": {
+            "greek": "delta",
+            "spot": 115,
+            "strike": 100,
+            "rate": 0.05,
+            "vol": 0.25,
+            "time_to_expiry": 0.5,
+            "option_type": "put"
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/greeks-delta.md",
+      "related": ["greeks-gamma", "delta-hedging", "black-scholes"]
+    },
+    {
+      "id": "greeks-gamma",
+      "domain": "deriv",
+      "title": "Gamma Curvature & Convexity Risk",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["19"], "primary": true },
+        { "book": "natenberg", "chapters": ["6"] }
+      ],
+      "template": "interactive",
+      "component": "greeks-visualizer",
+      "defaults": {
+        "greek": "gamma",
+        "spot": 100,
+        "strike": 100,
+        "rate": 0.05,
+        "vol": 0.20,
+        "time_to_expiry": 1.0,
+        "option_type": "call"
+      },
+      "examples": [
+        {
+          "label": "At-the-Money 1Y Baseline",
+          "config": {
+            "greek": "gamma",
+            "spot": 100,
+            "strike": 100,
+            "rate": 0.05,
+            "vol": 0.20,
+            "time_to_expiry": 1.0
+          }
+        },
+        {
+          "label": "Near-Expiration Pin Risk (0.05Y)",
+          "config": {
+            "greek": "gamma",
+            "spot": 100,
+            "strike": 100,
+            "rate": 0.05,
+            "vol": 0.20,
+            "time_to_expiry": 0.05
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/greeks-gamma.md",
+      "related": ["greeks-delta", "greeks-theta", "delta-hedging"]
+    },
+    {
+      "id": "greeks-theta",
+      "domain": "deriv",
+      "title": "Theta Time Decay",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["19"], "primary": true },
+        { "book": "natenberg", "chapters": ["6"] }
+      ],
+      "template": "interactive",
+      "component": "greeks-visualizer",
+      "defaults": {
+        "greek": "theta",
+        "spot": 100,
+        "strike": 100,
+        "rate": 0.05,
+        "vol": 0.20,
+        "time_to_expiry": 1.0,
+        "option_type": "call"
+      },
+      "examples": [
+        {
+          "label": "At-the-Money 1Y Call",
+          "config": {
+            "greek": "theta",
+            "spot": 100,
+            "strike": 100,
+            "rate": 0.05,
+            "vol": 0.20,
+            "time_to_expiry": 1.0
+          }
+        },
+        {
+          "label": "Accelerating 30-Day Decay",
+          "config": {
+            "greek": "theta",
+            "spot": 100,
+            "strike": 100,
+            "rate": 0.05,
+            "vol": 0.20,
+            "time_to_expiry": 0.08
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/greeks-theta.md",
+      "related": ["greeks-gamma", "strategy-covered-call", "black-scholes"]
+    },
+    {
+      "id": "greeks-vega",
+      "domain": "deriv",
+      "title": "Vega Volatility Exposure",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["19"], "primary": true },
+        { "book": "natenberg", "chapters": ["6"] }
+      ],
+      "template": "interactive",
+      "component": "greeks-visualizer",
+      "defaults": {
+        "greek": "vega",
+        "spot": 100,
+        "strike": 100,
+        "rate": 0.05,
+        "vol": 0.20,
+        "time_to_expiry": 1.0,
+        "option_type": "call"
+      },
+      "examples": [
+        {
+          "label": "At-the-Money 1Y Baseline",
+          "config": {
+            "greek": "vega",
+            "spot": 100,
+            "strike": 100,
+            "rate": 0.05,
+            "vol": 0.20,
+            "time_to_expiry": 1.0
+          }
+        },
+        {
+          "label": "High Volatility Spike (40%)",
+          "config": {
+            "greek": "vega",
+            "spot": 100,
+            "strike": 100,
+            "rate": 0.05,
+            "vol": 0.40,
+            "time_to_expiry": 1.0
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/greeks-vega.md",
+      "related": ["implied-vol", "vol-skew", "strategy-straddle"]
+    },
+    {
+      "id": "implied-vol",
+      "domain": "deriv",
+      "title": "Implied vs. Realized Volatility",
+      "tier": "core",
+      "sources": [
+        { "book": "natenberg", "chapters": ["4"], "primary": true },
+        { "book": "sinclair", "chapters": ["2"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/implied-vol.md",
+      "related": ["greeks-vega", "vol-skew", "edge-and-ev"]
+    },
+    {
+      "id": "vol-skew",
+      "domain": "deriv",
+      "title": "Volatility Skew, Smile & Fat Tails",
+      "tier": "core",
+      "sources": [
+        { "book": "natenberg", "chapters": ["17"], "primary": true },
+        { "book": "sinclair", "chapters": ["4"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/vol-skew.md",
+      "related": ["implied-vol", "black-scholes", "put-call-parity"]
+    },
+    {
+      "id": "delta-hedging",
+      "domain": "deriv",
+      "title": "Dynamic Delta Hedging & Rebalancing Costs",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["19"], "primary": true },
+        { "book": "sinclair", "chapters": ["3"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/delta-hedging.md",
+      "related": ["greeks-delta", "greeks-gamma", "implied-vol"]
+    },
+    {
+      "id": "strategy-covered-call",
+      "domain": "deriv",
+      "title": "Covered Call Strategy",
+      "tier": "core",
+      "sources": [
+        { "book": "natenberg", "chapters": ["7"], "primary": true },
+        { "book": "hull", "chapters": ["12"] }
+      ],
+      "template": "interactive",
+      "component": "payoff-diagram",
+      "defaults": {
+        "spot": 100,
+        "legs": [
+          { "type": "stock", "strike": 100, "premium": 0, "qty": 1 },
+          { "type": "call", "strike": 105, "premium": 3, "qty": -1 }
+        ],
+        "time_to_expiry": 0.25
+      },
+      "examples": [
+        {
+          "label": "Standard OTM Covered Call (105 Strike)",
+          "config": {
+            "spot": 100,
+            "legs": [
+              { "type": "stock", "strike": 100, "premium": 0, "qty": 1 },
+              { "type": "call", "strike": 105, "premium": 3, "qty": -1 }
+            ],
+            "time_to_expiry": 0.25
+          }
+        },
+        {
+          "label": "Aggressive ATM Covered Call (100 Strike)",
+          "config": {
+            "spot": 100,
+            "legs": [
+              { "type": "stock", "strike": 100, "premium": 0, "qty": 1 },
+              { "type": "call", "strike": 100, "premium": 5, "qty": -1 }
+            ],
+            "time_to_expiry": 0.25
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/strategy-covered-call.md",
+      "related": ["strategy-protective-put", "greeks-theta", "put-call-parity"]
+    },
+    {
+      "id": "strategy-protective-put",
+      "domain": "deriv",
+      "title": "Protective Put Strategy",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["12"], "primary": true },
+        { "book": "bodie", "chapters": ["20"] }
+      ],
+      "template": "interactive",
+      "component": "payoff-diagram",
+      "defaults": {
+        "spot": 100,
+        "legs": [
+          { "type": "stock", "strike": 100, "premium": 0, "qty": 1 },
+          { "type": "put", "strike": 100, "premium": 5, "qty": 1 }
+        ],
+        "time_to_expiry": 0.25
+      },
+      "examples": [
+        {
+          "label": "ATM Protective Put (100 Strike)",
+          "config": {
+            "spot": 100,
+            "legs": [
+              { "type": "stock", "strike": 100, "premium": 0, "qty": 1 },
+              { "type": "put", "strike": 100, "premium": 5, "qty": 1 }
+            ],
+            "time_to_expiry": 0.25
+          }
+        },
+        {
+          "label": "OTM Catastrophe Put (90 Strike)",
+          "config": {
+            "spot": 100,
+            "legs": [
+              { "type": "stock", "strike": 100, "premium": 0, "qty": 1 },
+              { "type": "put", "strike": 90, "premium": 2, "qty": 1 }
+            ],
+            "time_to_expiry": 0.25
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/strategy-protective-put.md",
+      "related": ["strategy-covered-call", "put-call-parity", "var"]
+    },
+    {
+      "id": "strategy-straddle",
+      "domain": "deriv",
+      "title": "Long Straddle Strategy",
+      "tier": "core",
+      "sources": [
+        { "book": "natenberg", "chapters": ["12"], "primary": true },
+        { "book": "hull", "chapters": ["12"] }
+      ],
+      "template": "interactive",
+      "component": "payoff-diagram",
+      "defaults": {
+        "spot": 100,
+        "legs": [
+          { "type": "call", "strike": 100, "premium": 5, "qty": 1 },
+          { "type": "put", "strike": 100, "premium": 5, "qty": 1 }
+        ],
+        "time_to_expiry": 0.25
+      },
+      "examples": [
+        {
+          "label": "At-the-Money Straddle (100 Strike)",
+          "config": {
+            "spot": 100,
+            "legs": [
+              { "type": "call", "strike": 100, "premium": 5, "qty": 1 },
+              { "type": "put", "strike": 100, "premium": 5, "qty": 1 }
+            ],
+            "time_to_expiry": 0.25
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/strategy-straddle.md",
+      "related": ["greeks-vega", "implied-vol", "strategy-spread-vertical"]
+    },
+    {
+      "id": "position-sizing",
+      "domain": "deriv",
+      "title": "Position Sizing & The Kelly Criterion",
+      "tier": "core",
+      "sources": [
+        { "book": "sinclair", "chapters": ["5"], "primary": true },
+        { "book": "bodie", "chapters": ["6"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/position-sizing.md",
+      "related": ["edge-and-ev", "var", "risk-return"]
+    },
+    {
+      "id": "edge-and-ev",
+      "domain": "deriv",
+      "title": "Mathematical Edge and Expected Value",
+      "tier": "core",
+      "sources": [
+        { "book": "sinclair", "chapters": ["1", "2"], "primary": true },
+        { "book": "natenberg", "chapters": ["18"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/edge-and-ev.md",
+      "related": ["position-sizing", "implied-vol", "risk-return"]
     }
   ]
 }

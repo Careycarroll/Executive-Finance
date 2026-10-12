@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Position Sizing & The Kelly Criterion — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Position Sizing & The Kelly Criterion</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Euan Sinclair Ch. 5</span>
+          <span class="concept-hero__citation-secondary">· also: Zvi Bodie Ch. 6</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>In quantitative trading and speculative capital allocation, having a positive mathematical edge ($\text{EV} &gt; 0$) is necessary, but wholly insufficient to prevent catastrophic bankruptcy. If a trader or enterprise bets too aggressively on favorable bets, sequential streaks of bad variance will trigger the <strong>Gambler&#39;s Ruin (irreversible capital drawdown)</strong>. Conversely, betting too little leaves compounding wealth on the table.</p>
+<p>John L. Kelly Jr. (Bell Labs, 1956) solved this by deriving the <strong>Kelly Criterion</strong>: the exact fraction of total bankroll or capital that maximizes the long-term expected geometric growth rate of wealth ($\mathbb{E}[\ln(W_{\infty})]$).</p>
+<p>The core insight of the Kelly Criterion is that <strong>geometric compounding penalizes volatility exponentially</strong>:</p>
+<ul>
+<li>Betting less than the Kelly fraction ($f &lt; f^*$) produces sub-optimal wealth growth, but lowers drawdown volatility.</li>
+<li>Betting exactly full Kelly ($f = f^*$) maximizes compounding growth, but incurs extreme, stomach-churning drawdowns (up to $50%-80%$ peak-to-trough drawdowns).</li>
+<li>Betting more than full Kelly ($f &gt; f^*$) is catastrophic: you take more risk for <em>lower</em> expected compounding growth, eventually converging to guaranteed mathematical ruin ($W \to 0$).</li>
+</ul>
+<p>Professional institutional traders and hedge funds universally employ <strong>Fractional Kelly</strong> (typically Half-Kelly or Quarter-Kelly, $f^* / 2$ or $f^* / 4$) to capture $75%-90%$ of optimal growth while slashing drawdown severity by half.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="f^* = \frac{p \cdot b - q}{b} = \frac{p \cdot (b + 1) - 1}{b} = \frac{\text{Edge}}{\text{Odds}} \quad \text{(Binary Bets)}
+
+$$f^* = \frac{\mu - r}{\sigma^2} \quad \text{(Continuous Continuous-Time Asset Allocation)}$$
+
+$$f_{\text{practical}} = c \cdot f^* \quad \text{where } c \in [0.25, 0.50] \text{ (Fractional Kelly)}">
+            f^* = \frac{p \cdot b - q}{b} = \frac{p \cdot (b + 1) - 1}{b} = \frac{\text{Edge}}{\text{Odds}} \quad \text{(Binary Bets)}
+
+$$f^* = \frac{\mu - r}{\sigma^2} \quad \text{(Continuous Continuous-Time Asset Allocation)}$$
+
+$$f_{\text{practical}} = c \cdot f^* \quad \text{where } c \in [0.25, 0.50] \text{ (Fractional Kelly)}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>f^</strong>*: Optimal percentage of total capital/bankroll to commit to the trade.</li>
+<li><strong>p</strong>: Probability of winning the trade.</li>
+<li><strong>q</strong>: Probability of losing the trade ($1 - p$).</li>
+<li><strong>b</strong>: Net odds received on the wager ($\frac{\text{Dollar Profit on Win}}{\text{Dollar Loss on Loss}}$).</li>
+<li><strong>\text{Edge}</strong>: Mathematical advantage ($p \cdot b - q$).</li>
+<li><strong>\mu - r</strong>: Excess expected return over risk-free rate.</li>
+<li><strong>\sigma^2</strong>: Variance of returns.</li>
+<li><strong>c</strong>: Kelly fraction multiplier (e.g., $0.5$ for Half-Kelly).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A quantitative trading strategy identifies an asymmetric earnings options trade with the following parameters:</p>
+<ul>
+<li>Probability of profit ($p$): $60%$ ($0.60$)</li>
+<li>Probability of loss ($q$): $40%$ ($0.40$)</li>
+<li>Payout odds ($b$): On a win, the trade makes $$1.50$ profit for every $$1.00$ risked ($b = 1.50$).</li>
+<li>Total portfolio capital available: $$1{,}000{,}000$.</li>
+</ul>
+<p><strong>Step 1: Calculate Full Kelly Fraction ($f^*$)</strong>
+$$f^* = \frac{(0.60 \times 1.50) - 0.40}{1.50} = \frac{0.90 - 0.40}{1.50} = \frac{0.50}{1.50} = 0.333 \ (33.3%)$$</p>
+<p>Full Kelly dictates wagering $33.3%$ of the entire $$1\text{M}$ capital base ($$333{,}333$) on this single trade.</p>
+<p><strong>Step 2: Apply Institutional Half-Kelly Reality Filter ($c = 0.50$)</strong>
+$$f_{\text{Half-Kelly}} = 0.50 \times 33.3% = 16.7% \implies $167{,}000$$</p>
+<p><strong>Step 3: Account for Parameter Uncertainty (Quarter-Kelly, $c = 0.25$)</strong>
+Because real-world win rates are estimated with statistical noise, hedge fund risk limits dictate Quarter-Kelly:
+$$f_{\text{Quarter-Kelly}} = 0.25 \times 33.3% = 8.33% \implies $83{,}333$$</p>
+<p>Allocating $$83{,}333$ captures $75%$ of optimal long-term compounding growth while ensuring that a rare string of 5 consecutive losses causes only a manageable drawdown rather than total liquidation.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Sizing algorithmic trading bets, allocating corporate venture capital across early-stage seed projects, setting position limits for credit default desks, and deciding capital commitments in binary M&amp;A auctions.</li>
+<li><strong>When not to use / Caveats:</strong> NEVER use Full Kelly when win probability $p$ is based on short-term backtests! Backtests suffer from overfitting and survivorship bias. Overestimating your edge by even $20%$ when using Full Kelly pushes your allocation into the negative-compounding death zone ($f &gt; 2 f^*$), guaranteeing account destruction.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>&quot;Surviving variance is the prerequisite to compounding.&quot; The most brilliant mathematical edge in the world is useless if you get margin-called on step 14 before the law of large numbers kicks in. Always default to <strong>Quarter-Kelly or Half-Kelly</strong>. If your model tells you to put 30% of your fund into a trade, scale it back to 7.5%. You will sacrifice only a tiny fraction of peak theoretical upside while buying complete structural immunity against black swan wipeouts.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/edge-and-ev.html" class="related-chip">
+          <span>Mathematical Edge and Expected Value</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/var.html" class="related-chip">
+          <span>Value at Risk (VaR)</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+
+        <a href="/pages/learn/risk-return.html" class="related-chip">
+          <span>Risk-Return Tradeoff</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

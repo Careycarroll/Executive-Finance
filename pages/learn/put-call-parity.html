@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Put-Call Parity and Synthetic Equivalence — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Put-Call Parity and Synthetic Equivalence</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 11</span>
+          <span class="concept-hero__citation-secondary">· also: Sheldon Natenberg Ch. 3</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Put-Call Parity is one of the most elegant and fundamental equilibrium laws in derivatives finance, proven by Hans Stoll in 1969. It establishes a static mathematical equality between the prices of European call options, European put options, the underlying stock, and a risk-free zero-coupon bond sharing the identical strike price ($K$) and expiration date ($T$).</p>
+<p>The intuition rests on <strong>Portfolio Equivalence</strong>:</p>
+<ul>
+<li><strong>Portfolio A (Fiduciary Call):</strong> Buy one European Call ($c$) and invest the present value of the strike ($K e^{-rT}$) in a risk-free bond.</li>
+<li><strong>Portfolio B (Protective Put):</strong> Buy one share of underlying stock ($S$) and buy one European Put ($p$).</li>
+</ul>
+<p>At expiration ($T$):</p>
+<ul>
+<li>If $S_T &gt; K$: Portfolio A call pays $S_T - K$ and the bond matures at $K$, giving total payoff $S_T$. Portfolio B put expires worthless, leaving the stock worth $S_T$.</li>
+<li>If $S_T \le K$: Portfolio A call expires worthless, and the bond matures at $K$. Portfolio B put exercises, allowing the investor to sell the stock for $K$.</li>
+</ul>
+<p>In every possible future state of the world, both portfolios have the exact same terminal payoff: $\max(S_T, K)$. Under the Law of One Price, they must cost the exact same amount today:
+$$c + K e^{-rT} = p + S_0$$</p>
+<p>This relationship allows traders to construct <strong>synthetic positions</strong>: any asset in the formula can be replicated synthetically using the other three.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="c + K \cdot e^{-r T} = p + S_0
+
+$$\text{Synthetic Stock: } S_0 = c - p + K \cdot e^{-r T}$$
+
+$$\text{Synthetic Call: } c = p + S_0 - K \cdot e^{-r T}$$
+
+$$\text{Synthetic Put: } p = c - S_0 + K \cdot e^{-r T}">
+            c + K \cdot e^{-r T} = p + S_0
+
+$$\text{Synthetic Stock: } S_0 = c - p + K \cdot e^{-r T}$$
+
+$$\text{Synthetic Call: } c = p + S_0 - K \cdot e^{-r T}$$
+
+$$\text{Synthetic Put: } p = c - S_0 + K \cdot e^{-r T}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>c</strong>: European Call option price today.</li>
+<li><strong>p</strong>: European Put option price today.</li>
+<li><strong>S_0</strong>: Current spot market price of the underlying asset.</li>
+<li><strong>K</strong>: Strike price common to both options.</li>
+<li><strong>r</strong>: Continuously compounded risk-free interest rate.</li>
+<li><strong>T</strong>: Time to expiration in years.</li>
+<li><strong>K e^{-rT}</strong>: Present value of the strike price payable at expiration.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A proprietary trading desk observes the following 1-year European option quotes on a non-dividend paying stock:</p>
+<ul>
+<li>Stock Spot Price ($S_0$): $$100.00$</li>
+<li>Strike Price ($K$): $$100.00$</li>
+<li>Risk-free rate ($r$): $5.0%$ ($e^{-0.05 \times 1} = 0.95123 \implies \text{PV}(K) = $95.12$)</li>
+<li>Market Call Price ($c$): $$12.00$</li>
+<li>Market Put Price ($p$): Suppose the market quotes the put at $$6.00$.</li>
+</ul>
+<p><strong>Step 1: Check Put-Call Parity Balance</strong>
+$$\text{Left Side (Call + Bond)} = c + K e^{-rT} = $12.00 + $95.12 = $107.12$$
+$$\text{Right Side (Put + Stock)} = p + S_0 = $6.00 + $100.00 = $106.00$$</p>
+<p><strong>Step 2: Exploit Arbitrage Discrepancy</strong>
+The Left Side is overpriced relative to the Right Side by $$1.12$!
+<strong>Arbitrage Trade Structure:</strong></p>
+<ol>
+<li>Sell the expensive assets: Short 1 Call ($+$12.00$) and borrow $$95.12$ at $5%$ ($+$95.12$). Total cash inflow: $+$107.12$.</li>
+<li>Buy the cheap assets: Buy 1 Put ($-$6.00$) and buy 1 share of Stock ($-$100.00$). Total cash outflow: $-$106.00$.</li>
+<li><strong>Immediate Riskless Upfront Cash Profit:</strong> $$107.12 - $106.00 = +$1.12$.</li>
+</ol>
+<p>At expiration $T$:</p>
+<ul>
+<li>If $S_T = $120$: Short call is exercised against you ($-$20$), stock is worth $+$120$, put is worthless, repay loan principal and interest ($-$100$). Net cash flow: $-20 + 120 - 100 = $0$.</li>
+<li>If $S_T = $80$: Short call expires worthless, put is exercised ($+$20$), sell stock for $$80$, repay loan ($-$100$). Net cash flow: $0 + 20 + 80 - 100 = $0$.</li>
+</ul>
+<p>The arbitrageur locks in $$1.12$ upfront with absolute zero net payoff risk at maturity.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Option market making, checking options pricing integrity, creating synthetic short stock when borrowing shares is impossible or expensive (&quot;hard-to-borrow&quot; rebate fees), and conversions/reversals arbitrage.</li>
+<li><strong>When not to use / Caveats (American Options):</strong> Strict put-call parity equality ONLY holds for <strong>European-style options</strong>. For American options (which can be exercised prior to expiration), early exercise rights on puts (or calls on dividend-paying stocks) break the strict equality, turning parity into inequality bounds:
+$$S_0 - K \le C - P \le S_0 - K e^{-rT}$$</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Synthetic equivalence is the ultimate weapon against execution friction. If you need to short a stock that has a brutal $15%$ borrow fee, do not short the physical stock. Synthetically create the short by buying an at-the-money Put and selling an at-the-money Call ($S_{\text{synth}} = c - p$). The synthetic short gives you identical delta exposure and dollar-for-dollar downside participation without borrowing shares.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/black-scholes.html" class="related-chip">
+          <span>Black-Scholes Option Pricing</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/strategy-covered-call.html" class="related-chip">
+          <span>Covered Call Strategy</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/strategy-protective-put.html" class="related-chip">
+          <span>Protective Put Strategy</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

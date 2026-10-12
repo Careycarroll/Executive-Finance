@@ -42,3 +42,4 @@ At the exact point where **Portfolio Duration equals Target Liability Horizon ($
 
 ## Notes for Future-Me
 Look at Silicon Valley Bank (SVB) in 2023: they held short-duration demand deposits (liabilities with duration $< 1\text{ year}$) and invested them into 10-year fixed-rate mortgages and Treasuries with durations $> 6\text{ years}$ without interest rate hedges! When the Fed raised rates by 500 bps, their assets crashed by $17\%$, completely wiping out their equity capital and triggering a bank run. Never allow an organization you lead to run unhedged asset-liability duration mismatches to harvest short-term carry.
+

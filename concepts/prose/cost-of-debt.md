@@ -38,3 +38,4 @@ Even though the debt contract specifies a $6.0\%$ coupon, the actual cash cost d
 
 ## Notes for Future-Me
 Watch out for debt covenants and synthetic rating traps: as you increase leverage, your pre-tax debt yield does not stay flat—it steps up discontinuously if your rating falls from investment grade (BBB-) into high yield (BB+). The "junk bond barrier" immediately forces institutional bond funds (pension funds, insurance companies) to dump the paper, expanding credit spreads by 200–300 basis points overnight and tightening restrictive covenants. Always calculate after-tax debt cost across stress-tested credit rating buckets, not just today's baseline spread.
+

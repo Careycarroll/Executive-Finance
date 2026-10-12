@@ -50,3 +50,4 @@ Common equity holders can safely receive up to $\$42{,}000{,}000$ in cash divide
 
 ## Notes for Future-Me
 When inspecting financial projections, check the delta between **Net Income** and **FCFF**. If a company is reporting rapid revenue and accounting profit growth but persistent negative FCFF, they are either burning cash in ballooning uncollected accounts receivable ($\Delta\text{NWC}$ trap) or capitalizing regular expenses into aggressive long-term software CapEx assets. Earnings growth without free cash flow conversion is a classic precursor to emergency dilutive equity down-rounds or liquidity distress.
+

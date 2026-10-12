@@ -28,3 +28,4 @@ $$\text{Tangency Portfolio: } \max_{\mathbf{w}} \text{Sharpe} = \frac{\mathbf{w}
 Markowitz mean-variance optimization has famously been called an "error maximizer" by Richard Michaud. Because the algorithm takes expected returns and covariance estimates literally, it aggressively over-allocates capital to assets with the highest historical return estimates and lowest estimated correlations—which are precisely the assets most plagued by historical estimation error!
 
 In corporate treasury and endowment asset allocation, never run unconstrained MPT. Always apply **Black-Litterman shrinkage priors**, impose strict asset allocation weight constraints (e.g., maximum 25% in any single private asset class), or resample the covariance matrix via Monte Carlo simulation to avoid extreme, fragile allocations.
+

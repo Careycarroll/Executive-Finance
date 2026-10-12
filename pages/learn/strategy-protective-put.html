@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protective Put Strategy — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Protective Put Strategy</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 12</span>
+          <span class="concept-hero__citation-secondary">· also: Zvi Bodie Ch. 20</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The Protective Put (Portfolio Insurance) is the quintessential risk management strategy in institutional equity management. It consists of <strong>holding a long position in an underlying stock or portfolio while simultaneously purchasing a Put option on that same asset</strong>.</p>
+<p>The strategy acts exactly like a homeowners casualty insurance policy:</p>
+<ul>
+<li><strong>Catastrophic Floor:</strong> The strike price ($K$) of the put establishes a strictly guaranteed price floor below which portfolio losses cannot fall, regardless of how severe the market crash.</li>
+<li><strong>Uncapped Upside:</strong> If the stock appreciates, the investor retains 100% of the upside gains, minus only the upfront insurance deductible cost (the put premium $P_0$).</li>
+<li><strong>Maximum Loss:</strong> Strictly capped at $(S_0 - K) + P_0$.</li>
+</ul>
+<p>By Put-Call Parity ($S + p = c + K e^{-rT}$), a protective put is <strong>synthetically identical to a Long Call Option plus cash in a risk-free bond</strong>! Both positions deliver an identical asymmetric payoff: bounded downside protection combined with unlimited upside participation.</p>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;stock&quot;,&quot;strike&quot;:100,&quot;premium&quot;:0,&quot;qty&quot;:1},{&quot;type&quot;:&quot;put&quot;,&quot;strike&quot;:100,&quot;premium&quot;:5,&quot;qty&quot;:1}],&quot;time_to_expiry&quot;:0.25}">ATM Protective Put (100 Strike)</button>
+<button type="button" class="preset-btn" data-config="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;stock&quot;,&quot;strike&quot;:100,&quot;premium&quot;:0,&quot;qty&quot;:1},{&quot;type&quot;:&quot;put&quot;,&quot;strike&quot;:90,&quot;premium&quot;:2,&quot;qty&quot;:1}],&quot;time_to_expiry&quot;:0.25}">OTM Catastrophe Put (90 Strike)</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="payoff-diagram" data-defaults="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;stock&quot;,&quot;strike&quot;:100,&quot;premium&quot;:0,&quot;qty&quot;:1},{&quot;type&quot;:&quot;put&quot;,&quot;strike&quot;:100,&quot;premium&quot;:5,&quot;qty&quot;:1}],&quot;time_to_expiry&quot;:0.25}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\text{Net Payoff at Expiration } (T) = S_T - S_0 - P_0 + \max(0, K - S_T)
+
+$$\text{Floor Portfolio Value} = K - P_0 \quad \text{(Guaranteed minimum value at } T\text{)}$$
+
+$$\text{Max Loss} = (S_0 - K) + P_0 \quad \text{(Occurs if } S_T \le K\text{)}$$
+
+$$\text{Breakeven Stock Price} = S_0 + P_0">
+              \text{Net Payoff at Expiration } (T) = S_T - S_0 - P_0 + \max(0, K - S_T)
+
+$$\text{Floor Portfolio Value} = K - P_0 \quad \text{(Guaranteed minimum value at } T\text{)}$$
+
+$$\text{Max Loss} = (S_0 - K) + P_0 \quad \text{(Occurs if } S_T \le K\text{)}$$
+
+$$\text{Breakeven Stock Price} = S_0 + P_0
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>S_0</strong>: Initial purchase price of the underlying stock.</li>
+<li><strong>S_T</strong>: Stock price at option expiration.</li>
+<li><strong>K</strong>: Strike price of the protective put option ($K \le S_0$).</li>
+<li><strong>P_0</strong>: Cash premium paid upfront per share to purchase the put option.</li>
+<li><strong>\text{Breakeven}</strong>: Stock price needed at expiration to recover the initial stock cost plus the insurance premium paid.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Beware of <strong>&quot;Continuous Insurance Bleed&quot;</strong>: 
+Buying protective puts rolling month after month sounds safe, but due to the persistent <strong>equity volatility skew</strong>, out-of-the-money puts trade at steep implied volatility premiums. If an institutional manager buys 3-month rolling 10% OTM puts continuously over a 10-year bull market, the cumulative drag from paying put premiums will destroy $30%-50%$ of total fund returns!</p>
+<p><strong>Smart Insurance Architecture:</strong>
+Instead of paying cash out-of-pocket for naked protective puts, structure a <strong>Zero-Cost Collar</strong>:</p>
+<ol>
+<li>Own the underlying equity portfolio ($S_0$).</li>
+<li>Buy an Out-of-the-Money Put ($K_{\text{put}} = 90%$ of spot) for downside protection.</li>
+<li>Sell an Out-of-the-Money Call ($K_{\text{call}} = 110%$ of spot) where the cash collected from the call <em>exactly equals</em> the cash spent on the put!
+This immunizes the portfolio against bear market crashes with zero net cash outlay from the treasury, in exchange for agreeing to cap upside gains during the hedging window.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/strategy-covered-call.html" class="related-chip">
+          <span>Covered Call Strategy</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/put-call-parity.html" class="related-chip">
+          <span>Put-Call Parity and Synthetic Equivalence</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/var.html" class="related-chip">
+          <span>Value at Risk (VaR)</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

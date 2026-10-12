@@ -54,3 +54,4 @@ Instead, present the **Triangulated Range**:
 *"Under intrinsic DCF at an 8.5% WACC, value is $\$320\text{M}-\$380\text{M}$; under peer market trading multiples, value is $\$300\text{M}-\$350\text{M}$; with full control synergies in an M&A auction, precedent deals suggest $\$360\text{M}-\$420\text{M}$. We recommend bidding between $\$330\text{M}$ and $\$350\text{M}$ to capture attractive risk-adjusted upside."*
 
 That framing turns a theoretical accounting debate into an actionable strategic negotiation posture.
+

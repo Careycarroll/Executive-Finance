@@ -49,3 +49,4 @@ The bond trades at a **discount** of $\$864.10$ ($86.41\%$ of par) because its $
 Beware of **Clean Price vs. Dirty Price (Invoice Price)** in corporate transactions! Quotation terminals (Bloomberg, Refinitiv) quote "Clean Prices" that strip out accrued interest. When you actually execute the wire transfer to buy the bond, you must pay the "Dirty Price":
 $$\text{Dirty Price} = \text{Clean Price} + \text{Accrued Interest}$$
 If a bond pays semi-annual coupons and you buy it 5 months after the last coupon date, you owe the seller 5 months of accrued interest. If you model cash outflows using clean prices alone, your treasury will encounter an unpleasant cash reconciliation deficit on settlement day.
+

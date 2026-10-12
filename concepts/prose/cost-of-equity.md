@@ -47,3 +47,4 @@ The spin-off must generate an expected equity return of at least $13.50\%$ to ju
 
 ## Notes for Future-Me
 Unlevering and re-levering betas via the Hamada equation is one of the most powerful tools in an executive's valuation arsenal. When a private equity sponsor or banker tells you a private target has a beta of 0.8, check if that was borrowed from a giant debt-free conglomerate. Once you apply the target's proposed $4.0\times$ debt leverage structure, the levered beta will rocket toward 2.0+, and the cost of equity will leap from 9% to 16%. Financial leverage amplifies equity risk linearly.
+

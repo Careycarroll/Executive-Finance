@@ -48,3 +48,4 @@ If the stock is currently trading on the public exchange at $\$76.50$, it trades
 
 ## Notes for Future-Me
 The Gordon Growth formula contains an extreme mathematical singularity: as $g$ approaches $r_e$, the denominator $(r_e - g)$ approaches zero, sending the calculated stock price to infinity. Small adjustments in your growth estimate trigger violent swings in valuation. For companies transitioning from high growth to maturity, never force a single $g$ into Gordon Growth; use a **Two-Stage or Three-Stage DDM (H-Model)** where rapid near-term growth linearly decays over 5 to 10 years to reach the steady-state macroeconomic growth rate.
+

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Covered Call Strategy — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Covered Call Strategy</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 7</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The Covered Call (Buy-Write) is one of the most widely deployed yield-enhancement strategies in equity portfolio management. It consists of <strong>owning shares of an underlying stock while simultaneously selling (writing) an Out-of-the-Money (OTM) Call option against those identical shares</strong>.</p>
+<p>The strategy converts uncertain future upside appreciation into immediate, certain cash income today:</p>
+<ul>
+<li><strong>Downside Buffer:</strong> The cash premium collected from selling the call provides a modest downside cushion against stock price declines.</li>
+<li><strong>Capped Upside:</strong> In exchange for the upfront cash premium, the investor forfeits all future stock appreciation above the strike price ($K$).</li>
+<li><strong>Maximum Profit:</strong> Reached when the stock closes at or above the strike price at expiration.</li>
+<li><strong>Maximum Loss:</strong> Substantial (the stock can collapse to zero), cushioned only by the option premium collected.</li>
+</ul>
+<p>By Put-Call Parity ($S - c = K e^{-rT} - p$), a covered call is <strong>synthetically identical to a Short Cash-Secured Put</strong>! Both strategies share the identical asymmetric risk-reward profile: capped upside, full downside risk, and positive Theta.</p>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;stock&quot;,&quot;strike&quot;:100,&quot;premium&quot;:0,&quot;qty&quot;:1},{&quot;type&quot;:&quot;call&quot;,&quot;strike&quot;:105,&quot;premium&quot;:3,&quot;qty&quot;:-1}],&quot;time_to_expiry&quot;:0.25}">Standard OTM Covered Call (105 Strike)</button>
+<button type="button" class="preset-btn" data-config="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;stock&quot;,&quot;strike&quot;:100,&quot;premium&quot;:0,&quot;qty&quot;:1},{&quot;type&quot;:&quot;call&quot;,&quot;strike&quot;:100,&quot;premium&quot;:5,&quot;qty&quot;:-1}],&quot;time_to_expiry&quot;:0.25}">Aggressive ATM Covered Call (100 Strike)</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="payoff-diagram" data-defaults="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;stock&quot;,&quot;strike&quot;:100,&quot;premium&quot;:0,&quot;qty&quot;:1},{&quot;type&quot;:&quot;call&quot;,&quot;strike&quot;:105,&quot;premium&quot;:3,&quot;qty&quot;:-1}],&quot;time_to_expiry&quot;:0.25}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\text{Net Payoff at Expiration } (T) = S_T - S_0 + C_0 - \max(0, S_T - K)
+
+$$\text{Max Profit} = (K - S_0) + C_0 \quad \text{(Achieved when } S_T \ge K\text{)}$$
+
+$$\text{Breakeven Stock Price} = S_0 - C_0$$
+
+$$\text{Max Loss} = S_0 - C_0 \quad \text{(Occurs if stock drops to } \$0\text{)}">
+              \text{Net Payoff at Expiration } (T) = S_T - S_0 + C_0 - \max(0, S_T - K)
+
+$$\text{Max Profit} = (K - S_0) + C_0 \quad \text{(Achieved when } S_T \ge K\text{)}$$
+
+$$\text{Breakeven Stock Price} = S_0 - C_0$$
+
+$$\text{Max Loss} = S_0 - C_0 \quad \text{(Occurs if stock drops to } \$0\text{)}
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>S_0</strong>: Initial purchase price of the underlying stock.</li>
+<li><strong>S_T</strong>: Stock price at option expiration.</li>
+<li><strong>K</strong>: Strike price of the written call option ($K &gt; S_0$ for OTM covered call).</li>
+<li><strong>C_0</strong>: Cash premium collected upfront per share for selling the call option.</li>
+<li><strong>\text{Breakeven}</strong>: The price below which the overall combined position incurs net losses.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Beware the <strong>&quot;Winner Forfeiture &amp; Loser Concentration Trap&quot;</strong>: 
+Covered calls sound great in marketing brochures (&quot;generate 8% annual dividend yield on your stock portfolio!&quot;), but the strategy suffers from severe negative skewness.</p>
+<ul>
+<li>When your stock picks are massive winners (surging +40% on breakthrough product news), your calls are exercised, and your upside is capped at +5%.</li>
+<li>When your stock picks are disastrous losers (crashing -50% on scandal or bankruptcy), you keep the tiny $3.00 call premium, but absorb the entire brutal $50 loss!</li>
+</ul>
+<p>Over long market cycles, unmanaged covered calls systematically underperform simple buy-and-hold investing because you sell away your right-tail compounders while retaining all your left-tail disasters. </p>
+<p><strong>Rule for Future-Me:</strong> Only sell covered calls on mature, low-beta cash cows (utilities, consumer staples) with high implied volatility (IV Rank $&gt; 60$), where you are genuinely willing to part with the stock at the strike price. Never sell covered calls on high-conviction, secular compounders.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/strategy-protective-put.html" class="related-chip">
+          <span>Protective Put Strategy</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/greeks-theta.html" class="related-chip">
+          <span>Theta Time Decay</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/put-call-parity.html" class="related-chip">
+          <span>Put-Call Parity and Synthetic Equivalence</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

@@ -58,3 +58,4 @@ Penman’s decomposition prevents you from overpaying for levered "high-ROE" com
 - Target B has an RNOA of only 8% but is loaded to the gills with cheap debt ($\text{FLEV} = 3.0$, borrowing at 4% after-tax $\implies \text{ROE} = 8\% + 3 \times [8\% - 4\%] = 20\%$).
 
 Target A is an operational powerhouse with pricing power and massive untapped debt capacity. Target B is a mediocre operation teetering on a leverage tightrope: a tiny 2% margin dip collapses its RNOA to 6%, turning its spread razor-thin and threatening debt covenants!
+

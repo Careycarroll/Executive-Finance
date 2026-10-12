@@ -42,3 +42,4 @@ $$r_{\text{req, Beta}} = 4.0\% + 1.02 \times (10.0\% - 4.0\%) = 4.0\% + 6.12\% =
 
 ## Notes for Future-Me
 Managers often fall in love with projects that have massive total volatility and believe they deserve high returns simply because the project was "hard or risky." Remember: markets and capital providers do not reward you for taking dumb, unhedged idiosyncratic risks that could have been diversified away. If an operational failure in a single warehouse can sink the firm, that is uncompensated operational fragility, not a priced risk factor. Always translate strategic risk back to: *Does this covary with macroeconomic downturns when capital is expensive, or is this independent risk that we can absorb across our broader portfolio?*
+

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Long Straddle Strategy — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Long Straddle Strategy</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 12</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The Long Straddle is the quintessential pure volatility strategy in derivatives trading. It consists of <strong>buying an At-the-Money (ATM) Call option and simultaneously buying an At-the-Money Put option with the exact same strike price ($K$) and expiration date ($T$)</strong>.</p>
+<p>The trade is <strong>directionally neutral (Delta $\approx 0$)</strong>: the trader does not care whether the stock moves up or down. Instead, the straddle is a pure bet on <strong>magnitude of movement (large realized volatility)</strong>:</p>
+<ul>
+<li>If the stock makes a massive move upward, the call gains unlimited profit while the put loss is capped at its purchase price.</li>
+<li>If the stock collapses downward, the put gains substantial profit while the call loss is capped at its purchase price.</li>
+<li><strong>The Enemy of the Straddle is Stagnation:</strong> If the stock stays pinned near the strike price $K$ through expiration, both options lose all time value, resulting in a <strong>$100%$ total loss of the net premium paid</strong>.</li>
+</ul>
+<p>The combined premium paid defines two distinct <strong>Breakeven Points</strong>: the stock must move outside of this breakeven corridor by expiration for the trade to be profitable.</p>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;call&quot;,&quot;strike&quot;:100,&quot;premium&quot;:5,&quot;qty&quot;:1},{&quot;type&quot;:&quot;put&quot;,&quot;strike&quot;:100,&quot;premium&quot;:5,&quot;qty&quot;:1}],&quot;time_to_expiry&quot;:0.25}">At-the-Money Straddle (100 Strike)</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="payoff-diagram" data-defaults="{&quot;spot&quot;:100,&quot;legs&quot;:[{&quot;type&quot;:&quot;call&quot;,&quot;strike&quot;:100,&quot;premium&quot;:5,&quot;qty&quot;:1},{&quot;type&quot;:&quot;put&quot;,&quot;strike&quot;:100,&quot;premium&quot;:5,&quot;qty&quot;:1}],&quot;time_to_expiry&quot;:0.25}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\text{Net Payoff at Expiration } (T) = \max(0, S_T - K) + \max(0, K - S_T) - (C_0 + P_0) = |S_T - K| - \text{Total Premium}
+
+$$\text{Upside Breakeven} = K + (C_0 + P_0)$$
+
+$$\text{Downside Breakeven} = K - (C_0 + P_0)$$
+
+$$\text{Max Profit} = \infty \quad \text{(Unlimited in either extreme direction)}$$
+
+$$\text{Max Loss} = C_0 + P_0 \quad \text{(Occurs if stock closes exactly at strike } K\text{)}">
+              \text{Net Payoff at Expiration } (T) = \max(0, S_T - K) + \max(0, K - S_T) - (C_0 + P_0) = |S_T - K| - \text{Total Premium}
+
+$$\text{Upside Breakeven} = K + (C_0 + P_0)$$
+
+$$\text{Downside Breakeven} = K - (C_0 + P_0)$$
+
+$$\text{Max Profit} = \infty \quad \text{(Unlimited in either extreme direction)}$$
+
+$$\text{Max Loss} = C_0 + P_0 \quad \text{(Occurs if stock closes exactly at strike } K\text{)}
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>K</strong>: Strike price common to both the call and the put ($K \approx S_0$).</li>
+<li><strong>C_0</strong>: Cash premium paid for the at-the-money Call option.</li>
+<li><strong>P_0</strong>: Cash premium paid for the at-the-money Put option.</li>
+<li><strong>C_0 + P_0</strong>: Total debit paid upfront (total cost of the straddle).</li>
+<li><strong>S_T</strong>: Price of the underlying stock at option expiration.</li>
+<li><strong>|S_T - K|</strong>: Absolute dollar distance of the stock from the strike price at expiration.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>The straddle market price is the market&#39;s collective consensus forecast of the <strong>Expected Move</strong> of the asset over the option&#39;s life:
+$$\text{Expected Move} \approx 0.85 \times (C_{\text{ATM}} + P_{\text{ATM}}) \approx S_0 \times \frac{\sigma_{\text{IV}}}{\sqrt{252}} \times \sqrt{DTE}$$</p>
+<p>Whenever you consider buying a straddle ahead of an earnings release or FDA announcement:</p>
+<ol>
+<li>Calculate the breakeven move required: if the straddle costs $$10.00$ on a $$100.00$ stock, the stock must move by more than $\pm 10.0%$ just to break even!</li>
+<li>Review historical earnings moves: if the stock has historically only moved an average of $\pm 5.5%$ on earnings days over the past 8 quarters, buying the straddle at a $10%$ implied move is a negative expected value proposition. The market has priced in the event; you are buying overpriced implied volatility.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/greeks-vega.html" class="related-chip">
+          <span>Vega Volatility Exposure</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/implied-vol.html" class="related-chip">
+          <span>Implied vs. Realized Volatility</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/strategy-spread-vertical.html" class="related-chip">
+          <span>Vertical Spreads (Bull and Bear Spreads)</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
