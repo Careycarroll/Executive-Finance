@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Net Present Value and Internal Rate of Return — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--corpfin">corpfin</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Net Present Value and Internal Rate of Return</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Gabriel Hawawini Ch. 2</span>
+          <span class="concept-hero__citation-secondary">· also: Zvi Bodie Ch. 5</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Capital budgeting decisions define the long-term trajectory of an enterprise. The two preeminent metrics for evaluating investment projects are <strong>Net Present Value (NPV)</strong> and <strong>Internal Rate of Return (IRR)</strong>.</p>
+<ul>
+<li><strong>Net Present Value (NPV):</strong> The dollar amount of economic value created today by undertaking the project. It equals the present value of all expected future cash inflows minus the present value of all initial and subsequent cash outlays, discounted at the project&#39;s required opportunity cost of capital ($r$).<ul>
+<li><strong>Decision Rule:</strong> Accept any project with $\text{NPV} &gt; 0$. If projects are mutually exclusive, choose the project with the highest positive NPV.</li>
+</ul>
+</li>
+<li><strong>Internal Rate of Return (IRR):</strong> The annualized discount rate that forces the project&#39;s NPV to equal zero. It represents the break-even return rate inherent in the cash flow schedule.<ul>
+<li><strong>Decision Rule:</strong> Accept if $\text{IRR} &gt; \text{Hurdle Rate } (r)$.</li>
+</ul>
+</li>
+</ul>
+<p><strong>The Executive Conflict:</strong> While executives often prefer IRR because it communicates a convenient percentage hurdle (e.g., &quot;this venture delivers a 28% IRR!&quot;), NPV is mathematically superior. When choosing between mutually exclusive projects of differing scales or cash flow timing, IRR often yields distorted rankings due to the <strong>reinvestment rate trap</strong> and <strong>scale neglect</strong>. NPV measures absolute shareholder wealth creation in actual currency.</p>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;discount_rate&quot;:0.1,&quot;cash_flows&quot;:[-1000,300,350,400,300,200]}">Standard CapEx Project</button>
+<button type="button" class="preset-btn" data-config="{&quot;discount_rate&quot;:0.16,&quot;cash_flows&quot;:[-1000,300,350,400,300,200]}">High Hurdle Rate (16%)</button>
+<button type="button" class="preset-btn" data-config="{&quot;discount_rate&quot;:0.1,&quot;cash_flows&quot;:[-1000,500,400,300,200,100]}">Front-Loaded Inflows</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="cash-flow-chart" data-defaults="{&quot;periods&quot;:5,&quot;cash_flows&quot;:[-1000,300,350,400,300,200],&quot;discount_rate&quot;:0.1,&quot;growth_rate&quot;:0,&quot;show_pv&quot;:true,&quot;show_cumulative&quot;:true}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\text{NPV} = -C_0 + \sum_{t=1}^T \frac{\text{CF}_t}{(1 + r)^t} = 0 \iff r = \text{IRR}">
+              \text{NPV} = -C_0 + \sum_{t=1}^T \frac{\text{CF}_t}{(1 + r)^t} = 0 \iff r = \text{IRR}
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>\text{NPV}</strong>: Net Present Value in currency units today.</li>
+<li><strong>\text{IRR}</strong>: Internal Rate of Return (the discount rate $r^<em>$ such that $\text{NPV}(r^</em>) = 0$).</li>
+<li><strong>C_0</strong>: Initial capital outlay / upfront CapEx at period $0$.</li>
+<li><strong>\text{CF}_t</strong>: Net cash inflow or outflow generated in period $t$.</li>
+<li><strong>r</strong>: Opportunity cost of capital (hurdle rate / WACC).</li>
+<li><strong>T</strong>: Useful economic life or projection horizon of the investment.</li>
+<li><strong>\text{PI}</strong>: Profitability Index ($= \frac{\text{PV of Inflows}}{C_0} = 1 + \frac{\text{NPV}}{C_0}$), useful for capital rationing.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Whenever a finance presentation leads with IRR, put on your skepticism goggles:</p>
+<ol>
+<li><strong>The Reinvestment Assumption Trap:</strong> IRR implicitly assumes that all interim cash flows released by the project can be continuously reinvested at that same sky-high IRR until the end of the horizon. If a project has a 45% IRR, it assumes cash released in Year 1 can immediately find another 45% project! In reality, interim cash can only be reinvested at the company&#39;s cost of capital (WACC). Use <strong>Modified IRR (MIRR)</strong> or pure NPV to eliminate this fantasy.</li>
+<li><strong>The Scale Blindspot:</strong> Would you rather earn a 50% IRR on a $10,000 marketing pilot ($5,000 profit) or a 20% IRR on a $10,000,000 data center expansion ($2,000,000 net value created)? A manager obsessed with IRR picks the tiny pilot; a CFO maximizing shareholder wealth picks the $10M project.</li>
+<li><strong>Multiple IRRs:</strong> Any project with alternating signs in cash flows (e.g., negative outlay, positive mid-life mining cash flows, followed by huge environmental cleanup outlays at decommissioning) will have multiple real mathematical solutions for IRR, making the metric mathematically meaningless. NPV is monotonic and never suffers from multiple roots.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/tvm.html" class="related-chip">
+          <span>Time Value of Money</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/discount-rate.html" class="related-chip">
+          <span>Discount Rates and Opportunity Cost</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/fcf.html" class="related-chip">
+          <span>Free Cash Flow (FCFF vs FCFE)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/capital-budgeting.html" class="related-chip">
+          <span>Capital Budgeting & Capital Allocation Decisions</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

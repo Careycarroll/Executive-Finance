@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diversification and Portfolio Risk — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--corpfin">corpfin</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Diversification and Portfolio Risk</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 6, 7</span>
+          <span class="concept-hero__citation-secondary">· also: Gabriel Hawawini Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Diversification has famously been called &quot;the only free lunch in finance&quot; (Harry Markowitz, 1952). By combining assets whose returns do not move in lockstep—meaning their correlation coefficient $\rho$ is strictly less than $+1.0$—an investor or corporate enterprise can reduce overall portfolio variance below the weighted average variance of the individual assets, without sacrificing expected return.</p>
+<p>In an $N$-asset portfolio, as $N$ grows large, the contribution of individual asset variances shrinks toward zero, and the portfolio&#39;s total risk converges to the <strong>average pairwise covariance</strong> among all assets. Non-systematic (idiosyncratic) risks cancel out across unrelated operations, leaving only systematic market risk.</p>
+<p>Executives encounter diversification in two domains:</p>
+<ol>
+<li><strong>Treasury &amp; Investment Portfolios:</strong> Allocating capital across uncorrelated asset classes (equities, bonds, real assets, cash reserves) to immunize against macroeconomic shocks.</li>
+<li><strong>Corporate Conglomerate Strategy:</strong> Acquiring unrelated businesses to &quot;smooth earnings.&quot; Unlike market investors who diversify costlessly through index funds, corporate diversification often incurs conglomerate discounts due to managerial coordination friction and agency costs unless genuine operational synergies exist.</li>
+</ol>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;assets&quot;:[&quot;US Equities&quot;,&quot;Treasury Bonds&quot;,&quot;Gold&quot;,&quot;Real Estate&quot;],&quot;matrix&quot;:[[1,-0.3,0.1,0.6],[-0.3,1,0.2,-0.1],[0.1,0.2,1,0.15],[0.6,-0.1,0.15,1]],&quot;vols&quot;:[0.18,0.08,0.15,0.2]}">Standard 4-Asset Allocation</button>
+<button type="button" class="preset-btn" data-config="{&quot;assets&quot;:[&quot;Equities&quot;,&quot;Treasuries&quot;],&quot;matrix&quot;:[[1,-0.65],[-0.65,1]],&quot;vols&quot;:[0.22,0.09]}">Flight to Safety (Negative Correlation)</button>
+<button type="button" class="preset-btn" data-config="{&quot;assets&quot;:[&quot;Tech&quot;,&quot;Growth&quot;,&quot;Discretionary&quot;],&quot;matrix&quot;:[[1,0.88,0.78],[0.88,1,0.72],[0.78,0.72,1]],&quot;vols&quot;:[0.25,0.24,0.21]}">Correlated Growth Basket</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="correlation-heatmap" data-defaults="{&quot;assets&quot;:[&quot;US Equities&quot;,&quot;Treasury Bonds&quot;,&quot;Gold&quot;,&quot;Real Estate&quot;],&quot;matrix&quot;:[[1,-0.3,0.1,0.6],[-0.3,1,0.2,-0.1],[0.1,0.2,1,0.15],[0.6,-0.1,0.15,1]],&quot;vols&quot;:[0.18,0.08,0.15,0.2]}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\sigma_p^2 = \sum_{i=1}^N w_i^2 \sigma_i^2 + \sum_{i=1}^N \sum_{j \neq i}^N w_i w_j \sigma_i \sigma_j \rho_{ij} = \sum_{i=1}^N \sum_{j=1}^N w_i w_j \text{Cov}(R_i, R_j)">
+              \sigma_p^2 = \sum_{i=1}^N w_i^2 \sigma_i^2 + \sum_{i=1}^N \sum_{j \neq i}^N w_i w_j \sigma_i \sigma_j \rho_{ij} = \sum_{i=1}^N \sum_{j=1}^N w_i w_j \text{Cov}(R_i, R_j)
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>\sigma_p^2</strong>: Portfolio variance (total risk squared).</li>
+<li><strong>\sigma_p</strong>: Portfolio standard deviation (volatility).</li>
+<li><strong>w_i, w_j</strong>: Portfolio weights assigned to assets $i$ and $j$, where $\sum w_i = 1.0$.</li>
+<li><strong>\sigma_i, \sigma_j</strong>: Individual return volatilities (standard deviations) of assets $i$ and $j$.</li>
+<li><strong>\rho_{ij}</strong>: Correlation coefficient between returns of asset $i$ and asset $j$, bounded between $[-1.0, +1.0]$.</li>
+<li><strong>\text{Cov}(R_i, R_j)</strong>: Covariance between returns of asset $i$ and asset $j$ ($= \rho_{ij} \sigma_i \sigma_j$).</li>
+<li><strong>N</strong>: Number of distinct securities or asset classes in the portfolio.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Beware the &quot;Correlation 1 Trap&quot; during market panics: during liquidity crises (e.g., 2008 Lehman collapse, March 2020 COVID shock), correlations across seemingly unrelated asset classes converge rapidly toward $+1.0$ as investors liquidate whatever is liquid to meet margin calls and debt covenants. The only true diversifiers in systemic crises are sovereign debt of reserve-currency issuers (US Treasuries), cash, long volatility hedges, or deep negative-correlation contracts.</p>
+<p>Also keep corporate boundaries clear: shareholders do not need your company to buy unrelated businesses to diversify their portfolios—they can buy shares of both companies themselves for a $0 commission without paying a 30% control premium! Corporate diversification is only value-accretive when it generates balance-sheet debt capacity synergies, operational tax shields, or supply-chain resilience that markets cannot replicate frictionlessly.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/risk-return.html" class="related-chip">
+          <span>Risk-Return Tradeoff</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/cost-of-equity.html" class="related-chip">
+          <span>Cost of Equity (CAPM, DDM & Build-Up)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/var.html" class="related-chip">
+          <span>Value at Risk (VaR)</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

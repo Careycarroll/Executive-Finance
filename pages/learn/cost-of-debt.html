@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cost of Debt (Pre-Tax & After-Tax) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--corpfin">corpfin</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Cost of Debt (Pre-Tax & After-Tax)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Gabriel Hawawini Ch. 12</span>
+          <span class="concept-hero__citation-secondary">· also: Peter D. Easton Ch. 11</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The Cost of Debt represents the effective interest rate an enterprise must pay to raise new debt financing in the capital markets. Because debt holders have contractual seniority and collateral liens over company assets in liquidation, their downside is capped (absent default), making the required pre-tax cost of debt ($r_d$) lower than the cost of equity.</p>
+<p>Crucially, in the corporate tax systems of the United States and most developed jurisdictions, interest expense paid on corporate debt is a tax-deductible expense (subject to IRC Section 163(j) limitations). Every dollar paid in interest reduces taxable corporate income, creating a <strong>debt tax shield</strong>. The true economic cost to the enterprise is therefore the <strong>after-tax cost of debt</strong>:
+$$r_{d,\text{after-tax}} = r_d \cdot (1 - t)$$</p>
+<p>If a company borrows at $8%$ with a $25%$ marginal corporate tax rate, the government effectively subsidizes $2%$, leaving an actual net economic cost of $6%$.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="r_{d,\text{after-tax}} = r_d \cdot (1 - t) = (r_f + \text{Credit Spread}) \cdot (1 - t)">
+            r_{d,\text{after-tax}} = r_d \cdot (1 - t) = (r_f + \text{Credit Spread}) \cdot (1 - t)
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>r_{d,\text{after-tax}}</strong>: Effective after-tax cost of debt used directly in the WACC formula.</li>
+<li><strong>r_d</strong>: Pre-tax marginal cost of debt (the current market yield-to-maturity on newly issued bonds or revolving credit lines).</li>
+<li><strong>r_f</strong>: Benchmark risk-free interest rate matching the maturity of the debt.</li>
+<li><strong>\text{Credit Spread}</strong>: Risk premium demanded by lenders based on the company&#39;s credit rating / default probability (e.g., BBB, BB, B).</li>
+<li><strong>t</strong>: Marginal corporate income tax rate (federal + state effective rate).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A corporate treasurer is evaluating the capital structure impact of issuing $$200{,}000{,}000$ of 10-year senior unsecured notes to finance plant modernization:</p>
+<ol>
+<li><strong>Benchmark Yield:</strong> 10-year US Treasury bond yields $4.20%$.</li>
+<li><strong>Credit Rating Assessment:</strong> The company&#39;s credit profile aligns with an <strong>S&amp;P BBB rating</strong>, where market credit spreads are currently $180\text{ bps}$ ($1.80%$).
+$$r_d = 4.20% + 1.80% = 6.00% \text{ pre-tax yield}$$</li>
+<li><strong>Flotation &amp; Origination Costs:</strong> Underwriting and legal fees amount to $1.0%$ annualized adjustment $\implies r_{d,\text{gross}} = 6.10%$.</li>
+<li><strong>Tax Shield:</strong> Combined federal ($21%$) and state net of federal deduction ($4%$) marginal tax rate is $t = 25%$.</li>
+</ol>
+<p><strong>Calculate After-Tax Cost of Debt:</strong>
+$$r_{d,\text{after-tax}} = 6.10% \times (1 - 0.25) = 6.10% \times 0.75 = 4.575%$$</p>
+<p>Even though the debt contract specifies a $6.0%$ coupon, the actual cash cost dragging down corporate returns is only $4.58%$.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Computing WACC, structuring debt vs. equity recapitalizations, evaluating lease financing vs. debt-financed asset purchases, and negotiating syndicated credit facilities.</li>
+<li><strong>When not to use / Caveats:</strong> Do not calculate the cost of debt by dividing historical interest expense from the income statement by total debt on the balance sheet! That backward-looking accounting ratio reflects ancient low-rate loans that cannot be renewed at today&#39;s rates. Cost of capital is strictly the <em>marginal</em> cost of new funding.</li>
+<li><strong>Tax Cap Caveat (IRC §163(j)):</strong> Under current US tax law, net business interest expense deduction is capped at $30%$ of adjusted taxable income (EBIT). If your firm is highly levered and exceeds this 30% cap, interest on marginal debt is NOT deductible in the current year, making the marginal after-tax cost of debt equal to the full $100%$ pre-tax rate!</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Watch out for debt covenants and synthetic rating traps: as you increase leverage, your pre-tax debt yield does not stay flat—it steps up discontinuously if your rating falls from investment grade (BBB-) into high yield (BB+). The &quot;junk bond barrier&quot; immediately forces institutional bond funds (pension funds, insurance companies) to dump the paper, expanding credit spreads by 200–300 basis points overnight and tightening restrictive covenants. Always calculate after-tax debt cost across stress-tested credit rating buckets, not just today&#39;s baseline spread.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/wacc.html" class="related-chip">
+          <span>Weighted Average Cost of Capital (WACC)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/tax-shield.html" class="related-chip">
+          <span>Tax Shields and After-Tax Cost of Debt</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+
+        <a href="/pages/learn/capital-structure.html" class="related-chip">
+          <span>Capital Structure & Modigliani-Miller Theorems</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
