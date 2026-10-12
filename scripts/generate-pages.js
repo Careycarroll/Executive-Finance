@@ -104,7 +104,7 @@ function renderSiteHeader(activeNav = 'learn') {
       <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
         <a href="/pages/learn/" class="site-header__nav-link ${activeNav === 'learn' ? 'site-header__nav-link--active' : ''}">Learn</a>
         <a href="/pages/toolbox.html" class="site-header__nav-link ${activeNav === 'toolbox' ? 'site-header__nav-link--active' : ''}">Toolbox</a>
-        <a href="/pages/apply/" class="site-header__nav-link ${activeNav === 'apply' ? 'site-header__nav-link--active' : ''}">Analyze</a>
+        <a href="/pages/analyze/" class="site-header__nav-link ${activeNav === 'analyze' ? 'site-header__nav-link--active' : ''}">Analyze</a>
         <a href="/pages/formulas.html" class="site-header__nav-link ${activeNav === 'formulas' ? 'site-header__nav-link--active' : ''}">Formulas</a>
         <a href="/pages/glossary.html" class="site-header__nav-link ${activeNav === 'glossary' ? 'site-header__nav-link--active' : ''}">Glossary</a>
         <a href="/pages/reference/bibliography.html" class="site-header__nav-link ${activeNav === 'bibliography' ? 'site-header__nav-link--active' : ''}">Bibliography</a>
