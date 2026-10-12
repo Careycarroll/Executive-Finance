@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deferred Taxes on the Financial Statements — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Deferred Taxes on the Financial Statements</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Peter D. Easton Ch. Mod. 10</span>
+          <span class="concept-hero__citation-secondary">· also: Stephen H. Penman Ch. 10</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Deferred Taxes on the Financial Statements</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Permanent vs. Temporary Book-Tax Differences</h3>
+<table>
+<thead>
+<tr>
+<th>Difference Type</th>
+<th>Accounting Mechanism</th>
+<th>Balance Sheet Impact</th>
+<th>Effect on Effective Tax Rate (ETR)</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Temporary Differences</strong></td>
+<td>Timing mismatch between GAAP recognition and tax return deduction; reverses in future years.</td>
+<td>Creates <strong>Deferred Tax Assets (DTA)</strong> or <strong>Deferred Tax Liabilities (DTL)</strong>.</td>
+<td><strong>Zero impact on ETR</strong> (deferred tax provision offsets current cash tax change).</td>
+<td>MACRS accelerated depreciation, warranty reserves, bad debt allowances, deferred revenue.</td>
+</tr>
+<tr>
+<td><strong>Permanent Differences</strong></td>
+<td>Income or expense recognized under GAAP that is <em>never</em> taxable or deductible on tax returns.</td>
+<td><strong>No DTA or DTL created</strong> (never reverses).</td>
+<td><strong>Directly alters ETR</strong> permanently above or below the statutory rate.</td>
+<td>Tax-exempt municipal bond interest, R&amp;D tax credits, non-deductible executive pay (§162(m)), regulatory fines, foreign rate differentials.</td>
+</tr>
+</tbody></table>
+<pre><code>10-K Tax Footnote Diagnostic Workflow
+┌────────────────────────────────────────────────────────┐
+│ 1. Inspect Effective Tax Rate (ETR) Reconciliation     │
+│ • Separate structural foreign/R&amp;D savings from one-off │
+│   discrete tax releases (audit settlements, VA changes)│
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ 2. Analyze Deferred Tax Asset (DTA) Composition        │
+│ • Check NOL carryforwards &amp; expiration schedules       │
+│ • Inspect Valuation Allowance (VA) changes             │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ 3. Check Cash Tax vs. Book Tax Divergence              │
+│ • Widening DTLs without CapEx growth = aggressive      │
+│   GAAP revenue recognition not yet taxable on returns! │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;A low Effective Tax Rate (ETR) this year means the company has superior permanent tax planning.&quot;</strong><br><em>Reality:</em> Companies frequently achieve an artificially low one-year ETR by releasing a <strong>Valuation Allowance</strong> or settling an old IRS audit reserve. Analysts must strip out one-time discrete tax items and model a normalized ** Core Sustainable Effective Tax Rate** for NOPAT and DCF projections.</li>
+<li><strong>Misconception 2: &quot;All Deferred Tax Liabilities (DTLs) should be treated as debt in Enterprise Value.&quot;</strong><br><em>Reality:</em> Operating DTLs arising from ongoing CapEx depreciation or intangible asset amortization in M&amp;A purchase accounting are non-interest-bearing and reverse slowly over decades (or never reverse in growing firms). Treat DTLs as operating items inside Invested Capital (reducing Net Operating Assets), not as financial debt.</li>
+<li><strong>Misconception 3: &quot;GAAP Tax Expense equals cash taxes paid.&quot;</strong><br><em>Reality:</em> Cash taxes paid are disclosed in the supplemental cash flow disclosures (or calculated as $\text{Current Tax Provision} - \Delta\text{Income Taxes Payable}$). During high-CapEx cycles with bonus depreciation, cash taxes paid are often $30%-50%$ lower than GAAP tax expense.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Use the <strong>Book-Tax Earnings Quality Signal</strong> when screening financial statements:
+If a company&#39;s GAAP Pre-Tax Income is surging by $25%$ per year, but its <strong>Current Tax Expense (taxable income reported to the IRS)</strong> is flat or declining, pause immediately!
+When managers manipulate GAAP earnings upward via aggressive revenue recognition or capitalizing operating expenses, they rarely want to pay real cash taxes to the IRS on those fake earnings. A widening gap between book income and taxable income (reflected in unexplained spikes in non-CapEx DTLs) is one of the most reliable forensic predictors of accounting restatements.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/deferred-tax.html" class="related-chip">
+          <span>Deferred Taxes & Net Operating Losses</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+
+        <a href="/pages/learn/accrual-quality.html" class="related-chip">
+          <span>Accrual Quality & Earnings Persistence</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/reformulated-bs.html" class="related-chip">
+          <span>Reformulated Balance Sheet</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

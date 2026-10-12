@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commercial Real Estate Valuation (NOI & Cap Rates) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Commercial Real Estate Valuation (NOI & Cap Rates)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: External sources</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Commercial Real Estate Valuation (NOI &amp; Cap Rates)</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Commercial Real Estate Income &amp; Cash Flow Waterfall</h3>
+<pre><code>Commercial Property Cash Flow Statement Architecture
+┌────────────────────────────────────────────────────────┐
+│ Gross Potential Rent (GPR) (100% Occupancy at Mkt Rent)│
+│ Less: Vacancy &amp; Collection Loss (-5% to -10%)          │
+│ Plus: Ancillary Income (Parking, tenant reimbursements)│
+├────────────────────────────────────────────────────────┤
+│ = EFFECTIVE GROSS INCOME (EGI)                         │
+│ Less: Operating Expenses (Property taxes, insurance,   │
+│       utilities, maintenance, property management fees)│
+├────────────────────────────────────────────────────────┤
+│ = NET OPERATING INCOME (NOI)  [Unlevered, Pre-Tax]     │
+│ Less: Capital Expenditures (TI - Tenant Improvements,  │
+│       LC - Leasing Commissions, Structural Reserves)   │
+├────────────────────────────────────────────────────────┤
+│ = UNLEVERED PROPERTY CASH FLOW (PBTCF)                 │
+│ Less: Annual Mortgage Debt Service (Principal + Int.)  │
+├────────────────────────────────────────────────────────┤
+│ = LEVERED BEFORE-TAX CASH FLOW (EBTCF / Cash-on-Cash)  │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>Core Underwriting Ratios Used by Lenders &amp; Investment Committees</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Formula</th>
+<th>Institutional Lending / Underwriting Threshold</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Cap Rate ($R_{\text{cap}}$)</strong></td>
+<td>$\frac{\text{NOI}_1}{\text{Property Value}}$</td>
+<td>Inverse of valuation multiple ($5% \text{ Cap Rate} = 20\times \text{NOI}$). Lower cap rate = higher property price.</td>
+</tr>
+<tr>
+<td><strong>Debt Service Coverage Ratio (DSCR)</strong></td>
+<td>$\frac{\text{NOI}}{\text{Annual Debt Service (P + I)}}$</td>
+<td>Senior mortgage lenders require $\text{DSCR} \ge 1.25\times - 1.35\times$.</td>
+</tr>
+<tr>
+<td><strong>Debt Yield</strong></td>
+<td>$\frac{\text{NOI}}{\text{Total Loan Amount}}$</td>
+<td>Lender&#39;s unlevered return if they foreclose Day 1; typically require $\ge 8% - 10%$.</td>
+</tr>
+<tr>
+<td><strong>Loan-to-Value (LTV)</strong></td>
+<td>$\frac{\text{Loan Amount}}{\text{Appraised Property Value}}$</td>
+<td>Institutional commercial mortgages cap LTV at $55% - 70%$.</td>
+</tr>
+<tr>
+<td><strong>Cash-on-Cash Return</strong></td>
+<td>$\frac{\text{Levered Before-Tax Cash Flow}}{\text{Equity Down Payment}}$</td>
+<td>Measures current cash yield on actual equity check invested.</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;NOI is equivalent to corporate EBITDA.&quot;</strong><br><em>Reality:</em> While similar, NOI does not deduct recurring <strong>Tenant Improvements (TIs)</strong>, <strong>Leasing Commissions (LCs)</strong>, or roof/HVAC structural reserves. In office and retail real estate, TIs and LCs required to sign new tenants can consume $20%-35%$ of NOI! Professional buyers value properties on <strong>Adjusted NOI (Cash Flow Available for Debt Service)</strong> after deducting capital reserves.</li>
+<li><strong>Misconception 2: &quot;A higher Cap Rate means a better investment.&quot;</strong><br><em>Reality:</em> Just like a high dividend yield on a troubled stock, a high Cap Rate ($8%-10%$) reflects high perceived risk, tenant default exposure, functional obsolescence, or zero growth ($g \le 0$). A prime logistics warehouse leased to Amazon for 15 years trades at a low Cap Rate ($4.5%-5.5%$) because cash flows are bond-like and rents escalate annually.</li>
+<li><strong>Misconception 3: &quot;Mortgage interest expenses are deducted when calculating NOI.&quot;</strong><br><em>Reality:</em> <strong>NOI is strictly an unlevered metric</strong>. Debt service and income taxes are never deducted in NOI, ensuring properties can be compared apples-to-apples regardless of how the current owner financed the building.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>When evaluating <strong>Corporate Sale-Leaseback Transactions</strong> (selling company-owned factories or headquarters to a REIT and leasing them back under a 15-year Triple-Net / NNN lease):</p>
+<ul>
+<li>Compare the <strong>Lease Cap Rate</strong> (initial annual rent divided by sale proceeds) against your corporate <strong>After-Tax Cost of Debt</strong> and <strong>WACC</strong>.</li>
+<li>A sale-leaseback is simply an alternative form of 100% LTV financing! If you can issue senior secured corporate bonds at $6.0%$, selling your mission-critical factory to a REIT at an $8.5%$ Cap Rate with $3%$ annual rent escalators is value-destructive financing—unless your internal ROIC on redeploying that cash exceeds $15%+$.</li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/dcf.html" class="related-chip">
+          <span>Discounted Cash Flow Valuation (Enterprise vs Equity)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/terminal-value.html" class="related-chip">
+          <span>Terminal Value (Exit Multiple vs Perpetuity Growth)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/lease-accounting.html" class="related-chip">
+          <span>Lease Accounting (ASC 842 / IFRS 16)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

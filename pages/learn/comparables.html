@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selecting Comparables & Peer Benchmarking — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Selecting Comparables & Peer Benchmarking</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Peter D. Easton Ch. Mod. 13</span>
+          <span class="concept-hero__citation-secondary">· also: Russell Lundholm Ch. 11</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Selecting Comparables &amp; Peer Benchmarking</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Four-Filter Comparable Selection Protocol</h3>
+<table>
+<thead>
+<tr>
+<th>Selection Filter</th>
+<th>Analytical Criteria</th>
+<th>Why It Matters for Multiples</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1. Business Model &amp; Revenue Mix</strong></td>
+<td>Recurring subscription vs hardware transactional; B2B vs B2C; asset-light vs capital-intensive.</td>
+<td>Recurring revenue commands $2\times-3\times$ higher multiples due to lower cash flow volatility (lower WACC).</td>
+</tr>
+<tr>
+<td><strong>2. Scale &amp; Market Position</strong></td>
+<td>Revenue size band ($0.5\times$ to $2.0\times$ target), geographic footprint, customer concentration.</td>
+<td>Sub-scale companies suffer from illiquidity discounts and lack operating leverage.</td>
+</tr>
+<tr>
+<td><strong>3. Growth &amp; Profitability Profile</strong></td>
+<td>Expected 3-year revenue CAGR and EBITDA / EBIT margin trajectory (&quot;Rule of 40&quot; in software).</td>
+<td>High-growth companies trade at compressed near-term multiples that normalize 3 years out.</td>
+</tr>
+<tr>
+<td><strong>4. Capital Structure &amp; Accounting</strong></td>
+<td>Leverage ratios, US GAAP vs IFRS lease accounting, fiscal year-end calendar alignment.</td>
+<td>Prevents mechanical distortions in P/E and EV/EBITDA numerators and denominators.</td>
+</tr>
+</tbody></table>
+<pre><code>Comp Sheet Normalization Checklist (Before Computing Any Multiple)
+┌────────────────────────────────────────────────────────┐
+│ 1. Calendarize Financial Statements                    │
+│ • Align all peers to Trailing Twelve Months (LTM) and  │
+│   Next Twelve Months (NTM) calendar periods.           │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ 2. Scrub Non-Recurring Items (&quot;Clean EBITDA / NOPAT&quot;)  │
+│ • Strip out one-time litigation settlements, M&amp;A fees, │
+│   asset impairments, and restructuring charges.        │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ 3. Harmonize Accounting Policies                       │
+│ • Deduct Stock-Based Comp uniformly across all peers   │
+│ • Capitalize operating leases consistently (EBITDAR)   │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;The industry mean or median multiple is the &#39;fair value&#39; for our target.&quot;</strong><br><em>Reality:</em> If your target company grows at 4% with an 8% ROIC while the peer group median grows at 12% with a 20% ROIC, applying the peer median multiple to your target massively overvalues the asset! Always use <strong>value-driver regression</strong> (e.g., plotting EV/Sales against EBITDA Margin + Growth) rather than blind averages.</li>
+<li><strong>Misconception 2: &quot;Management&#39;s &#39;Adjusted EBITDA&#39; press release numbers can be plugged directly into a comp table.&quot;</strong><br><em>Reality:</em> Different companies define &quot;Adjusted EBITDA&quot; wildly differently—some add back normal recurring software development, customer acquisition costs, or store opening expenses. Always rebuild adjusted metrics from the raw audited GAAP 10-K footnotes using a single uniform definition across all peers.</li>
+<li><strong>Misconception 3: &quot;Trading Comps and Precedent Transaction Comps measure the same thing.&quot;</strong><br><em>Reality:</em> <strong>Public Trading Comps</strong> reflect the value of a liquid, minority single share on an exchange. <strong>Precedent M&amp;A Transaction Comps</strong> include a $20%-40%$ <strong>Control Premium</strong> and priced-in buyer synergies, representing the price required to acquire 100% ownership.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Never allow an investment banker or corporate development analyst to cherry-pick aspirational peers (&quot;aspirational comps&quot;) to inflate a valuation pitch:</p>
+<ul>
+<li>A regional brick-and-mortar retailer launching a website is <strong>not</strong> comparable to Amazon.</li>
+<li>An automotive manufacturer developing electric batteries is <strong>not</strong> comparable to a pure-play AI software company.
+Whenever presented with a comparable valuation table, immediately inspect the <strong>dispersion (interquartile range)</strong> and ask: <em>&quot;Which specific company was excluded from this peer list, and how does the median change if we put them back in?&quot;</em></li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/multiples.html" class="related-chip">
+          <span>Relative Valuation & Comparable Multiples</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/dcf.html" class="related-chip">
+          <span>Discounted Cash Flow Valuation (Enterprise vs Equity)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/valuation-reconciliation.html" class="related-chip">
+          <span>Valuation Reconciliation & Triangulation</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Option Strategy: Calendar & Diagonal Spreads — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Option Strategy: Calendar & Diagonal Spreads</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 14</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Option Strategy: Calendar &amp; Diagonal Spreads</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Payoff Geometry at Front-Month Expiration ($T_1$) &amp; Greek Comparison</h3>
+<pre><code>Payoff Profile of a Long Calendar Spread at Front-Month Expiration (T_1)
+    P&amp;L
+     ▲
++$3  ┼───────────────────────╭───╮───────────────────────  Max Profit at S_{T1} = K ($100)
+     │                      ╱     ╲                        (Short expires $0; Long retains
+     │                     ╱       ╲                        full extrinsic time value!)
+ $0 ─┼────────────────────┼─────────┼────────────────────► Stock Price at T_1 (S_{T1})
+-$2 ─┼─────────────╯     94         106    ╰─────────────  Max Loss = Initial Net Debit (-$2)
+                         Strike K=$100
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Spread Type</th>
+<th>Leg Construction</th>
+<th>Net Greek Profile (Near Strike $K$)</th>
+<th>Primary Strategic Objective</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Long Calendar Spread (Horizontal)</strong></td>
+<td>Short $(K, T_1)$ + Long $(K, T_2)$</td>
+<td>$\Delta \approx 0, \quad \mathbf{\Theta &gt; 0}, \quad \mathbf{\Gamma &lt; 0}, \quad \mathbf{\mathcal{V} &gt; 0}$</td>
+<td>Range-bound stock through $T_1$ paired with rising overall implied volatility.</td>
+</tr>
+<tr>
+<td><strong>Short Calendar Spread</strong></td>
+<td>Long $(K, T_1)$ + Short $(K, T_2)$</td>
+<td>$\Delta \approx 0, \quad \mathbf{\Theta &lt; 0}, \quad \mathbf{\Gamma &gt; 0}, \quad \mathbf{\mathcal{V} &lt; 0}$</td>
+<td>Explosive imminent breakout move OR crush in back-month volatility.</td>
+</tr>
+<tr>
+<td><strong>Diagonal Spread (&quot;Poor Man&#39;s Covered Call&quot;)</strong></td>
+<td>Long Deep ITM $(K_1, T_2)$ + Short OTM $(K_2, T_1)$</td>
+<td><strong>Directional $\Delta$</strong> ($\pm 0.30$ to $\pm 0.60$), $+\Theta$, $+\mathcal{V}$</td>
+<td>Capital-efficient substitute for Covered Calls using a long-dated LEAPS call as synthetic stock.</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;A Long Calendar Spread always profits when implied volatility rises.&quot;</strong><br><em>Reality:</em> This is only true for a <strong>parallel shift</strong> in volatility across both months! In the real world, when a sudden market panic or earnings rumor hits, front-month volatility ($\sigma_1$) spikes $3\times$ harder than back-month volatility ($\sigma_2$), driving the term structure into <strong>Backwardation</strong>. Even though your back-month option has a higher raw Vega number, a violent spike in front-month IV relative to back-month IV can cause a Long Calendar Spread to lose money! Always weight your Vega by the term-structure beta (<strong>Weighted Vega</strong>: $\mathcal{V}<em>w = \mathcal{V} \cdot \sqrt{T</em>{\text{base}} / T}$).</li>
+<li><strong>Misconception 2: &quot;You should buy a Long Calendar Spread right before an earnings announcement because IV is high.&quot;</strong><br><em>Reality:</em> Before earnings, front-month IV is massively inflated relative to back-month IV (steep backwardation). If you buy a Calendar before earnings, you are selling elevated front-month vol (good), <em>unless</em> the stock makes a huge post-earnings gap outside your tent, where Gamma kills the position. Conversely, never buy a Calendar when front-month IV is elevated if you expect <em>both</em> months to crush equally.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>The two golden rules for trading Calendar and Diagonal Spreads:</p>
+<ol>
+<li><strong>Check the Term Structure Slope First:</strong> Only buy Long Calendar Spreads when the Volatility Term Structure is in <strong>Contango</strong> or flat ($\sigma_{\text{front}} \le \sigma_{\text{back}}$), or when you have a specific catalyst (like an earnings date in $T_1$) where front-month IV is $20+\text{ vol points}$ higher than $T_2$ and you expect a smaller-than-implied stock move.</li>
+<li><strong>Poor Man&#39;s Covered Call Rule:</strong> When structuring a Bullish Call Diagonal (buying a $0.80\Delta$ back-month call and selling a $0.30\Delta$ front-month call), ensure the <strong>Net Debit paid is less than the strike width ($K_2 - K_1$)</strong>. That guarantees you cannot lose money if the stock explodes upward through your short strike!</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/greeks-theta.html" class="related-chip">
+          <span>Theta Time Decay</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/greeks-vega.html" class="related-chip">
+          <span>Vega Volatility Exposure</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/vol-surface.html" class="related-chip">
+          <span>The Implied Volatility Surface</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

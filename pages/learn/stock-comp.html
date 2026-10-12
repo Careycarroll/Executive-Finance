@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stock-Based Compensation (ASC 718) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Stock-Based Compensation (ASC 718)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Peter D. Easton Ch. Mod. 9</span>
+          <span class="concept-hero__citation-secondary">· also: Stephen H. Penman Ch. 9</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Stock-Based Compensation (ASC 718)</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Accounting vs. Economic Treatment of Stock-Based Compensation</h3>
+<table>
+<thead>
+<tr>
+<th>Financial Statement</th>
+<th>GAAP Accounting Treatment</th>
+<th>Economic Valuation Reality (DCF &amp; True FCF)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Income Statement</strong></td>
+<td>Deducted inside COGS, R&amp;D, and SG&amp;A based on grant-date fair value.</td>
+<td><strong>True Operating Expense:</strong> Keep SBC deducted inside NOPAT! Do not add it back when valuing ongoing operations.</td>
+</tr>
+<tr>
+<td><strong>Cash Flow Statement</strong></td>
+<td>Added back as a non-cash item in <strong>Operating Cash Flow (CFO)</strong>.</td>
+<td><strong>In-Kind Financing:</strong> Adding SBC back to FCF overstates cash generation unless offset by cash share buybacks to neutralize dilution.</td>
+</tr>
+<tr>
+<td><strong>Balance Sheet</strong></td>
+<td>Increases Additional Paid-In Capital (APIC) as expense is recognized.</td>
+<td><strong>Dilutes Per-Share Value:</strong> Expands total diluted share count via the <strong>Treasury Stock Method (TSM)</strong>.</td>
+</tr>
+</tbody></table>
+<h3>The Treasury Stock Method (TSM) for Diluted Shares</h3>
+<p>In-the-money options and unvested RSUs increase diluted share count assuming exercise proceeds are used to repurchase shares at the current market price:
+$$\text{Net Dilutive Shares Added} = N_{\text{options}} - \frac{N_{\text{options}} \times \text{Strike Price}}{\text{Current Stock Price}}$$</p>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;Adding back SBC to Free Cash Flow is harmless because we also use diluted share count.&quot;</strong><br><em>Reality:</em> Diluted share count only captures options and RSUs granted <em>in the past</em> that exist today! If you add SBC back to Free Cash Flow in a 10-year DCF model, including terminal value, you are assuming the company will receive <strong>10 years of future employee labor for free</strong> with zero future dilution!</li>
+<li><strong>Misconception 2: &quot;SBC expense changes when the stock price moves after the grant date.&quot;</strong><br><em>Reality:</em> Under ASC 718, equity-classified RSU and option expense is locked in at the <strong>Grant-Date Fair Value</strong>. If a company grants RSUs when its stock is at $200, and the stock crashes to $40, the company must still record GAAP expense based on the $200 grant price (even though employees are receiving only $40 of economic value).</li>
+<li><strong>Misconception 3: &quot;Net Share Settlement (withholding shares for taxes) is non-dilutive.&quot;</strong><br><em>Reality:</em> When a company withholds 40% of vesting RSUs to remit employee payroll taxes in cash to the IRS, that cash payment shows up in the <strong>Financing section</strong> of the cash flow statement, masking a massive cash outflow caused by employee compensation.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>&quot;If Stock-Based Compensation isn&#39;t an expense, what is it? And if it doesn&#39;t go into the calculation of earnings, where does it go?&quot; — <em>Warren Buffett</em></p>
+<p><strong>Two Non-Negotiable Rules for Valuing Tech Companies:</strong></p>
+<ol>
+<li><strong>Treat SBC as a Cash Expense in DCF:</strong> Never add back Stock-Based Compensation when calculating Free Cash Flow for a DCF valuation. Deduct 100% of SBC just like cash salaries.</li>
+<li><strong>Track Net Burn &amp; Dilution Rate:</strong> Always compare annual SBC as a percentage of revenue against the company&#39;s <strong>Net Share Count Growth</strong> ($\Delta \text{Diluted Shares} / \text{Total Shares}$). If a mature company spends $20%$ of revenue on SBC and spends 100% of its Free Cash Flow on share buybacks just to keep its share count flat, its true economic Free Cash Flow to shareholders is <strong>zero</strong>.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/fcf.html" class="related-chip">
+          <span>Free Cash Flow (FCFF vs FCFE)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/dcf.html" class="related-chip">
+          <span>Discounted Cash Flow Valuation (Enterprise vs Equity)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/tax-comp.html" class="related-chip">
+          <span>Tax-Efficient Compensation & Section 83(b)</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

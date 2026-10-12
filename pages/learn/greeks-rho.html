@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greeks: Rho (Interest Rate Sensitivity) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Greeks: Rho (Interest Rate Sensitivity)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 19</span>
+          <span class="concept-hero__citation-secondary">· also: Sheldon Natenberg Ch. 7</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Greeks: Rho (Interest Rate Sensitivity)</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Black-Scholes Mathematical Formulas &amp; Directional Signs</h3>
+<p>$$\rho_{\text{Call}} = \frac{\partial C}{\partial r} = K \cdot T \cdot e^{-rT} \cdot N(d_2) &gt; 0$$</p>
+<p>$$\rho_{\text{Put}} = \frac{\partial P}{\partial r} = -K \cdot T \cdot e^{-rT} \cdot N(-d_2) &lt; 0$$</p>
+<p><em>(In trading software, Rho is reported per $1%$ or $0.01$ change in $r$, so the raw derivative above is divided by $100$).</em></p>
+<table>
+<thead>
+<tr>
+<th>Option Position</th>
+<th>Rho Sign</th>
+<th>Impact of Fed Rate Hike ($+100\text{ bps}$)</th>
+<th>Economic Intuition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Long Call</strong></td>
+<td><strong>Positive ($+$)</strong></td>
+<td>Option Value <strong>Increases</strong></td>
+<td>Deferring payment of the cash strike price $K$ until expiration $T$ saves more interest ($K e^{-rT}$ drops).</td>
+</tr>
+<tr>
+<td><strong>Long Put</strong></td>
+<td><strong>Negative ($-$)</strong></td>
+<td>Option Value <strong>Decreases</strong></td>
+<td>Waiting until expiration $T$ to receive the cash sale proceeds $K$ incurs a higher opportunity cost of foregone interest.</td>
+</tr>
+<tr>
+<td><strong>Deep ITM Options</strong></td>
+<td><strong>Maximum $|\rho|$</strong></td>
+<td>Largest dollar impact ($N(d_2) \to 1$)</td>
+<td>Deep ITM options are nearly certain to be exercised, so they carry the full present-value sensitivity of the strike cash flow $K$.</td>
+</tr>
+<tr>
+<td><strong>Longer Time ($T$)</strong></td>
+<td><strong>Scales linearly with $T$</strong></td>
+<td>2-year LEAPS has $24\times$ the Rho of a 1-month option</td>
+<td>Notice the explicit multiplication by $T$ in $K \cdot T \cdot e^{-rT} N(d_2)$.</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;Higher interest rates increase call option prices, so tech call options will profit when the Fed hikes rates.&quot;</strong><br><em>Reality:</em> Remember <em>ceteris paribus</em> (all else equal)! While a $+100\text{ bps}$ rate hike adds positive Rho to a call option if the stock price stays constant, in the real world a surprise Fed rate hike often triggers a $-5%$ drop in the underlying stock price (Delta loss)! On a 3-month option, the negative Delta impact of a stock sell-off completely overwhelms the tiny positive Rho gain.</li>
+<li><strong>Misconception 2: &quot;Futures options (like S&amp;P E-mini or Crude Oil options) have the same Rho sign as stock options.&quot;</strong><br><em>Reality:</em> Under the <strong>Black-76 Model</strong> for options on futures contracts, because entering a futures contract requires zero upfront cash outlay (no cost of carry on the underlying), a rise in interest rates simply discounts the future option payoff more heavily! Therefore, for <strong>options on futures</strong>, both Calls and Puts have <strong>negative Rho</strong> ($\rho_{\text{futures call}} = -T \cdot C &lt; 0$)!</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>When valuing <strong>Long-Term Employee Stock Options (ASC 718)</strong>, <strong>M&amp;A Contingent Value Rights</strong>, or <strong>2-Year LEAPS</strong>:
+Never ignore Rho during interest rate regime shifts. Moving from a $0.5%$ zero-rate environment to a $5.0%$ risk-free rate increases the Black-Scholes value of an at-the-money 3-year Call option by <strong>over $20%$</strong> even if stock price and implied volatility do not move an inch! Always pull the exact maturity-matched US Treasury Strip yield when pricing multi-year equity derivatives.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/black-scholes.html" class="related-chip">
+          <span>Black-Scholes Option Pricing</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/greeks-delta.html" class="related-chip">
+          <span>Delta Sensitivity & Directional Hedge Ratio</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/greeks-theta.html" class="related-chip">
+          <span>Theta Time Decay</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

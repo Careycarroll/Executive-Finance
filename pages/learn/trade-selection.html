@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantitative Trade Selection & Structure Rules — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Quantitative Trade Selection & Structure Rules</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Euan Sinclair Ch. 4</span>
+          <span class="concept-hero__citation-secondary">· also: Sheldon Natenberg Ch. 18</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Quantitative Trade Selection &amp; Structure Rules</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Institutional Option Structure Selection Matrix</h3>
+<table>
+<thead>
+<tr>
+<th>Forecasted Market View</th>
+<th>Implied Volatility Regime</th>
+<th>Optimal Option Structure</th>
+<th>Why This Structure Wins</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Neutral / Range-Bound</strong></td>
+<td>High IV Rank + Steep Skew</td>
+<td><strong>Short Iron Condor / Strangle</strong></td>
+<td>Harvests Variance Risk Premium ($+\Theta, -\mathcal{V}$) from both tails.</td>
+</tr>
+<tr>
+<td><strong>Neutral / Volatility Pin</strong></td>
+<td>Moderate IV + Near Expiry</td>
+<td><strong>Long Butterfly Spread</strong></td>
+<td>High $4:1+$ payout ratio with strictly capped risk if market breaks out.</td>
+</tr>
+<tr>
+<td><strong>Moderate Bullish</strong></td>
+<td>High Implied Volatility</td>
+<td><strong>Bull Put Credit Spread</strong> or <strong>$1 \times 2$ Put Ratio</strong></td>
+<td>Sells expensive OTM put skew; profits from stock rising, staying flat, OR vol crushing!</td>
+</tr>
+<tr>
+<td><strong>Aggressive Bullish Breakout</strong></td>
+<td>Low Implied Volatility</td>
+<td><strong>Long Call</strong> or <strong>Call Backspread</strong></td>
+<td>Maximizes positive Gamma ($+\Gamma$) and Long Vega ($+\mathcal{V}$) when options are cheap.</td>
+</tr>
+<tr>
+<td><strong>Event Catalyst (Earnings)</strong></td>
+<td>Extreme Front-Month Backwardation</td>
+<td><strong>Long Calendar Spread</strong> or <strong>Iron Fly</strong></td>
+<td>Sells $100%+$ front-month event IV while hedging tail risk with back-month or wing legs.</td>
+</tr>
+</tbody></table>
+<pre><code>The 4-Gate Quantitative Trade Filtering Funnel
+┌────────────────────────────────────────────────────────┐
+│ Gate 1: Volatility Valuation Screen                    │
+│ • Compare Current IV vs Forecasted Realized Vol (RV)   │
+│ • Requires |IV - RV| &gt; 4.0 vol points of statistical edge│
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Gate 2: Skew &amp; Term Structure Alignment                │
+│ • Buy low-IV legs; Sell high-IV legs along the surface │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Gate 3: Bid-Ask Friction &amp; Liquidity Audit             │
+│ • Bid-Ask Width must be &lt; 5% of option premium         │
+│ • Open Interest &gt; 1,000 contracts; tight market makers │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Gate 4: Kelly / Tail-Risk Position Sizing              │
+│ • Max loss under 3-sigma shock &lt; 1.5% of total NAV     │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;Adding more legs to an option strategy makes it more sophisticated and profitable.&quot;</strong><br><em>Reality:</em> Every additional leg you add to an option structure (e.g., a 4-legged Condor or Double Diagonal) <strong>multiplies your bid-ask slippage and exchange fees by $4\times$</strong> both on entry and exit! If a single-leg or two-leg vertical spread expresses 90% of the same Greek exposure with half the transaction friction, <strong>always choose the simpler structure</strong>.</li>
+<li><strong>Misconception 2: &quot;High Implied Volatility means you should always sell options.&quot;</strong><br><em>Reality:</em> High Implied Volatility means the market is pricing in a major move. Selling options before a binary biotech FDA ruling or an M&amp;A buyout rumor because &quot;IV is at the 99th percentile&quot; is picking up pennies in front of a steamroller. Only sell high IV when it represents <strong>structural risk-aversion hedging demand</strong> (the Variance Risk Premium), not informed event jump risk!</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Before clicking &quot;Transmit&quot; on any options order, answer the <strong>&quot;Who Is On The Other Side?&quot; Test</strong>:</p>
+<ul>
+<li>If a counterparty is paying you a massive premium, ask <em>why</em>: Are they a price-insensitive hedger (e.g., a pension fund forced by mandate to buy monthly S&amp;P 500 puts regardless of price)? If yes, you are getting paid to provide liquidity and insurance—<strong>take the trade</strong>.</li>
+<li>Or is the counterparty an informed institutional flow trader aggressively sweeping the offer on 2-week Out-of-the-Money calls in an illiquid mid-cap stock? If yes, you are being adverse-selected by informed flow—<strong>step aside immediately</strong>.</li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/edge-and-ev.html" class="related-chip">
+          <span>Mathematical Edge and Expected Value</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/position-sizing.html" class="related-chip">
+          <span>Position Sizing & The Kelly Criterion</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/exit-rules.html" class="related-chip">
+          <span>Disciplined Exit Rules & Trade Management</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

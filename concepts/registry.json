@@ -1724,6 +1724,460 @@
       "template": "explainer",
       "prose_ref": "concepts/prose/biases.md",
       "related": ["prospect-theory", "scenario-analysis", "capital-budgeting"]
+    },
+    {
+      "id": "real-options",
+      "domain": "corpfin",
+      "title": "Real Options in Capital Budgeting",
+      "tier": "reference",
+      "sources": [
+        { "book": "hawawini", "chapters": ["16"], "primary": true },
+        { "book": "hull", "chapters": ["35"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/real-options.md",
+      "related": ["capital-budgeting", "npv-irr", "binomial-pricing"]
+    },
+    {
+      "id": "ma-mechanics",
+      "domain": "corpfin",
+      "title": "M&A Deal Mechanics & Accretion/Dilution",
+      "tier": "reference",
+      "sources": [
+        { "book": "hawawini", "chapters": ["14"], "primary": true },
+        { "book": "external" }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/ma-mechanics.md",
+      "related": ["dcf", "multiples", "ma-tax"]
+    },
+    {
+      "id": "lbo",
+      "domain": "corpfin",
+      "title": "Leveraged Buyout (LBO) Structure & Returns Math",
+      "tier": "reference",
+      "sources": [
+        { "book": "hawawini", "chapters": ["14"], "primary": true },
+        { "book": "external" }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/lbo.md",
+      "related": ["capital-structure", "fcf", "pe-fund-economics"]
+    },
+    {
+      "id": "pe-fund-economics",
+      "domain": "corpfin",
+      "title": "Private Equity Fund Economics (2-and-20 & Waterfalls)",
+      "tier": "reference",
+      "sources": [
+        { "book": "external", "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/pe-fund-economics.md",
+      "related": ["lbo", "vc-mechanics", "npv-irr"]
+    },
+    {
+      "id": "vc-mechanics",
+      "domain": "corpfin",
+      "title": "Venture Capital Stages & Term Sheet Mechanics",
+      "tier": "reference",
+      "sources": [
+        { "book": "external", "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/vc-mechanics.md",
+      "related": ["pe-fund-economics", "private-company-val", "tax-comp"]
+    },
+    {
+      "id": "corporate-hedging",
+      "domain": "risk",
+      "title": "Corporate Hedging Strategy & Risk Governance",
+      "tier": "reference",
+      "sources": [
+        { "book": "hawawini", "chapters": ["15"], "primary": true },
+        { "book": "hull", "chapters": ["3"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/corporate-hedging.md",
+      "related": ["hedging-fx", "hedging-ir", "scenario-analysis"]
+    },
+    {
+      "id": "balance-of-payments",
+      "domain": "macro",
+      "title": "Balance of Payments & Global Capital Flows",
+      "tier": "reference",
+      "sources": [
+        { "book": "bodie", "chapters": ["17"], "primary": true },
+        { "book": "external" }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/balance-of-payments.md",
+      "related": ["fx-parity", "fed-policy", "hedging-fx"]
+    },
+    {
+      "id": "revenue-recognition",
+      "domain": "fsa",
+      "title": "Revenue Recognition (ASC 606 / IFRS 15)",
+      "tier": "reference",
+      "sources": [
+        { "book": "easton", "chapters": ["Mod. 6"], "primary": true },
+        { "book": "penman", "chapters": ["16"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/revenue-recognition.md",
+      "related": ["accrual-quality", "reformulated-is", "cash-flow-analysis"]
+    },
+    {
+      "id": "lease-accounting",
+      "domain": "fsa",
+      "title": "Lease Accounting (ASC 842 / IFRS 16)",
+      "tier": "reference",
+      "sources": [
+        { "book": "easton", "chapters": ["Mod. 10"], "primary": true },
+        { "book": "penman", "chapters": ["13"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/lease-accounting.md",
+      "related": ["reformulated-bs", "cost-of-debt", "comparables"]
+    },
+    {
+      "id": "stock-comp",
+      "domain": "fsa",
+      "title": "Stock-Based Compensation (ASC 718)",
+      "tier": "reference",
+      "sources": [
+        { "book": "easton", "chapters": ["Mod. 9"], "primary": true },
+        { "book": "penman", "chapters": ["9"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/stock-comp.md",
+      "related": ["fcf", "dcf", "tax-comp"]
+    },
+    {
+      "id": "deferred-tax-fsa",
+      "domain": "fsa",
+      "title": "Deferred Taxes on the Financial Statements",
+      "tier": "reference",
+      "sources": [
+        { "book": "easton", "chapters": ["Mod. 10"], "primary": true },
+        { "book": "penman", "chapters": ["10"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/deferred-tax-fsa.md",
+      "related": ["deferred-tax", "accrual-quality", "reformulated-bs"]
+    },
+    {
+      "id": "comparables",
+      "domain": "fsa",
+      "title": "Selecting Comparables & Peer Benchmarking",
+      "tier": "reference",
+      "sources": [
+        { "book": "easton", "chapters": ["Mod. 13"], "primary": true },
+        { "book": "lundholm-sloan", "chapters": ["11"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/comparables.md",
+      "related": ["multiples", "dcf", "valuation-reconciliation"]
+    },
+    {
+      "id": "private-company-val",
+      "domain": "fsa",
+      "title": "Private Company Valuation Adjustments (DLOM & Control)",
+      "tier": "reference",
+      "sources": [
+        { "book": "lundholm-sloan", "chapters": ["12"], "primary": true },
+        { "book": "easton", "chapters": ["Mod. 14"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/private-company-val.md",
+      "related": ["multiples", "dcf", "vc-mechanics"]
+    },
+    {
+      "id": "active-vs-passive",
+      "domain": "invest",
+      "title": "Active vs. Passive Management & Alpha",
+      "tier": "reference",
+      "sources": [
+        { "book": "bodie", "chapters": ["11", "24"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/active-vs-passive.md",
+      "related": ["market-efficiency", "capm", "performance-attribution"]
+    },
+    {
+      "id": "performance-attribution",
+      "domain": "invest",
+      "title": "Performance Attribution (Brinson-Fachler Model)",
+      "tier": "reference",
+      "sources": [
+        { "book": "bodie", "chapters": ["24"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/performance-attribution.md",
+      "related": ["active-vs-passive", "factor-models", "index-construction"]
+    },
+    {
+      "id": "index-construction",
+      "domain": "invest",
+      "title": "Market Index Construction Mechanics",
+      "tier": "reference",
+      "sources": [
+        { "book": "bodie", "chapters": ["2"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/index-construction.md",
+      "related": ["active-vs-passive", "diversification", "capm"]
+    },
+    {
+      "id": "bootstrapping",
+      "domain": "invest",
+      "title": "Bootstrapping the Zero-Coupon Spot Curve",
+      "tier": "reference",
+      "sources": [
+        { "book": "bodie", "chapters": ["14", "15"], "primary": true },
+        { "book": "hull", "chapters": ["4"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/bootstrapping.md",
+      "related": ["yield-curve", "bond-pricing", "ytm"]
+    },
+    {
+      "id": "real-estate-val",
+      "domain": "invest",
+      "title": "Commercial Real Estate Valuation (NOI & Cap Rates)",
+      "tier": "reference",
+      "sources": [
+        { "book": "external", "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/real-estate-val.md",
+      "related": ["dcf", "terminal-value", "lease-accounting"]
+    },
+    {
+      "id": "american-options",
+      "domain": "deriv",
+      "title": "American Options & Early Exercise Mechanics",
+      "tier": "reference",
+      "sources": [
+        { "book": "hull", "chapters": ["11"], "primary": true },
+        { "book": "natenberg", "chapters": ["15"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/american-options.md",
+      "related": ["binomial-pricing", "black-scholes", "put-call-parity"]
+    },
+    {
+      "id": "swaps-fx",
+      "domain": "deriv",
+      "title": "Cross-Currency Swaps (FX Swaps)",
+      "tier": "reference",
+      "sources": [
+        { "book": "hull", "chapters": ["7"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/swaps-fx.md",
+      "related": ["swaps-ir", "fx-parity", "hedging-fx"]
+    },
+    {
+      "id": "exotic-options",
+      "domain": "deriv",
+      "title": "Exotic Options Overview (Barrier, Asian, Digital, Lookback)",
+      "tier": "reference",
+      "sources": [
+        { "book": "hull", "chapters": ["26"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/exotic-options.md",
+      "related": ["monte-carlo", "black-scholes", "corporate-hedging"]
+    },
+    {
+      "id": "greeks-rho",
+      "domain": "deriv",
+      "title": "Greeks: Rho (Interest Rate Sensitivity)",
+      "tier": "reference",
+      "sources": [
+        { "book": "hull", "chapters": ["19"], "primary": true },
+        { "book": "natenberg", "chapters": ["7"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/greeks-rho.md",
+      "related": ["black-scholes", "greeks-delta", "greeks-theta"]
+    },
+    {
+      "id": "greeks-charm",
+      "domain": "deriv",
+      "title": "Greeks: Charm (Delta Bleed / DdeltaDtime)",
+      "tier": "reference",
+      "sources": [
+        { "book": "natenberg", "chapters": ["11"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/greeks-charm.md",
+      "related": ["greeks-delta", "greeks-theta", "delta-hedging"]
+    },
+    {
+      "id": "greeks-vanna",
+      "domain": "deriv",
+      "title": "Greeks: Vanna (Volatility-Spot Cross-Sensitivity)",
+      "tier": "reference",
+      "sources": [
+        { "book": "natenberg", "chapters": ["11"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/greeks-vanna.md",
+      "related": ["greeks-delta", "greeks-vega", "vol-skew"]
+    },
+    {
+      "id": "vol-surface",
+      "domain": "deriv",
+      "title": "The Implied Volatility Surface",
+      "tier": "reference",
+      "sources": [
+        { "book": "natenberg", "chapters": ["19"], "primary": true },
+        { "book": "hull", "chapters": ["20"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/vol-surface.md",
+      "related": ["implied-vol", "vol-skew", "greeks-vanna"]
+    },
+    {
+      "id": "gamma-scalping",
+      "domain": "deriv",
+      "title": "Gamma Scalping (Dynamic Long-Gamma Trading)",
+      "tier": "reference",
+      "sources": [
+        { "book": "natenberg", "chapters": ["16"], "primary": true },
+        { "book": "sinclair", "chapters": ["3"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/gamma-scalping.md",
+      "related": ["greeks-gamma", "greeks-theta", "delta-hedging"]
+    },
+    {
+      "id": "strategy-collar",
+      "domain": "deriv",
+      "title": "Option Strategy: The Collar (Zero-Cost Risk Reversal)",
+      "tier": "reference",
+      "sources": [
+        { "book": "natenberg", "chapters": ["13"], "primary": true },
+        { "book": "hull", "chapters": ["12"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/strategy-collar.md",
+      "related": ["strategy-protective-put", "strategy-covered-call", "vol-skew"]
+    },
+    {
+      "id": "strategy-condor",
+      "domain": "deriv",
+      "title": "Option Strategy: The Iron Condor",
+      "tier": "reference",
+      "sources": [
+        { "book": "natenberg", "chapters": ["13"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/strategy-condor.md",
+      "related": ["strategy-spread-vertical", "strategy-straddle", "strategy-butterfly"]
+    },
+    {
+      "id": "strategy-butterfly",
+      "domain": "deriv",
+      "title": "Option Strategy: The Butterfly Spread",
+      "tier": "reference",
+      "sources": [
+        { "book": "natenberg", "chapters": ["13"], "primary": true },
+        { "book": "hull", "chapters": ["12"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/strategy-butterfly.md",
+      "related": ["strategy-condor", "strategy-spread-vertical", "greeks-gamma"]
+    },
+    {
+      "id": "strategy-calendar",
+      "domain": "deriv",
+      "title": "Option Strategy: Calendar & Diagonal Spreads",
+      "tier": "reference",
+      "sources": [
+        { "book": "natenberg", "chapters": ["14"], "primary": true },
+        { "book": "hull", "chapters": ["12"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/strategy-calendar.md",
+      "related": ["greeks-theta", "greeks-vega", "vol-surface"]
+    },
+    {
+      "id": "strategy-ratio",
+      "domain": "deriv",
+      "title": "Option Strategy: Ratio Spreads & Backspreads",
+      "tier": "reference",
+      "sources": [
+        { "book": "natenberg", "chapters": ["14"], "primary": true },
+        { "book": "sinclair", "chapters": ["4"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/strategy-ratio.md",
+      "related": ["vol-skew", "strategy-spread-vertical", "greeks-gamma"]
+    },
+    {
+      "id": "trade-selection",
+      "domain": "deriv",
+      "title": "Quantitative Trade Selection & Structure Rules",
+      "tier": "reference",
+      "sources": [
+        { "book": "sinclair", "chapters": ["4"], "primary": true },
+        { "book": "natenberg", "chapters": ["18"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/trade-selection.md",
+      "related": ["edge-and-ev", "position-sizing", "exit-rules"]
+    },
+    {
+      "id": "exit-rules",
+      "domain": "deriv",
+      "title": "Disciplined Exit Rules & Trade Management",
+      "tier": "reference",
+      "sources": [
+        { "book": "sinclair", "chapters": ["6"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/exit-rules.md",
+      "related": ["trade-selection", "position-sizing", "prospect-theory"]
+    },
+    {
+      "id": "ma-tax",
+      "domain": "tax",
+      "title": "M&A Tax Structuring (Asset vs. Stock vs. §338(h)(10))",
+      "tier": "reference",
+      "sources": [
+        { "book": "scholes-wolfson", "chapters": ["13", "14"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/ma-tax.md",
+      "related": ["ma-mechanics", "deferred-tax", "entity-choice"]
+    },
+    {
+      "id": "international-tax",
+      "domain": "tax",
+      "title": "International Taxation & Transfer Pricing",
+      "tier": "reference",
+      "sources": [
+        { "book": "scholes-wolfson", "chapters": ["10", "11"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/international-tax.md",
+      "related": ["hedging-fx", "deferred-tax", "entity-choice"]
+    },
+    {
+      "id": "tax-clienteles",
+      "domain": "tax",
+      "title": "Tax Clienteles & Implicit Taxes",
+      "tier": "reference",
+      "sources": [
+        { "book": "scholes-wolfson", "chapters": ["5", "7"], "primary": true }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/tax-clienteles.md",
+      "related": ["tax-shield", "entity-choice", "lease-accounting"]
     }
   ]
 }
+

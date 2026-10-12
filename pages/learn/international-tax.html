@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>International Taxation & Transfer Pricing — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--tax">tax</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">International Taxation & Transfer Pricing</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Myron Scholes Ch. 10, 11</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>International Taxation &amp; Transfer Pricing</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Modern Cross-Border Tax Guardrails (US TCJA &amp; OECD Pillar Two)</h3>
+<table>
+<thead>
+<tr>
+<th>Tax Mechanism</th>
+<th>Statutory Target</th>
+<th>How the Guardrail Works</th>
+<th>Corporate Strategic Impact</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Arm&#39;s-Length Transfer Pricing (IRC §482)</strong></td>
+<td>Intercompany goods, services, royalties, and loans.</td>
+<td>Requires benchmarking intercompany margins against independent comparables (CUP, Cost-Plus, Resale Price, or CPM methods).</td>
+<td>Prevents arbitrary invoice shifting; requires Contemporaneous Transfer Pricing Studies to avoid $20%-40%$ IRS penalties.</td>
+</tr>
+<tr>
+<td><strong>Subpart F Income</strong></td>
+<td>Passive mobile income (dividends, interest, royalties) in foreign subsidiaries.</td>
+<td>Immediate US taxation at $21%$ on passive income held in Controlled Foreign Corporations (CFCs), even if cash is not repatriated.</td>
+<td>Eliminates &quot;passive cash box&quot; tax havens.</td>
+</tr>
+<tr>
+<td><strong>GILTI (Global Intangible Low-Taxed Income)</strong></td>
+<td>Active foreign earnings exceeding a $10%$ return on foreign tangible assets (QBAI).</td>
+<td>Imposes a minimum US tax ($10.5% - 13.125%$) on high-margin foreign IP/software profits taxed below $\approx 13.125%$ abroad.</td>
+<td>Reduces—but does not eliminate—the benefit of locating high-margin IP in low-tax jurisdictions.</td>
+</tr>
+<tr>
+<td><strong>FDII (Foreign-Derived Intangible Income)</strong></td>
+<td>Export sales of US-held IP and goods to foreign customers.</td>
+<td>Grants a reduced $13.125%$ effective US tax rate (vs $21%$) on high-margin export income kept inside the US!</td>
+<td>Incentivizes keeping IP onshore in the United States (&quot;carrot&quot; paired with GILTI&#39;s &quot;stick&quot;).</td>
+</tr>
+<tr>
+<td><strong>OECD Pillar Two (Global Minimum Tax)</strong></td>
+<td>Multinationals with revenue $&gt; €750\text{M}$.</td>
+<td>Enforces a <strong>15% Global Minimum Effective Tax Rate</strong> in every jurisdiction via Income Inclusion Rules (IIR) and Top-Up Taxes.</td>
+<td>Ends the era of $0%-5%$ statutory tax haven arbitrage for large multinationals.</td>
+</tr>
+</tbody></table>
+<pre><code>Intercompany Transfer Pricing Profit-Shifting &amp; Arm&#39;s-Length Audit
+┌────────────────────────────────────────────────────────┐
+│ Low-Tax Subsidiary (Ireland, 12.5% Tax)                │
+│ • Manufactures software/pharma and sells to US Parent  │
+│   at Transfer Price P_T                                │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ High-Tax Parent Distributor (US, 21%+ State Tax)       │
+│ • Higher P_T → Shifts profit to Ireland (saves taxes)  │
+│ • IRS §482 Audit: Demands Comparable Uncontrolled Price│
+│   (CUP) or Advance Pricing Agreement (APA) proof!      │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;A US company can eliminate its US taxes simply by transferring its patents to a Cayman Islands subsidiary for $1.&quot;</strong><br><em>Reality:</em> Under <strong>IRC Section 367(d)</strong> and the <strong>&quot;Commensurate with Income&quot; standard</strong>, transferring valuable IP offshore triggers an immediate exit tax or forces the US parent to impute an annual royalty stream equal to the actual future economic profits generated by that IP! Furthermore, Subpart F and GILTI immediately tax offshore passive and low-taxed intangible income.</li>
+<li><strong>Misconception 2: &quot;Foreign Tax Credits (FTCs) give a dollar-for-dollar refund for all foreign taxes paid.&quot;</strong><br><em>Reality:</em> Foreign Tax Credits are strictly capped at the <strong>US tax rate that would have been owed on that foreign income</strong> ($\text{FTC Limit} = \text{US Tax} \times \frac{\text{Foreign Taxable Income}}{\text{Total Taxable Income}}$), segregated into separate statutory baskets (GILTI basket, Passive basket, General basket). Excess foreign credits paid in high-tax countries ($30%$) cannot be used to offset US taxes on domestic income.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>When expanding internationally or managing cross-border supply chains:</p>
+<ol>
+<li><strong>Pair FDII vs. GILTI Before Moving IP:</strong> Do the math before spending millions in legal fees to migrate Intellectual Property offshore. With the US <strong>FDII deduction</strong> offering a $13.125%$ tax rate on export income kept <em>inside</em> the US and <strong>OECD Pillar Two</strong> imposing a $15%$ minimum tax offshore, keeping IP onshore in Delaware is now frequently more tax-efficient and vastly simpler than offshore tax structures!</li>
+<li><strong>Secure an Advance Pricing Agreement (APA):</strong> For large, recurring intercompany royalty or manufacturing flows, negotiate a bilateral <strong>Advance Pricing Agreement</strong> directly with the IRS and the foreign tax authority upfront to lock in guaranteed transfer pricing methodology and eliminate double-taxation audit risk.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/hedging-fx.html" class="related-chip">
+          <span>Foreign Exchange Hedging Strategies</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+
+        <a href="/pages/learn/deferred-tax.html" class="related-chip">
+          <span>Deferred Taxes & Net Operating Losses</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+
+        <a href="/pages/learn/entity-choice.html" class="related-chip">
+          <span>Entity Choice (C-Corp, S-Corp, LLC, Partnership)</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Implied Volatility Surface — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">The Implied Volatility Surface</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 19</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 20</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>The Implied Volatility Surface</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Two Dimensions of the Volatility Surface</h3>
+<pre><code>3D Implied Volatility Surface: σ(K, T)
+   Implied Vol (σ)
+     ▲
+ 40% │   ╲
+     │    ╲  30-Day Skew (Steepest curvature near expiry)
+ 30% │     ╲       ╲
+     │      ╲       ╲  180-Day Skew (Flatter due to mean reversion)
+ 20% │       ╰───────╰───────────────
+     │      80%     100%    120%  ► Strike Moneyness (K / S)
+     └────────────────────────────► Time to Maturity (T)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Surface Dimension</th>
+<th>Calm Contango Regime (&quot;Normal&quot;)</th>
+<th>Crisis Backwardation Regime (&quot;Panic&quot;)</th>
+<th>Economic &amp; Order-Flow Driver</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Term Structure ($\partial \sigma / \partial T$)</strong></td>
+<td><strong>Upward-Sloping:</strong> Front-month IV ($14%$) $&lt;$ Back-month IV ($19%$).</td>
+<td><strong>Inverted (Backwardation):</strong> Front-month IV ($45%$) $\gg$ Back-month IV ($26%$).</td>
+<td>Near-term macro panic spikes front-month options; long-term volatility mean-reverts toward historical averages ($18%-20%$).</td>
+</tr>
+<tr>
+<td><strong>Equity Skew ($\partial \sigma / \partial K$)</strong></td>
+<td><strong>Negative Put Skew:</strong> OTM Puts trade $5-8\text{ vol pts}$ above ATM Calls.</td>
+<td><strong>Extreme Put Skew:</strong> OTM Puts trade $15+\text{ vol pts}$ above ATM.</td>
+<td>Institutional crash-protection demand + leverage effect (stock drop increases debt-to-equity ratio and real vol).</td>
+</tr>
+<tr>
+<td><strong>Commodity / FX Smile</strong></td>
+<td><strong>Symmetric Smile or Positive Call Skew</strong></td>
+<td><strong>Steep Right-Tail Call Skew</strong></td>
+<td>Supply shocks (droughts, wars, pipeline freezes) cause violent <em>upward</em> price spikes in oil, wheat, and gold.</td>
+</tr>
+</tbody></table>
+<h3>Dupire Local Volatility &amp; Arbitrage-Free Surface Constraints</h3>
+<p>For a volatility surface to be free of static arbitrage:</p>
+<ol>
+<li><strong>No Calendar Spread Arbitrage:</strong> Total implied variance $w(K, T) = \sigma_{\text{IV}}^2(K, T) \cdot T$ must be strictly non-decreasing with expiration $T$ along constant forward-moneyness lines.</li>
+<li><strong>No Butterfly Arbitrage:</strong> The risk-neutral probability density $\frac{\partial^2 C}{\partial K^2} \ge 0$ must remain non-negative at every strike, limiting how steeply the skew can curve.</li>
+</ol>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;If 30-day volatility jumps +5 points, 1-year LEAPS volatility will also jump +5 points.&quot;</strong><br><em>Reality:</em> Volatility mean-reverts! Because of the <strong>Square-Root-of-Time Rule on Variance shocks</strong>, a $1\text{ point}$ move in 1-year implied volatility normally corresponds to a $\sqrt{12} \approx 3.5\text{ point}$ move in 1-month implied volatility. Long-dated Vega is far more stable than front-month Vega.</li>
+<li><strong>Misconception 2: &quot;Sticky-Strike and Sticky-Delta mean the same thing.&quot;</strong><br><em>Reality:</em> When the underlying stock moves, how does the surface shift? Under <strong>Sticky-Strike</strong>, each fixed strike $K$ keeps its exact old IV. Under <strong>Sticky-Delta (Sticky-Moneyness)</strong>, the IV curve shifts horizontally <em>with</em> the spot price so that a $50\Delta$ ATM option always keeps the same ATM volatility. Understanding whether a market is trading Sticky-Strike or Sticky-Delta determines how you must adjust your Delta hedge!</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Before entering any multi-leg option strategy, inspect where the current Volatility Surface sits relative to its 1-year historical percentile:</p>
+<ul>
+<li><strong>Steep Contango + Low ATM Vol:</strong> Ideal regime for <strong>Calendar Spreads</strong> or <strong>Long Diagonal Spreads</strong> (selling slightly elevated back-month vol or buying cheap front-month gamma).</li>
+<li><strong>Inverted Backwardation + Extreme Skew:</strong> Never buy naked front-month OTM puts at the height of a panic—you are paying peak implied volatility and peak skew simultaneously. Use <strong>Put Ratio Spreads</strong> or <strong>Collars</strong> to sell the overpriced skew leg to fund your protection.</li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/implied-vol.html" class="related-chip">
+          <span>Implied vs. Realized Volatility</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/vol-skew.html" class="related-chip">
+          <span>Volatility Skew, Smile & Fat Tails</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/greeks-vanna.html" class="related-chip">
+          <span>Greeks: Vanna (Volatility-Spot Cross-Sensitivity)</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

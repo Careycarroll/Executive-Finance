@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Performance Attribution (Brinson-Fachler Model) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--reference">reference</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Performance Attribution (Brinson-Fachler Model)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 24</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><h1>Performance Attribution (Brinson-Fachler Model)</h1>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Brinson-Fachler Attribution Decomposition</h3>
+<p>Let $w_{p,i}$ and $w_{b,i}$ denote the portfolio and benchmark weights in sector $i$, and let $R_{p,i}$ and $R_{b,i}$ denote the portfolio and benchmark returns in sector $i$, with total benchmark return $R_B = \sum w_{b,i} R_{b,i}$:</p>
+<p>$$\text{Total Active Return} = R_P - R_B = \sum_{i=1}^N w_{p,i} R_{p,i} - \sum_{i=1}^N w_{b,i} R_{b,i} = \text{Allocation} + \text{Selection} + \text{Interaction}$$</p>
+<table>
+<thead>
+<tr>
+<th>Attribution Effect</th>
+<th>Mathematical Formula</th>
+<th>Economic Interpretation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1. Asset Allocation Effect</strong></td>
+<td>$\sum_{i} (w_{p,i} - w_{b,i}) \cdot (R_{b,i} - R_B)$</td>
+<td>Value added by overweighting sectors whose benchmark return beat the overall total benchmark ($R_{b,i} &gt; R_B$), or underweighting lagging sectors.</td>
+</tr>
+<tr>
+<td><strong>2. Security Selection Effect</strong></td>
+<td>$\sum_{i} w_{b,i} \cdot (R_{p,i} - R_{b,i})$</td>
+<td>Value added by picking individual securities within sector $i$ that outperformed that sector&#39;s own benchmark ($R_{p,i} &gt; R_{b,i}$), evaluated at benchmark weight.</td>
+</tr>
+<tr>
+<td><strong>3. Interaction Effect</strong></td>
+<td>$\sum_{i} (w_{p,i} - w_{b,i}) \cdot (R_{p,i} - R_{b,i})$</td>
+<td>Cross-product effect: positive when the manager both overweights a sector <em>and</em> picks outperforming stocks within that same sector (often folded into Selection in institutional reporting).</td>
+</tr>
+</tbody></table>
+<pre><code>Worked Two-Sector Attribution Example (Total Benchmark Return R_B = 10.0%)
+┌────────────────────────────────────────────────────────┐
+│ Technology Sector:                                     │
+│ • Benchmark Weight = 30%, Benchmark Return = 18.0%     │
+│ • Portfolio Weight = 45%, Portfolio Return = 22.0%     │
+├────────────────────────────────────────────────────────┤
+│ 1. Allocation Effect:                                  │
+│    (45% - 30%) × (18.0% - 10.0%) = +15% × +8% = +1.20% │
+│ 2. Selection Effect:                                   │
+│    30% × (22.0% - 18.0%) = 30% × +4.0% = +1.20%        │
+│ 3. Interaction Effect:                                 │
+│    (45% - 30%) × (22.0% - 18.0%) = +15% × +4% = +0.60% │
+│ → Total Value Added from Tech = +3.00% (+300 bps)      │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;Brinson-Hood-Beebower (BHB) and Brinson-Fachler (BF) give the same sector allocation numbers.&quot;</strong><br><em>Reality:</em> In the older BHB formula, sector allocation is measured as $(w_{p,i} - w_{b,i}) \times R_{b,i}$. Under BHB, overweighting a sector that returned $+5%$ when the overall market returned $+15%$ looks like a &quot;positive $+5%$ allocation contribution,&quot; even though overweighting that lagging sector dragged down relative performance! <strong>Brinson-Fachler</strong> fixes this by subtracting overall $R_B$: $(w_{p,i} - w_{b,i}) \times (R_{b,i} - R_B)$, properly showing that overweighting a sector that underperformed the overall market is a negative allocation decision.</li>
+<li><strong>Misconception 2: &quot;The famous Brinson study proved that 90% of returns come from asset allocation, so security selection doesn&#39;t matter.&quot;</strong><br><em>Reality:</em> Brinson et al. showed that ~90% of the <em>time-series variance</em> of a pension fund&#39;s quarterly total return is explained by its policy benchmark asset allocation. Among active managers with similar benchmarks, <em>cross-sectional differences</em> in excess return are frequently driven by security selection and factor tilts.</li>
+<li><strong>Misconception 3: &quot;Single-period arithmetic attribution sums cleanly across multiple years.&quot;</strong><br><em>Reality:</em> Because portfolio returns compound multiplicatively over time, single-period arithmetic attribution effects do not sum cleanly across multi-year horizons without geometric smoothing adjustments (e.g., Carino or Menchero linking algorithms).</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Use Brinson-Fachler attribution as your <strong>Manager Accountability Audit</strong>:</p>
+<ul>
+<li>If a fund manager markets themselves as a &quot;bottom-up fundamental stock picker,&quot; their excess return should come overwhelmingly from the <strong>Security Selection</strong> bucket. If attribution reveals that $95%$ of their outperformance came from an unhedged macro Allocation bet on Energy or Tech, they are charging stock-picking fees for a sector ETF bet!</li>
+<li>Apply this exact same math in <strong>Corporate FP&amp;A Variance Analysis</strong> to decompose division revenue variances into <strong>Market Share Effect</strong>, <strong>Industry Growth Effect</strong>, and <strong>Price/Mix Effect</strong>.</li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/active-vs-passive.html" class="related-chip">
+          <span>Active vs. Passive Management & Alpha</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/factor-models.html" class="related-chip">
+          <span>Factor Models (Fama-French Multi-Factor Asset Pricing)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/index-construction.html" class="related-chip">
+          <span>Market Index Construction Mechanics</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
