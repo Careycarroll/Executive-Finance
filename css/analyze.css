@@ -990,6 +990,12 @@
   color: #b91c1c !important;
 }
 
+.wb-td-neg,
+.wb-table td.wb-td-neg,
+.wb-table tr.wb-row-total td.wb-td-neg {
+  color: #dc2626 !important;
+}
+
 /* ── Formula Breakdown Boxes (.wb-formula-breakdown) ────────── */
 .wb-formula-breakdown {
   display: flex;

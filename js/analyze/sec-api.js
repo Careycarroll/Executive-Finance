@@ -346,6 +346,9 @@ function toMillions(val) {
 function extractConceptData(facts, conceptKey) {
   const tags = CONCEPT_MAP[conceptKey] || [];
   const gaap = facts?.facts?.['us-gaap'] || {};
+  const merged = [];
+  const seenPeriodKeys = new Set();
+
   for (const tag of tags) {
     const concept = gaap[tag];
     if (!concept?.units) continue;
@@ -357,10 +360,16 @@ function extractConceptData(facts, conceptKey) {
       ? 'shares'
       : Object.keys(concept.units)[0];
     if (unitKey && concept.units[unitKey]?.length > 0) {
-      return concept.units[unitKey];
+      for (const item of concept.units[unitKey]) {
+        const periodKey = `${item.form || ''}|${item.start || ''}|${item.end || ''}`;
+        if (!seenPeriodKeys.has(periodKey)) {
+          seenPeriodKeys.add(periodKey);
+          merged.push(item);
+        }
+      }
     }
   }
-  return [];
+  return merged;
 }
 
 function filterAnnualItems(raw, formType = '10-K') {

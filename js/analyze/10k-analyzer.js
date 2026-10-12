@@ -19,7 +19,8 @@ import {
   fmtSharePrice,
   fmtPct,
   fmtMult,
-  conceptPill
+  conceptPill,
+  highlightNegativeTableCells
 } from './state.js';
 import { mountTargetBanner } from './hub.js';
 
@@ -858,7 +859,7 @@ function render10KAnalyzer(company, opCashPct = 0.015) {
               <tr>
                 <td>Diluted EPS ($/share)</td>
                 <td>${conceptPill('multiples', 'EPS')}</td>
-                ${byYear.map(y => `<td>$${y.epsDiluted.toFixed(2)}</td>`).join('')}
+                ${byYear.map(y => `<td>${fmtSharePrice(y.epsDiluted)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.epsDiluted, latest.epsDiluted, byYear.length - 1))}
               </tr>
 
@@ -1114,6 +1115,9 @@ function render10KAnalyzer(company, opCashPct = 0.015) {
       </div>
     </div>
   `;
+
+  // Highlight negative numbers and parenthesized cash outflows in red across all tables
+  highlightNegativeTableCells(root);
 
   // Wire Tab Switching
   const tabs = root.querySelectorAll('.wb-tab');

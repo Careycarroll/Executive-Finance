@@ -80,3 +80,21 @@ export function conceptPill(conceptId, label = 'Concept') {
   return `<a class="analyze-concept-pill" href="../learn/${conceptId}.html" title="Open Learn concept page: ${conceptId}">${label} &rarr;</a>`;
 }
 
+/**
+ * Automatically apply red negative styling (.wb-td-neg) to table cells containing
+ * negative values (e.g. -$992M, -14.2%, -1.5x) or parenthesized outflows/deductions (e.g. ($88M)).
+ */
+export function highlightNegativeTableCells(root) {
+  if (!root || typeof root.querySelectorAll !== 'function') return;
+  root.querySelectorAll('.wb-table td, .analyze-table td').forEach(td => {
+    if (td === td.parentElement?.firstElementChild) return;
+    if (td.querySelector('a, button, input, select')) return;
+    const txt = (td.textContent || '').trim();
+    if (!txt || txt === '—' || txt === '-') return;
+    if (/^[-−]\s*\$?\d/.test(txt) || /^\(\$?\d[\d.,]*[A-Za-z%]*\)$/.test(txt)) {
+      td.classList.add('wb-td-neg');
+    }
+  });
+}
+
+
