@@ -583,3 +583,57 @@ export async function fetchSECData(ticker, years = 5, formType = '10-K') {
 }
 
 export const parseSecJsonToSnapshot = parseUploadedCompanyFacts;
+export { BUILTIN_TICKERS };
+
+/**
+ * Resolve a ticker or numeric CIK to direct SEC EDGAR XBRL CompanyFacts JSON & browse URLs
+ */
+export function resolveSECLinks(query) {
+  const raw = String(query || '').trim().toUpperCase();
+  if (!raw) {
+    return {
+      found: false,
+      edgarSearchUrl: 'https://www.sec.gov/edgar/searchedgar/companysearch',
+      tickersJsonUrl: 'https://www.sec.gov/files/company_tickers.json'
+    };
+  }
+
+  // Check if user entered CIK########## or digits
+  const cikMatch = raw.match(/^(?:CIK)?0*(\d{1,10})$/i);
+  if (cikMatch) {
+    const paddedCIK = cikMatch[1].padStart(10, '0');
+    return {
+      found: true,
+      cik: paddedCIK,
+      ticker: `CIK${paddedCIK}`,
+      name: `CIK ${paddedCIK}`,
+      factsUrl: `https://data.sec.gov/api/xbrl/companyfacts/CIK${paddedCIK}.json`,
+      edgarBrowseUrl: `https://www.sec.gov/edgar/browse/?CIK=${paddedCIK}`,
+      edgarSearchUrl: 'https://www.sec.gov/edgar/searchedgar/companysearch'
+    };
+  }
+
+  // Check built-in S&P 500 ticker directory
+  const hit = BUILTIN_TICKERS[raw];
+  if (hit) {
+    const paddedCIK = String(hit.cik).padStart(10, '0');
+    return {
+      found: true,
+      cik: paddedCIK,
+      ticker: raw,
+      name: hit.name,
+      factsUrl: `https://data.sec.gov/api/xbrl/companyfacts/CIK${paddedCIK}.json`,
+      edgarBrowseUrl: `https://www.sec.gov/edgar/browse/?CIK=${paddedCIK}`,
+      edgarSearchUrl: 'https://www.sec.gov/edgar/searchedgar/companysearch'
+    };
+  }
+
+  return {
+    found: false,
+    ticker: raw,
+    edgarBrowseUrl: `https://www.sec.gov/edgar/searchedgar/companysearch`,
+    edgarSearchUrl: 'https://www.sec.gov/edgar/searchedgar/companysearch',
+    tickersJsonUrl: 'https://www.sec.gov/files/company_tickers.json'
+  };
+}
+

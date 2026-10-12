@@ -198,6 +198,8 @@
   border: 1px solid var(--color-gray-200);
   border-radius: var(--radius-md);
   padding: var(--space-4);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .analyze-data-box__title {
@@ -217,20 +219,52 @@
 .analyze-inline-form {
   display: flex;
   gap: var(--space-2);
+  align-items: center;
+}
+
+.analyze-inline-form--wrap {
+  flex-wrap: wrap;
 }
 
 .analyze-input {
-  flex: 1;
+  flex: 1 1 110px;
+  min-width: 0;
   padding: 6px 10px;
   border: 1px solid var(--color-gray-300);
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
   font-family: var(--font-sans);
+  box-sizing: border-box;
 }
 
 .analyze-input:focus {
   outline: none;
   border-color: var(--color-primary);
+}
+
+.analyze-sec-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--color-gray-200);
+}
+
+.analyze-sec-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.analyze-sec-link:hover {
+  text-decoration: underline;
+  color: var(--color-primary-dark, #1e3a8a);
 }
 
 .analyze-status-msg {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { SNAPSHOTS, SNAPSHOT_LIST, getSnapshot } from '../js/analyze/snapshots.js';
-import { parseSecJsonToSnapshot } from '../js/analyze/sec-api.js';
+import { parseSecJsonToSnapshot, resolveSECLinks } from '../js/analyze/sec-api.js';
 import { compute10KAnalysis, calcCAGR } from '../js/analyze/10k-analyzer.js';
 import { computeStockValuation } from '../js/analyze/stock-valuator.js';
 import { computeMAAnalysis, computeLBOModel, computeCapExModel } from '../js/analyze/deal-workbench.js';
@@ -69,6 +69,22 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
       expect(parsed.incomeStatements.length).toBe(2);
       expect(parsed.incomeStatements[0].revenue).toBeCloseTo(391035, 0);
       expect(parsed.incomeStatements[0].netIncome).toBeCloseTo(93736, 0);
+    });
+
+    it('resolves tickers and CIK numbers to SEC EDGAR XBRL CompanyFacts and search URLs', () => {
+      const nvda = resolveSECLinks('nvda');
+      expect(nvda.found).toBe(true);
+      expect(nvda.cik).toBe('0001045810');
+      expect(nvda.factsUrl).toBe('https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json');
+
+      const cikDirect = resolveSECLinks('320193');
+      expect(cikDirect.found).toBe(true);
+      expect(cikDirect.cik).toBe('0000320193');
+      expect(cikDirect.factsUrl).toBe('https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json');
+
+      const unknown = resolveSECLinks('ZZZZ');
+      expect(unknown.found).toBe(false);
+      expect(unknown.edgarSearchUrl).toBe('https://www.sec.gov/edgar/searchedgar/companysearch');
     });
   });
 
