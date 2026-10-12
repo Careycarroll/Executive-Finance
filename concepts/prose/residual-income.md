@@ -64,3 +64,4 @@ Notice that $\$500\text{M}$ (88% of total value) is grounded in verifiable asset
 
 ## Notes for Future-Me
 The beauty of the Residual Income model is how it tames terminal value anxiety. In a DCF, $75\%$ of your valuation comes from an imaginary perpetual cash flow 10 years away. In a Residual Income model, the balance sheet gives you today's starting value ($\text{NOA}_0$), and you only have to estimate the *abnormal competitive advantage period* (the moat). Under economic theory, competition forces abnormal returns ($\text{ReOI}$) to zero over time as rivals enter. Valuing a business as "Book Value + PV of Moat Duration" is far more intellectually honest than forecasting cash flows to the year 2085.
+

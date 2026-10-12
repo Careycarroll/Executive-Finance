@@ -48,3 +48,4 @@ The reported earnings growth is illusory: future quarters will suffer massive ba
 
 ## Notes for Future-Me
 Whenever a CFO presents an earnings beat, look straight to the Cash Flow Statement. If Net Income is up but CFO is down, you are looking at red-flag accrual inflation. Ask the simple question: *"Where did the cash go?"* If it is trapped in uncollected receivables, capitalized intangibles, or ballooning inventory that hasn't sold, earnings are being manufactured by spreadsheet entries. Quality earnings convert directly into cash in the bank.
+

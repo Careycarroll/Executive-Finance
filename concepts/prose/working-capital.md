@@ -54,3 +54,4 @@ A 25-day CCC compression delivers $\$19{,}000{,}000$ of instant, non-dilutive li
 
 ## Notes for Future-Me
 "Growth eats cash." The single most dangerous phase for a rapidly scaling business is a sudden doubling of sales. Because accounts receivable and inventory must be funded weeks or months before customer cash arrives, a doubling of revenue causes Working Capital Requirements ($\Delta\text{WCR}$) to explode. Without adequate revolving credit or cash cushions, a wildly profitable company can suffer a catastrophic liquidity crisis ("overtrading"). Always model working capital cash drains at every stage of growth projections.
+

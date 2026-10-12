@@ -29,3 +29,4 @@ $$\text{Equity Value} = \text{EV} + \text{Cash \& Marketable Securities} - \text
 DCF models suffer from the **"Terminal Value Domination Problem"**: in a standard 5-year DCF, the Terminal Value typically represents $65\%-85\%$ of the total calculated Enterprise Value! This means the 40-tab financial model detailing quarterly revenues, gross margins, and headcount across the 5-year forecast horizon is driving less than a third of the total valuation; the remaining two-thirds hangs entirely on two subjective assumptions: the exit WACC and the perpetuity growth rate $g$.
 
 Always run a two-variable sensitivity table crossing WACC against $g$ (or against exit EV/EBITDA multiple). If the valuation drops by 35% when WACC rises from 8.5% to 9.5% or when $g$ falls from 3% to 2%, your model is not providing certainty—it is mapping vulnerability.
+

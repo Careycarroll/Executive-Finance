@@ -44,3 +44,4 @@ The stock must offer an expected return of at least $10.88\%$ to clear its risk 
 
 ## Notes for Future-Me
 Never accept a beta without checking the regression $R^2$. If a stock has a beta of 1.2 but an $R^2$ of only $0.15$ against the S&P 500, that means $85\%$ of the company's return variance is driven by company-specific drama, not macroeconomic market swings. In that situation, CAPM is only explaining a tiny sliver of the company's risk profile. Always cross-check single-stock regression betas against industry-wide peer average unlevered betas.
+

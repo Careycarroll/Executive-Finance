@@ -53,3 +53,4 @@ $$R_i - r_f = \alpha_i + \beta_i (R_m - r_f) + s_i \cdot \text{SMB} + h_i \cdot 
 
 ## Notes for Future-Me
 Whenever evaluating an external money manager or private equity general partner, run a **Factor Attribution Analysis** on their historical track record. If their excess returns disappear after controlling for SMB (size) and HML (value), you are not paying for proprietary stock-picking genius—you are paying 2-and-20 fees for a leveraged small-cap value index fund! Insist on paying incentive fees only on **True Multi-Factor Alpha ($\alpha$)** that persists after stripping out all known risk factors.
+

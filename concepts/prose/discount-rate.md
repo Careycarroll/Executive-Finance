@@ -35,3 +35,4 @@ Every $\$1.00$ expected in Year 5 is worth only $\$0.56$ today under this hurdle
 
 ## Notes for Future-Me
 Discount rates are subjective assumptions that masquerade as objective precision. In DCF models and boardroom pitch decks, moving the discount rate by 100 basis points (e.g., from 9.5% to 8.5%) moves the enterprise valuation far more than changing revenue growth projections by 3%. Whenever a deal sponsor brings you an NPV calculation, interrogate the discount rate derivation first: where did they get beta? Are they using trailing 10-year risk-free rates or current spot rates? Did they strip out company-specific risks that should have been modeled directly into scenario cash flows rather than dumped into an arbitrary hurdle rate adder?
+

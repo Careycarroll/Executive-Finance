@@ -37,3 +37,4 @@ $$\frac{\text{EV}}{\text{EBITDA}} \approx \frac{(1 - t) \times (1 - \text{Reinve
 When an analyst says *"Our company deserves a 15x EV/EBITDA multiple because the peer group trades at 15x,"* they are implicitly asserting that your company has the identical growth rate ($g$), identical reinvestment requirements, identical tax profile ($t$), and identical operating risk ($\text{WACC}$) as the peer group!
 
 If your target company has lower ROIC, higher customer churn, or slower projected growth than its peers, applying the peer average multiple will cause you to dramatically overpay. Always adjust multiples for differences in growth and return on capital using regression analysis or PEG ratios.
+

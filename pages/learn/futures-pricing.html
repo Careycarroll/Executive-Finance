@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cost of Carry and Futures Pricing — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Cost of Carry and Futures Pricing</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 5</span>
+          <span class="concept-hero__citation-secondary">· also: Zvi Bodie Ch. 22</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The theoretical price of a forward or futures contract is governed by the <strong>Law of One Price</strong> and the principle of <strong>No-Arbitrage</strong>.</p>
+<p>To acquire an asset $T$ years in the future, an investor has two equivalent choices:</p>
+<ol>
+<li>Buy a forward contract today agreeing to pay $F_0$ at time $T$.</li>
+<li>Buy the physical asset in the spot market today at $S_0$, store it, insure it, pay storage costs, collect any interim cash yields (dividends or interest), and finance the purchase with debt at interest rate $r$.</li>
+</ol>
+<p>Because both strategies result in identical ownership of the asset at time $T$ with zero interim cash requirements, the forward price must equal the spot price plus the net <strong>Cost of Carry</strong>:
+$$\text{Futures Price} = \text{Spot Price} + \text{Financing Cost} + \text{Storage Cost} - \text{Interim Income}$$</p>
+<p>If the futures price drifts above this no-arbitrage boundary, traders execute <strong>Cash-and-Carry Arbitrage</strong> (borrow cash, buy spot, short futures). If it drops below, they execute <strong>Reverse Cash-and-Carry Arbitrage</strong>.</p>
+<p>For physical commodities (oil, wheat, copper), commercial inventory holders receive an implicit benefit from holding physical stock during supply disruptions called the <strong>Convenience Yield ($y$)</strong>. When convenience yield is high, the market shifts into <strong>Backwardation</strong> ($F_0 &lt; S_0$). When storage costs dominate, the market enters <strong>Contango</strong> ($F_0 &gt; S_0$).</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="F_0 = S_0 \cdot e^{(r - q) T} \quad \text{(Financial Assets with Dividend Yield } q\text{)}
+
+$$F_0 = S_0 \cdot e^{(r + u - y) T} \quad \text{(Commodities with Storage Cost } u \text{ and Convenience Yield } y\text{)}$$
+
+$$\text{Basis} = S_t - F_t">
+            F_0 = S_0 \cdot e^{(r - q) T} \quad \text{(Financial Assets with Dividend Yield } q\text{)}
+
+$$F_0 = S_0 \cdot e^{(r + u - y) T} \quad \text{(Commodities with Storage Cost } u \text{ and Convenience Yield } y\text{)}$$
+
+$$\text{Basis} = S_t - F_t
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>F_0</strong>: Theoretical equilibrium forward/futures price today.</li>
+<li><strong>S_0</strong>: Spot market price of the underlying asset today.</li>
+<li><strong>r</strong>: Continuously compounded risk-free financing interest rate.</li>
+<li><strong>q</strong>: Continuous dividend yield (or foreign risk-free interest rate for currencies).</li>
+<li><strong>u</strong>: Annualized storage and insurance cost as a percentage of spot price.</li>
+<li><strong>y</strong>: Annualized convenience yield (benefit of holding physical inventory).</li>
+<li><strong>T</strong>: Time to contract maturity in years.</li>
+<li><strong>\text{Basis}</strong>: Spot price minus futures price ($S_t - F_t$). At maturity, basis must converge to zero.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A corporate treasurer is evaluating an S&amp;P 500 equity index futures hedge with a 6-month maturity ($T = 0.50$):</p>
+<ul>
+<li>Current Index Spot Level ($S_0$): $5{,}000.00$</li>
+<li>Risk-free financing rate ($r$): $5.0%$ per annum ($0.05$)</li>
+<li>Dividend yield on the index ($q$): $1.5%$ per annum ($0.015$)</li>
+</ul>
+<p><strong>Step 1: Calculate Net Cost of Carry</strong>
+$$\text{Net Carry} = r - q = 0.05 - 0.015 = 0.035 \ (3.5%)$$</p>
+<p><strong>Step 2: Calculate Theoretical Futures Price</strong>
+$$F_0 = 5{,}000 \cdot e^{(0.035 \times 0.50)} = 5{,}000 \cdot e^{0.0175} = 5{,}000 \times 1.01765 = 5{,}088.27$$</p>
+<p>The fair futures price is <strong>$5,088.27</strong>.</p>
+<p><strong>Arbitrage Analysis:</strong>
+If market makers quote the futures at $$5{,}110.00$ (overpriced by $$21.73$):</p>
+<ol>
+<li>Borrow $$5{,}000$ at $5%$.</li>
+<li>Buy the physical S&amp;P 500 basket at $$5{,}000$.</li>
+<li>Sell the 6-month futures contract at $$5{,}110.00$.</li>
+<li>Over 6 months, collect $$37.50$ in dividends while paying $$125.00$ in interest.</li>
+<li>At $T = 0.5$, deliver the basket into the contract for $$5{,}110.00$. Net riskless arbitrage profit: $$21.73$ per contract. Market arbitrageurs instantly force the price back to $$5{,}088.27$.</li>
+</ol>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Index arbitrage, currency forward pricing (Covered Interest Parity: $F = S \frac{1+r_d}{1+r_f}$), sizing commodity supply chain procurement hedges, and calendar roll analysis.</li>
+<li><strong>When not to use / Caveats:</strong> Do not assume reverse cash-and-carry arbitrage works smoothly on physical commodities during a short squeeze! If you short spot and buy futures, you must borrow physical barrels of oil or bushels of wheat. If physical inventory is locked up in storage, you cannot short spot, allowing futures to trade in deep backwardation without arbitrage correction.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Beware the <strong>&quot;Contango Roll Bleed&quot;</strong>: When commodity futures markets are in steep contango ($F_{\text{distant}} &gt; F_{\text{near}}$), an exchange-traded fund or corporate hedging program that rolls expiring contracts month after month is systematically selling cheap expiring contracts and buying more expensive next-month contracts. This negative roll yield quietly destroys $10%-30%$ of portfolio value annually, even if the underlying spot commodity price doesn&#39;t move! Always audit roll yield before deploying long-term commodity hedges.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/forwards-futures.html" class="related-chip">
+          <span>Forwards vs. Futures Mechanics</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/put-call-parity.html" class="related-chip">
+          <span>Put-Call Parity and Synthetic Equivalence</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/yield-curve.html" class="related-chip">
+          <span>Yield Curve and Term Structure of Interest Rates</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

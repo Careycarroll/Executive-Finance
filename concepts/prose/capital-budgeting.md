@@ -68,3 +68,4 @@ The executive objective is unambiguous: allocate every dollar of discretionary c
 Maintain an explicit **Capital Allocation Hurdle Rate Register** and track post-completion audits. When division heads submit capital expenditure requests (AFEs), their pitch decks will always forecast 25% IRRs and hockey-stick revenues. Institute a mandatory 2-year and 5-year **Look-Back Review**: compare actual realized project cash flows against the original pitch deck. 
 
 When you discover that a team systematically over-forecasts revenues by 30% and under-forecasts CapEx overruns by 20%, adjust their future capital budgets accordingly. Great CEOs do not pick winners by trusting unchecked spreadsheets; they create governance that enforces accountability for invested capital.
+

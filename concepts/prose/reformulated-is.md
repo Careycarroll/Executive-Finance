@@ -46,3 +46,4 @@ $$\text{NOPAT} = \text{Operating Income} - \text{Tax on Operating Income}$$
 
 ## Notes for Future-Me
 Whenever evaluating an acquisition target or divisional performance, never take GAAP Net Income at face value. A target can engineer an apparent 20% surge in Net Income simply by borrowing cheap debt to buy back stock, even while its core operating margins (NOPAT / Sales) are actively collapsing. Reformulating the income statement strips out financial engineering and exposes whether the underlying product engine is generating real economic rents.
+

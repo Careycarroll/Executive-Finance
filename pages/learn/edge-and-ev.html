@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mathematical Edge and Expected Value — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Mathematical Edge and Expected Value</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Euan Sinclair Ch. 1, 2</span>
+          <span class="concept-hero__citation-secondary">· also: Sheldon Natenberg Ch. 18</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>At the core of all rational decision-making in financial markets, casino gaming, and corporate capital allocation lies a single foundational metric: <strong>Expected Value ($\mathbb{E}[X]$ / EV)</strong>.</p>
+<p>Expected Value is the probability-weighted average outcome of an uncertain decision repeated over an infinite number of identical trials:
+$$\mathbb{E}[X] = \sum_{i=1}^n p_i \cdot x_i$$</p>
+<p>In quantitative finance, <strong>Edge</strong> is defined as having a strictly positive Expected Value net of all transaction costs, execution slippage, and borrow friction:
+$$\text{Edge} = \frac{\mathbb{E}[\text{Payoff}] - \text{Cost}}{\text{Capital at Risk}} &gt; 0$$</p>
+<p>The central axiom of executive risk-taking is the <strong>Separation of Outcome from Process (Resulting)</strong>:</p>
+<ul>
+<li>A great decision with positive EV can result in a catastrophic loss due to bad short-term variance.</li>
+<li>A reckless decision with negative EV can result in a massive windfall due to dumb luck.</li>
+</ul>
+<p>Novice leaders judge decisions solely by their retrospective outcomes (&quot;We made money, so it was a great call!&quot;). Elite quantitative executives judge decisions exclusively by whether the underlying <strong>process possessed mathematical positive expected value</strong> at the moment the decision was made.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="\mathbb{E}[X] = \sum_{i=1}^n p_i \cdot x_i = (p_{\text{win}} \cdot \text{Win Amount}) - (p_{\text{loss}} \cdot \text{Loss Amount})
+
+$$\text{Trade Edge (\%)} = \frac{\mathbb{E}[\text{Payoff}]}{\text{Risk}} = p \cdot b - (1 - p)$$
+
+$$\text{Post-Friction Edge} = \text{Gross EV} - \text{Commission} - \text{Bid-Ask Slippage} - \text{Borrow Cost}">
+            \mathbb{E}[X] = \sum_{i=1}^n p_i \cdot x_i = (p_{\text{win}} \cdot \text{Win Amount}) - (p_{\text{loss}} \cdot \text{Loss Amount})
+
+$$\text{Trade Edge (\%)} = \frac{\mathbb{E}[\text{Payoff}]}{\text{Risk}} = p \cdot b - (1 - p)$$
+
+$$\text{Post-Friction Edge} = \text{Gross EV} - \text{Commission} - \text{Bid-Ask Slippage} - \text{Borrow Cost}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>\mathbb{E}[X]</strong>: Expected Value in currency units.</li>
+<li><strong>p_i</strong>: Probability of outcome $i$, where $\sum p_i = 1.0$.</li>
+<li><strong>x_i</strong>: Net payoff (profit or loss) associated with outcome $i$.</li>
+<li><strong>p_{\text{win}}</strong>: Probability of a profitable trade or project outcome.</li>
+<li><strong>p_{\text{loss}}</strong>: Probability of an unprofitable outcome ($1 - p_{\text{win}}$).</li>
+<li><strong>b</strong>: Profit-to-loss payoff ratio ($\text{Win Amount} / \text{Loss Amount}$).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A corporate venture capital unit is deciding whether to exercise an option to acquire a biotech licensing patent for $$5{,}000{,}000$:</p>
+<ul>
+<li><strong>Clinical Trial Success Scenario (Probability $35%$):</strong> Patent approved. Commercialization generates a net present value payoff of $+$25{,}000{,}000$ (net gain after purchase $= +$20{,}000{,}000$).</li>
+<li><strong>Moderate Efficacy Scenario (Probability $25%$):</strong> Narrow approval. Generates $+$6{,}000{,}000$ net present value (net gain after purchase $= +$1{,}000{,}000$).</li>
+<li><strong>Trial Failure Scenario (Probability $40%$):</strong> Trial fails completely. Zero revenue (net loss $= -$5{,}000{,}000$).</li>
+</ul>
+<p><strong>Calculate Expected Value:</strong>
+$$\mathbb{E}[\text{NPV}] = (0.35 \times $20{,}000{,}000) + (0.25 \times $1{,}000{,}000) + (0.40 \times -$5{,}000{,}000)$$
+$$\mathbb{E}[\text{NPV}] = $7{,}000{,}000 + $250{,}000 - $2{,}000{,}000 = +$5{,}250{,}000$$</p>
+<p><strong>Decision Analysis:</strong></p>
+<ul>
+<li>The venture possesses an outstanding positive expected value of <strong>$+$5,250,000</strong> ($+105%$ expected ROI on the $$5\text{M}$ outlay).</li>
+<li><strong>Executive Imperative:</strong> Management should unequivocally fund this patent, despite knowing that there is a <strong>$40%$ probability of losing every penny</strong> on this specific trial. If the enterprise executes 20 such uncorrelated patents across its pipeline, the portfolio will compound massively while absorbing individual trial failures.</li>
+</ul>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Systematic options trading, corporate capital allocation (R&amp;D pipelines, drilling exploratory oil wells, bidding in government spectrum auctions), insurance underwriting, and lawsuit litigation settlements.</li>
+<li><strong>When not to use / Caveats (The Ergodicity Problem):</strong> Positive expected value across an ensemble of parallel universes ($\mathbb{E}[X] &gt; 0$) is meaningless if a single trial outcome is <strong>absorbing (ruin)</strong>! If a trade offers a $99%$ chance of making $$1{,}000{,}000$ and a $1%$ chance of immediate corporate bankruptcy, the expected value is $+$990{,}000$, but you cannot play: you cannot compound wealth if you are dead. Never play positive EV games that contain non-zero absorbing ruin barriers.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Beware of <strong>&quot;Resulting&quot;</strong> (Annie Duke’s term for outcome bias). When a project team takes a well-modeled, positive-EV bet that fails due to bad $10%$ tail variance, do not fire the team! If you punish teams for bad variance on positive-EV bets, your organization will develop institutional cowardice: managers will only propose risk-free, zero-return projects to protect their bonuses. </p>
+<p>Conversely, when an executive makes an unhedged, negative-EV bet that miraculously succeeds due to dumb luck, do not praise them. Investigate the process. Celebrate positive EV; punish negative EV; ignore the variance.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/position-sizing.html" class="related-chip">
+          <span>Position Sizing & The Kelly Criterion</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/implied-vol.html" class="related-chip">
+          <span>Implied vs. Realized Volatility</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/risk-return.html" class="related-chip">
+          <span>Risk-Return Tradeoff</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

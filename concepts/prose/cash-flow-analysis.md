@@ -58,3 +58,4 @@ Cash Flow Statement Architecture
 Look at the **CFO-to-CapEx ratio**:
 $$\text{Reinvestment Ratio} = \frac{\text{CFO}}{\text{CapEx}}$$
 If this ratio is consistently $> 2.0$, you are looking at a compounding monopoly that generates twice the cash it needs to sustain itself. If the ratio is $< 1.0$, the company is a capital incinerator that cannot self-fund its own asset depreciation and will be perpetually at the mercy of capital markets.
+

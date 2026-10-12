@@ -27,3 +27,4 @@ $$\text{10Y - 2Y Spread} = y_{10} - y_2$$
 When the yield curve inverts, do not panic and freeze all business operations immediately: the historical lag between curve inversion and the actual onset of recession averages **12 to 18 months**. In fact, equities frequently rally during the early months of an inversion! 
 
 The true danger zone is the **"Re-Steepening Trap"**: when the yield curve un-inverts and rapidly steepens because the central bank begins emergency short-term rate cuts. That rapid un-inversion is when the real-economy recession hits corporate earnings. When you see the curve invert, use that 12-month window to refinance short-term debt into fixed long-term paper, stretch cash cushions, and prune marginal projects.
+

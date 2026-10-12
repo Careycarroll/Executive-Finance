@@ -895,5 +895,347 @@
         ]
       }
     ]
+  },
+  "forwards-futures": {
+    "title": "Forwards vs. Futures Mechanics",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "2",
+          "3"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "22"
+        ]
+      }
+    ]
+  },
+  "futures-pricing": {
+    "title": "Cost of Carry and Futures Pricing",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "5"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "22"
+        ]
+      }
+    ]
+  },
+  "put-call-parity": {
+    "title": "Put-Call Parity and Synthetic Equivalence",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "11"
+        ],
+        "primary": true
+      },
+      {
+        "book": "natenberg",
+        "chapters": [
+          "3"
+        ]
+      }
+    ]
+  },
+  "binomial-pricing": {
+    "title": "Binomial Option Pricing Model",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "13"
+        ],
+        "primary": true
+      },
+      {
+        "book": "natenberg",
+        "chapters": [
+          "15"
+        ]
+      }
+    ]
+  },
+  "swaps-ir": {
+    "title": "Interest Rate Swaps and Comparative Advantage",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "7"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "23"
+        ]
+      }
+    ]
+  },
+  "greeks-delta": {
+    "title": "Delta Sensitivity & Directional Hedge Ratio",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "19"
+        ],
+        "primary": true
+      },
+      {
+        "book": "natenberg",
+        "chapters": [
+          "6"
+        ]
+      }
+    ]
+  },
+  "greeks-gamma": {
+    "title": "Gamma Curvature & Convexity Risk",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "19"
+        ],
+        "primary": true
+      },
+      {
+        "book": "natenberg",
+        "chapters": [
+          "6"
+        ]
+      }
+    ]
+  },
+  "greeks-theta": {
+    "title": "Theta Time Decay",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "19"
+        ],
+        "primary": true
+      },
+      {
+        "book": "natenberg",
+        "chapters": [
+          "6"
+        ]
+      }
+    ]
+  },
+  "greeks-vega": {
+    "title": "Vega Volatility Exposure",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "19"
+        ],
+        "primary": true
+      },
+      {
+        "book": "natenberg",
+        "chapters": [
+          "6"
+        ]
+      }
+    ]
+  },
+  "implied-vol": {
+    "title": "Implied vs. Realized Volatility",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "natenberg",
+        "chapters": [
+          "4"
+        ],
+        "primary": true
+      },
+      {
+        "book": "sinclair",
+        "chapters": [
+          "2"
+        ]
+      }
+    ]
+  },
+  "vol-skew": {
+    "title": "Volatility Skew, Smile & Fat Tails",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "natenberg",
+        "chapters": [
+          "17"
+        ],
+        "primary": true
+      },
+      {
+        "book": "sinclair",
+        "chapters": [
+          "4"
+        ]
+      }
+    ]
+  },
+  "delta-hedging": {
+    "title": "Dynamic Delta Hedging & Rebalancing Costs",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "19"
+        ],
+        "primary": true
+      },
+      {
+        "book": "sinclair",
+        "chapters": [
+          "3"
+        ]
+      }
+    ]
+  },
+  "strategy-covered-call": {
+    "title": "Covered Call Strategy",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "natenberg",
+        "chapters": [
+          "7"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hull",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "strategy-protective-put": {
+    "title": "Protective Put Strategy",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "12"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "20"
+        ]
+      }
+    ]
+  },
+  "strategy-straddle": {
+    "title": "Long Straddle Strategy",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "natenberg",
+        "chapters": [
+          "12"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hull",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "position-sizing": {
+    "title": "Position Sizing & The Kelly Criterion",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "sinclair",
+        "chapters": [
+          "5"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "6"
+        ]
+      }
+    ]
+  },
+  "edge-and-ev": {
+    "title": "Mathematical Edge and Expected Value",
+    "domain": "deriv",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "sinclair",
+        "chapters": [
+          "1",
+          "2"
+        ],
+        "primary": true
+      },
+      {
+        "book": "natenberg",
+        "chapters": [
+          "18"
+        ]
+      }
+    ]
   }
 }

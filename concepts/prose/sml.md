@@ -48,3 +48,4 @@ $$\alpha_{\text{LegacyMetal}} = 7.5\% - 8.80\% = -1.30\% \ (\text{Plots BELOW SM
 
 ## Notes for Future-Me
 "Alpha" is the most abused term in financial sales pitches. When a hedge fund or asset manager pitches you a "market-beating 12% return," look at their beta first. If the market returned 15% and their beta was 1.4, their required return was $4\% + 1.4 \times 11\% = 19.4\%$. That manager didn't generate positive alpha—they generated negative $-7.4\%$ alpha while taking massive leveraged risk! Always strip out the SML beta return before paying any manager an incentive performance fee.
+

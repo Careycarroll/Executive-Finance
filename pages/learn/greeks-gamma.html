@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gamma Curvature & Convexity Risk — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Gamma Curvature & Convexity Risk</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 19</span>
+          <span class="concept-hero__citation-secondary">· also: Sheldon Natenberg Ch. 6</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Gamma ($\Gamma$) is the second-order derivative of option price with respect to underlying asset price, and the first derivative of Delta with respect to the asset price:
+$$\Gamma = \frac{\partial^2 V}{\partial S^2} = \frac{\partial \Delta}{\partial S}$$</p>
+<p>Gamma measures the <strong>acceleration and stability of your hedge</strong>:</p>
+<ul>
+<li><strong>Long Gamma ($\Gamma &gt; 0$):</strong> All long options (calls and puts) have positive gamma. As the stock rises, your delta increases (making you longer); as the stock falls, your delta decreases (making you less long). Gamma automatically works in your favor! In a delta-neutral long straddle, positive gamma allows you to buy low and sell high on every rebalance.</li>
+<li><strong>Short Gamma ($\Gamma &lt; 0$):</strong> Option sellers (short calls, short puts) have negative gamma. As the stock falls, your position becomes more short; as the stock surges, your position becomes more long. Negative gamma forces you to buy high and sell low, compounding losses during market volatility.</li>
+</ul>
+<p>Gamma is strictly positive for vanilla long options and reaches its maximum peak <strong>at-the-money (ATM) close to expiration</strong>, where delta must violently transition between $0$ and $1.0$.</p>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;greek&quot;:&quot;gamma&quot;,&quot;spot&quot;:100,&quot;strike&quot;:100,&quot;rate&quot;:0.05,&quot;vol&quot;:0.2,&quot;time_to_expiry&quot;:1}">At-the-Money 1Y Baseline</button>
+<button type="button" class="preset-btn" data-config="{&quot;greek&quot;:&quot;gamma&quot;,&quot;spot&quot;:100,&quot;strike&quot;:100,&quot;rate&quot;:0.05,&quot;vol&quot;:0.2,&quot;time_to_expiry&quot;:0.05}">Near-Expiration Pin Risk (0.05Y)</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="greeks-visualizer" data-defaults="{&quot;greek&quot;:&quot;gamma&quot;,&quot;spot&quot;:100,&quot;strike&quot;:100,&quot;rate&quot;:0.05,&quot;vol&quot;:0.2,&quot;time_to_expiry&quot;:1,&quot;option_type&quot;:&quot;call&quot;}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\Gamma = \frac{e^{-q T} N'(d_1)}{S \sigma \sqrt{T}} = \frac{e^{-q T} \frac{1}{\sqrt{2\pi}} e^{-\frac{d_1^2}{2}}}{S \sigma \sqrt{T}}
+
+$$\Delta_{\text{new}} \approx \Delta_{\text{old}} + \Gamma \cdot \Delta S$$
+
+$$V_{\text{new}} \approx V_{\text{old}} + \Delta \cdot \Delta S + \frac{1}{2} \Gamma \cdot (\Delta S)^2">
+              \Gamma = \frac{e^{-q T} N'(d_1)}{S \sigma \sqrt{T}} = \frac{e^{-q T} \frac{1}{\sqrt{2\pi}} e^{-\frac{d_1^2}{2}}}{S \sigma \sqrt{T}}
+
+$$\Delta_{\text{new}} \approx \Delta_{\text{old}} + \Gamma \cdot \Delta S$$
+
+$$V_{\text{new}} \approx V_{\text{old}} + \Delta \cdot \Delta S + \frac{1}{2} \Gamma \cdot (\Delta S)^2
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>\Gamma</strong>: Gamma curvature ($\partial^2 V / \partial S^2$). Identical for standard European calls and puts with the same strike.</li>
+<li><strong>N&#39;(d_1)</strong>: Standard normal probability density function evaluated at $d_1$.</li>
+<li><strong>S</strong>: Current spot price.</li>
+<li><strong>\sigma</strong>: Annualized volatility.</li>
+<li><strong>T</strong>: Time to expiration in years.</li>
+<li><strong>q</strong>: Continuous dividend yield.</li>
+<li><strong>\Delta S</strong>: Change in underlying stock price.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Beware of <strong>&quot;Gamma Pin Risk&quot;</strong> near expiration: when you are short options that are close to the money with only hours or days until expiration ($T \to 0$), the denominator $S \sigma \sqrt{T}$ collapses toward zero, causing Gamma to spike toward infinity! A $0.50 move in the stock can swing your delta from 0 to 100 in seconds, forcing catastrophic panic hedging in the cash market. Never hold concentrated short near-the-money options through expiration week without hard stop-loss automation.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/greeks-delta.html" class="related-chip">
+          <span>Delta Sensitivity & Directional Hedge Ratio</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/greeks-theta.html" class="related-chip">
+          <span>Theta Time Decay</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/delta-hedging.html" class="related-chip">
+          <span>Dynamic Delta Hedging & Rebalancing Costs</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

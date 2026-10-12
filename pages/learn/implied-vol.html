@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Implied vs. Realized Volatility — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Implied vs. Realized Volatility</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 4</span>
+          <span class="concept-hero__citation-secondary">· also: Euan Sinclair Ch. 2</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Volatility is the primary driver of option pricing and risk management. However, financial markets operate on two radically different manifestations of volatility:</p>
+<ol>
+<li><strong>Realized Volatility ($\sigma_{\text{realized}}$ / Historical Volatility):</strong> The actual, backward-looking statistical standard deviation of asset price returns observed over a historical window (e.g., trailing 30, 60, or 252 trading days). It measures what <em>actually happened</em> in the physical world.</li>
+<li><strong>Implied Volatility ($\sigma_{\text{implied}}$ / IV):</strong> The forward-looking market consensus expectation of future volatility, derived by <strong>inverting the Black-Scholes formula</strong> from currently observed market option prices. It represents the <em>price of volatility insurance</em> demanded by market makers today.</li>
+</ol>
+<p>The persistent spread between the two creates the <strong>Volatility Risk Premium (VRP)</strong>:
+$$\text{VRP} = \sigma_{\text{implied}} - \sigma_{\text{realized}}$$</p>
+<p>Empirical market data shows that across broad equity indices (S&amp;P 500 VIX), implied volatility trades higher than subsequent realized volatility approximately $80%-85%$ of the time! Option buyers systematically pay an insurance risk premium to protect against catastrophic tail risk, creating an enduring structural edge for disciplined options sellers.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="\sigma_{\text{realized}} = \sqrt{\frac{252}{N - 1} \sum_{i=1}^N \left( \ln\left(\frac{S_i}{S_{i-1}}\right) - \bar{r} \right)^2}
+
+$$\text{Implied Volatility: } \sigma_{\text{IV}} \text{ such that } C_{\text{BSM}}(S, K, r, T, \sigma_{\text{IV}}) = C_{\text{market}}$$
+
+$$\text{Expected 1-Day Range} \approx S_0 \cdot \frac{\sigma_{\text{IV}}}{\sqrt{252}} \approx S_0 \cdot \frac{\sigma_{\text{IV}}}{16}">
+            \sigma_{\text{realized}} = \sqrt{\frac{252}{N - 1} \sum_{i=1}^N \left( \ln\left(\frac{S_i}{S_{i-1}}\right) - \bar{r} \right)^2}
+
+$$\text{Implied Volatility: } \sigma_{\text{IV}} \text{ such that } C_{\text{BSM}}(S, K, r, T, \sigma_{\text{IV}}) = C_{\text{market}}$$
+
+$$\text{Expected 1-Day Range} \approx S_0 \cdot \frac{\sigma_{\text{IV}}}{\sqrt{252}} \approx S_0 \cdot \frac{\sigma_{\text{IV}}}{16}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>\sigma_{\text{realized}}</strong>: Annualized realized historical standard deviation of daily logarithmic returns.</li>
+<li><strong>\sigma_{\text{IV}}</strong>: Annualized Black-Scholes implied volatility.</li>
+<li><strong>N</strong>: Number of trading days in the calculation window (typically 20, 30, or 60 days).</li>
+<li><strong>S_i / S_{i-1}</strong>: Consecutive closing prices.</li>
+<li><strong>\bar{r}</strong>: Mean daily logarithmic return over the sample window.</li>
+<li><strong>\text{Rule of 16}</strong>: Quick mental math: since $\sqrt{252} \approx 15.87 \approx 16$, dividing annualized IV by 16 gives the expected 1-standard-deviation daily price move in percent!</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A risk manager is evaluating hedging costs for a portfolio holding $$10{,}000{,}000$ of tech shares trading at $$200.00$:</p>
+<ul>
+<li>30-day Realized Volatility ($\sigma_{\text{realized}}$): $20.0%$ per annum.</li>
+<li>30-day At-The-Money Option Implied Volatility ($\sigma_{\text{IV}}$): $32.0%$ per annum.</li>
+</ul>
+<p><strong>Step 1: Calculate the Volatility Risk Premium (VRP)</strong>
+$$\text{VRP} = \sigma_{\text{IV}} - \sigma_{\text{realized}} = 32.0% - 20.0% = +12.0% \ (12 \text{ percentage points})$$
+Options are pricing in dramatic turbulence that is not currently occurring in daily stock trading.</p>
+<p><strong>Step 2: Rule of 16 Daily Move Translation</strong>
+$$\text{Implied Daily Move} = \frac{32.0%}{16} = \pm 2.0% \ (\pm $4.00 \text{ per share})$$
+$$\text{Actual Realized Daily Move} = \frac{20.0%}{16} = \pm 1.25% \ (\pm $2.50 \text{ per share})$$</p>
+<p><strong>Strategic Takeaway:</strong>
+Buying 30-day put options at a $32%$ IV to hedge a stock that is moving only $1.25%$ per day means you are overpaying by nearly $60%$ for volatility protection. Instead of buying naked puts, the manager should execute a <strong>collar</strong> (buy put funded by selling a call) or sell an out-of-the-money credit spread to capture the elevated VRP.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Systematic options selling strategies, market making, evaluating whether options are &quot;rich&quot; or &quot;cheap&quot; relative to history via <strong>IV Rank (IVR)</strong> and <strong>IV Percentile (IVP)</strong>, and timing hedge entries.</li>
+<li><strong>When not to use / Caveats:</strong> Do not assume that high IV is always overpriced. When a genuine geopolitical or credit crisis erupts (e.g., 2008 Lehman collapse, 2020 pandemic), realized volatility explodes from 15% to 80% in days, completely overwhelming implied volatility and wiping out short-volatility funds.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Always use <strong>IV Rank</strong> before trading options:
+$$\text{IV Rank} = \frac{\text{Current IV} - \text{52-Week Low IV}}{\text{52-Week High IV} - \text{52-Week Low IV}} \times 100$$</p>
+<ul>
+<li>If IV Rank $&gt; 50$: Options are historically expensive. Edge favors <strong>selling premium</strong> (covered calls, iron condors, credit spreads).</li>
+<li>If IV Rank $&lt; 20$: Options are historically cheap. Edge favors <strong>buying premium</strong> (long calls, long straddles, calendar spreads).
+Trading without checking IV Rank is like buying real estate without looking at historical comparable prices per square foot.</li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/greeks-vega.html" class="related-chip">
+          <span>Vega Volatility Exposure</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/vol-skew.html" class="related-chip">
+          <span>Volatility Skew, Smile & Fat Tails</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/edge-and-ev.html" class="related-chip">
+          <span>Mathematical Edge and Expected Value</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

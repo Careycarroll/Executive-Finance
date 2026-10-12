@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forwards vs. Futures Mechanics — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Forwards vs. Futures Mechanics</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 2, 3</span>
+          <span class="concept-hero__citation-secondary">· also: Zvi Bodie Ch. 22</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><p>Forward contracts and futures contracts are the foundational linear derivatives: both represent firm commitments to buy or sell an underlying asset at a specified future date for a predetermined delivery price ($K$).</p>
+<p>While economically equivalent at maturity under constant interest rates, their market architecture and risk profiles diverge dramatically:</p>
+<ul>
+<li><strong>Forward Contracts:</strong> Over-the-counter (OTC) bilateral agreements between two private counterparties. Completely customizable (notional size, tenor, delivery terms), but carry <strong>counterparty credit risk</strong> and are illiquid prior to maturity. Settlement occurs in a single lump-sum cash flow at expiration.</li>
+<li><strong>Futures Contracts:</strong> Standardized, exchange-traded contracts traded on central exchanges (CME, ICE, Eurex). Counterparty risk is eliminated by the <strong>Central Clearinghouse (CCP)</strong> through mandatory initial margin and daily <strong>mark-to-market</strong> settlement. Any interim price fluctuation generates immediate daily cash variation margin inflows or outflows.</li>
+</ul>
+<p>For corporate treasurers, choosing between forwards and futures is a trade-off between <strong>customization without liquidity drag</strong> (OTC forwards) versus <strong>zero credit risk with daily liquidity volatility</strong> (exchange futures).</p>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Architecture: Over-the-Counter Forwards vs. Exchange-Traded Futures</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Forward Contract (OTC)</th>
+<th>Futures Contract (Exchange)</th>
+<th>Executive Takeaway</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Trading Venue</strong></td>
+<td>Bilateral OTC between banks/corporates</td>
+<td>Central Exchange (e.g., CME Group)</td>
+<td>Forwards are private; futures are public and transparent.</td>
+</tr>
+<tr>
+<td><strong>Contract Terms</strong></td>
+<td>100% Bespoke (any amount, any date)</td>
+<td>Standardized lot sizes and fixed expiration cycles</td>
+<td>Forwards eliminate basis risk by matching exact operational cash flows.</td>
+</tr>
+<tr>
+<td><strong>Credit Risk</strong></td>
+<td>High counterparty default risk</td>
+<td>Near-zero (Guaranteed by clearinghouse)</td>
+<td>Must evaluate bank credit ratings on long-term OTC forwards.</td>
+</tr>
+<tr>
+<td><strong>Cash Settlement</strong></td>
+<td>Single settlement at maturity ($T$)</td>
+<td>Daily mark-to-market variation margin</td>
+<td>Futures require substantial liquid cash reserves for margin calls.</td>
+</tr>
+<tr>
+<td><strong>Secondary Liquidity</strong></td>
+<td>Illiquid (requires negotiated termination)</td>
+<td>Highly liquid (close out position anytime)</td>
+<td>Futures allow instant dynamic hedging adjustments.</td>
+</tr>
+</tbody></table>
+<pre><code>The Futures Daily Mark-to-Market Margin Engine
+┌────────────────────────────────────────────────────────┐
+│ Initial Margin Deposited (e.g., $10,000 per contract)   │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+      ┌───────────────────────────────────────────┐
+      │ Daily Settlement Price Announced by CCP   │
+      └─────────────────────┬─────────────────────┘
+                            │
+            ┌───────────────┴───────────────┐
+            ▼                               ▼
+┌───────────────────────┐       ┌───────────────────────┐
+│ Price Rises (Gain)    │       │ Price Falls (Loss)    │
+│ Excess cash credited  │       │ Cash deducted from    │
+│ to margin account     │       │ margin account        │
+└───────────────────────┘       └───────────┬───────────┘
+                                            │
+                                            ▼
+                                ┌───────────────────────┐
+                                │ Balance &lt; Maint Margin?│
+                                └───────────┬───────────┘
+                                            │ Yes
+                                            ▼
+                                ┌───────────────────────┐
+                                │ MARGIN CALL: Deposit  │
+                                │ cash immediately or   │
+                                │ positions liquidated! │
+                                └───────────────────────┘
+</code></pre>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;Because futures are safer than forwards, corporations should always hedge with futures.&quot;</strong>
+<em>Reality:</em> Daily mark-to-market on futures can trigger a catastrophic corporate liquidity crisis! In 1993, German conglomerate Metallgesellschaft nearly went bankrupt because its massive long oil futures hedges suffered billions in short-term daily margin calls when oil prices crashed, even though its forward retail customer contracts were fully protected long-term. Hedges using futures require immense liquid cash buffers.</li>
+<li><strong>Misconception 2: &quot;Hedging with forward contracts is free because there is zero upfront premium.&quot;</strong>
+<em>Reality:</em> While forwards require no upfront option-like cash premium, they embed <strong>credit valuation adjustments (CVA)</strong>, bank bid-ask spreads, and ISDA master agreement collateral lockups.</li>
+<li><strong>Misconception 3: &quot;Futures prices and forward prices are always mathematically identical.&quot;</strong>
+<em>Reality:</em> When interest rates are stochastic (variable) and positively correlated with asset prices, long futures contracts are slightly more valuable than forwards because margin gains earn high interest while margin losses are financed at low interest.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>When structuring currency or commodity hedges for corporate operations, match the instrument to your treasury&#39;s liquidity tolerance:</p>
+<ul>
+<li>If your operating cash flows occur on irregular dates (e.g., a $47.3M equipment payment due on November 17th) and your treasury cannot tolerate daily wire transfers for margin swings, use an <strong>OTC Forward</strong> via an ISDA bank facility.</li>
+<li>If you need to dynamically scale hedges up or down as supply forecasts shift, use <strong>Exchange Futures</strong>, but pre-allocate a dedicated cash credit facility to fund worst-case $3\sigma$ margin call drawdowns.</li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/futures-pricing.html" class="related-chip">
+          <span>Cost of Carry and Futures Pricing</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/swaps-ir.html" class="related-chip">
+          <span>Interest Rate Swaps and Comparative Advantage</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/duration-hedging.html" class="related-chip">
+          <span>Duration-Based Hedging & Immunization</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Delta Hedging & Rebalancing Costs — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Dynamic Delta Hedging & Rebalancing Costs</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 19</span>
+          <span class="concept-hero__citation-secondary">· also: Euan Sinclair Ch. 3</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The entire theoretical architecture of Black-Scholes-Merton option pricing rests on <strong>continuous dynamic delta hedging</strong>: an option position can be completely replicated or hedged by continuously buying or selling shares of the underlying asset so that the combined portfolio remains <strong>delta-neutral ($\Delta = 0$)</strong> at every instant.</p>
+<p>Under continuous rebalancing in a frictionless world with zero transaction costs, the net P&amp;L of a delta-hedged short option position equals zero: the daily Theta collected from time decay exactly offsets the daily Gamma hedging rebalancing costs.</p>
+<p>In the real world, however, continuous rebalancing is impossible:</p>
+<ol>
+<li><strong>Discrete Rebalancing:</strong> Hedging occurs at discrete intervals (e.g., daily or when delta breaches a threshold bandwidth $\pm 0.05$). Between rebalancing intervals, the portfolio is exposed to <strong>gamma risk</strong>.</li>
+<li><strong>Transaction Costs &amp; Bid-Ask Drag:</strong> Every rebalance incurs brokerage commissions, exchange fees, and market impact costs.</li>
+<li><strong>Volatility Mispricing:</strong> If an option is sold at an implied volatility $\sigma_{\text{IV}}$ and the trader delta-hedges it to expiration, the trader&#39;s ultimate profit or loss is determined strictly by the spread between implied volatility and the <strong>actual realized volatility ($\sigma_{\text{realized}}$)</strong> of the stock:
+$$\text{Expected P&amp;L} \approx \frac{1}{2} \cdot S^2 \cdot \Gamma \cdot (\sigma_{\text{IV}}^2 - \sigma_{\text{realized}}^2) \cdot \Delta t$$</li>
+</ol>
+<p>If you sell an option at $30%$ IV and dynamically delta-hedge it while the stock realizes only $20%$ volatility, you lock in pure mathematical profit regardless of which direction the stock moves!</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="\Pi_{\text{hedged}} = V - \Delta \cdot S \implies \Delta_{\Pi} = \frac{\partial V}{\partial S} - \Delta = 0
+
+$$\text{1-Step Discrete Hedging Error: } \Delta \Pi \approx \frac{1}{2} S^2 \Gamma \left[ \left(\frac{\Delta S}{S}\right)^2 - \sigma_{\text{IV}}^2 \Delta t \right]$$
+
+$$\text{Leland Adjusted Volatility (Transaction Costs): } \sigma_{\text{adj}}^2 = \sigma^2 \left( 1 \pm k \sqrt{\frac{2}{\pi \sigma^2 \Delta t}} \right)">
+            \Pi_{\text{hedged}} = V - \Delta \cdot S \implies \Delta_{\Pi} = \frac{\partial V}{\partial S} - \Delta = 0
+
+$$\text{1-Step Discrete Hedging Error: } \Delta \Pi \approx \frac{1}{2} S^2 \Gamma \left[ \left(\frac{\Delta S}{S}\right)^2 - \sigma_{\text{IV}}^2 \Delta t \right]$$
+
+$$\text{Leland Adjusted Volatility (Transaction Costs): } \sigma_{\text{adj}}^2 = \sigma^2 \left( 1 \pm k \sqrt{\frac{2}{\pi \sigma^2 \Delta t}} \right)
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>\Pi_{\text{hedged}}</strong>: Value of the delta-neutral portfolio (Option $+$ Short Stock).</li>
+<li><strong>\Delta</strong>: Delta hedge ratio ($N(d_1)$).</li>
+<li><strong>\Gamma</strong>: Gamma curvature ($\partial \Delta / \partial S$).</li>
+<li><strong>\sigma_{\text{IV}}</strong>: Implied volatility at which option was traded.</li>
+<li><strong>\sigma_{\text{realized}}</strong>: Realized volatility experienced during the hedging period.</li>
+<li><strong>k</strong>: Round-trip transaction cost percentage (bid-ask spread fraction).</li>
+<li><strong>\Delta t</strong>: Rebalancing frequency interval (e.g., $1/252$ for daily rebalancing).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>An options market-making desk sells 100 contracts of ATM 6-month Call options ($10{,}000$ shares notional) on a stock trading at $S = $100.00$:</p>
+<ul>
+<li>Option Implied Volatility sold ($\sigma_{\text{IV}}$): $30.0%$ ($0.30$)</li>
+<li>Initial Delta: $\Delta = 0.50 \implies$ Desk shorts $5{,}000$ shares of stock at $$100.00$ to achieve initial delta neutrality.</li>
+<li>Initial Gamma: $\Gamma = 0.0266$ per share.</li>
+</ul>
+<p><strong>Scenario A: Stock Moves by Normal Daily Volatility</strong>
+Next day, stock rises to $$102.00$ ($\Delta S = +$2.00$):</p>
+<ul>
+<li>Call option delta increases by $\Gamma \cdot \Delta S = 0.0266 \times 2 = +0.0532 \implies \Delta_{\text{new}} = 0.5532$.</li>
+<li>The desk is now short $10{,}000 \times 0.5532 = 5{,}532$ shares of delta, but only holds $5{,}000$ short shares of stock.</li>
+<li><strong>Rebalancing Action:</strong> Desk must short an additional $532$ shares of stock at $$102.00$ to restore delta neutrality.</li>
+</ul>
+<p><strong>Scenario B: Terminal Realized Outcome</strong>
+Over the full 6 months, the desk rebalances daily. The stock experiences mild realized volatility of only $\sigma_{\text{realized}} = 22.0%$:</p>
+<ul>
+<li>The desk collected option premium priced at $30%$ IV ($\approx $8.50$ per share, or $$85{,}000$).</li>
+<li>Total cumulative dynamic hedging losses (buying high, selling low due to negative gamma) amounted to only $$48{,}000$ (reflecting the $22%$ realized variance).</li>
+<li><strong>Net Trading Desk Profit:</strong> $$85{,}000 - $48{,}000 = +$37{,}000$.</li>
+</ul>
+<p>The market maker captured the $8%$ volatility risk premium through disciplined dynamic replication.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Option market making, institutional execution of large convertible bond hedges, structuring OTC structured note payoffs, and pricing synthetic exotic options.</li>
+<li><strong>When not to use / Caveats (Jump Risk &amp; Gaps):</strong> Delta hedging assumes continuous, smooth price paths (Brownian motion). If a stock announces an overnight surprise acquisition or accounting fraud and gaps down by $40%$ at the opening bell, delta hedging fails completely: your hedge was calibrated for yesterday&#39;s price, resulting in massive gap slippage losses.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Dynamic hedging is a friction trap: rebalancing too frequently (e.g., every 5 minutes) destroys your edge in broker commissions and bid-ask slippage. Rebalancing too infrequently (e.g., once every two weeks) leaves you nakedly exposed to huge unhedged gamma moves. </p>
+<p>Use <strong>Bandwidth-Based Rebalancing (Whalley-Wilmott bands)</strong> instead of fixed-time rebalancing: only execute a rebalancing trade when your net portfolio delta drifts outside a pre-calculated tolerance band:
+$$\text{Rebalance only when: } |\Delta_{\text{current}} - \Delta_{\text{target}}| &gt; \left(\frac{3 k \Gamma S}{2 \gamma}\right)^{1/3}$$
+This cuts rebalancing transaction costs by up to $60%$ without materially degrading hedge quality.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/greeks-delta.html" class="related-chip">
+          <span>Delta Sensitivity & Directional Hedge Ratio</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/greeks-gamma.html" class="related-chip">
+          <span>Gamma Curvature & Convexity Risk</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/implied-vol.html" class="related-chip">
+          <span>Implied vs. Realized Volatility</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

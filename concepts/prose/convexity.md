@@ -48,3 +48,4 @@ Notice the critical distinction: linear duration alone predicted a catastrophic 
 
 ## Notes for Future-Me
 "Positive convexity is an insurance policy; negative convexity is selling insurance for nickels in front of a steamroller." Whenever someone pitches a high-yielding structured debt product that offers "an extra 80 bps of yield," check its embedded options. 99% of the time, that extra yield comes from shorting convexity (e.g., selling embedded prepayment options to borrowers). If rates spike, negative convexity accelerates your losses. Never chase yield into an asset with negative convexity without a dedicated hedging desk.
+

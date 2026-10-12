@@ -51,3 +51,4 @@ The company must pay an annual interest rate of $6.82\%$ on its new notes.
 
 ## Notes for Future-Me
 Watch high-yield credit spreads as the canary in the economic coal mine. In equity bull markets, stock prices can ignore rising corporate leverage for months. But bond investors—who have no upside beyond par and 100% downside—react with ruthless discipline. When the **ICE BofA US High Yield Index Spread** widens past $500\text{ bps}$, credit conditions are tightening; when it blows past $800\text{ bps}$, capital markets are officially frozen. If you need to raise debt capital, do it when spreads are sub-350 bps, not when the credit cycle turns against you.
+

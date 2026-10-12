@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Volatility Skew, Smile & Fat Tails — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Volatility Skew, Smile & Fat Tails</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Sheldon Natenberg Ch. 17</span>
+          <span class="concept-hero__citation-secondary">· also: Euan Sinclair Ch. 4</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><p>The Black-Scholes-Merton model makes a foundational simplifying assumption: that returns follow a log-normal distribution with constant volatility $\sigma$ across all strike prices and maturities.</p>
+<p>If this assumption were true, plotting Black-Scholes implied volatility against strike price would yield a perfectly flat horizontal line. In real-world financial markets, however, that line is never flat:</p>
+<ul>
+<li><strong>The Volatility Smile:</strong> Observed in foreign exchange (FX) markets, where both out-of-the-money puts and out-of-the-money calls trade at higher implied volatilities than at-the-money options, forming a symmetric &quot;U-shaped smile.&quot; This reflects <strong>excess kurtosis (fat tails)</strong>: extreme moves in either direction occur far more frequently than a Gaussian normal distribution predicts.</li>
+<li><strong>The Volatility Skew (Smirk):</strong> Universal in equity index options (S&amp;P 500, Nasdaq) since the <strong>1987 Black Monday crash</strong>. Out-of-the-money puts trade at massive volatility premiums relative to at-the-money options, while out-of-the-money calls trade at a steep discount, creating a downward-sloping &quot;skew&quot; curve.</li>
+</ul>
+<p>The equity skew exists because of <strong>crash phobia and financial leverage</strong>: investors fear sudden catastrophic market crashes far more than upside blow-offs, creating unquenchable demand for downside put protection. Furthermore, as stock prices drop, corporate debt leverage mechanically increases, making equity fundamentally riskier and more volatile.</p>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Implied Volatility Surface: Smile vs. Skew</h3>
+<pre><code>Implied Volatility (IV)
+       ▲
+  40%  │   \  (Equity Skew / Smirk)
+       │    \
+  30%  │     \                      /  (FX Smile)
+       │      \                    /
+  20%  │       \______  ATM  _____/
+       │              \  │  /
+  10%  │               \ │ /
+       └─────────────────┼─────────────────────────► Strike Price (K)
+                      Deep OTM Puts        ATM         Deep OTM Calls
+</code></pre>
+<h3>Volatility Profiles by Asset Class</h3>
+<table>
+<thead>
+<tr>
+<th>Market</th>
+<th>Volatility Surface Shape</th>
+<th>Primary Economic Driver</th>
+<th>Executive Implication</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Equities / Equity Indices</strong></td>
+<td><strong>Downward Skew (Smirk)</strong></td>
+<td>Crash phobia; downside institutional put demand; leverage effect.</td>
+<td>Downside put hedges are expensive; selling OTM puts carries extreme tail risk.</td>
+</tr>
+<tr>
+<td><strong>Commodities (Oil, Ags)</strong></td>
+<td><strong>Upward / Inverted Skew</strong></td>
+<td>Supply disruptions; fear of sudden catastrophic price spikes.</td>
+<td>Call options trade at a volatility premium over puts.</td>
+</tr>
+<tr>
+<td><strong>Currencies (FX)</strong></td>
+<td><strong>Symmetric Smile</strong></td>
+<td>Sovereign currency devaluation risk; equal probability of two-sided tail jumps.</td>
+<td>Straddles and strangles trade rich relative to at-the-money options.</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;A 10% out-of-the-money put with an IV of 28% is more expensive than an at-the-money put with an IV of 20%.&quot;</strong>
+<em>Reality:</em> In dollar terms, the OTM put is still cheaper! However, its <em>implied price per unit of volatility</em> is higher. The market is charging a premium because it knows returns have fat tails: a $3\sigma$ or $4\sigma$ crash will happen far more often than the 0.13% probability predicted by a normal distribution.</li>
+<li><strong>Misconception 2: &quot;Volatility skew is an arbitrage opportunity.&quot;</strong>
+<em>Reality:</em> Selling high-IV OTM puts and buying low-IV ATM puts (ratio spreads) is NOT free arbitrage. It is selling catastrophic disaster insurance. In a true market panic (e.g., March 2020), those cheap-looking short OTM puts will expand in value by $50\times$, bankrupting the fund.</li>
+<li><strong>Misconception 3: &quot;Skew is static over time.&quot;</strong>
+<em>Reality:</em> Skew steepens dramatically when markets rise in calm conditions (complacency, putting calls on discount) and flattens during crashes as panic buying hits ATM and OTM options equally.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Respect the fat tails: in a Gaussian normal distribution, an $8\sigma$ daily move is mathematically expected once every 3.5 trillion years—yet global markets experience $5\sigma$ to $10\sigma$ crashes every single decade! </p>
+<p>When structuring portfolio hedges, use the skew to your advantage:</p>
+<ul>
+<li><strong>Avoid buying expensive outright puts:</strong> Buying deep OTM puts guarantees a continuous negative roll bleed because you are paying maximum skew premium.</li>
+<li><strong>Use Put Spread Collars:</strong> Buy an OTM put spread (selling an even deeper OTM put to fund the purchase), or finance the put by selling an OTM call. Selling high-skew OTM options partially finances your downside protection, immunizing your treasury from skew drag.</li>
+</ul>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/implied-vol.html" class="related-chip">
+          <span>Implied vs. Realized Volatility</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/black-scholes.html" class="related-chip">
+          <span>Black-Scholes Option Pricing</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/put-call-parity.html" class="related-chip">
+          <span>Put-Call Parity and Synthetic Equivalence</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

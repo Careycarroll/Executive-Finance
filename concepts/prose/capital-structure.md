@@ -52,3 +52,4 @@ Enterprise Value (V)
 When sizing debt capacity for your enterprise or an M&A transaction, do not look at peak-cycle EBITDA multiples (e.g., "banks will lend us $5.5\times$ EBITDA today!"). Size debt against a **trough-cycle stress test**: if revenue contracts by 25% and gross margins compress by 400 basis points, can operating cash flow still cover interest payments by at least $1.5\times$ (Fixed Charge Coverage Ratio)?
 
 Debt is a magnifying glass: it magnifies equity returns on the upside, but it robs management of strategic agility on the downside. The ultimate luxury in a downturn is having dry powder while debt-encumbered competitors are paralyzed by bank covenants.
+

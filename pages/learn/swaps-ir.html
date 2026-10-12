@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interest Rate Swaps and Comparative Advantage — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Interest Rate Swaps and Comparative Advantage</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 7</span>
+          <span class="concept-hero__citation-secondary">· also: Zvi Bodie Ch. 23</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>An Interest Rate Swap (IRS) is a bilateral derivative agreement in which two parties exchange periodic interest rate cash flows based on a specified <strong>notional principal amount</strong>, without ever exchanging the principal itself.</p>
+<p>The classic vanilla structure is a <strong>Fixed-for-Floating Swap</strong>:</p>
+<ul>
+<li><strong>Party A (Fixed Payer / Floating Receiver):</strong> Pays a predetermined fixed interest rate ($R_{\text{swap}}$) and receives a floating reference rate (e.g., SOFR, EURIBOR).</li>
+<li><strong>Party B (Floating Payer / Fixed Receiver):</strong> Pays the floating reference rate and receives the fixed rate.</li>
+</ul>
+<p>Interest rate swaps serve two primary executive purposes:</p>
+<ol>
+<li><strong>Asset-Liability Management (ALM):</strong> Converting floating-rate corporate bank debt (e.g., SOFR $+ 150\text{ bps}$) into synthetic fixed-rate debt to immunize the firm against central bank rate hikes.</li>
+<li><strong>Exploiting Comparative Advantage:</strong> Companies with disparate credit ratings often face different credit spreads in the fixed vs. floating debt markets. By borrowing in the market where they possess a comparative advantage and swapping with a counterparty, both firms lower their borrowing costs.</li>
+</ol>
+<p>Because a swap is essentially a portfolio of forward rate agreements (FRAs), the <strong>Par Swap Rate</strong> is the fixed rate that sets the net present value of the swap to exactly zero at inception.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="V_{\text{swap}} = B_{\text{floating}} - B_{\text{fixed}} \quad \text{(For Fixed Payer)}
+
+$$R_{\text{swap}} = \frac{1 - P(0, T_N)}{\sum_{i=1}^N \Delta t_i \cdot P(0, T_i)}$$
+
+$$\text{Net Payment}_i = \text{Notional} \cdot \left[ R_{\text{floating}, i-1} - R_{\text{fixed}} \right] \cdot \Delta t_i">
+            V_{\text{swap}} = B_{\text{floating}} - B_{\text{fixed}} \quad \text{(For Fixed Payer)}
+
+$$R_{\text{swap}} = \frac{1 - P(0, T_N)}{\sum_{i=1}^N \Delta t_i \cdot P(0, T_i)}$$
+
+$$\text{Net Payment}_i = \text{Notional} \cdot \left[ R_{\text{floating}, i-1} - R_{\text{fixed}} \right] \cdot \Delta t_i
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>R_{\text{swap}}</strong>: Par swap rate (the fixed rate that sets initial swap value to zero).</li>
+<li><strong>P(0, T_i)</strong>: Discount factor for cash flows maturing at payment date $T_i$ ($= e^{-r_i T_i}$).</li>
+<li><strong>B_{\text{floating}}</strong>: Value of a floating-rate bond (which resets to par value $100%$ on every reset date).</li>
+<li><strong>B_{\text{fixed}}</strong>: Value of a fixed-rate bond paying coupon $R_{\text{swap}}$.</li>
+<li><strong>\Delta t_i</strong>: Accrual period day-count fraction (e.g., $0.25$ for quarterly payments).</li>
+<li><strong>\text{Notional}</strong>: Principal balance used solely to compute interest payments (not exchanged).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>Company AAA (high-grade credit) and Company BBB (speculative-grade credit) need $$100{,}000{,}000$ in 5-year debt.</p>
+<ul>
+<li><strong>Company AAA</strong> prefers floating-rate debt to match its floating-rate receivables.</li>
+<li><strong>Company BBB</strong> prefers fixed-rate debt to avoid rate hike volatility.</li>
+</ul>
+<p><strong>Market Borrowing Quotes Available:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Fixed Rate Market</th>
+<th>Floating Rate Market</th>
+<th>Quality Spread Differential (QSD)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Company AAA</strong></td>
+<td>$5.0%$</td>
+<td>SOFR $+ 0.30%$</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Company BBB</strong></td>
+<td>$7.0%$</td>
+<td>SOFR $+ 1.10%$</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Credit Spread</strong></td>
+<td>$2.0%$ ($200\text{ bps}$)</td>
+<td>$0.80%$ ($80\text{ bps}$)</td>
+<td><strong>Net Spread Arbitrage = $120\text{ bps}$</strong></td>
+</tr>
+</tbody></table>
+<p>Notice: AAA has an absolute advantage in both markets, but a <strong>comparative advantage in fixed borrowing</strong> (it saves $200\text{ bps}$ in fixed vs only $80\text{ bps}$ in floating).</p>
+<p><strong>Swap Structure (with Financial Intermediary taking 20 bps):</strong></p>
+<ol>
+<li>AAA issues fixed debt at $5.0%$.</li>
+<li>BBB issues floating debt at SOFR $+ 1.10%$.</li>
+<li>They enter an interest rate swap where AAA pays SOFR to BBB, and BBB pays $5.50%$ fixed to AAA:<ul>
+<li><strong>AAA’s Net Cost:</strong> Pays $5.0%$ fixed $+$ pays SOFR $-$ receives $5.50%$ fixed $= \text{SOFR} - 0.50%$ (saves $80\text{ bps}$ compared to borrowing direct at SOFR $+ 0.30%$).</li>
+<li><strong>BBB’s Net Cost:</strong> Pays SOFR $+ 1.10%$ $+$ pays $5.50%$ fixed $-$ receives SOFR $= 6.60%$ fixed (saves $40\text{ bps}$ compared to borrowing direct at $7.0%$).</li>
+</ul>
+</li>
+</ol>
+<p>Both parties save substantial interest expense through synthetic transformation.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Hedging floating-rate corporate credit facilities (term loans), liability immunization for pension funds and life insurers, locking in funding rates for multi-year capital projects, and yield enhancement.</li>
+<li><strong>When not to use / Caveats:</strong> Swaps eliminate interest rate risk, but create <strong>Counterparty Credit Risk</strong> and <strong>Mark-to-Market Collateral Risk</strong>. If rates move sharply in your favor, your swap has positive market value, but if your bank counterparty defaults (e.g., Lehman Brothers 2008), your hedge vanishes. Always use cleared swaps (CME/LCH) or mandate bilateral CSA daily collateral margining.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Beware the <strong>&quot;Termination Breakage Fee&quot;</strong>: When a company enters a 10-year swap paying 5% fixed and interest rates crash to 2%, the swap has an enormous negative mark-to-market liability. If management decides to refinance or pay off the underlying bank loan early (e.g., during an M&amp;A acquisition sale), the bank will demand an immediate cash &quot;breakage fee&quot; equal to the millions of dollars in negative swap value! Never enter a long-dated swap on debt that might be retired or refinanced early without negotiating flexible prepayment or novation clauses.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/forwards-futures.html" class="related-chip">
+          <span>Forwards vs. Futures Mechanics</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/yield-curve.html" class="related-chip">
+          <span>Yield Curve and Term Structure of Interest Rates</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/duration-hedging.html" class="related-chip">
+          <span>Duration-Based Hedging & Immunization</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

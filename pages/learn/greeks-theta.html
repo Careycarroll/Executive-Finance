@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Theta Time Decay — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--deriv">deriv</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Theta Time Decay</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 19</span>
+          <span class="concept-hero__citation-secondary">· also: Sheldon Natenberg Ch. 6</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Options are wasting assets with a finite lifespan. Every calendar day that passes without a move in the underlying asset reduces the option’s remaining time value. <strong>Theta ($\Theta$)</strong> measures the rate of decay of an option’s theoretical value with the passage of time:
+$$\Theta = \frac{\partial V}{\partial t}$$</p>
+<p>For long options, Theta is strictly negative: holding options costs money each day (<strong>time decay bleed</strong>). For option sellers, Theta is positive: the seller collects premium decay as the clock runs down toward expiration.</p>
+<p><strong>The Fundamental Theta-Gamma Tradeoff:</strong>
+In an efficient market, there is no free lunch. The Black-Scholes partial differential equation reveals that in a delta-neutral portfolio, <strong>Theta and Gamma are exact economic opposites</strong>:
+$$\Theta + \frac{1}{2} \sigma^2 S^2 \Gamma + r S \Delta = r V$$</p>
+<p>To earn positive Theta (collecting daily time decay income by selling options), you MUST accept negative Gamma (catastrophic tail risk if the stock makes an explosive move). Conversely, to own positive Gamma (long convexity), you MUST pay Theta rent every single day.</p>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;greek&quot;:&quot;theta&quot;,&quot;spot&quot;:100,&quot;strike&quot;:100,&quot;rate&quot;:0.05,&quot;vol&quot;:0.2,&quot;time_to_expiry&quot;:1}">At-the-Money 1Y Call</button>
+<button type="button" class="preset-btn" data-config="{&quot;greek&quot;:&quot;theta&quot;,&quot;spot&quot;:100,&quot;strike&quot;:100,&quot;rate&quot;:0.05,&quot;vol&quot;:0.2,&quot;time_to_expiry&quot;:0.08}">Accelerating 30-Day Decay</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="greeks-visualizer" data-defaults="{&quot;greek&quot;:&quot;theta&quot;,&quot;spot&quot;:100,&quot;strike&quot;:100,&quot;rate&quot;:0.05,&quot;vol&quot;:0.2,&quot;time_to_expiry&quot;:1,&quot;option_type&quot;:&quot;call&quot;}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\Theta_{\text{call}} = -\frac{S \sigma e^{-q T} N'(d_1)}{2 \sqrt{T}} - r K e^{-r T} N(d_2) + q S e^{-q T} N(d_1)
+
+$$\Theta_{\text{put}} = -\frac{S \sigma e^{-q T} N'(d_1)}{2 \sqrt{T}} + r K e^{-r T} N(-d_2) - q S e^{-q T} N(-d_1)$$
+
+$$\text{1-Day Dollar Theta} \approx \frac{\Theta_{\text{annual}}}{365}">
+              \Theta_{\text{call}} = -\frac{S \sigma e^{-q T} N'(d_1)}{2 \sqrt{T}} - r K e^{-r T} N(d_2) + q S e^{-q T} N(d_1)
+
+$$\Theta_{\text{put}} = -\frac{S \sigma e^{-q T} N'(d_1)}{2 \sqrt{T}} + r K e^{-r T} N(-d_2) - q S e^{-q T} N(-d_1)$$
+
+$$\text{1-Day Dollar Theta} \approx \frac{\Theta_{\text{annual}}}{365}
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>\Theta</strong>: Theta decay per year (typically divided by 252 or 365 to express decay per calendar day).</li>
+<li><strong>S</strong>: Current spot price.</li>
+<li><strong>K</strong>: Strike price.</li>
+<li><strong>\sigma</strong>: Annualized implied volatility.</li>
+<li><strong>T</strong>: Time to expiration in years.</li>
+<li><strong>r</strong>: Risk-free interest rate.</li>
+<li><strong>q</strong>: Dividend yield.</li>
+<li><strong>N&#39;(d_1)</strong>: Standard normal probability density function.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Time decay is non-linear! For at-the-money options, Theta decays at a rate proportional to $1 / \sqrt{T}$. This means decay is slow and gentle when the option has 9 months remaining, but accelerates like an avalanche during the final <strong>30 to 45 days</strong> before expiration. </p>
+<p>When designing systematic options selling strategies (e.g., covered calls or iron condors), the sweet spot for maximum Theta decay per unit of gamma risk is <strong>30 to 45 days to expiration (DTE)</strong>, rolling or closing the position around 14 to 21 DTE before exponential gamma risk takes over.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/greeks-gamma.html" class="related-chip">
+          <span>Gamma Curvature & Convexity Risk</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/strategy-covered-call.html" class="related-chip">
+          <span>Covered Call Strategy</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+
+        <a href="/pages/learn/black-scholes.html" class="related-chip">
+          <span>Black-Scholes Option Pricing</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
