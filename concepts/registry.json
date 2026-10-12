@@ -787,6 +787,261 @@
       "template": "explainer",
       "prose_ref": "concepts/prose/valuation-reconciliation.md",
       "related": ["dcf", "multiples", "residual-income", "terminal-value"]
+    },
+    {
+      "id": "efficient-frontier",
+      "domain": "invest",
+      "title": "Efficient Frontier & Portfolio Optimization",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["6", "7", "8"], "primary": true },
+        { "book": "hawawini", "chapters": ["12"] }
+      ],
+      "template": "interactive",
+      "component": "frontier-plotter",
+      "defaults": {
+        "assets": [
+          { "id": "A", "label": "Equities", "return": 0.10, "vol": 0.20 },
+          { "id": "B", "label": "Bonds", "return": 0.05, "vol": 0.10, "corr_A": 0.20 }
+        ],
+        "risk_free": 0.03
+      },
+      "examples": [
+        {
+          "label": "Standard 60/40 Equity-Bond",
+          "config": {
+            "assets": [
+              { "id": "A", "label": "Equities", "return": 0.10, "vol": 0.20 },
+              { "id": "B", "label": "Bonds", "return": 0.05, "vol": 0.10, "corr_A": 0.20 }
+            ],
+            "risk_free": 0.03
+          }
+        },
+        {
+          "label": "Uncorrelated Basket (Zero Rho)",
+          "config": {
+            "assets": [
+              { "id": "A", "label": "Equities", "return": 0.10, "vol": 0.20 },
+              { "id": "B", "label": "Bonds", "return": 0.05, "vol": 0.10, "corr_A": 0.00 }
+            ],
+            "risk_free": 0.03
+          }
+        },
+        {
+          "label": "High Inflation Regime",
+          "config": {
+            "assets": [
+              { "id": "A", "label": "Equities", "return": 0.12, "vol": 0.24 },
+              { "id": "B", "label": "Bonds", "return": 0.06, "vol": 0.12, "corr_A": 0.45 }
+            ],
+            "risk_free": 0.05
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/efficient-frontier.md",
+      "related": ["cal-cml", "capm", "diversification"]
+    },
+    {
+      "id": "cal-cml",
+      "domain": "invest",
+      "title": "Capital Allocation Line and Capital Market Line",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["6", "7"], "primary": true },
+        { "book": "hawawini", "chapters": ["12"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/cal-cml.md",
+      "related": ["efficient-frontier", "capm", "sml"]
+    },
+    {
+      "id": "capm",
+      "domain": "invest",
+      "title": "Capital Asset Pricing Model (CAPM)",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["9"], "primary": true },
+        { "book": "hawawini", "chapters": ["12"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/capm.md",
+      "related": ["sml", "factor-models", "cost-of-equity"]
+    },
+    {
+      "id": "sml",
+      "domain": "invest",
+      "title": "Security Market Line and Alpha",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["9"], "primary": true },
+        { "book": "hawawini", "chapters": ["12"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/sml.md",
+      "related": ["capm", "factor-models", "market-efficiency"]
+    },
+    {
+      "id": "factor-models",
+      "domain": "invest",
+      "title": "Factor Models (Fama-French Multi-Factor Asset Pricing)",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["13"], "primary": true },
+        { "book": "hawawini", "chapters": ["12"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/factor-models.md",
+      "related": ["capm", "sml", "market-efficiency"]
+    },
+    {
+      "id": "bond-pricing",
+      "domain": "invest",
+      "title": "Bond Pricing Mechanics",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["14"], "primary": true },
+        { "book": "hawawini", "chapters": ["12"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/bond-pricing.md",
+      "related": ["ytm", "duration", "yield-curve"]
+    },
+    {
+      "id": "ytm",
+      "domain": "invest",
+      "title": "Yield to Maturity and Spot Yields",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["14"], "primary": true },
+        { "book": "hawawini", "chapters": ["12"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/ytm.md",
+      "related": ["bond-pricing", "duration", "credit-spreads"]
+    },
+    {
+      "id": "duration",
+      "domain": "invest",
+      "title": "Macaulay and Modified Duration",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["16"], "primary": true },
+        { "book": "hawawini", "chapters": ["12"] }
+      ],
+      "template": "interactive",
+      "component": "sensitivity-panel",
+      "defaults": {
+        "compute": "duration",
+        "face": 1000,
+        "couponRate": 0.08,
+        "ytm": 0.10,
+        "years": 3,
+        "freq": 1
+      },
+      "examples": [
+        {
+          "label": "3-Year 8% Coupon Bond",
+          "config": {
+            "face": 1000,
+            "couponRate": 0.08,
+            "ytm": 0.10,
+            "years": 3,
+            "freq": 1
+          }
+        },
+        {
+          "label": "10-Year Benchmark Treasury",
+          "config": {
+            "face": 1000,
+            "couponRate": 0.045,
+            "ytm": 0.045,
+            "years": 10,
+            "freq": 2
+          }
+        },
+        {
+          "label": "Long-Term 30-Year Bond",
+          "config": {
+            "face": 1000,
+            "couponRate": 0.05,
+            "ytm": 0.05,
+            "years": 30,
+            "freq": 2
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/duration.md",
+      "related": ["convexity", "duration-hedging", "bond-pricing"]
+    },
+    {
+      "id": "convexity",
+      "domain": "invest",
+      "title": "Convexity and Second-Order Price Approximation",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["16"], "primary": true },
+        { "book": "hull", "chapters": ["4"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/convexity.md",
+      "related": ["duration", "duration-hedging", "bond-pricing"]
+    },
+    {
+      "id": "duration-hedging",
+      "domain": "invest",
+      "title": "Duration-Based Hedging & Immunization",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["16"], "primary": true },
+        { "book": "hull", "chapters": ["4"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/duration-hedging.md",
+      "related": ["duration", "convexity", "yield-curve"]
+    },
+    {
+      "id": "yield-curve",
+      "domain": "invest",
+      "title": "Yield Curve and Term Structure of Interest Rates",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["15"], "primary": true },
+        { "book": "hull", "chapters": ["4"] }
+      ],
+      "template": "interactive",
+      "component": "yield-curve",
+      "defaults": {
+        "shift_bps": 0
+      },
+      "examples": [
+        {
+          "label": "Normal Curve Baseline",
+          "config": { "shift_bps": 0 }
+        },
+        {
+          "label": "Parallel Rate Hike (+100 bps)",
+          "config": { "shift_bps": 100 }
+        },
+        {
+          "label": "Rate Cut Stimulus (-100 bps)",
+          "config": { "shift_bps": -100 }
+        }
+      ],
+      "prose_ref": "concepts/prose/yield-curve.md",
+      "related": ["bond-pricing", "ytm", "duration-hedging"]
+    },
+    {
+      "id": "credit-spreads",
+      "domain": "invest",
+      "title": "Credit Spreads and Default Risk",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["14"], "primary": true },
+        { "book": "hull", "chapters": ["24"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/credit-spreads.md",
+      "related": ["bond-pricing", "ytm", "cost-of-debt"]
     }
   ]
 }

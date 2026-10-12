@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capital Allocation Line and Capital Market Line — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Capital Allocation Line and Capital Market Line</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 6, 7</span>
+          <span class="concept-hero__citation-secondary">· also: Gabriel Hawawini Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Modern portfolio theory proves that an investor&#39;s total asset allocation problem separates into two independent decisions (James Tobin’s <strong>Two-Fund Separation Theorem</strong>):</p>
+<ol>
+<li><strong>The Technical Portfolio Decision:</strong> Identifying the single optimal tangency portfolio of risky assets that maximizes the Sharpe Ratio, completely independent of individual risk aversion.</li>
+<li><strong>The Personal Allocation Decision:</strong> Choosing how to split total wealth between that optimal risky portfolio and the risk-free asset (Treasury bills) based strictly on personal risk tolerance.</li>
+</ol>
+<p>The graph of all possible combinations of the risk-free asset and a specific risky portfolio is the <strong>Capital Allocation Line (CAL)</strong>. Its slope is the Sharpe Ratio.</p>
+<p>When the risky portfolio chosen is the aggregate <strong>Market Portfolio ($M$)</strong> containing all investable assets in proportion to their market capitalization, the CAL becomes the <strong>Capital Market Line (CML)</strong>. The CML represents the ultimate macroeconomic efficiency frontier: no individual asset or sub-portfolio can lie above the CML.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="E[R_c] = r_f + \left[ \frac{E[R_p] - r_f}{\sigma_p} \right] \cdot \sigma_c = r_f + \text{Sharpe}_p \cdot \sigma_c
+
+$$\text{Capital Market Line (CML): } E[R_c] = r_f + \left[ \frac{E[R_m] - r_f}{\sigma_m} \right] \cdot \sigma_c">
+            E[R_c] = r_f + \left[ \frac{E[R_p] - r_f}{\sigma_p} \right] \cdot \sigma_c = r_f + \text{Sharpe}_p \cdot \sigma_c
+
+$$\text{Capital Market Line (CML): } E[R_c] = r_f + \left[ \frac{E[R_m] - r_f}{\sigma_m} \right] \cdot \sigma_c
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>E[R_c]</strong>: Expected return on the complete combined portfolio (risk-free + risky).</li>
+<li><strong>\sigma_c</strong>: Volatility (standard deviation) of the complete combined portfolio ($= y \cdot \sigma_p$).</li>
+<li><strong>r_f</strong>: Risk-free rate of return (zero standard deviation).</li>
+<li><strong>E[R_p]</strong>: Expected return on the risky portfolio.</li>
+<li><strong>\sigma_p</strong>: Volatility of the risky portfolio.</li>
+<li><strong>E[R_m]</strong>: Expected return on the aggregate broad market portfolio.</li>
+<li><strong>\sigma_m</strong>: Volatility of the aggregate broad market portfolio.</li>
+<li><strong>y</strong>: Proportion of total wealth allocated to the risky portfolio ($1 - y$ allocated to risk-free asset).</li>
+<li><strong>\text{Sharpe}_p</strong>: Slope of the CAL ($= \frac{E[R_p] - r_f}{\sigma_p}$).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>An endowment foundation has the following investment parameters:</p>
+<ul>
+<li>Risk-free rate ($r_f$): $4.0%$</li>
+<li>Tangency Risky Portfolio ($P$): Expected return $E[R_p] = 10.0%$, annual volatility $\sigma_p = 15.0%$</li>
+<li>Slope of CAL (Sharpe Ratio):
+$$\text{Sharpe} = \frac{10.0% - 4.0%}{15.0%} = \frac{6.0%}{15.0%} = 0.40$$</li>
+</ul>
+<p>The board&#39;s investment policy mandate specifies a target total portfolio volatility of $\sigma_c = 9.0%$.</p>
+<p><strong>Step 1: Determine the Risky Weight ($y$)</strong>
+$$\sigma_c = y \cdot \sigma_p \implies y = \frac{\sigma_c}{\sigma_p} = \frac{9.0%}{15.0%} = 0.60 \ (60%)$$
+The endowment allocates $60%$ to the optimal risky portfolio and $40%$ ($1 - 0.60$) to Treasury bills.</p>
+<p><strong>Step 2: Calculate Expected Complete Return</strong>
+$$E[R_c] = r_f + \text{Sharpe} \times \sigma_c = 4.0% + (0.40 \times 9.0%) = 4.0% + 3.6% = 7.60%$$
+Direct check: $(0.40 \times 4.0%) + (0.60 \times 10.0%) = 1.6% + 6.0% = 7.60%$.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Multi-asset endowment allocation, institutional liability-driven investing (LDI), individual wealth planning glidepaths, and evaluating leverage in hedge funds (borrowing at $r_f$ with $y &gt; 1.0$ moves an investor upward along the CAL).</li>
+<li><strong>When not to use / Caveats:</strong> The CML only prices <strong>fully diversified, complete portfolios</strong>. It cannot price individual stocks or undiversified portfolios because its horizontal axis is total risk ($\sigma$), not systematic risk ($\beta$). For individual stocks, you must use the <strong>Security Market Line (SML)</strong>.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Tobin&#39;s Separation Theorem is liberating for executive asset management: you do not need to create customized portfolios of 500 different stock picks for every different risk profile in your family office or corporate pension. You find the single best tangency portfolio that maximizes Sharpe Ratio once, and then dial risk up or down simply by blending it with cash or borrowing leverage.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/efficient-frontier.html" class="related-chip">
+          <span>Efficient Frontier & Portfolio Optimization</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/capm.html" class="related-chip">
+          <span>Capital Asset Pricing Model (CAPM)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/sml.html" class="related-chip">
+          <span>Security Market Line and Alpha</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

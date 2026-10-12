@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bond Pricing Mechanics — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Bond Pricing Mechanics</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 14</span>
+          <span class="concept-hero__citation-secondary">· also: Gabriel Hawawini Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>A standard fixed-income bond is a contractual debt instrument that pays a stream of periodic interest payments (coupons) over a specified tenor, culminating in the repayment of the principal (face value / par value) at maturity.</p>
+<p>Bond pricing is a direct application of the Time Value of Money: the price of a bond equals the <strong>present value of its annuity coupon stream plus the present value of its single principal par lump-sum</strong>, discounted at the market required rate of return (<strong>Yield to Maturity / YTM</strong>).</p>
+<p>The fundamental rule of bond mechanics is the <strong>inverse relationship between interest rates and bond prices</strong>:</p>
+<ul>
+<li><strong>Coupon Rate = YTM:</strong> The bond trades at <strong>Par</strong> ($\text{Price} = 100%$ of face value).</li>
+<li><strong>Coupon Rate &lt; YTM:</strong> The bond trades at a <strong>Discount</strong> ($\text{Price} &lt; 100%$ of par).</li>
+<li><strong>Coupon Rate &gt; YTM:</strong> The bond trades at a <strong>Premium</strong> ($\text{Price} &gt; 100%$ of par).</li>
+</ul>
+<p>When market interest rates rise, existing bonds with lower coupons become less attractive, forcing their market prices down until their effective yield equals current market rates.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="P = \sum_{t=1}^{2T} \frac{C / 2}{\left(1 + \frac{y}{2}\right)^t} + \frac{M}{\left(1 + \frac{y}{2}\right)^{2T}} = \frac{C}{y} \left[ 1 - \frac{1}{\left(1 + \frac{y}{2}\right)^{2T}} \right] + \frac{M}{\left(1 + \frac{y}{2}\right)^{2T}}">
+            P = \sum_{t=1}^{2T} \frac{C / 2}{\left(1 + \frac{y}{2}\right)^t} + \frac{M}{\left(1 + \frac{y}{2}\right)^{2T}} = \frac{C}{y} \left[ 1 - \frac{1}{\left(1 + \frac{y}{2}\right)^{2T}} \right] + \frac{M}{\left(1 + \frac{y}{2}\right)^{2T}}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>P</strong>: Current clean market price of the bond.</li>
+<li><strong>C</strong>: Annual dollar coupon payment ($= \text{Coupon Rate} \times M$).</li>
+<li><strong>M</strong>: Par / Face value of the bond (typically $$1{,}000$ in US markets).</li>
+<li><strong>y</strong>: Annualized Yield to Maturity (nominal annual discount rate compounded semi-annually).</li>
+<li><strong>T</strong>: Number of years remaining until maturity.</li>
+<li><strong>2T</strong>: Total number of semi-annual coupon periods remaining.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>An investor is pricing a 10-year senior corporate bond with the following specifications:</p>
+<ul>
+<li><strong>Par Value ($M$):</strong> $$1{,}000$</li>
+<li><strong>Coupon Rate:</strong> $6.0%$ per annum, paid semi-annually ($$30.00$ every 6 months)</li>
+<li><strong>Maturity ($T$):</strong> 10 years ($2T = 20$ semi-annual periods)</li>
+<li><strong>Market Yield to Maturity ($y$):</strong> Suppose market yields on comparable bonds are currently $8.0%$ ($y/2 = 4.0%$ per period)</li>
+</ul>
+<p><strong>Step 1: Present Value of Semi-Annual Coupons (Annuity)</strong>
+$$\text{PV}(\text{Coupons}) = \frac{$30}{0.04} \left[ 1 - \frac{1}{(1.04)^{20}} \right] = $750 \times [1 - 0.45639] = $750 \times 0.54361 = $407.71$$</p>
+<p><strong>Step 2: Present Value of Face Value at Maturity</strong>
+$$\text{PV}(\text{Face Value}) = \frac{$1{,}000}{(1.04)^{20}} = \frac{$1{,}000}{2.19112} = $456.39$$</p>
+<p><strong>Step 3: Sum to Calculate Total Bond Price</strong>
+$$\text{Price} = $407.71 + $456.39 = $864.10$$</p>
+<p>The bond trades at a <strong>discount</strong> of $$864.10$ ($86.41%$ of par) because its $6%$ coupon is below the prevailing $8%$ market yield.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Pricing debt securities, calculating debt value for Enterprise Value bridges, analyzing corporate refinancing decisions, and treasury liability management.</li>
+<li><strong>When not to use / Caveats:</strong> Standard bond pricing assumes zero default risk and a flat term structure. For bonds with credit risk, coupons must be discounted using credit-adjusted spot curves. For bonds with embedded call options (callable debt), use binomial lattice trees rather than static DCF discounting.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Beware of <strong>Clean Price vs. Dirty Price (Invoice Price)</strong> in corporate transactions! Quotation terminals (Bloomberg, Refinitiv) quote &quot;Clean Prices&quot; that strip out accrued interest. When you actually execute the wire transfer to buy the bond, you must pay the &quot;Dirty Price&quot;:
+$$\text{Dirty Price} = \text{Clean Price} + \text{Accrued Interest}$$
+If a bond pays semi-annual coupons and you buy it 5 months after the last coupon date, you owe the seller 5 months of accrued interest. If you model cash outflows using clean prices alone, your treasury will encounter an unpleasant cash reconciliation deficit on settlement day.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/ytm.html" class="related-chip">
+          <span>Yield to Maturity and Spot Yields</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/duration.html" class="related-chip">
+          <span>Macaulay and Modified Duration</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/yield-curve.html" class="related-chip">
+          <span>Yield Curve and Term Structure of Interest Rates</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

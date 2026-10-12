@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Market Line and Alpha — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Security Market Line and Alpha</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 9</span>
+          <span class="concept-hero__citation-secondary">· also: Gabriel Hawawini Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The Security Market Line (SML) is the graphical representation of the Capital Asset Pricing Model (CAPM). While the Capital Market Line (CML) plots expected return against <strong>total risk ($\sigma$)</strong> for complete portfolios, the SML plots expected return against <strong>systematic risk ($\beta$)</strong> for individual securities, portfolios, or corporate business units.</p>
+<p>In equilibrium, all correctly priced securities must lie directly on the SML.</p>
+<p>When a security&#39;s expected return diverges from its CAPM fair required return, it generates <strong>Jensen’s Alpha ($\alpha$)</strong>:</p>
+<ul>
+<li><strong>Positive Alpha ($\alpha &gt; 0$):</strong> The asset plots <strong>above the SML</strong>. It generates an expected return higher than warranted by its systematic risk. The asset is <strong>underpriced (bargain)</strong>.</li>
+<li><strong>Negative Alpha ($\alpha &lt; 0$):</strong> The asset plots <strong>below the SML</strong>. It offers inadequate expected return for the risk incurred. The asset is <strong>overpriced</strong>.</li>
+</ul>
+<p>Alpha is the holy grail of active investment management: generating risk-adjusted excess returns that cannot be explained by passive factor exposure.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="E[R_i] = r_f + \beta_i \cdot \left( E[R_m] - r_f \right)
+
+$$\alpha_i = R_i - \left[ r_f + \beta_i \cdot (R_m - r_f) \right]">
+            E[R_i] = r_f + \beta_i \cdot \left( E[R_m] - r_f \right)
+
+$$\alpha_i = R_i - \left[ r_f + \beta_i \cdot (R_m - r_f) \right]
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>\text{SML}</strong>: Linear locus of points where $E[R] = r_f + \beta \times \text{ERP}$.</li>
+<li><strong>\alpha_i</strong>: Jensen’s Alpha (abnormal risk-adjusted return of asset $i$).</li>
+<li><strong>R_i</strong>: Realized or forecasted return of security $i$.</li>
+<li><strong>\beta_i</strong>: Beta systematic risk coefficient (the slope of the security&#39;s characteristic line).</li>
+<li><strong>r_f</strong>: Risk-free rate (the vertical intercept of the SML where $\beta = 0$).</li>
+<li><strong>E[R_m] - r_f</strong>: Slope of the Security Market Line (the Equity Risk Premium).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>An equity analyst is evaluating two competing industrial stocks:</p>
+<ul>
+<li><strong>Macro environment:</strong> $r_f = 4.0%$, Market return $E[R_m] = 10.0%$ (SML slope $= 6.0%$).</li>
+<li><strong>Stock AlphaTech ($\beta = 1.20$):</strong> Consensus 12-month expected return $= 13.5%$.</li>
+<li><strong>Stock LegacyMetal ($\beta = 0.80$):</strong> Consensus 12-month expected return $= 7.5%$.</li>
+</ul>
+<p><strong>Step 1: Calculate SML Benchmark Required Returns</strong>
+$$r_{\text{SML, AlphaTech}} = 4.0% + (1.20 \times 6.0%) = 4.0% + 7.20% = 11.20%$$
+$$r_{\text{SML, LegacyMetal}} = 4.0% + (0.80 \times 6.0%) = 4.0% + 4.80% = 8.80%$$</p>
+<p><strong>Step 2: Calculate Jensen’s Alpha</strong>
+$$\alpha_{\text{AlphaTech}} = 13.5% - 11.20% = +2.30% \ (\text{Plots ABOVE SML})$$
+$$\alpha_{\text{LegacyMetal}} = 7.5% - 8.80% = -1.30% \ (\text{Plots BELOW SML})$$</p>
+<p><strong>Strategic Evaluation:</strong></p>
+<ul>
+<li><strong>AlphaTech</strong> delivers $+2.30%$ of positive alpha: it compensates the investor for its above-average volatility ($\beta = 1.2$) and provides an extra cushion of value creation. Recommendation: <strong>Overweight / Buy</strong>.</li>
+<li><strong>LegacyMetal</strong> fails to clear its hurdle rate, offering negative $-1.30%$ alpha despite having lower volatility ($\beta = 0.8$). Recommendation: <strong>Underweight / Sell</strong>.</li>
+</ul>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Evaluating active fund manager performance, selecting individual equities for active portfolios, pricing corporate project hurdles, and identifying market mispricings.</li>
+<li><strong>When not to use / Caveats:</strong> Be careful with historical backward-looking alpha. In statistical regressions, positive alpha is often indistinguishable from statistical luck (sampling noise). True persistent alpha requires a $t$-statistic $&gt; 2.0$ over at least 5 to 7 years of data.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>&quot;Alpha&quot; is the most abused term in financial sales pitches. When a hedge fund or asset manager pitches you a &quot;market-beating 12% return,&quot; look at their beta first. If the market returned 15% and their beta was 1.4, their required return was $4% + 1.4 \times 11% = 19.4%$. That manager didn&#39;t generate positive alpha—they generated negative $-7.4%$ alpha while taking massive leveraged risk! Always strip out the SML beta return before paying any manager an incentive performance fee.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/capm.html" class="related-chip">
+          <span>Capital Asset Pricing Model (CAPM)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/factor-models.html" class="related-chip">
+          <span>Factor Models (Fama-French Multi-Factor Asset Pricing)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/market-efficiency.html" class="related-chip">
+          <span>Market Efficiency (EMH Forms)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Factor Models (Fama-French Multi-Factor Asset Pricing) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Factor Models (Fama-French Multi-Factor Asset Pricing)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 13</span>
+          <span class="concept-hero__citation-secondary">· also: Gabriel Hawawini Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><p>While the single-factor CAPM was a monumental theoretical breakthrough, decades of empirical market data revealed that single-factor market beta fails to explain why certain categories of stocks consistently outperform or underperform over long horizons.</p>
+<p>Eugene Fama and Kenneth French (1992, 1993, 2015) revolutionized quantitative asset pricing by demonstrating that stock returns are driven by multiple systematic risk dimensions:</p>
+<ol>
+<li><strong>The Fama-French 3-Factor Model:</strong><ul>
+<li><strong>Market Factor ($\text{MKT} - r_f$):</strong> Broad equity market risk premium.</li>
+<li><strong>Size Factor ($\text{SMB}$ - Small Minus Big):</strong> Historical return premium of small-cap companies over large-cap companies.</li>
+<li><strong>Value Factor ($\text{HML}$ - High Minus Low):</strong> Historical return premium of high book-to-market (value) stocks over low book-to-market (growth) stocks.</li>
+</ul>
+</li>
+<li><strong>The Carhart 4-Factor Extension (1997):</strong> Added <strong>Momentum ($\text{WML}$ / $\text{UMD}$ - Winners Minus Losers)</strong>, capturing the tendency of past 12-month winning stocks to continue outperforming in the near term.</li>
+<li><strong>The Fama-French 5-Factor Model (2015):</strong> Added <strong>Robust Operating Profitability ($\text{RMW}$)</strong> and <strong>Conservative Investment ($\text{CMA}$)</strong> factors.</li>
+</ol>
+<p>Factor models provide the analytical foundation for modern quantitative investing (&quot;Smart Beta&quot;), risk parity, and forensic style-drift analysis of asset managers.</p>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Anatomy of the Multi-Factor Landscape</h3>
+<pre><code>                        ┌──────────────────────────────────────────────┐
+                        │      Total Asset Expected Return E[R_i]      │
+                        └──────────────────────┬───────────────────────┘
+                                               │
+               ┌───────────────────────────────┴───────────────────────────────┐
+               ▼                                                               ▼
+┌───────────────────────────────┐                             ┌─────────────────────────────────┐
+│     Risk-Free Baseline (r_f)  │                             │ Systematic Factor Risk Premia   │
+└───────────────────────────────┘                             └────────────────┬────────────────┘
+                                                                               │
+         ┌─────────────────────┬─────────────────────┬─────────────────────────┴──────────┐
+         ▼                     ▼                     ▼                                    ▼
+┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐                ┌──────────────────┐
+│  Market Factor   │  │   Size Factor    │  │   Value Factor   │                │ Momentum / Qual  │
+│   (MKT - r_f)    │  │     (SMB)        │  │     (HML)        │                │   (WML / RMW)    │
+├──────────────────┤  ├──────────────────┤  ├──────────────────┤                ├──────────────────┤
+│ Sensitivity: β_m │  │ Sensitivity: s_i │  │ Sensitivity: h_i │                │ Sensitivity: m_i │
+│ Captures broad   │  │ Premium earned by│  │ Premium earned by│                │ Premium earned by│
+│ macroeconomic    │  │ holding less     │  │ buying cheap book│                │ trend persistence│
+│ growth &amp; cycles. │  │ liquid small-caps│  │ assets vs growth.│                │ &amp; high ROIC.     │
+└──────────────────┘  └──────────────────┘  └──────────────────┘                └──────────────────┘
+</code></pre>
+<h3>The Fama-French Regression Specification</h3>
+<p>$$R_i - r_f = \alpha_i + \beta_i (R_m - r_f) + s_i \cdot \text{SMB} + h_i \cdot \text{HML} + m_i \cdot \text{WML} + \epsilon_i$$</p>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;Factor premiums are guaranteed free returns.&quot;</strong>
+<em>Reality:</em> Factor premiums exist because they represent <strong>undiversifiable systematic risk</strong>! Value stocks (high HML exposure) carry higher returns because they are often distressed, capital-intensive companies vulnerable to debt default during economic recessions. Small caps carry higher returns because they lack access to commercial paper credit facilities during credit freezes.</li>
+<li><strong>Misconception 2: &quot;An active fund manager with 15% annual returns has great stock-picking skill.&quot;</strong>
+<em>Reality:</em> When you run a 4-factor regression on most high-performing mutual funds, their apparent &quot;alpha&quot; collapses to zero! Their outperformance was simply a hidden mechanical bet on small-cap value (high $s_i$ and $h_i$) or momentum ($m_i$). Investors shouldn&#39;t pay 1.5% management fees for passive factor exposures that can be bought in an ETF for 8 basis points.</li>
+<li><strong>Misconception 3: &quot;Factors work consistently every year.&quot;</strong>
+<em>Reality:</em> Factors suffer multi-year drawdowns. Between 2010 and 2020, the Value factor (HML) underperformed Growth by historic margins as ultra-low interest rates favored long-duration tech equities. Factor investing requires decade-long holding horizons.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Whenever evaluating an external money manager or private equity general partner, run a <strong>Factor Attribution Analysis</strong> on their historical track record. If their excess returns disappear after controlling for SMB (size) and HML (value), you are not paying for proprietary stock-picking genius—you are paying 2-and-20 fees for a leveraged small-cap value index fund! Insist on paying incentive fees only on <strong>True Multi-Factor Alpha ($\alpha$)</strong> that persists after stripping out all known risk factors.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/capm.html" class="related-chip">
+          <span>Capital Asset Pricing Model (CAPM)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/sml.html" class="related-chip">
+          <span>Security Market Line and Alpha</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/market-efficiency.html" class="related-chip">
+          <span>Market Efficiency (EMH Forms)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

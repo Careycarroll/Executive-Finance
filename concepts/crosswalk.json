@@ -652,5 +652,248 @@
         ]
       }
     ]
+  },
+  "efficient-frontier": {
+    "title": "Efficient Frontier & Portfolio Optimization",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "6",
+          "7",
+          "8"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "cal-cml": {
+    "title": "Capital Allocation Line and Capital Market Line",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "6",
+          "7"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "capm": {
+    "title": "Capital Asset Pricing Model (CAPM)",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "9"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "sml": {
+    "title": "Security Market Line and Alpha",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "9"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "factor-models": {
+    "title": "Factor Models (Fama-French Multi-Factor Asset Pricing)",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "13"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "bond-pricing": {
+    "title": "Bond Pricing Mechanics",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "14"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "ytm": {
+    "title": "Yield to Maturity and Spot Yields",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "14"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "duration": {
+    "title": "Macaulay and Modified Duration",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "16"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "convexity": {
+    "title": "Convexity and Second-Order Price Approximation",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "16"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hull",
+        "chapters": [
+          "4"
+        ]
+      }
+    ]
+  },
+  "duration-hedging": {
+    "title": "Duration-Based Hedging & Immunization",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "16"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hull",
+        "chapters": [
+          "4"
+        ]
+      }
+    ]
+  },
+  "yield-curve": {
+    "title": "Yield Curve and Term Structure of Interest Rates",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "15"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hull",
+        "chapters": [
+          "4"
+        ]
+      }
+    ]
+  },
+  "credit-spreads": {
+    "title": "Credit Spreads and Default Risk",
+    "domain": "invest",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "14"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hull",
+        "chapters": [
+          "24"
+        ]
+      }
+    ]
   }
 }

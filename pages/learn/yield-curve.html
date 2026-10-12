@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yield Curve and Term Structure of Interest Rates — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Yield Curve and Term Structure of Interest Rates</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 15</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 4</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The yield curve plots the relationship between bond yields and their maturities for bonds of identical credit quality (typically benchmark sovereign US Treasuries). It is the single most watched macroeconomic thermometer in global finance, anchoring borrowing costs for mortgages, corporate loans, and equity discount rates.</p>
+<p>The curve takes four classic shapes:</p>
+<ol>
+<li><strong>Normal (Upward Sloping):</strong> Longer maturities command higher yields. Investors require a term premium to lock up capital over long horizons due to inflation uncertainty and interest rate risk. Reflects healthy economic expansion.</li>
+<li><strong>Flat:</strong> Short-term rates equal long-term rates. Typically signals an economic transition or policy inflection.</li>
+<li><strong>Inverted (Downward Sloping):</strong> Short-term rates exceed long-term rates. The bond market is forecasting aggressive future central bank rate cuts to fight an imminent economic contraction. Historically, a sustained <strong>10Y minus 2Y Treasury curve inversion</strong> has preceded every US recession over the past six decades with remarkable reliability.</li>
+<li><strong>Humped:</strong> Intermediate rates (2Y to 5Y) peak above both short-term bills and 30-year long bonds.</li>
+</ol>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;shift_bps&quot;:0}">Normal Curve Baseline</button>
+<button type="button" class="preset-btn" data-config="{&quot;shift_bps&quot;:100}">Parallel Rate Hike (+100 bps)</button>
+<button type="button" class="preset-btn" data-config="{&quot;shift_bps&quot;:-100}">Rate Cut Stimulus (-100 bps)</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="yield-curve" data-defaults="{&quot;shift_bps&quot;:0}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="(1 + y_n)^n = (1 + y_1) \cdot (1 + f_{1,2}) \cdot (1 + f_{2,3}) \dots (1 + f_{n-1,n})
+
+$$\text{Implied Forward Rate: } f_{n,n+1} = \frac{(1 + y_{n+1})^{n+1}}{(1 + y_n)^n} - 1$$
+
+$$\text{10Y - 2Y Spread} = y_{10} - y_2">
+              (1 + y_n)^n = (1 + y_1) \cdot (1 + f_{1,2}) \cdot (1 + f_{2,3}) \dots (1 + f_{n-1,n})
+
+$$\text{Implied Forward Rate: } f_{n,n+1} = \frac{(1 + y_{n+1})^{n+1}}{(1 + y_n)^n} - 1$$
+
+$$\text{10Y - 2Y Spread} = y_{10} - y_2
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>y_n</strong>: Spot rate / yield to maturity on an $n$-year zero-coupon bond.</li>
+<li><strong>f_{n,n+1}</strong>: 1-year forward interest rate starting at year $n$ and ending at year $n+1$.</li>
+<li><strong>y_{10} - y_2</strong>: The benchmark 10-year minus 2-year yield spread (recession warning indicator).</li>
+<li><strong>\text{Pure Expectations Hypothesis}</strong>: Assumes forward rates reflect market consensus of future spot rates ($f_{t,t+1} = E[y_{t+1}]$).</li>
+<li><strong>\text{Liquidity Preference Theory}</strong>: Assumes forward rates exceed expected spot rates by an upward-sloping liquidity/term premium.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>When the yield curve inverts, do not panic and freeze all business operations immediately: the historical lag between curve inversion and the actual onset of recession averages <strong>12 to 18 months</strong>. In fact, equities frequently rally during the early months of an inversion! </p>
+<p>The true danger zone is the <strong>&quot;Re-Steepening Trap&quot;</strong>: when the yield curve un-inverts and rapidly steepens because the central bank begins emergency short-term rate cuts. That rapid un-inversion is when the real-economy recession hits corporate earnings. When you see the curve invert, use that 12-month window to refinance short-term debt into fixed long-term paper, stretch cash cushions, and prune marginal projects.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/bond-pricing.html" class="related-chip">
+          <span>Bond Pricing Mechanics</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/ytm.html" class="related-chip">
+          <span>Yield to Maturity and Spot Yields</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/duration-hedging.html" class="related-chip">
+          <span>Duration-Based Hedging & Immunization</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

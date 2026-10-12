@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Duration-Based Hedging & Immunization — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Duration-Based Hedging & Immunization</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 16</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 4</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><p>Financial institutions, corporate pension funds, and insurance companies face a structural balance sheet vulnerability: their liabilities (future annuity payouts, pension payments, deposit withdrawals) and their assets (loans, corporate bonds, mortgage holdings) respond differently to interest rate shocks.</p>
+<p><strong>Balance Sheet Immunization</strong> is the strategic technique of structuring asset portfolios so that their value changes identically to liabilities whenever interest rates shift, locking in a guaranteed rate of return regardless of whether yields rise or fall.</p>
+<p>Immunization achieves this by balancing two offsetting forces:</p>
+<ol>
+<li><strong>Price Risk:</strong> When interest rates rise, bond asset prices fall (a capital loss).</li>
+<li><strong>Reinvestment Risk:</strong> When interest rates rise, interim coupons can be reinvested at higher rates (a compounding gain).</li>
+</ol>
+<p>At the exact point where <strong>Portfolio Duration equals Target Liability Horizon ($D^<em>_A = D^</em>_L$)</strong>, price risk and reinvestment risk cancel each other out with mathematical precision!</p>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Mechanics of Balance Sheet Immunization</h3>
+<pre><code>       Interest Rates Rise (+Δy)                        Interest Rates Fall (-Δy)
+┌───────────────────────────────────────┐        ┌───────────────────────────────────────┐
+│ Capital Loss on Bond Prices:          │        │ Capital Gain on Bond Prices:          │
+│   Existing asset prices drop (-)      │        │   Existing asset prices rise (+)      │
+│ Offset By:                            │        │ Offset By:                            │
+│ Reinvestment Compounding Gain:        │        │ Reinvestment Compounding Loss:        │
+│   Coupons reinvested at higher yields │        │   Coupons reinvested at lower yields  │
+├───────────────────────────────────────┤        ├───────────────────────────────────────┤
+│ Net Portfolio Value: UNCHANGED (★)    │        │ Net Portfolio Value: UNCHANGED (★)    │
+└───────────────────────────────────────┘        └───────────────────────────────────────┘
+</code></pre>
+<h3>The Three Golden Rules of Redington Immunization</h3>
+<ol>
+<li><strong>Duration Matching:</strong> $D_A \cdot V_A = D_L \cdot V_L$ (Dollar duration of assets equals dollar duration of liabilities).</li>
+<li><strong>Present Value Sufficiency:</strong> $V_A \ge V_L$ (Assets must fully cover liabilities).</li>
+<li><strong>Convexity Dominance:</strong> $\text{Convexity}_A &gt; \text{Convexity}_L$ (Asset convexity must exceed liability convexity, guaranteeing that any non-parallel yield shift benefits the institution).</li>
+</ol>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;Immunization is a set-it-and-forget-it strategy.&quot;</strong>
+<em>Reality:</em> Immunization is dynamic! As time passes, asset durations and liability durations decay at different speeds. Furthermore, when interest rates move, duration itself changes (due to convexity). An immunized portfolio must be <strong>periodically rebalanced</strong> back to target duration; otherwise, duration drift leaves the balance sheet nakedly exposed.</li>
+<li><strong>Misconception 2: &quot;Matching maturity dates is the same as immunizing.&quot;</strong>
+<em>Reality:</em> Matching final maturity dates does NOT immunize! If a pension liability is due in 10 years, buying a 10-year coupon-paying bond leaves you heavily under-immunized because its duration is only $\approx 7.5\text{ years}$. To immunize a 10-year lump-sum liability, you must buy either a 10-year zero-coupon bond or a portfolio of coupon bonds whose weighted duration is exactly 10.0 years.</li>
+<li><strong>Misconception 3: &quot;Immunization protects against all yield curve movements.&quot;</strong>
+<em>Reality:</em> Standard duration-matching assumes <strong>parallel shifts</strong> across the yield curve. If the curve twists (steepens or inverts), classical immunization fails. Multi-factor <strong>Key Rate Duration</strong> matching is required for non-parallel twists.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Look at Silicon Valley Bank (SVB) in 2023: they held short-duration demand deposits (liabilities with duration $&lt; 1\text{ year}$) and invested them into 10-year fixed-rate mortgages and Treasuries with durations $&gt; 6\text{ years}$ without interest rate hedges! When the Fed raised rates by 500 bps, their assets crashed by $17%$, completely wiping out their equity capital and triggering a bank run. Never allow an organization you lead to run unhedged asset-liability duration mismatches to harvest short-term carry.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/duration.html" class="related-chip">
+          <span>Macaulay and Modified Duration</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/convexity.html" class="related-chip">
+          <span>Convexity and Second-Order Price Approximation</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/yield-curve.html" class="related-chip">
+          <span>Yield Curve and Term Structure of Interest Rates</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

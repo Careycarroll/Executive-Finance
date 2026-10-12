@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Convexity and Second-Order Price Approximation — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Convexity and Second-Order Price Approximation</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 16</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 4</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Modified Duration is a linear tangent line approximation to the bond price-yield curve. However, the actual mathematical relationship between bond price and yield is non-linear and bowed toward the origin: it is strictly <strong>convex</strong>.</p>
+<p><strong>Convexity</strong> is the second derivative of bond price with respect to interest rates (the curvature). It captures how duration itself changes as yields shift:
+$$\text{Convexity} = \frac{1}{P} \frac{d^2 P}{dy^2}$$</p>
+<p>Convexity is an asymmetric positive gift to bondholders:</p>
+<ul>
+<li>When interest rates rise, price falls by <strong>less</strong> than linear duration predicts.</li>
+<li>When interest rates fall, price rises by <strong>more</strong> than linear duration predicts.</li>
+</ul>
+<p>All else being equal, a bond or portfolio with higher convexity outperforms an otherwise identical portfolio with lower convexity in both rising and falling interest rate regimes! For this reason, positive convexity commands a price premium in the capital markets (investors accept lower baseline yields for higher convexity).</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="\text{Convexity} = \frac{1}{P \cdot (1 + y)^2} \sum_{t=1}^T \frac{t(t + 1) \cdot \text{CF}_t}{(1 + y)^t}
+
+$$\frac{\Delta P}{P} \approx -D^* \cdot \Delta y + \frac{1}{2} \cdot \text{Convexity} \cdot (\Delta y)^2">
+            \text{Convexity} = \frac{1}{P \cdot (1 + y)^2} \sum_{t=1}^T \frac{t(t + 1) \cdot \text{CF}_t}{(1 + y)^t}
+
+$$\frac{\Delta P}{P} \approx -D^* \cdot \Delta y + \frac{1}{2} \cdot \text{Convexity} \cdot (\Delta y)^2
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>\text{Convexity}</strong>: Measure of the curvature of the bond price-yield function.</li>
+<li><strong>D^</strong>*: Modified Duration.</li>
+<li><strong>\Delta y</strong>: Change in yield to maturity (in decimal, e.g. $+0.02$ for $+200\text{ bps}$).</li>
+<li><strong>\frac{\Delta P}{P}</strong>: Percentage change in bond price.</li>
+<li><strong>\text{CF}_t</strong>: Cash flow at period $t$.</li>
+<li><strong>P</strong>: Current bond price.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A treasury portfolio holds a 20-year bond with the following metrics:</p>
+<ul>
+<li>Modified Duration ($D^*$): $12.0\text{ years}$</li>
+<li>Convexity: $200.0$</li>
+<li>Yield shock: Suppose the Federal Reserve implements an aggressive $200\text{ bps}$ ($+0.02$) interest rate hike.</li>
+</ul>
+<p><strong>Step 1: First-Order Duration Effect</strong>
+$$\text{Duration Effect} = -D^* \cdot \Delta y = -12.0 \times (+0.02) = -0.24 \ (-24.0%)$$</p>
+<p><strong>Step 2: Second-Order Convexity Adjustment</strong>
+$$\text{Convexity Effect} = \frac{1}{2} \cdot \text{Convexity} \cdot (\Delta y)^2 = \frac{1}{2} \times 200.0 \times (0.02)^2 = 100.0 \times 0.0004 = +0.04 \ (+4.0%)$$</p>
+<p><strong>Step 3: Total Estimated Price Change</strong>
+$$\frac{\Delta P}{P} \approx -24.0% + 4.0% = -20.0%$$</p>
+<p>Notice the critical distinction: linear duration alone predicted a catastrophic $-24.0%$ crash, but positive convexity cushioned the loss by $+4.0%$, limiting the actual decline to $-20.0%$.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Stress testing corporate balance sheets against large macroeconomic rate shocks ($\ge 100-300\text{ bps}$), pricing fixed income derivatives, and managing mortgage-backed securities (MBS) portfolios.</li>
+<li><strong>When not to use / Caveats (Negative Convexity):</strong> Beware of callable bonds and residential mortgage-backed securities! When rates fall, homeowners refinance and corporate issuers call high-coupon debt, capping the upside. In these assets, convexity flips to <strong>negative convexity</strong>—the price drops faster when rates rise, but fails to appreciate when rates fall!</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>&quot;Positive convexity is an insurance policy; negative convexity is selling insurance for nickels in front of a steamroller.&quot; Whenever someone pitches a high-yielding structured debt product that offers &quot;an extra 80 bps of yield,&quot; check its embedded options. 99% of the time, that extra yield comes from shorting convexity (e.g., selling embedded prepayment options to borrowers). If rates spike, negative convexity accelerates your losses. Never chase yield into an asset with negative convexity without a dedicated hedging desk.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/duration.html" class="related-chip">
+          <span>Macaulay and Modified Duration</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/duration-hedging.html" class="related-chip">
+          <span>Duration-Based Hedging & Immunization</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/bond-pricing.html" class="related-chip">
+          <span>Bond Pricing Mechanics</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

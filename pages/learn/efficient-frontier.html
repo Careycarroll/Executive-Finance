@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Efficient Frontier & Portfolio Optimization — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Efficient Frontier & Portfolio Optimization</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 6, 7, 8</span>
+          <span class="concept-hero__citation-secondary">· also: Gabriel Hawawini Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The Efficient Frontier is the cornerstone of Modern Portfolio Theory (MPT), developed by Harry Markowitz in 1952. It represents the set of optimal portfolios in expected return–volatility space that offer the <strong>highest possible expected return for a given level of risk</strong>, or equivalently, the <strong>lowest possible risk (variance) for a targeted expected return</strong>.</p>
+<p>Portfolios located below the frontier are economically sub-optimal because an investor could achieve higher returns with the exact same volatility, or lower volatility with the same return, simply by adjusting portfolio weights. The leftmost point on the frontier is the <strong>Minimum Variance Portfolio (MVP)</strong>.</p>
+<p>When a risk-free asset is introduced, a straight line tangent to the Efficient Frontier—the <strong>Capital Allocation Line (CAL)</strong>—dominates the curved frontier. The single point of tangency identifies the <strong>Optimal Risky Portfolio (Tangency Portfolio)</strong>, which maximizes the Sharpe Ratio.</p>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;assets&quot;:[{&quot;id&quot;:&quot;A&quot;,&quot;label&quot;:&quot;Equities&quot;,&quot;return&quot;:0.1,&quot;vol&quot;:0.2},{&quot;id&quot;:&quot;B&quot;,&quot;label&quot;:&quot;Bonds&quot;,&quot;return&quot;:0.05,&quot;vol&quot;:0.1,&quot;corr_A&quot;:0.2}],&quot;risk_free&quot;:0.03}">Standard 60/40 Equity-Bond</button>
+<button type="button" class="preset-btn" data-config="{&quot;assets&quot;:[{&quot;id&quot;:&quot;A&quot;,&quot;label&quot;:&quot;Equities&quot;,&quot;return&quot;:0.1,&quot;vol&quot;:0.2},{&quot;id&quot;:&quot;B&quot;,&quot;label&quot;:&quot;Bonds&quot;,&quot;return&quot;:0.05,&quot;vol&quot;:0.1,&quot;corr_A&quot;:0}],&quot;risk_free&quot;:0.03}">Uncorrelated Basket (Zero Rho)</button>
+<button type="button" class="preset-btn" data-config="{&quot;assets&quot;:[{&quot;id&quot;:&quot;A&quot;,&quot;label&quot;:&quot;Equities&quot;,&quot;return&quot;:0.12,&quot;vol&quot;:0.24},{&quot;id&quot;:&quot;B&quot;,&quot;label&quot;:&quot;Bonds&quot;,&quot;return&quot;:0.06,&quot;vol&quot;:0.12,&quot;corr_A&quot;:0.45}],&quot;risk_free&quot;:0.05}">High Inflation Regime</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="frontier-plotter" data-defaults="{&quot;assets&quot;:[{&quot;id&quot;:&quot;A&quot;,&quot;label&quot;:&quot;Equities&quot;,&quot;return&quot;:0.1,&quot;vol&quot;:0.2},{&quot;id&quot;:&quot;B&quot;,&quot;label&quot;:&quot;Bonds&quot;,&quot;return&quot;:0.05,&quot;vol&quot;:0.1,&quot;corr_A&quot;:0.2}],&quot;risk_free&quot;:0.03}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\min_{\mathbf{w}} \frac{1}{2} \mathbf{w}^T \mathbf{\Sigma} \mathbf{w} \quad \text{subject to} \quad \mathbf{w}^T \mathbf{E}[R] = \mu_p, \quad \mathbf{w}^T \mathbf{1} = 1
+
+$$\text{For a 2-Asset Portfolio: } \sigma_p = \sqrt{w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2 w_1 w_2 \sigma_1 \sigma_2 \rho_{1,2}}$$
+
+$$\text{Tangency Portfolio: } \max_{\mathbf{w}} \text{Sharpe} = \frac{\mathbf{w}^T \mathbf{E}[R] - r_f}{\sqrt{\mathbf{w}^T \mathbf{\Sigma} \mathbf{w}}}">
+              \min_{\mathbf{w}} \frac{1}{2} \mathbf{w}^T \mathbf{\Sigma} \mathbf{w} \quad \text{subject to} \quad \mathbf{w}^T \mathbf{E}[R] = \mu_p, \quad \mathbf{w}^T \mathbf{1} = 1
+
+$$\text{For a 2-Asset Portfolio: } \sigma_p = \sqrt{w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2 w_1 w_2 \sigma_1 \sigma_2 \rho_{1,2}}$$
+
+$$\text{Tangency Portfolio: } \max_{\mathbf{w}} \text{Sharpe} = \frac{\mathbf{w}^T \mathbf{E}[R] - r_f}{\sqrt{\mathbf{w}^T \mathbf{\Sigma} \mathbf{w}}}
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>\mathbf{w}</strong>: Vector of portfolio weights assigned to each asset ($w_1, w_2, \dots, w_N$), summing to $1.0$.</li>
+<li><strong>\mathbf{\Sigma}</strong>: Covariance matrix of asset returns.</li>
+<li><strong>\mathbf{E}[R]</strong>: Vector of expected asset returns.</li>
+<li><strong>\mu_p</strong>: Target expected portfolio return.</li>
+<li><strong>\sigma_p</strong>: Standard deviation of the portfolio (volatility).</li>
+<li><strong>\rho_{1,2}</strong>: Correlation coefficient between asset 1 and asset 2.</li>
+<li><strong>r_f</strong>: Risk-free rate of return.</li>
+<li><strong>\text{Sharpe}</strong>: Reward-to-volatility ratio at the tangency point.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Markowitz mean-variance optimization has famously been called an &quot;error maximizer&quot; by Richard Michaud. Because the algorithm takes expected returns and covariance estimates literally, it aggressively over-allocates capital to assets with the highest historical return estimates and lowest estimated correlations—which are precisely the assets most plagued by historical estimation error!</p>
+<p>In corporate treasury and endowment asset allocation, never run unconstrained MPT. Always apply <strong>Black-Litterman shrinkage priors</strong>, impose strict asset allocation weight constraints (e.g., maximum 25% in any single private asset class), or resample the covariance matrix via Monte Carlo simulation to avoid extreme, fragile allocations.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/cal-cml.html" class="related-chip">
+          <span>Capital Allocation Line and Capital Market Line</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/capm.html" class="related-chip">
+          <span>Capital Asset Pricing Model (CAPM)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/diversification.html" class="related-chip">
+          <span>Diversification and Portfolio Risk</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

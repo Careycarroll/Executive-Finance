@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Credit Spreads and Default Risk — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Credit Spreads and Default Risk</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 14</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 24</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Unlike sovereign governments that can print reserve currency to satisfy nominal debt obligations, corporate borrowers can default. Lenders demand a premium over default-free government bonds of identical maturity to compensate for this credit risk: this differential is the <strong>Credit Spread</strong>.</p>
+<p>Credit spreads reflect two economic components:</p>
+<ol>
+<li><strong>Expected Loss ($\text{PD} \times \text{LGD}$):</strong> The actuarial probability of default ($\text{PD}$) multiplied by the loss given default ($\text{LGD} = 1 - \text{Recovery Rate}$).</li>
+<li><strong>Credit Risk Premium (Liquidity &amp; Systematic Uncertainty):</strong> An additional return premium demanded by risk-averse investors because defaults cluster during severe macroeconomic recessions when capital is dearest.</li>
+</ol>
+<p>Credit spreads are quoted in basis points ($\text{bps}$) over the benchmark Treasury curve and categorized by credit ratings:</p>
+<ul>
+<li><strong>Investment Grade (AAA down to BBB-):</strong> Low default probability ($\le 0.2%-0.5%$ annually), narrow spreads ($80-180\text{ bps}$).</li>
+<li><strong>High Yield / Speculative / &quot;Junk&quot; (BB+ down to CCC):</strong> Elevated default probability ($2%-15%$ annually), wide spreads ($300-800+\text{ bps}$).</li>
+</ul>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="s = y_{\text{corporate}} - y_{\text{treasury}}
+
+$$s \approx \lambda \cdot (1 - R) = \text{PD} \cdot \text{LGD}$$
+
+$$y_{\text{corporate}} = r_f + \text{Credit Spread} + \text{Liquidity Premium}">
+            s = y_{\text{corporate}} - y_{\text{treasury}}
+
+$$s \approx \lambda \cdot (1 - R) = \text{PD} \cdot \text{LGD}$$
+
+$$y_{\text{corporate}} = r_f + \text{Credit Spread} + \text{Liquidity Premium}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>s</strong>: Credit spread (in basis points or decimal).</li>
+<li><strong>y_{\text{corporate}}</strong>: Yield to maturity on corporate bond.</li>
+<li><strong>y_{\text{treasury}} / r_f</strong>: Yield to maturity on benchmark risk-free Treasury of matching maturity.</li>
+<li><strong>\lambda / \text{PD}</strong>: Hazard rate / annualized Probability of Default.</li>
+<li><strong>R</strong>: Expected Recovery Rate in bankruptcy (percentage of par recovered by creditors; historically $\approx 40%$ for senior unsecured debt).</li>
+<li><strong>\text{LGD}</strong>: Loss Given Default ($= 1 - R$).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A treasury team is analyzing debt refinancing terms for a $5$-year senior unsecured bond:</p>
+<ul>
+<li>5-year US Treasury benchmark yield: $4.00%$</li>
+<li>Company credit rating: <strong>BB</strong> (High Yield)</li>
+<li>Historical annual default probability for BB debt ($\text{PD}$): $2.2%$ ($0.022$)</li>
+<li>Historical recovery rate for senior unsecured industrial debt in bankruptcy ($R$): $40%$ ($\text{LGD} = 1 - 0.40 = 60%$ or $0.60$)</li>
+<li>Credit liquidity &amp; systematic risk premium: $150\text{ bps}$ ($1.50%$)</li>
+</ul>
+<p><strong>Step 1: Calculate Actuarial Expected Loss Spread</strong>
+$$\text{Expected Loss} = \text{PD} \times \text{LGD} = 0.022 \times 0.60 = 0.0132 \ (1.32% \text{ or } 132\text{ bps})$$</p>
+<p><strong>Step 2: Total Equilibrium Credit Spread</strong>
+$$\text{Credit Spread } (s) = 132\text{ bps (Expected Loss)} + 150\text{ bps (Risk Premium)} = 282\text{ bps} \ (2.82%)$$</p>
+<p><strong>Step 3: Total Required Borrowing Yield</strong>
+$$y_{\text{corporate}} = 4.00% + 2.82% = 6.82%$$</p>
+<p>The company must pay an annual interest rate of $6.82%$ on its new notes.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Sizing corporate debt issuance costs, estimating default probabilities from market prices via the Merton structural model or Credit Default Swaps (CDS), and evaluating counterparty credit risk.</li>
+<li><strong>When not to use / Caveats:</strong> Do not assume historical average recovery rates apply during industry-wide collapses! When an entire sector experiences simultaneous distress (e.g., energy collapse in 2015, commercial office real estate in 2023), liquidation asset firesales drive recovery rates from the typical $40%$ down to $10%-15%$, causing credit spreads to violently blow out.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Watch high-yield credit spreads as the canary in the economic coal mine. In equity bull markets, stock prices can ignore rising corporate leverage for months. But bond investors—who have no upside beyond par and 100% downside—react with ruthless discipline. When the <strong>ICE BofA US High Yield Index Spread</strong> widens past $500\text{ bps}$, credit conditions are tightening; when it blows past $800\text{ bps}$, capital markets are officially frozen. If you need to raise debt capital, do it when spreads are sub-350 bps, not when the credit cycle turns against you.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/bond-pricing.html" class="related-chip">
+          <span>Bond Pricing Mechanics</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/ytm.html" class="related-chip">
+          <span>Yield to Maturity and Spot Yields</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/cost-of-debt.html" class="related-chip">
+          <span>Cost of Debt (Pre-Tax & After-Tax)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
