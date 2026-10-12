@@ -51,41 +51,30 @@
     </header>
 
     <article class="concept-content">
-      <div class="concept-container">
+      <div class="concept-container concept-container--wide">
         
     <div class="concept-section">
       
-        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
-          <div class="concept-intuition__heading">Overview & Intuition</div>
-          <div><h1>Entity Choice (C-Corp, S-Corp, LLC, Partnership)</h1>
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The legal and tax structure chosen for a business dictates whether income is subject to double taxation (entity level plus shareholder distribution level) or pass-through taxation (taxed solely at owner personal rates). Choosing an entity requires trading off access to public equity markets and institutional venture capital against operational tax friction and self-employment payroll taxes.</p>
 </div>
         </div>
 
-      
-        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
-          <h2 class="concept-section__title">Framework & Structure</h2>
-          <div><ul>
-<li><strong>C-Corporation:</strong> Separate legal and tax taxpayer. Entity pays corporate income tax ($t_c = 21%$ federal). Dividends and share repurchases pay capital gains/qualified dividend rates ($t_{cg} \le 20% + \text{NIIT}$). Double tax, but allows Qualified Small Business Stock (QSBS / Section 1202) capital gains exemptions and institutional VC investment.</li>
-<li><strong>S-Corporation:</strong> Pass-through tax status with corporate limited liability. Avoids entity-level double tax. Strict statutory caps: maximum 100 shareholders, only US individuals/trusts, only one class of stock permitted (disqualifies institutional preferred equity).</li>
-<li><strong>LLC / Partnership:</strong> Pass-through flexibility. Profits and losses allocate according to the operating agreement, not rigid share count. Substantial flexibility for debt basis adjustments (Section 752).</li>
-</ul>
-</div>
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;preset&quot;:&quot;entity_choice&quot;}">Business Entity Selection</button>
+<button type="button" class="preset-btn" data-config="{&quot;preset&quot;:&quot;section_83b&quot;}">Section 83(b) Tax Election</button>
+<button type="button" class="preset-btn" data-config="{&quot;preset&quot;:&quot;deal_structure&quot;}">M&A Deal Architecture</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="decision-tree" data-defaults="{&quot;preset&quot;:&quot;entity_choice&quot;}">
+          <!-- Interactive tool mounts here -->
         </div>
+      </div>
 
       
-        <div class="misconception-callout">
-          <div class="misconception-callout__title">
-            <span>⚠️</span>
-            <span>Common Misconceptions</span>
-          </div>
-          <div class="misconception-callout__text">
-            <ul>
-<li><strong>Myth 1: &quot;Pass-through entities always result in lower total tax than C-corps.&quot;</strong><br><em>Reality:</em> If high-growth business profits are 100% retained and reinvested inside the entity rather than distributed, the 21% flat corporate tax rate can be significantly lower than high personal marginal tax brackets (up to 37% + state).</li>
-<li><strong>Myth 2: &quot;An LLC cannot issue equity to venture capitalists.&quot;</strong><br><em>Reality:</em> It can, but standard institutional VCs typically mandate converting to a Delaware C-Corp prior to Series A funding to avoid pass-through tax filing complexities for tax-exempt LP investors.</li>
-</ul>
-
-          </div>
-        </div>
     </div>
         
     <footer class="concept-footer">

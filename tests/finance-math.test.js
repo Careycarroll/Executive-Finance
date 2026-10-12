@@ -26,6 +26,24 @@ import {
   reformulateIncomeStatement,
   penmanROEDecomposition,
   dupont3Way,
+  calcCharm,
+  calcVanna,
+  binomialCRR,
+  calcPortfolioReturn,
+  calcPortfolioVol,
+  calcMVPWeight,
+  calcTangencyWeight,
+  calcSharpe,
+  generateFrontierPoints,
+  runGBMSimulation,
+  calcForwardRate,
+  transformYieldCurve,
+  arithmeticMean,
+  harmonicMean,
+  compSummaryStats,
+  impliedValuationForMetric,
+  calcAverageCorrelation,
+  calcPortfolioDiversification,
 } from '../js/lib/finance-math/index.js';
 
 describe('Black-Scholes Option Pricing (Hull Ch. 15)', () => {
@@ -235,5 +253,178 @@ describe('Penman Reformulated Financial Statements & ROE (Penman Ch. 8, 11)', ()
     expect(dp.assetTurnover).toBeCloseTo(1000 / 1100, 4);
     expect(dp.equityMultiplier).toBeCloseTo(1100 / 400, 4);
     expect(dp.roe).toBeCloseTo(116 / 400, 4);
+  });
+});
+
+describe('Advanced Greeks & Binomial CRR Tree (Hull Ch. 13, 19; Natenberg Ch. 8)', () => {
+  it('computes Charm and Vanna', () => {
+    const spot = 100;
+    const strike = 100;
+    const rate = 0.05;
+    const vol = 0.20;
+    const time = 1.0;
+
+    const charm = calcCharm(spot, strike, rate, vol, time, true);
+    const vanna = calcVanna(spot, strike, rate, vol, time);
+
+    expect(typeof charm).toBe('number');
+    expect(typeof vanna).toBe('number');
+  });
+
+  it('prices European call via CRR converging close to Black-Scholes', () => {
+    // S=100, K=100, r=0.05, vol=0.20, T=1.0 -> BSM Call = 10.45
+    const res = binomialCRR({
+      spot: 100,
+      strike: 100,
+      rate: 0.05,
+      vol: 0.20,
+      time: 1.0,
+      steps: 10,
+      isCall: true,
+      isAmerican: false,
+    });
+
+    expect(res.price).toBeCloseTo(10.45, 0); // converges within ~$0.50 with 10 steps
+    expect(res.tree).toHaveLength(11);
+  });
+
+  it('demonstrates American early exercise premium on deep ITM put', () => {
+    // S=70, K=100, r=0.10, vol=0.20, T=1.0
+    const euroPut = binomialCRR({
+      spot: 70,
+      strike: 100,
+      rate: 0.10,
+      vol: 0.20,
+      time: 1.0,
+      steps: 8,
+      isCall: false,
+      isAmerican: false,
+    });
+
+    const amerPut = binomialCRR({
+      spot: 70,
+      strike: 100,
+      rate: 0.10,
+      vol: 0.20,
+      time: 1.0,
+      steps: 8,
+      isCall: false,
+      isAmerican: true,
+    });
+
+    // American put allows immediate exercise to lock in $30, earning higher value than delayed European put
+    expect(amerPut.price).toBeGreaterThanOrEqual(30.0);
+    expect(amerPut.price).toBeGreaterThan(euroPut.price);
+  });
+});
+
+describe('Modern Portfolio Theory (Bodie Ch. 6, 7, 8)', () => {
+  it('computes 2-asset return, vol, and MVP weight', () => {
+    const rA = 0.10;
+    const volA = 0.20;
+    const rB = 0.05;
+    const volB = 0.10;
+    const corr = 0.20;
+
+    const mvpWA = calcMVPWeight(volA, volB, corr);
+    expect(mvpWA).toBeCloseTo(0.1429, 3); // 1/7 ≈ 0.1429
+
+    const mvpVol = calcPortfolioVol(mvpWA, volA, volB, corr);
+    // Diversification reduces portfolio risk below bond risk (volB = 10%)
+    expect(mvpVol).toBeLessThan(volB);
+    expect(mvpVol).toBeCloseTo(0.0956, 3);
+  });
+
+  it('computes optimal tangency portfolio maximizing Sharpe ratio', () => {
+    const wA = calcTangencyWeight(0.10, 0.20, 0.05, 0.10, 0.20, 0.03);
+    const expR = calcPortfolioReturn(wA, 0.10, 0.05);
+    const vol = calcPortfolioVol(wA, 0.20, 0.10, 0.20);
+    const sharpeT = calcSharpe(expR, vol, 0.03);
+
+    const sharpeA = calcSharpe(0.10, 0.20, 0.03);
+    const sharpeB = calcSharpe(0.05, 0.10, 0.03);
+
+    expect(sharpeT).toBeGreaterThan(sharpeA);
+    expect(sharpeT).toBeGreaterThan(sharpeB);
+  });
+});
+
+describe('Monte Carlo GBM & VaR (Hull Ch. 21, 22)', () => {
+  it('runs reproducible GBM simulation and computes percentiles', () => {
+    const sim = runGBMSimulation({
+      s0: 100,
+      drift: 0.08,
+      vol: 0.20,
+      horizon: 1.0,
+      nPaths: 2000,
+      seed: 42,
+    });
+
+    expect(sim.mean).toBeCloseTo(108.5, 0); // close to 100 * exp(0.08) ≈ 108.3
+    expect(sim.p5).toBeLessThan(100);
+    expect(sim.p50).toBeGreaterThan(95);
+    expect(sim.p95).toBeGreaterThan(120);
+    expect(sim.var95).toBeGreaterThan(0);
+    expect(sim.cvar95).toBeGreaterThan(sim.var95); // Expected Shortfall is strictly >= VaR
+
+    // Histogram partition check
+    const totalBinned = sim.bins.reduce((sum, b) => sum + b.count, 0);
+    expect(totalBinned).toBe(2000);
+  });
+});
+
+describe('Yield Curve & Term Structure (Bodie Ch. 15)', () => {
+  it('bootstraps forward rate accurately', () => {
+    // 1Y spot 4%, 2Y spot 5% -> 1Y-2Y forward rate = 6.01%
+    const fRate = calcForwardRate(0.04, 1, 0.05, 2);
+    expect(fRate).toBeCloseTo(0.0601, 4);
+  });
+
+  it('applies parallel shift and slope twist', () => {
+    const tenors = [1, 2, 5, 10];
+    const baseRates = [0.03, 0.035, 0.04, 0.045];
+
+    // +100 bps parallel shift
+    const shifted = transformYieldCurve(tenors, baseRates, 100, 0, 5);
+    expect(shifted[0]).toBeCloseTo(0.04, 4);
+    expect(shifted[3]).toBeCloseTo(0.055, 4);
+  });
+});
+
+describe('Comparable Multiples & Relative Valuation (Easton Mod. 14, Lundholm Ch. 11)', () => {
+  it('computes harmonic mean, arithmetic mean, and implied target values', () => {
+    const multiples = [10, 12, 15];
+    expect(arithmeticMean(multiples)).toBeCloseTo(12.3333, 4);
+    expect(harmonicMean(multiples)).toBeCloseTo(12.0000, 4);
+
+    const stats = compSummaryStats(multiples);
+    expect(stats.min).toBe(10);
+    expect(stats.max).toBe(15);
+    expect(stats.median).toBe(12);
+
+    const val = impliedValuationForMetric({
+      metricKey: 'ev_ebitda',
+      multipleValue: 12.0,
+      target: { ebitda: 100, net_debt: 50 },
+    });
+    expect(val.impliedEV).toBe(1200);
+    expect(val.impliedEquity).toBe(1150);
+  });
+});
+
+describe('Correlation Matrix & Portfolio Diversification (Bodie Ch. 7)', () => {
+  it('calculates average pairwise correlation and diversification ratio', () => {
+    const matrix = [
+      [1.0, 0.2, -0.1],
+      [0.2, 1.0, 0.3],
+      [-0.1, 0.3, 1.0],
+    ];
+    // Off-diagonals: (0,1)=0.2, (0,2)=-0.1, (1,2)=0.3. Sum = 0.4. Count = 3. Avg = 0.13333
+    const avgCorr = calcAverageCorrelation(matrix);
+    expect(avgCorr).toBeCloseTo(0.13333, 4);
+
+    const div = calcPortfolioDiversification(matrix, [0.20, 0.20, 0.20]);
+    expect(div.divRatio).toBeGreaterThan(1.0); // Diversification reduces risk
+    expect(div.portVol).toBeLessThan(0.20);
   });
 });
