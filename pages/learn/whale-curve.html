@@ -70,65 +70,47 @@
 <li><strong>Y-Axis:</strong> Cumulative operating profit as a percentage of total company profit.</li>
 </ul>
 <div style="margin: 1.5rem 0; padding: 1rem; background: #ffffff; border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
-  <svg viewBox="0 0 720 380" width="100%" height="auto" style="display: block; font-family: var(--font-sans);">
-    <!-- Background Zones -->
-    <!-- Top 20% Zone (Green/Value Creators) -->
-    <rect x="70" y="40" width="130" height="260" fill="#f0fff4" opacity="0.8" />
-    <!-- Middle 70% Zone (Neutral/Break-even) -->
-    <rect x="200" y="40" width="420" height="260" fill="#f7fafc" opacity="0.8" />
-    <!-- Bottom 10% Zone (Red/Profit Bleeders) -->
-    <rect x="620" y="40" width="70" height="260" fill="#fff5f5" opacity="0.8" /><pre><code>&lt;!-- Grid lines --&gt;
-&lt;line x1=&quot;70&quot; y1=&quot;300&quot; x2=&quot;690&quot; y2=&quot;300&quot; stroke=&quot;#cbd5e1&quot; stroke-width=&quot;1.5&quot; /&gt;
-&lt;line x1=&quot;70&quot; y1=&quot;180&quot; x2=&quot;690&quot; y2=&quot;180&quot; stroke=&quot;#94a3b8&quot; stroke-width=&quot;1.5&quot; stroke-dasharray=&quot;5,5&quot; /&gt;
-&lt;line x1=&quot;70&quot; y1=&quot;65&quot; x2=&quot;690&quot; y2=&quot;65&quot; stroke=&quot;#e2e8f0&quot; stroke-width=&quot;1&quot; stroke-dasharray=&quot;3,3&quot; /&gt;
-
-&lt;!-- Vertical Zone Separators --&gt;
-&lt;line x1=&quot;200&quot; y1=&quot;40&quot; x2=&quot;200&quot; y2=&quot;300&quot; stroke=&quot;#cbd5e1&quot; stroke-width=&quot;1&quot; stroke-dasharray=&quot;2,2&quot; /&gt;
-&lt;line x1=&quot;620&quot; y1=&quot;40&quot; x2=&quot;620&quot; y2=&quot;300&quot; stroke=&quot;#cbd5e1&quot; stroke-width=&quot;1&quot; stroke-dasharray=&quot;2,2&quot; /&gt;
-
-&lt;!-- 100% Reported Profit Label --&gt;
-&lt;text x=&quot;75&quot; y=&quot;174&quot; fill=&quot;#64748b&quot; font-size=&quot;12&quot; font-weight=&quot;600&quot;&gt;100% (Reported Profit Baseline)&lt;/text&gt;
-&lt;text x=&quot;75&quot; y=&quot;59&quot; fill=&quot;#94a3b8&quot; font-size=&quot;11&quot; font-weight=&quot;500&quot;&gt;225% Peak&lt;/text&gt;
-&lt;text x=&quot;75&quot; y=&quot;294&quot; fill=&quot;#94a3b8&quot; font-size=&quot;11&quot; font-weight=&quot;500&quot;&gt;0%&lt;/text&gt;
-
-&lt;!-- The Whale Curve Line --&gt;
-&lt;path d=&quot;M 70 300 C 110 200, 155 65, 200 65 L 620 70 C 640 85, 665 150, 690 180&quot; 
-      fill=&quot;none&quot; stroke=&quot;#1a365d&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot; /&gt;
-
-&lt;!-- Peak Annotation Marker --&gt;
-&lt;circle cx=&quot;200&quot; cy=&quot;65&quot; r=&quot;5&quot; fill=&quot;#2b6cb0&quot; /&gt;
-&lt;rect x=&quot;145&quot; y=&quot;18&quot; width=&quot;130&quot; height=&quot;24&quot; rx=&quot;12&quot; fill=&quot;#1a365d&quot; /&gt;
-&lt;text x=&quot;210&quot; y=&quot;34&quot; fill=&quot;#ffffff&quot; font-size=&quot;11&quot; font-weight=&quot;700&quot; text-anchor=&quot;middle&quot;&gt;Peak: ~225% Profit&lt;/text&gt;
-
-&lt;!-- Final Reported Point Marker --&gt;
-&lt;circle cx=&quot;690&quot; cy=&quot;180&quot; r=&quot;5&quot; fill=&quot;#c53030&quot; /&gt;
-&lt;rect x=&quot;580&quot; y=&quot;195&quot; width=&quot;115&quot; height=&quot;22&quot; rx=&quot;4&quot; fill=&quot;#c53030&quot; /&gt;
-&lt;text x=&quot;637&quot; y=&quot;210&quot; fill=&quot;#ffffff&quot; font-size=&quot;10&quot; font-weight=&quot;700&quot; text-anchor=&quot;middle&quot;&gt;100% Net Profit&lt;/text&gt;
-
-&lt;!-- Zone Banners / Labels at bottom --&gt;
-&lt;g transform=&quot;translate(70, 312)&quot;&gt;
-  &lt;!-- Zone 1 --&gt;
-  &lt;rect x=&quot;10&quot; y=&quot;5&quot; width=&quot;110&quot; height=&quot;42&quot; rx=&quot;6&quot; fill=&quot;#c6f6d5&quot; /&gt;
-  &lt;text x=&quot;65&quot; y=&quot;22&quot; fill=&quot;#22543d&quot; font-size=&quot;11&quot; font-weight=&quot;700&quot; text-anchor=&quot;middle&quot;&gt;Top 20% Accounts&lt;/text&gt;
-  &lt;text x=&quot;65&quot; y=&quot;38&quot; fill=&quot;#276749&quot; font-size=&quot;10&quot; font-weight=&quot;500&quot; text-anchor=&quot;middle&quot;&gt;Generate +225%&lt;/text&gt;
-
-  &lt;!-- Zone 2 --&gt;
-  &lt;rect x=&quot;230&quot; y=&quot;5&quot; width=&quot;180&quot; height=&quot;42&quot; rx=&quot;6&quot; fill=&quot;#edf2f7&quot; /&gt;
-  &lt;text x=&quot;320&quot; y=&quot;22&quot; fill=&quot;#2d3748&quot; font-size=&quot;11&quot; font-weight=&quot;700&quot; text-anchor=&quot;middle&quot;&gt;Middle 70% Accounts&lt;/text&gt;
-  &lt;text x=&quot;320&quot; y=&quot;38&quot; fill=&quot;#4a5568&quot; font-size=&quot;10&quot; font-weight=&quot;500&quot; text-anchor=&quot;middle&quot;&gt;Break-Even (~0% Net)&lt;/text&gt;
-
-  &lt;!-- Zone 3 --&gt;
-  &lt;rect x=&quot;555&quot; y=&quot;5&quot; width=&quot;60&quot; height=&quot;42&quot; rx=&quot;6&quot; fill=&quot;#fed7d7&quot; /&gt;
-  &lt;text x=&quot;585&quot; y=&quot;22&quot; fill=&quot;#742a2a&quot; font-size=&quot;11&quot; font-weight=&quot;700&quot; text-anchor=&quot;middle&quot;&gt;Bottom 10%&lt;/text&gt;
-  &lt;text x=&quot;585&quot; y=&quot;38&quot; fill=&quot;#9b2c2c&quot; font-size=&quot;10&quot; font-weight=&quot;500&quot; text-anchor=&quot;middle&quot;&gt;Erode -125%&lt;/text&gt;
-&lt;/g&gt;
-
-&lt;!-- X-axis Label --&gt;
-&lt;text x=&quot;380&quot; y=&quot;375&quot; fill=&quot;#64748b&quot; font-size=&quot;12&quot; font-weight=&quot;600&quot; text-anchor=&quot;middle&quot;&gt;
-  Cumulative % of Customers (Ranked from Most to Least Profitable) →
-&lt;/text&gt;
-</code></pre>
-  </svg>
+<svg viewBox="0 0 720 380" width="100%" height="auto" style="display: block; font-family: var(--font-sans);">
+<!-- Background Zones -->
+<rect x="70" y="40" width="130" height="260" fill="#f0fff4" opacity="0.8" />
+<rect x="200" y="40" width="420" height="260" fill="#f7fafc" opacity="0.8" />
+<rect x="620" y="40" width="70" height="260" fill="#fff5f5" opacity="0.8" />
+<!-- Grid lines -->
+<line x1="70" y1="300" x2="690" y2="300" stroke="#cbd5e1" stroke-width="1.5" />
+<line x1="70" y1="180" x2="690" y2="180" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5,5" />
+<line x1="70" y1="65" x2="690" y2="65" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3,3" />
+<!-- Vertical Zone Separators -->
+<line x1="200" y1="40" x2="200" y2="300" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
+<line x1="620" y1="40" x2="620" y2="300" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
+<!-- 100% Reported Profit Label -->
+<text x="75" y="174" fill="#64748b" font-size="12" font-weight="600">100% (Reported Profit Baseline)</text>
+<text x="75" y="59" fill="#94a3b8" font-size="11" font-weight="500">225% Peak</text>
+<text x="75" y="294" fill="#94a3b8" font-size="11" font-weight="500">0%</text>
+<!-- The Whale Curve Line -->
+<path d="M 70 300 C 110 200, 155 65, 200 65 L 620 70 C 640 85, 665 150, 690 180" fill="none" stroke="#1a365d" stroke-width="4" stroke-linecap="round" />
+<!-- Peak Annotation Marker -->
+<circle cx="200" cy="65" r="5" fill="#2b6cb0" />
+<rect x="145" y="18" width="130" height="24" rx="12" fill="#1a365d" />
+<text x="210" y="34" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle">Peak: ~225% Profit</text>
+<!-- Final Reported Point Marker -->
+<circle cx="690" cy="180" r="5" fill="#c53030" />
+<rect x="580" y="195" width="115" height="22" rx="4" fill="#c53030" />
+<text x="637" y="210" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">100% Net Profit</text>
+<!-- Zone Banners / Labels at bottom -->
+<g transform="translate(70, 312)">
+<rect x="10" y="5" width="110" height="42" rx="6" fill="#c6f6d5" />
+<text x="65" y="22" fill="#22543d" font-size="11" font-weight="700" text-anchor="middle">Top 20% Accounts</text>
+<text x="65" y="38" fill="#276749" font-size="10" font-weight="500" text-anchor="middle">Generate +225%</text>
+<rect x="230" y="5" width="180" height="42" rx="6" fill="#edf2f7" />
+<text x="320" y="22" fill="#2d3748" font-size="11" font-weight="700" text-anchor="middle">Middle 70% Accounts</text>
+<text x="320" y="38" fill="#4a5568" font-size="10" font-weight="500" text-anchor="middle">Break-Even (~0% Net)</text>
+<rect x="555" y="5" width="60" height="42" rx="6" fill="#fed7d7" />
+<text x="585" y="22" fill="#742a2a" font-size="11" font-weight="700" text-anchor="middle">Bottom 10%</text>
+<text x="585" y="38" fill="#9b2c2c" font-size="10" font-weight="500" text-anchor="middle">Erode -125%</text>
+</g>
+<!-- X-axis Label -->
+<text x="380" y="375" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">Cumulative % of Customers (Ranked from Most to Least Profitable) →</text>
+</svg>
 </div><h3>Strategic Levers for Managing the Bleeders:</h3>
 <ol>
 <li><strong>Unbundle and Reprice:</strong> Charge explicitly for rush shipping, small order sizes, and bespoke packaging rather than bundling them into base pricing.</li>
