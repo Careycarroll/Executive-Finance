@@ -6,15 +6,15 @@ The discount rate is the rate of return an investor or enterprise requires to co
 In executive capital allocation, the discount rate serves as the hurdle rate that sets the price of time and risk. When discounting cash flows, higher discount rates penalize long-dated cash flows exponentially, favoring near-term liquidity and raising the bar for multi-year capital expenditures.
 
 ## Formula
-r = r_f + \beta \cdot \text{ERP} + \alpha_{\text{size}} + \alpha_{\text{specific}}
+$$r = r_f + \beta \cdot \text{ERP} + \alpha_{\text{size}} + \alpha_{\text{specific}}$$
 
 ## Variable Glossary
-- **r**: Nominal discount rate / required rate of return (hurdle rate).
-- **r_f**: Risk-free rate (typically the yield on a 10-year or 20-year US Treasury bond matching the cash flow currency and duration).
-- **\beta**: Beta coefficient measuring systematic exposure to macroeconomic/market variance.
-- **\text{ERP}**: Equity Risk Premium ($E[R_m] - r_f$), historically $4.5\% - 6.0\%$ in developed markets.
-- **\alpha_{\text{size}}**: Size premium adjustment for micro-cap or small-cap liquidity constraints (Duff & Phelps / Kroll data).
-- **\alpha_{\text{specific}}**: Company-specific or project-specific unsystematic risk premium (regulatory hurdle, execution risk, customer concentration).
+- **$r$**: Nominal discount rate / required rate of return (hurdle rate).
+- **$r_f$**: Risk-free rate (typically the yield on a 10-year or 20-year US Treasury bond matching the cash flow currency and duration).
+- **$\beta$**: Beta coefficient measuring systematic exposure to macroeconomic/market variance.
+- **$\text{ERP}$**: Equity Risk Premium ($E[R_m] - r_f$), historically $4.5\% - 6.0\%$ in developed markets.
+- **$\alpha_{\text{size}}$**: Size premium adjustment for micro-cap or small-cap liquidity constraints (Duff & Phelps / Kroll data).
+- **$\alpha_{\text{specific}}$**: Company-specific or project-specific unsystematic risk premium (regulatory hurdle, execution risk, customer concentration).
 
 ## Worked Example
 A corporate strategy team is evaluating an organic expansion project with a 7-year cash flow profile. The company's CFO determines the appropriate hurdle rate using a build-up approach:

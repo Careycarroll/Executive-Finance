@@ -11,19 +11,19 @@ Executives primarily estimate $r_e$ through three core frameworks:
 3. **The Build-Up Method:** Common in private company appraisal and lower-middle-market M&A, layering size and company-specific risk premiums onto base CAPM.
 
 ## Formula
-r_e = r_f + \beta_L \cdot \left( E[R_m] - r_f \right) = r_f + \beta_L \cdot \text{ERP}
+$$r_e = r_f + \beta_L \cdot \left( E[R_m] - r_f \right) = r_f + \beta_L \cdot \text{ERP}$$
 
 $$\beta_L = \beta_U \cdot \left[ 1 + (1 - t) \cdot \frac{D}{E} \right]$$
 
 ## Variable Glossary
-- **r_e**: Cost of equity (required return on common stock).
-- **r_f**: Risk-free rate of return (matching sovereign bond matching duration of cash flows).
-- **\beta_L**: Levered equity beta (measuring systematic risk inclusive of financial leverage).
-- **\beta_U**: Unlevered asset beta (measuring pure business operating risk independent of debt).
-- **\text{ERP}**: Equity Risk Premium ($E[R_m] - r_f$), historically $5.0\% - 6.0\%$.
-- **\frac{D}{E}**: Debt-to-Equity market value ratio (financial leverage).
-- **t**: Corporate marginal income tax rate.
-- **\text{Hamada Equation}**: Converts pure operating risk ($\beta_U$) to levered equity risk ($\beta_L$).
+- **$r_e$**: Cost of equity (required return on common stock).
+- **$r_f$**: Risk-free rate of return (matching sovereign bond matching duration of cash flows).
+- **$\beta_L$**: Levered equity beta (measuring systematic risk inclusive of financial leverage).
+- **$\beta_U$**: Unlevered asset beta (measuring pure business operating risk independent of debt).
+- **$\text{ERP}$**: Equity Risk Premium ($E[R_m] - r_f$), historically $5.0\% - 6.0\%$.
+- **$\frac{D}{E}$**: Debt-to-Equity market value ratio (financial leverage).
+- **$t$**: Corporate marginal income tax rate.
+- **$\text{Hamada Equation}$**: Converts pure operating risk ($\beta_U$) to levered equity risk ($\beta_L$).
 
 ## Worked Example
 An executive is valuing a division spin-off or private competitor in the enterprise SaaS sector:

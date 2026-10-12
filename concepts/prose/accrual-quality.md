@@ -8,19 +8,19 @@ Accruals are essential for matching revenues with expenses, but they require man
 Richard Sloan’s seminal research (1996) documented the **Accrual Anomaly**: earnings driven by cash flows are far more persistent and sustainable than earnings driven by large accounting accruals. When a firm reports record net income but cash flow from operations stagnates or turns negative, the high accrual component will inevitably mean-revert or result in write-downs in future quarters. High accruals signal low earnings quality.
 
 ## Formula
-\text{Total Accruals} = \text{Net Income} - \text{Operating Cash Flow (CFO)}
+$$\text{Total Accruals} = \text{Net Income} - \text{Operating Cash Flow (CFO)}$$
 
 $$\text{Balance Sheet Accrual Ratio} = \frac{\Delta\text{NOA}}{\text{Average NOA}} = \frac{\text{NOA}_t - \text{NOA}_{t-1}}{\frac{1}{2}(\text{NOA}_t + \text{NOA}_{t-1})}$$
 
 $$\text{Cash Flow Accrual Ratio} = \frac{\text{Net Income} - (\text{CFO} + \text{CFI})}{\text{Average Total Assets}}$$
 
 ## Variable Glossary
-- **\text{Total Accruals}**: Difference between accounting net earnings and actual cash flow generated from operations.
-- **\text{CFO}**: Cash Flow from Operating Activities (from GAAP Cash Flow Statement).
-- **\text{CFI}**: Cash Flow from Investing Activities.
-- **\text{NOA}**: Net Operating Assets ($\text{Operating Assets} - \text{Operating Liabilities}$).
-- **\Delta\text{NOA}**: Annual change in net operating assets. Under clean-surplus accounting, all cumulative accounting accruals eventually build up on the balance sheet inside net operating assets.
-- **\text{Sloan Accrual Measure}**: Scaled accruals as a percentage of average total assets.
+- **$\text{Total Accruals}$**: Difference between accounting net earnings and actual cash flow generated from operations.
+- **$\text{CFO}$**: Cash Flow from Operating Activities (from GAAP Cash Flow Statement).
+- **$\text{CFI}$**: Cash Flow from Investing Activities.
+- **$\text{NOA}$**: Net Operating Assets ($\text{Operating Assets} - \text{Operating Liabilities}$).
+- **$\Delta\text{NOA}$**: Annual change in net operating assets. Under clean-surplus accounting, all cumulative accounting accruals eventually build up on the balance sheet inside net operating assets.
+- **$\text{Sloan Accrual Measure}$**: Scaled accruals as a percentage of average total assets.
 
 ## Worked Example
 A fast-growing healthcare services firm announces impressive FY2025 financial results:

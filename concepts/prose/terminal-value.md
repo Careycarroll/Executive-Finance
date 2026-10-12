@@ -12,20 +12,20 @@ Valuation professionals calculate Terminal Value using two primary methods:
 Best practice requires cross-checking both methods: an assumed exit multiple implicitly embeds a perpetual growth rate, and an assumed perpetual growth rate implies an exit multiple. Reconciling the two eliminates absurd hidden assumptions.
 
 ## Formula
-\text{TV}_{\text{Perpetuity}} = \frac{\text{FCFF}_{T+1}}{\text{WACC} - g} = \frac{\text{FCFF}_T \cdot (1 + g)}{\text{WACC} - g}
+$$\text{TV}_{\text{Perpetuity}} = \frac{\text{FCFF}_{T+1}}{\text{WACC} - g} = \frac{\text{FCFF}_T \cdot (1 + g)}{\text{WACC} - g}$$
 
 $$\text{TV}_{\text{Multiple}} = \text{EBITDA}_T \cdot \text{Exit Multiple}$$
 
 $$\text{Implied } g = \text{WACC} - \frac{\text{FCFF}_{T+1}}{\text{TV}_{\text{Multiple}}}$$
 
 ## Variable Glossary
-- **\text{TV}**: Terminal Value in nominal dollars at the end of year $T$.
-- **\text{FCFF}_T**: Free Cash Flow to the Firm in the final year of the explicit forecast horizon.
-- **\text{FCFF}_{T+1}**: Normalized steady-state Free Cash Flow in the first year of the terminal period.
-- **\text{WACC}**: Weighted Average Cost of Capital.
-- **g**: Perpetual sustainable growth rate.
-- **\text{EBITDA}_T**: Earnings Before Interest, Taxes, Depreciation, and Amortization in year $T$.
-- **\text{Exit Multiple}**: Target enterprise valuation multiple (e.g., EV/EBITDA) derived from comparable mature transactions.
+- **$\text{TV}$**: Terminal Value in nominal dollars at the end of year $T$.
+- **$\text{FCFF}_T$**: Free Cash Flow to the Firm in the final year of the explicit forecast horizon.
+- **$\text{FCFF}_{T+1}$**: Normalized steady-state Free Cash Flow in the first year of the terminal period.
+- **$\text{WACC}$**: Weighted Average Cost of Capital.
+- **$g$**: Perpetual sustainable growth rate.
+- **$\text{EBITDA}_T$**: Earnings Before Interest, Taxes, Depreciation, and Amortization in year $T$.
+- **$\text{Exit Multiple}$**: Target enterprise valuation multiple (e.g., EV/EBITDA) derived from comparable mature transactions.
 
 ## Worked Example
 A corporate strategy team is valuing a business unit with the following Year 5 projections:

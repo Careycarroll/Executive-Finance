@@ -12,17 +12,17 @@ When a security's expected return diverges from its CAPM fair required return, i
 Alpha is the holy grail of active investment management: generating risk-adjusted excess returns that cannot be explained by passive factor exposure.
 
 ## Formula
-E[R_i] = r_f + \beta_i \cdot \left( E[R_m] - r_f \right)
+$$E[R_i] = r_f + \beta_i \cdot \left( E[R_m] - r_f \right)$$
 
 $$\alpha_i = R_i - \left[ r_f + \beta_i \cdot (R_m - r_f) \right]$$
 
 ## Variable Glossary
-- **\text{SML}**: Linear locus of points where $E[R] = r_f + \beta \times \text{ERP}$.
-- **\alpha_i**: Jensen’s Alpha (abnormal risk-adjusted return of asset $i$).
-- **R_i**: Realized or forecasted return of security $i$.
-- **\beta_i**: Beta systematic risk coefficient (the slope of the security's characteristic line).
-- **r_f**: Risk-free rate (the vertical intercept of the SML where $\beta = 0$).
-- **E[R_m] - r_f**: Slope of the Security Market Line (the Equity Risk Premium).
+- **$\text{SML}$**: Linear locus of points where $E[R] = r_f + \beta \times \text{ERP}$.
+- **$\alpha_i$**: Jensen’s Alpha (abnormal risk-adjusted return of asset $i$).
+- **$R_i$**: Realized or forecasted return of security $i$.
+- **$\beta_i$**: Beta systematic risk coefficient (the slope of the security's characteristic line).
+- **$r_f$**: Risk-free rate (the vertical intercept of the SML where $\beta = 0$).
+- **$E[R_m] - r_f$**: Slope of the Security Market Line (the Equity Risk Premium).
 
 ## Worked Example
 An equity analyst is evaluating two competing industrial stocks:

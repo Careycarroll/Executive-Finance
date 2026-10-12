@@ -12,7 +12,7 @@ The strategy converts uncertain future upside appreciation into immediate, certa
 By Put-Call Parity ($S - c = K e^{-rT} - p$), a covered call is **synthetically identical to a Short Cash-Secured Put**! Both strategies share the identical asymmetric risk-reward profile: capped upside, full downside risk, and positive Theta.
 
 ## Formula
-\text{Net Payoff at Expiration } (T) = S_T - S_0 + C_0 - \max(0, S_T - K)
+$$\text{Net Payoff at Expiration } (T) = S_T - S_0 + C_0 - \max(0, S_T - K)$$
 
 $$\text{Max Profit} = (K - S_0) + C_0 \quad \text{(Achieved when } S_T \ge K\text{)}$$
 
@@ -21,11 +21,11 @@ $$\text{Breakeven Stock Price} = S_0 - C_0$$
 $$\text{Max Loss} = S_0 - C_0 \quad \text{(Occurs if stock drops to } \$0\text{)}$$
 
 ## Variable Glossary
-- **S_0**: Initial purchase price of the underlying stock.
-- **S_T**: Stock price at option expiration.
-- **K**: Strike price of the written call option ($K > S_0$ for OTM covered call).
-- **C_0**: Cash premium collected upfront per share for selling the call option.
-- **\text{Breakeven}**: The price below which the overall combined position incurs net losses.
+- **$S_0$**: Initial purchase price of the underlying stock.
+- **$S_T$**: Stock price at option expiration.
+- **$K$**: Strike price of the written call option ($K > S_0$ for OTM covered call).
+- **$C_0$**: Cash premium collected upfront per share for selling the call option.
+- **$\text{Breakeven}$**: The price below which the overall combined position incurs net losses.
 
 ## Notes for Future-Me
 Beware the **"Winner Forfeiture & Loser Concentration Trap"**: 

@@ -58,7 +58,7 @@
       
         <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
           <div class="concept-intuition__heading">Overview & Intuition</div>
-          <div><p>Forward contracts and futures contracts are the foundational linear derivatives: both represent firm commitments to buy or sell an underlying asset at a specified future date for a predetermined delivery price ($K$).</p>
+          <div><p>Forward contracts and futures contracts are the foundational linear derivatives: both represent firm commitments to buy or sell an underlying asset at a specified future date for a predetermined delivery price (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">K</span></span></span></span>).</p>
 <p>While economically equivalent at maturity under constant interest rates, their market architecture and risk profiles diverge dramatically:</p>
 <ul>
 <li><strong>Forward Contracts:</strong> Over-the-counter (OTC) bilateral agreements between two private counterparties. Completely customizable (notional size, tenor, delivery terms), but carry <strong>counterparty credit risk</strong> and are illiquid prior to maturity. Settlement occurs in a single lump-sum cash flow at expiration.</li>
@@ -101,7 +101,7 @@
 </tr>
 <tr>
 <td><strong>Cash Settlement</strong></td>
-<td>Single settlement at maturity ($T$)</td>
+<td>Single settlement at maturity (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">T</span></span></span></span>)</td>
 <td>Daily mark-to-market variation margin</td>
 <td>Futures require substantial liquid cash reserves for margin calls.</td>
 </tr>
@@ -175,7 +175,7 @@
           <p>When structuring currency or commodity hedges for corporate operations, match the instrument to your treasury&#39;s liquidity tolerance:</p>
 <ul>
 <li>If your operating cash flows occur on irregular dates (e.g., a $47.3M equipment payment due on November 17th) and your treasury cannot tolerate daily wire transfers for margin swings, use an <strong>OTC Forward</strong> via an ISDA bank facility.</li>
-<li>If you need to dynamically scale hedges up or down as supply forecasts shift, use <strong>Exchange Futures</strong>, but pre-allocate a dedicated cash credit facility to fund worst-case $3\sigma$ margin call drawdowns.</li>
+<li>If you need to dynamically scale hedges up or down as supply forecasts shift, use <strong>Exchange Futures</strong>, but pre-allocate a dedicated cash credit facility to fund worst-case <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mi>σ</mi></mrow><annotation encoding="application/x-tex">3\sigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span><span class="mord mathnormal" style="margin-right:0.0359em;">σ</span></span></span></span> margin call drawdowns.</li>
 </ul>
 
         </div>

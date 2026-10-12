@@ -14,20 +14,20 @@ $$\text{Enterprise Value} = \text{Current Net Operating Assets (NOA}_0) + \text{
 This provides a profound mathematical advantage over DCF models: **value is anchored immediately on the balance sheet today**, shifting the weight of valuation away from subjective terminal year cash flow assumptions.
 
 ## Formula
-\text{ReOI}_t = \text{NOPAT}_t - (\text{WACC} \cdot \text{NOA}_{t-1}) = (\text{RNOA}_t - \text{WACC}) \cdot \text{NOA}_{t-1}
+$$\text{ReOI}_t = \text{NOPAT}_t - (\text{WACC} \cdot \text{NOA}_{t-1}) = (\text{RNOA}_t - \text{WACC}) \cdot \text{NOA}_{t-1}$$
 
 $$\text{Enterprise Value} = \text{NOA}_0 + \sum_{t=1}^T \frac{\text{ReOI}_t}{(1 + \text{WACC})^t} + \frac{\text{Terminal ReOI}_T}{(1 + \text{WACC})^T}$$
 
 $$\text{Equity Residual Income (RI}_t) = \text{Net Income}_t - (r_e \cdot \text{Book Value of Equity}_{t-1})$$
 
 ## Variable Glossary
-- **\text{ReOI}_t**: Residual Operating Income in year $t$.
-- **\text{NOPAT}_t**: Net Operating Profit After Tax in year $t$.
-- **\text{NOA}_{t-1}**: Net Operating Assets at the beginning of period $t$.
-- **\text{WACC}**: Weighted Average Cost of Capital.
-- **\text{RNOA}_t**: Return on Net Operating Assets ($\text{NOPAT}_t / \text{NOA}_{t-1}$).
-- **\text{RNOA} - \text{WACC}**: Economic Value spread (value creation rate).
-- **\text{NOA}_0**: Current Net Operating Assets on the balance sheet today.
+- **$\text{ReOI}_t$**: Residual Operating Income in year $t$.
+- **$\text{NOPAT}_t$**: Net Operating Profit After Tax in year $t$.
+- **$\text{NOA}_{t-1}$**: Net Operating Assets at the beginning of period $t$.
+- **$\text{WACC}$**: Weighted Average Cost of Capital.
+- **$\text{RNOA}_t$**: Return on Net Operating Assets ($\text{NOPAT}_t / \text{NOA}_{t-1}$).
+- **$\text{RNOA} - \text{WACC}$**: Economic Value spread (value creation rate).
+- **$\text{NOA}_0$**: Current Net Operating Assets on the balance sheet today.
 
 ## Worked Example
 An executive is evaluating a corporate division:

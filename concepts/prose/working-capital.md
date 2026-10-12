@@ -10,18 +10,18 @@ Hawawini & Viallet introduce a vital distinction often missed in generic account
 A shorter Cash Conversion Cycle accelerates internal cash generation, boosting Free Cash Flow and reducing the need for external bank credit lines. Elite supply-chain operators (e.g., Apple, Dell, Amazon) operate with **negative Cash Conversion Cycles**, effectively financing their entire working capital on zero-interest credit provided by their suppliers!
 
 ## Formula
-\text{CCC} = \text{DIO} + \text{DSO} - \text{DPO} = \frac{\text{Inventory}}{\text{COGS}/365} + \frac{\text{Receivables}}{\text{Revenue}/365} - \frac{\text{Payables}}{\text{COGS}/365}
+$$\text{CCC} = \text{DIO} + \text{DSO} - \text{DPO} = \frac{\text{Inventory}}{\text{COGS}/365} + \frac{\text{Receivables}}{\text{Revenue}/365} - \frac{\text{Payables}}{\text{COGS}/365}$$
 
 $$\text{WCR} = \text{Accounts Receivable} + \text{Inventories} + \text{Prepaid Expenses} - (\text{Accounts Payable} + \text{Accrued Expenses})$$
 
 ## Variable Glossary
-- **\text{CCC}**: Cash Conversion Cycle (net operating cash cycle in days).
-- **\text{DIO}**: Days Inventory Outstanding (average days inventory sits in stock before being sold).
-- **\text{DSO}**: Days Sales Outstanding (average days required to collect cash from customers after a credit sale; also called Average Collection Period).
-- **\text{DPO}**: Days Payables Outstanding (average days taken to pay vendors and suppliers for credit purchases).
-- **\text{COGS}**: Cost of Goods Sold.
-- **\text{WCR}**: Working Capital Requirement (Operating NWC).
-- **\Delta\text{WCR}**: Annual change in working capital requirement, which directly drains or fuels Free Cash Flow ($\text{FCFF} = \text{NOPAT} + \text{D\&A} - \Delta\text{WCR} - \text{CapEx}$).
+- **$\text{CCC}$**: Cash Conversion Cycle (net operating cash cycle in days).
+- **$\text{DIO}$**: Days Inventory Outstanding (average days inventory sits in stock before being sold).
+- **$\text{DSO}$**: Days Sales Outstanding (average days required to collect cash from customers after a credit sale; also called Average Collection Period).
+- **$\text{DPO}$**: Days Payables Outstanding (average days taken to pay vendors and suppliers for credit purchases).
+- **$\text{COGS}$**: Cost of Goods Sold.
+- **$\text{WCR}$**: Working Capital Requirement (Operating NWC).
+- **$\Delta\text{WCR}$**: Annual change in working capital requirement, which directly drains or fuels Free Cash Flow ($\text{FCFF} = \text{NOPAT} + \text{D\&A} - \Delta\text{WCR} - \text{CapEx}$).
 
 ## Worked Example
 An electronics manufacturer is benchmarking its supply chain performance against competitors:

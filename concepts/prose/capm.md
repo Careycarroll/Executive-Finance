@@ -11,18 +11,18 @@ This sensitivity is captured entirely by **Beta ($\beta$)**:
 - $\beta < 1.0$: Defensive asset (e.g., regulated electric utilities, healthcare, consumer staples) that dampens market swings.
 
 ## Formula
-E[R_i] = r_f + \beta_i \cdot \left( E[R_m] - r_f \right) = r_f + \beta_i \cdot \text{ERP}
+$$E[R_i] = r_f + \beta_i \cdot \left( E[R_m] - r_f \right) = r_f + \beta_i \cdot \text{ERP}$$
 
 $$\beta_i = \frac{\text{Cov}(R_i, R_m)}{\text{Var}(R_m)} = \rho_{i,m} \cdot \frac{\sigma_i}{\sigma_m}$$
 
 ## Variable Glossary
-- **E[R_i]**: Expected equilibrium rate of return on security $i$ (cost of equity $r_e$).
-- **r_f**: Risk-free rate of return (yield on 10-year US Treasury bond).
-- **E[R_m] - r_f**: Equity Risk Premium ($\text{ERP}$), the excess return demanded by investors to hold the market portfolio over cash.
-- **\beta_i**: Systematic risk coefficient of security $i$.
-- **\text{Cov}(R_i, R_m)**: Covariance between returns of asset $i$ and market $m$.
-- **\sigma_i, \sigma_m**: Volatilities of asset $i$ and market $m$.
-- **\rho_{i,m}**: Correlation coefficient between asset $i$ and the market index.
+- **$E[R_i]$**: Expected equilibrium rate of return on security $i$ (cost of equity $r_e$).
+- **$r_f$**: Risk-free rate of return (yield on 10-year US Treasury bond).
+- **$E[R_m] - r_f$**: Equity Risk Premium ($\text{ERP}$), the excess return demanded by investors to hold the market portfolio over cash.
+- **$\beta_i$**: Systematic risk coefficient of security $i$.
+- **$\text{Cov}(R_i, R_m)$**: Covariance between returns of asset $i$ and market $m$.
+- **$\sigma_i, \sigma_m$**: Volatilities of asset $i$ and market $m$.
+- **$\rho_{i,m}$**: Correlation coefficient between asset $i$ and the market index.
 
 ## Worked Example
 An investment committee is estimating the required return on equity for an enterprise software provider:

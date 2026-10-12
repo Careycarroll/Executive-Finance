@@ -8,18 +8,18 @@ Executive finance distinguishes two fundamental tiers of Free Cash Flow:
 2. **Free Cash Flow to Equity (FCFE / Levered Free Cash Flow):** Cash available strictly to **common shareholders** after paying operating taxes, reinvesting in the business, and servicing net debt (interest payments and net debt repayments/borrowings). FCFE is discounted at the **Cost of Equity ($r_e$)** to determine **Equity Value**.
 
 ## Formula
-\text{FCFF} = \text{NOPAT} + \text{D\&A} - \Delta\text{NWC} - \text{CapEx} = \text{EBIT}(1 - t) + \text{D\&A} - \Delta\text{NWC} - \text{CapEx}
+$$\text{FCFF} = \text{NOPAT} + \text{D\&A} - \Delta\text{NWC} - \text{CapEx} = \text{EBIT}(1 - t) + \text{D\&A} - \Delta\text{NWC} - \text{CapEx}$$
 
 $$\text{FCFE} = \text{FCFF} - \text{Interest}(1 - t) + \text{Net Borrowing} = \text{Net Income} + \text{D\&A} - \Delta\text{NWC} - \text{CapEx} + \text{Net Debt Issued}$$
 
 ## Variable Glossary
-- **FCFF**: Free Cash Flow to the Firm (Unlevered FCF).
-- **FCFE**: Free Cash Flow to Equity (Levered FCF).
+- **$FCFF$**: Free Cash Flow to the Firm (Unlevered FCF).
+- **$FCFE$**: Free Cash Flow to Equity (Levered FCF).
 - **NOPAT**: Net Operating Profit After Tax ($= \text{EBIT} \times (1 - t)$).
-- **EBIT**: Earnings Before Interest and Taxes (operating income).
-- **t**: Marginal effective corporate tax rate.
+- **$EBIT$**: Earnings Before Interest and Taxes (operating income).
+- **$t$**: Marginal effective corporate tax rate.
 - **D&A**: Non-cash Depreciation and Amortization expenses added back.
-- **\Delta NWC**: Change in Non-Cash Working Capital ($(\text{Current Assets} - \text{Cash}) - (\text{Current Liabilities} - \text{Short-Term Debt})$).
+- **$\Delta NWC$**: Change in Non-Cash Working Capital ($(\text{Current Assets} - \text{Cash}) - (\text{Current Liabilities} - \text{Short-Term Debt})$).
 - **CapEx**: Capital expenditures on property, plant, equipment, and capitalized software.
 - **Net Borrowing**: New debt principal issued minus debt principal repaid during the period.
 

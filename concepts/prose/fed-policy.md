@@ -22,22 +22,22 @@ Monetary policy impacts corporate balance sheets through five primary transmissi
 5. **Balance Sheet Channel:** Quantitative Easing (QE) expands central bank balance sheets to compress long-term term premiums; Quantitative Tightening (QT) shrinks the balance sheet, withdrawing liquidity and widening credit spreads.
 
 ## Formula
-i_t = r^* + \pi_t + \alpha_\pi (\pi_t - \pi^*) + \alpha_y (y_t - \bar{y}_t)
+$$i_t = r^* + \pi_t + \alpha_\pi (\pi_t - \pi^*) + \alpha_y (y_t - \bar{y}_t)$$
 
 $$\text{Taylor Rule with Policy Smoothing (Inertia): } i_t = \rho \, i_{t-1} + (1 - \rho) \left[ r^* + \pi_t + \alpha_\pi (\pi_t - \pi^*) + \alpha_y (y_t - \bar{y}_t) \right]$$
 
 $$\text{Fisher Equation: } r_t = i_t - \mathbb{E}[\pi_{t+1}]$$
 
 ## Variable Glossary
-- **i_t**: Prescribed target nominal federal funds rate.
+- **$i_t$**: Prescribed target nominal federal funds rate.
 - **r^***: Neutral real equilibrium interest rate ("r-star", the real rate consistent with full employment and stable 2% inflation; typically estimated between $0.5\%$ and $1.5\%$).
-- **\pi_t**: Current trailing inflation rate (e.g., year-over-year Core PCE).
+- **$\pi_t$**: Current trailing inflation rate (e.g., year-over-year Core PCE).
 - **\pi^***: Central bank target inflation rate ($2.0\%$).
-- **y_t - \bar{y}_t**: Output gap (percentage difference between actual real GDP $y_t$ and potential GDP $\bar{y}_t$).
-- **\alpha_\pi**: Policy weight on the inflation gap (standard Taylor specification $= 0.50$).
-- **\alpha_y**: Policy weight on the output gap (standard Taylor specification $= 0.50$; Taylor 1999 specification $= 1.00$).
-- **\rho**: Policy inertia / interest rate smoothing parameter (typically $0.70 - 0.85$).
-- **r_t**: Real policy interest rate.
+- **$y_t - \bar{y}_t$**: Output gap (percentage difference between actual real GDP $y_t$ and potential GDP $\bar{y}_t$).
+- **$\alpha_\pi$**: Policy weight on the inflation gap (standard Taylor specification $= 0.50$).
+- **$\alpha_y$**: Policy weight on the output gap (standard Taylor specification $= 0.50$; Taylor 1999 specification $= 1.00$).
+- **$\rho$**: Policy inertia / interest rate smoothing parameter (typically $0.70 - 0.85$).
+- **$r_t$**: Real policy interest rate.
 
 ## Worked Example
 Evaluate the prescribed Federal Funds Rate under the classical Taylor Rule during an economic overheating cycle:

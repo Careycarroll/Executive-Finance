@@ -16,20 +16,20 @@ Treasury teams manage interest rate risk using three primary tools:
 - **Eurodollar / SOFR Futures:** Adjusting portfolio duration dynamically using exchange-traded interest rate contracts.
 
 ## Formula
-\Delta \text{EVE} \approx -\left[ D_A - \left(\frac{L}{A}\right) \cdot D_L \right] \cdot A \cdot \Delta y = -DG \cdot A \cdot \Delta y
+$$\Delta \text{EVE} \approx -\left[ D_A - \left(\frac{L}{A}\right) \cdot D_L \right] \cdot A \cdot \Delta y = -DG \cdot A \cdot \Delta y$$
 
 $$\text{Number of Swap Contracts to Immunize: } N^* = \frac{DG \cdot A}{D_{\text{swap}} \cdot V_{\text{swap}}}$$
 
 $$\text{Annual Net Interest Income Impact: } \Delta \text{NII} = \text{GAP} \cdot \Delta y$$
 
 ## Variable Glossary
-- **\Delta \text{EVE}**: Change in Economic Value of Equity (market value of net worth).
-- **DG**: Duration Gap ($D_A - \frac{L}{A} D_L$).
-- **D_A / D_L**: Modified duration of total assets and total liabilities.
+- **$\Delta \text{EVE}$**: Change in Economic Value of Equity (market value of net worth).
+- **$DG$**: Duration Gap ($D_A - \frac{L}{A} D_L$).
+- **$D_A / D_L$**: Modified duration of total assets and total liabilities.
 - **A / L**: Market value of total assets and total liabilities.
-- **\Delta y**: Parallel interest rate shift across the yield curve.
-- **\text{NII}**: Net Interest Income ($\text{Interest Revenues} - \text{Interest Expenses}$).
-- **\text{GAP}**: Dollar volume of assets maturing/repricing within 1 year minus liabilities repricing within 1 year.
+- **$\Delta y$**: Parallel interest rate shift across the yield curve.
+- **$\text{NII}$**: Net Interest Income ($\text{Interest Revenues} - \text{Interest Expenses}$).
+- **$\text{GAP}$**: Dollar volume of assets maturing/repricing within 1 year minus liabilities repricing within 1 year.
 
 ## Worked Example
 A regional financial institution reports the following balance sheet metrics:

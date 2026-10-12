@@ -6,17 +6,17 @@ The risk-return tradeoff is the bedrock principle of modern finance: rational in
 For corporate leaders and portfolio architects, the critical distinction is between **total risk** (standard deviation $\sigma$, encompassing all fluctuations) and **systematic risk** (covariance with the broader macro economy $\beta$). Because diversified market participants can costlessly eliminate idiosyncratic company-specific risks, capital markets only price and reward systematic risk. Projects or portfolios that bear massive idiosyncratic volatility without systematic exposure do not earn an equilibrium risk premium.
 
 ## Formula
-E[R_p] = r_f + \left[ \frac{E[R_m] - r_f}{\sigma_m} \right] \cdot \sigma_p \cdot \rho_{p,m} = r_f + \beta_p \cdot \left( E[R_m] - r_f \right)
+$$E[R_p] = r_f + \left[ \frac{E[R_m] - r_f}{\sigma_m} \right] \cdot \sigma_p \cdot \rho_{p,m} = r_f + \beta_p \cdot \left( E[R_m] - r_f \right)$$
 
 ## Variable Glossary
-- **E[R_p]**: Expected rate of return on the asset or portfolio $p$.
-- **r_f**: Risk-free rate of return (zero covariance with the market portfolio).
-- **E[R_m] - r_f**: Market risk premium (the excess return demanded to hold the aggregate market portfolio).
-- **\sigma_p**: Total volatility (standard deviation of portfolio returns).
-- **\sigma_m**: Volatility of the aggregate market benchmark.
-- **\rho_{p,m}**: Correlation coefficient between asset returns and market returns.
-- **\beta_p**: Beta coefficient of systematic risk, defined as $\frac{\text{Cov}(R_p, R_m)}{\sigma_m^2} = \rho_{p,m} \frac{\sigma_p}{\sigma_m}$.
-- **\text{Sharpe Ratio}**: $\frac{E[R_p] - r_f}{\sigma_p}$, measuring excess return generated per unit of total risk.
+- **$E[R_p]$**: Expected rate of return on the asset or portfolio $p$.
+- **$r_f$**: Risk-free rate of return (zero covariance with the market portfolio).
+- **$E[R_m] - r_f$**: Market risk premium (the excess return demanded to hold the aggregate market portfolio).
+- **$\sigma_p$**: Total volatility (standard deviation of portfolio returns).
+- **$\sigma_m$**: Volatility of the aggregate market benchmark.
+- **$\rho_{p,m}$**: Correlation coefficient between asset returns and market returns.
+- **$\beta_p$**: Beta coefficient of systematic risk, defined as $\frac{\text{Cov}(R_p, R_m)}{\sigma_m^2} = \rho_{p,m} \frac{\sigma_p}{\sigma_m}$.
+- **$\text{Sharpe Ratio}$**: $\frac{E[R_p] - r_f}{\sigma_p}$, measuring excess return generated per unit of total risk.
 
 ## Worked Example
 An executive investment committee is comparing two potential strategic investments:

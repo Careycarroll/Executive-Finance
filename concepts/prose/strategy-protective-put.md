@@ -11,7 +11,7 @@ The strategy acts exactly like a homeowners casualty insurance policy:
 By Put-Call Parity ($S + p = c + K e^{-rT}$), a protective put is **synthetically identical to a Long Call Option plus cash in a risk-free bond**! Both positions deliver an identical asymmetric payoff: bounded downside protection combined with unlimited upside participation.
 
 ## Formula
-\text{Net Payoff at Expiration } (T) = S_T - S_0 - P_0 + \max(0, K - S_T)
+$$\text{Net Payoff at Expiration } (T) = S_T - S_0 - P_0 + \max(0, K - S_T)$$
 
 $$\text{Floor Portfolio Value} = K - P_0 \quad \text{(Guaranteed minimum value at } T\text{)}$$
 
@@ -20,11 +20,11 @@ $$\text{Max Loss} = (S_0 - K) + P_0 \quad \text{(Occurs if } S_T \le K\text{)}$$
 $$\text{Breakeven Stock Price} = S_0 + P_0$$
 
 ## Variable Glossary
-- **S_0**: Initial purchase price of the underlying stock.
-- **S_T**: Stock price at option expiration.
-- **K**: Strike price of the protective put option ($K \le S_0$).
-- **P_0**: Cash premium paid upfront per share to purchase the put option.
-- **\text{Breakeven}**: Stock price needed at expiration to recover the initial stock cost plus the insurance premium paid.
+- **$S_0$**: Initial purchase price of the underlying stock.
+- **$S_T$**: Stock price at option expiration.
+- **$K$**: Strike price of the protective put option ($K \le S_0$).
+- **$P_0$**: Cash premium paid upfront per share to purchase the put option.
+- **$\text{Breakeven}$**: Stock price needed at expiration to recover the initial stock cost plus the insurance premium paid.
 
 ## Notes for Future-Me
 Beware of **"Continuous Insurance Bleed"**: 

@@ -13,20 +13,20 @@ In their seminal behavioral economics framework, Daniel Kahneman and Amos Tversk
 4. **Non-Linear Probability Weighting:** People systematically **overweight low-probability extreme tail events** (explaining the purchase of lottery tickets and overpriced disaster insurance) and **underweight moderate-to-high probabilities** (discounting likely execution risks).
 
 ## Formula
-v(x) = \begin{cases} x^\alpha & \text{if } x \ge 0 \quad (\text{Domain of Gains}) \\ -\lambda (-x)^\beta & \text{if } x < 0 \quad (\text{Domain of Losses}) \end{cases}
+$$v(x) = \begin{cases} x^\alpha & \text{if } x \ge 0 \quad (\text{Domain of Gains}) \\ -\lambda (-x)^\beta & \text{if } x < 0 \quad (\text{Domain of Losses}) \end{cases}$$
 
 $$\text{Cumulative Prospect Value: } V = \sum_{i=1}^n \pi(p_i) \cdot v(x_i)$$
 
 $$\text{Tversky-Kahneman Probability Weighting: } w(p) = \frac{p^\gamma}{\left( p^\gamma + (1 - p)^\gamma \right)^{1/\gamma}}$$
 
 ## Variable Glossary
-- **x**: Outcome payoff relative to the psychological reference point ($x = W - R$).
-- **v(x)**: Subjective psychological value assigned to gain or loss $x$.
-- **\lambda**: Loss aversion coefficient (empirically estimated at $\approx 2.25$).
-- **\alpha, \beta**: Diminishing sensitivity curvature parameters (empirically estimated at $\approx 0.88$, creating concavity for gains and convexity for losses).
-- **p**: Objective probability of an outcome occurring.
-- **w(p) / \pi(p)**: Decision weight assigned to probability $p$.
-- **\gamma**: Probability distortion parameter (empirically $\approx 0.61$ for gains, $\approx 0.69$ for losses).
+- **$x$**: Outcome payoff relative to the psychological reference point ($x = W - R$).
+- **$v(x)$**: Subjective psychological value assigned to gain or loss $x$.
+- **$\lambda$**: Loss aversion coefficient (empirically estimated at $\approx 2.25$).
+- **$\alpha, \beta$**: Diminishing sensitivity curvature parameters (empirically estimated at $\approx 0.88$, creating concavity for gains and convexity for losses).
+- **$p$**: Objective probability of an outcome occurring.
+- **$w(p) / \pi(p)$**: Decision weight assigned to probability $p$.
+- **$\gamma$**: Probability distortion parameter (empirically $\approx 0.61$ for gains, $\approx 0.69$ for losses).
 
 ## Worked Example
 An executive vice president oversees a troubled strategic software division that has fallen behind schedule and faces an impending $\$1,000,000$ write-down:

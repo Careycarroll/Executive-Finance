@@ -13,20 +13,20 @@ In quantitative corporate finance and derivatives pricing, Monte Carlo simulatio
 Under **Geometric Brownian Motion (GBM)**, asset price paths are modeled continuously with a deterministic drift $\mu$ and stochastic random walk $\sigma \sqrt{\Delta t} \epsilon$.
 
 ## Formula
-S_{t+\Delta t} = S_t \cdot \exp\left[ \left(\mu - \frac{\sigma^2}{2}\right) \Delta t + \sigma \sqrt{\Delta t} \cdot \epsilon \right], \quad \epsilon \sim \mathcal{N}(0, 1)
+$$S_{t+\Delta t} = S_t \cdot \exp\left[ \left(\mu - \frac{\sigma^2}{2}\right) \Delta t + \sigma \sqrt{\Delta t} \cdot \epsilon \right], \quad \epsilon \sim \mathcal{N}(0, 1)$$
 
 $$\text{Simulation Standard Error: } \text{SE} = \frac{\sigma_{\text{sim}}}{\sqrt{M}}$$
 
 $$\text{Antithetic Variates (Variance Reduction): } \hat{f} = \frac{f(\epsilon) + f(-\epsilon)}{2}$$
 
 ## Variable Glossary
-- **S_t**: Asset price at time step $t$.
-- **\mu**: Expected annual drift rate (under risk-neutral pricing, $\mu = r - q$).
-- **\sigma**: Annualized volatility of returns.
-- **\Delta t**: Discrete time increment ($T / N$).
-- **\epsilon**: Standard normally distributed random variable with mean $0$ and variance $1$.
-- **M**: Number of independent simulated paths.
-- **\text{SE}**: Standard error of the simulation estimate, decaying at rate $1 / \sqrt{M}$.
+- **$S_t$**: Asset price at time step $t$.
+- **$\mu$**: Expected annual drift rate (under risk-neutral pricing, $\mu = r - q$).
+- **$\sigma$**: Annualized volatility of returns.
+- **$\Delta t$**: Discrete time increment ($T / N$).
+- **$\epsilon$**: Standard normally distributed random variable with mean $0$ and variance $1$.
+- **$M$**: Number of independent simulated paths.
+- **$\text{SE}$**: Standard error of the simulation estimate, decaying at rate $1 / \sqrt{M}$.
 
 ## Notes for Future-Me
 Beware of **"Garbage In, Gaussian Out"**: 

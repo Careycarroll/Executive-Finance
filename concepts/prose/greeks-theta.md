@@ -13,21 +13,21 @@ $$\Theta + \frac{1}{2} \sigma^2 S^2 \Gamma + r S \Delta = r V$$
 To earn positive Theta (collecting daily time decay income by selling options), you MUST accept negative Gamma (catastrophic tail risk if the stock makes an explosive move). Conversely, to own positive Gamma (long convexity), you MUST pay Theta rent every single day.
 
 ## Formula
-\Theta_{\text{call}} = -\frac{S \sigma e^{-q T} N'(d_1)}{2 \sqrt{T}} - r K e^{-r T} N(d_2) + q S e^{-q T} N(d_1)
+$$\Theta_{\text{call}} = -\frac{S \sigma e^{-q T} N'(d_1)}{2 \sqrt{T}} - r K e^{-r T} N(d_2) + q S e^{-q T} N(d_1)$$
 
 $$\Theta_{\text{put}} = -\frac{S \sigma e^{-q T} N'(d_1)}{2 \sqrt{T}} + r K e^{-r T} N(-d_2) - q S e^{-q T} N(-d_1)$$
 
 $$\text{1-Day Dollar Theta} \approx \frac{\Theta_{\text{annual}}}{365}$$
 
 ## Variable Glossary
-- **\Theta**: Theta decay per year (typically divided by 252 or 365 to express decay per calendar day).
-- **S**: Current spot price.
-- **K**: Strike price.
-- **\sigma**: Annualized implied volatility.
-- **T**: Time to expiration in years.
-- **r**: Risk-free interest rate.
-- **q**: Dividend yield.
-- **N'(d_1)**: Standard normal probability density function.
+- **$\Theta$**: Theta decay per year (typically divided by 252 or 365 to express decay per calendar day).
+- **$S$**: Current spot price.
+- **$K$**: Strike price.
+- **$\sigma$**: Annualized implied volatility.
+- **$T$**: Time to expiration in years.
+- **$r$**: Risk-free interest rate.
+- **$q$**: Dividend yield.
+- **$N'(d_1)$**: Standard normal probability density function.
 
 ## Notes for Future-Me
 Time decay is non-linear! For at-the-money options, Theta decays at a rate proportional to $1 / \sqrt{T}$. This means decay is slow and gentle when the option has 9 months remaining, but accelerates like an avalanche during the final **30 to 45 days** before expiration. 

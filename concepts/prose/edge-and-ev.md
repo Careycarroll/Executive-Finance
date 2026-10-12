@@ -16,19 +16,19 @@ The central axiom of executive risk-taking is the **Separation of Outcome from P
 Novice leaders judge decisions solely by their retrospective outcomes ("We made money, so it was a great call!"). Elite quantitative executives judge decisions exclusively by whether the underlying **process possessed mathematical positive expected value** at the moment the decision was made.
 
 ## Formula
-\mathbb{E}[X] = \sum_{i=1}^n p_i \cdot x_i = (p_{\text{win}} \cdot \text{Win Amount}) - (p_{\text{loss}} \cdot \text{Loss Amount})
+$$\mathbb{E}[X] = \sum_{i=1}^n p_i \cdot x_i = (p_{\text{win}} \cdot \text{Win Amount}) - (p_{\text{loss}} \cdot \text{Loss Amount})$$
 
 $$\text{Trade Edge (\%)} = \frac{\mathbb{E}[\text{Payoff}]}{\text{Risk}} = p \cdot b - (1 - p)$$
 
 $$\text{Post-Friction Edge} = \text{Gross EV} - \text{Commission} - \text{Bid-Ask Slippage} - \text{Borrow Cost}$$
 
 ## Variable Glossary
-- **\mathbb{E}[X]**: Expected Value in currency units.
-- **p_i**: Probability of outcome $i$, where $\sum p_i = 1.0$.
-- **x_i**: Net payoff (profit or loss) associated with outcome $i$.
-- **p_{\text{win}}**: Probability of a profitable trade or project outcome.
-- **p_{\text{loss}}**: Probability of an unprofitable outcome ($1 - p_{\text{win}}$).
-- **b**: Profit-to-loss payoff ratio ($\text{Win Amount} / \text{Loss Amount}$).
+- **$\mathbb{E}[X]$**: Expected Value in currency units.
+- **$p_i$**: Probability of outcome $i$, where $\sum p_i = 1.0$.
+- **$x_i$**: Net payoff (profit or loss) associated with outcome $i$.
+- **$p_{\text{win}}$**: Probability of a profitable trade or project outcome.
+- **$p_{\text{loss}}$**: Probability of an unprofitable outcome ($1 - p_{\text{win}}$).
+- **$b$**: Profit-to-loss payoff ratio ($\text{Win Amount} / \text{Loss Amount}$).
 
 ## Worked Example
 A corporate venture capital unit is deciding whether to exercise an option to acquire a biotech licensing patent for $\$5{,}000{,}000$:
@@ -41,7 +41,7 @@ $$\mathbb{E}[\text{NPV}] = (0.35 \times \$20{,}000{,}000) + (0.25 \times \$1{,}0
 $$\mathbb{E}[\text{NPV}] = \$7{,}000{,}000 + \$250{,}000 - \$2{,}000{,}000 = +\$5{,}250{,}000$$
 
 **Decision Analysis:**
-- The venture possesses an outstanding positive expected value of **$+\$5,250,000** ($+105\%$ expected ROI on the $\$5\text{M}$ outlay).
+- The venture possesses an outstanding positive expected value of **$+\$5{,}250{,}000$** ($+105\%$ expected ROI on the $\$5\text{M}$ outlay).
 - **Executive Imperative:** Management should unequivocally fund this patent, despite knowing that there is a **$40\%$ probability of losing every penny** on this specific trial. If the enterprise executes 20 such uncorrelated patents across its pipeline, the portfolio will compound massively while absorbing individual trial failures.
 
 ## When to Use

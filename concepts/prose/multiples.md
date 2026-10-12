@@ -14,7 +14,7 @@ To eliminate this upward distortion, valuation rigor requires using the **harmon
 $$\text{Harmonic Mean} = \frac{n}{\sum_{i=1}^n \frac{1}{x_i}}$$
 
 ## Formula
-\text{EV / EBITDA} = \frac{\text{Market Value of Equity} + \text{Total Debt} - \text{Cash}}{\text{EBITDA}}
+$$\text{EV / EBITDA} = \frac{\text{Market Value of Equity} + \text{Total Debt} - \text{Cash}}{\text{EBITDA}}$$
 
 $$\text{P / E} = \frac{\text{Price per Share}}{\text{Earnings per Share (EPS)}} = \frac{\text{Market Capitalization}}{\text{Net Income}}$$
 
@@ -23,12 +23,12 @@ $$\text{Harmonic Mean Multiple} = \frac{n}{\sum_{i=1}^n \left(\frac{1}{\text{Mul
 $$\text{Implied Enterprise Value} = \text{Target Operating Metric} \times \text{Peer Harmonic Multiple}$$
 
 ## Variable Glossary
-- **\text{EV}**: Enterprise Value ($= \text{Market Equity} + \text{Debt} + \text{Preferred} + \text{Minority Interest} - \text{Cash}$).
-- **\text{EBITDA}**: Earnings Before Interest, Taxes, Depreciation, and Amortization.
-- **\text{P / E}**: Price-to-Earnings ratio.
-- **\text{P / B}**: Price-to-Book ratio ($\text{Market Equity} / \text{Common Shareholders' Equity}$).
-- **n**: Number of comparable companies in the peer benchmark set.
-- **\text{Multiple}_i**: Valuation multiple observed for peer company $i$.
+- **$\text{EV}$**: Enterprise Value ($= \text{Market Equity} + \text{Debt} + \text{Preferred} + \text{Minority Interest} - \text{Cash}$).
+- **$\text{EBITDA}$**: Earnings Before Interest, Taxes, Depreciation, and Amortization.
+- **$\text{P / E}$**: Price-to-Earnings ratio.
+- **$\text{P / B}$**: Price-to-Book ratio ($\text{Market Equity} / \text{Common Shareholders' Equity}$).
+- **$n$**: Number of comparable companies in the peer benchmark set.
+- **$\text{Multiple}_i$**: Valuation multiple observed for peer company $i$.
 
 ## Notes for Future-Me
 Multiples are shorthand heuristics, not substitutes for fundamental analysis. Every multiple is an implicit DCF model in disguise:

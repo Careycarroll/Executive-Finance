@@ -4,14 +4,14 @@
 A dollar received today is worth more than a dollar received tomorrow because a dollar today can be invested to earn a positive return, and because inflation erodes future purchasing power. Every valuation model across corporate finance and investments is built on this foundation: converting cash flows across disparate points in time into a common denominator today.
 
 ## Formula
-PV = \sum_{t=1}^{T} \frac{CF_t}{(1 + r)^t}
+$$PV = \sum_{t=1}^{T} \frac{CF_t}{(1 + r)^t}$$
 
 ## Variable Glossary
-- **PV**: Present Value — the current worth of a future stream of cash flows discounted at rate $r$.
-- **CF_t**: Cash Flow at time $t$ — the nominal dollar amount expected at period $t$.
-- **r**: Discount Rate / Opportunity Cost of Capital — the expected rate of return for an investment of equivalent risk.
-- **t**: Period index ($1, 2, \dots, T$).
-- **T**: Terminal period of the horizon.
+- **$PV$**: Present Value — the current worth of a future stream of cash flows discounted at rate $r$.
+- **$CF_t$**: Cash Flow at time $t$ — the nominal dollar amount expected at period $t$.
+- **$r$**: Discount Rate / Opportunity Cost of Capital — the expected rate of return for an investment of equivalent risk.
+- **$t$**: Period index ($1, 2, \dots, T$).
+- **$T$**: Terminal period of the horizon.
 
 ## Worked Example
 Suppose an investment promises to pay \$1,000 in 1 year, \$2,000 in 2 years, and \$3,000 in 3 years. If the relevant opportunity cost of capital is 8% ($r = 0.08$):

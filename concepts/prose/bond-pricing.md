@@ -13,15 +13,15 @@ The fundamental rule of bond mechanics is the **inverse relationship between int
 When market interest rates rise, existing bonds with lower coupons become less attractive, forcing their market prices down until their effective yield equals current market rates.
 
 ## Formula
-P = \sum_{t=1}^{2T} \frac{C / 2}{\left(1 + \frac{y}{2}\right)^t} + \frac{M}{\left(1 + \frac{y}{2}\right)^{2T}} = \frac{C}{y} \left[ 1 - \frac{1}{\left(1 + \frac{y}{2}\right)^{2T}} \right] + \frac{M}{\left(1 + \frac{y}{2}\right)^{2T}}
+$$P = \sum_{t=1}^{2T} \frac{C / 2}{\left(1 + \frac{y}{2}\right)^t} + \frac{M}{\left(1 + \frac{y}{2}\right)^{2T}} = \frac{C}{y} \left[ 1 - \frac{1}{\left(1 + \frac{y}{2}\right)^{2T}} \right] + \frac{M}{\left(1 + \frac{y}{2}\right)^{2T}}$$
 
 ## Variable Glossary
-- **P**: Current clean market price of the bond.
-- **C**: Annual dollar coupon payment ($= \text{Coupon Rate} \times M$).
-- **M**: Par / Face value of the bond (typically $\$1{,}000$ in US markets).
-- **y**: Annualized Yield to Maturity (nominal annual discount rate compounded semi-annually).
-- **T**: Number of years remaining until maturity.
-- **2T**: Total number of semi-annual coupon periods remaining.
+- **$P$**: Current clean market price of the bond.
+- **$C$**: Annual dollar coupon payment ($= \text{Coupon Rate} \times M$).
+- **$M$**: Par / Face value of the bond (typically $\$1{,}000$ in US markets).
+- **$y$**: Annualized Yield to Maturity (nominal annual discount rate compounded semi-annually).
+- **$T$**: Number of years remaining until maturity.
+- **$2T$**: Total number of semi-annual coupon periods remaining.
 
 ## Worked Example
 An investor is pricing a 10-year senior corporate bond with the following specifications:

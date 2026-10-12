@@ -4,15 +4,15 @@
 Because interest expense on debt is tax-deductible for corporations, issuing debt creates an interest tax shield that reduces the firm's total tax bill. This tax subsidy reduces the effective after-tax cost of debt capital below the nominal borrowing coupon rate, creating the classical Modigliani-Miller Proposition II tax advantage of leverage.
 
 ## Formula
-r_d^{\text{after-tax}} = r_d \times (1 - t_c)
+$$r_d^{\text{after-tax}} = r_d \times (1 - t_c)
 \quad \text{and} \quad
-\text{Annual Tax Shield} = \text{Interest Expense} \times t_c = (D \times r_d) \times t_c
+\text{Annual Tax Shield} = \text{Interest Expense} \times t_c = (D \times r_d) \times t_c$$
 
 ## Variable Glossary
-- **r_d**: Pre-tax nominal borrowing rate / yield to maturity on debt.
-- **t_c**: Marginal corporate income tax rate.
-- **r_d^{\text{after-tax}}**: Effective after-tax borrowing cost entering the WACC calculation.
-- **D**: Nominal market value of outstanding debt.
+- **$r_d$**: Pre-tax nominal borrowing rate / yield to maturity on debt.
+- **$t_c$**: Marginal corporate income tax rate.
+- **$r_d^{\text{after-tax}}$**: Effective after-tax borrowing cost entering the WACC calculation.
+- **$D$**: Nominal market value of outstanding debt.
 
 ## Worked Example
 A corporation borrows \$10,000,000 at an 8.0% annual interest rate ($r_d = 0.08$) and faces a combined corporate marginal tax rate of 25% ($t_c = 0.25$):

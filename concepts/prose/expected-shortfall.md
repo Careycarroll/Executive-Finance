@@ -11,21 +11,21 @@ $$\text{Expected Shortfall} = \text{The expected (average) loss, given that the 
 Expected Shortfall answers the critical boardroom question: *"When disaster strikes and we breach our risk threshold, what is our average expected loss?"* In Basel III/IV international banking regulations, global regulators officially replaced VaR with Expected Shortfall as the primary metric for market risk capital requirements.
 
 ## Formula
-\text{ES}_\alpha = \mathbb{E}\left[ L \mid L \ge \text{VaR}_\alpha \right] = \frac{1}{1 - \alpha} \int_\alpha^1 \text{VaR}_u \, du
+$$\text{ES}_\alpha = \mathbb{E}\left[ L \mid L \ge \text{VaR}_\alpha \right] = \frac{1}{1 - \alpha} \int_\alpha^1 \text{VaR}_u \, du$$
 
 $$\text{For a Normal Distribution } L \sim \mathcal{N}(\mu, \sigma): \quad \text{ES}_\alpha = \mu + \sigma \cdot \frac{\phi(z_\alpha)}{1 - \alpha}$$
 
 $$\text{Subadditivity (Coherent Risk Measure): } \text{ES}(A + B) \le \text{ES}(A) + \text{ES}(B)$$
 
 ## Variable Glossary
-- **\text{ES}_\alpha / \text{CVaR}**: Expected Shortfall at confidence level $\alpha$ (e.g., $97.5\%$ or $99\%$).
-- **\text{VaR}_\alpha**: Value at Risk at confidence level $\alpha$.
-- **L**: Dollar loss of the portfolio.
-- **\alpha**: Confidence level (e.g., $0.975$ or $0.99$).
-- **\mu**: Mean portfolio return or expected profit.
-- **\sigma**: Standard deviation (volatility) of portfolio returns.
-- **z_\alpha**: Standard normal critical cutoff score ($z_{0.975} \approx 1.96$, $z_{0.99} \approx 2.326$).
-- **\phi(\cdot)**: Standard normal probability density function.
+- **$\text{ES}_\alpha / \text{CVaR}$**: Expected Shortfall at confidence level $\alpha$ (e.g., $97.5\%$ or $99\%$).
+- **$\text{VaR}_\alpha$**: Value at Risk at confidence level $\alpha$.
+- **$L$**: Dollar loss of the portfolio.
+- **$\alpha$**: Confidence level (e.g., $0.975$ or $0.99$).
+- **$\mu$**: Mean portfolio return or expected profit.
+- **$\sigma$**: Standard deviation (volatility) of portfolio returns.
+- **$z_\alpha$**: Standard normal critical cutoff score ($z_{0.975} \approx 1.96$, $z_{0.99} \approx 2.326$).
+- **$\phi(\cdot)$**: Standard normal probability density function.
 
 ## Worked Example
 A corporate treasury manages a $\$50{,}000{,}000$ liquid investment portfolio with daily return volatility $\sigma = 1.2\%$ ($\$600{,}000$) and expected daily drift $\mu \approx \$0$.

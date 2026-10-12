@@ -12,18 +12,18 @@ This relationship also demonstrates the two fundamental components of an equity 
 $$r_e = \frac{D_1}{P_0} + g$$
 
 ## Formula
-P_0 = \frac{D_1}{r_e - g} = \frac{D_0 \cdot (1 + g)}{r_e - g}
+$$P_0 = \frac{D_1}{r_e - g} = \frac{D_0 \cdot (1 + g)}{r_e - g}$$
 
 $$g = b \cdot \text{ROE} = (1 - \text{Payout Ratio}) \cdot \text{ROE}$$
 
 ## Variable Glossary
-- **P_0**: Intrinsic value per common share today.
-- **D_0**: Dividend per share paid in the most recent trailing 12 months.
-- **D_1**: Expected dividend per share over the next forward 12-month period ($= D_0 \times (1 + g)$).
-- **r_e**: Required rate of return on common equity (cost of equity from CAPM).
-- **g**: Sustainable long-term dividend growth rate.
-- **b**: Earnings retention ratio ($1 - \frac{\text{Dividends}}{\text{Net Income}}$).
-- **\text{ROE}**: Return on Equity on reinvested retained earnings.
+- **$P_0$**: Intrinsic value per common share today.
+- **$D_0$**: Dividend per share paid in the most recent trailing 12 months.
+- **$D_1$**: Expected dividend per share over the next forward 12-month period ($= D_0 \times (1 + g)$).
+- **$r_e$**: Required rate of return on common equity (cost of equity from CAPM).
+- **$g$**: Sustainable long-term dividend growth rate.
+- **$b$**: Earnings retention ratio ($1 - \frac{\text{Dividends}}{\text{Net Income}}$).
+- **$\text{ROE}$**: Return on Equity on reinvested retained earnings.
 
 ## Worked Example
 A mature regulated electric utility currently pays an annual dividend of $\$3.20$ per share ($D_0 = \$3.20$).

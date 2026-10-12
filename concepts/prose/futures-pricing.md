@@ -15,21 +15,21 @@ If the futures price drifts above this no-arbitrage boundary, traders execute **
 For physical commodities (oil, wheat, copper), commercial inventory holders receive an implicit benefit from holding physical stock during supply disruptions called the **Convenience Yield ($y$)**. When convenience yield is high, the market shifts into **Backwardation** ($F_0 < S_0$). When storage costs dominate, the market enters **Contango** ($F_0 > S_0$).
 
 ## Formula
-F_0 = S_0 \cdot e^{(r - q) T} \quad \text{(Financial Assets with Dividend Yield } q\text{)}
+$$F_0 = S_0 \cdot e^{(r - q) T} \quad \text{(Financial Assets with Dividend Yield } q\text{)}$$
 
 $$F_0 = S_0 \cdot e^{(r + u - y) T} \quad \text{(Commodities with Storage Cost } u \text{ and Convenience Yield } y\text{)}$$
 
 $$\text{Basis} = S_t - F_t$$
 
 ## Variable Glossary
-- **F_0**: Theoretical equilibrium forward/futures price today.
-- **S_0**: Spot market price of the underlying asset today.
-- **r**: Continuously compounded risk-free financing interest rate.
-- **q**: Continuous dividend yield (or foreign risk-free interest rate for currencies).
-- **u**: Annualized storage and insurance cost as a percentage of spot price.
-- **y**: Annualized convenience yield (benefit of holding physical inventory).
-- **T**: Time to contract maturity in years.
-- **\text{Basis}**: Spot price minus futures price ($S_t - F_t$). At maturity, basis must converge to zero.
+- **$F_0$**: Theoretical equilibrium forward/futures price today.
+- **$S_0$**: Spot market price of the underlying asset today.
+- **$r$**: Continuously compounded risk-free financing interest rate.
+- **$q$**: Continuous dividend yield (or foreign risk-free interest rate for currencies).
+- **$u$**: Annualized storage and insurance cost as a percentage of spot price.
+- **$y$**: Annualized convenience yield (benefit of holding physical inventory).
+- **$T$**: Time to contract maturity in years.
+- **$\text{Basis}$**: Spot price minus futures price ($S_t - F_t$). At maturity, basis must converge to zero.
 
 ## Worked Example
 A corporate treasurer is evaluating an S&P 500 equity index futures hedge with a 6-month maturity ($T = 0.50$):

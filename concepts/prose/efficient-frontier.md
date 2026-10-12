@@ -8,21 +8,21 @@ Portfolios located below the frontier are economically sub-optimal because an in
 When a risk-free asset is introduced, a straight line tangent to the Efficient Frontier—the **Capital Allocation Line (CAL)**—dominates the curved frontier. The single point of tangency identifies the **Optimal Risky Portfolio (Tangency Portfolio)**, which maximizes the Sharpe Ratio.
 
 ## Formula
-\min_{\mathbf{w}} \frac{1}{2} \mathbf{w}^T \mathbf{\Sigma} \mathbf{w} \quad \text{subject to} \quad \mathbf{w}^T \mathbf{E}[R] = \mu_p, \quad \mathbf{w}^T \mathbf{1} = 1
+$$\min_{\mathbf{w}} \frac{1}{2} \mathbf{w}^T \mathbf{\Sigma} \mathbf{w} \quad \text{subject to} \quad \mathbf{w}^T \mathbf{E}[R] = \mu_p, \quad \mathbf{w}^T \mathbf{1} = 1$$
 
 $$\text{For a 2-Asset Portfolio: } \sigma_p = \sqrt{w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2 w_1 w_2 \sigma_1 \sigma_2 \rho_{1,2}}$$
 
 $$\text{Tangency Portfolio: } \max_{\mathbf{w}} \text{Sharpe} = \frac{\mathbf{w}^T \mathbf{E}[R] - r_f}{\sqrt{\mathbf{w}^T \mathbf{\Sigma} \mathbf{w}}}$$
 
 ## Variable Glossary
-- **\mathbf{w}**: Vector of portfolio weights assigned to each asset ($w_1, w_2, \dots, w_N$), summing to $1.0$.
-- **\mathbf{\Sigma}**: Covariance matrix of asset returns.
-- **\mathbf{E}[R]**: Vector of expected asset returns.
-- **\mu_p**: Target expected portfolio return.
-- **\sigma_p**: Standard deviation of the portfolio (volatility).
-- **\rho_{1,2}**: Correlation coefficient between asset 1 and asset 2.
-- **r_f**: Risk-free rate of return.
-- **\text{Sharpe}**: Reward-to-volatility ratio at the tangency point.
+- **$\mathbf{w}$**: Vector of portfolio weights assigned to each asset ($w_1, w_2, \dots, w_N$), summing to $1.0$.
+- **$\mathbf{\Sigma}$**: Covariance matrix of asset returns.
+- **$\mathbf{E}[R]$**: Vector of expected asset returns.
+- **$\mu_p$**: Target expected portfolio return.
+- **$\sigma_p$**: Standard deviation of the portfolio (volatility).
+- **$\rho_{1,2}$**: Correlation coefficient between asset 1 and asset 2.
+- **$r_f$**: Risk-free rate of return.
+- **$\text{Sharpe}$**: Reward-to-volatility ratio at the tangency point.
 
 ## Notes for Future-Me
 Markowitz mean-variance optimization has famously been called an "error maximizer" by Richard Michaud. Because the algorithm takes expected returns and covariance estimates literally, it aggressively over-allocates capital to assets with the highest historical return estimates and lowest estimated correlations—which are precisely the assets most plagued by historical estimation error!

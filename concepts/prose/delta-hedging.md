@@ -14,20 +14,20 @@ $$\text{Expected P\&L} \approx \frac{1}{2} \cdot S^2 \cdot \Gamma \cdot (\sigma_
 If you sell an option at $30\%$ IV and dynamically delta-hedge it while the stock realizes only $20\%$ volatility, you lock in pure mathematical profit regardless of which direction the stock moves!
 
 ## Formula
-\Pi_{\text{hedged}} = V - \Delta \cdot S \implies \Delta_{\Pi} = \frac{\partial V}{\partial S} - \Delta = 0
+$$\Pi_{\text{hedged}} = V - \Delta \cdot S \implies \Delta_{\Pi} = \frac{\partial V}{\partial S} - \Delta = 0$$
 
 $$\text{1-Step Discrete Hedging Error: } \Delta \Pi \approx \frac{1}{2} S^2 \Gamma \left[ \left(\frac{\Delta S}{S}\right)^2 - \sigma_{\text{IV}}^2 \Delta t \right]$$
 
 $$\text{Leland Adjusted Volatility (Transaction Costs): } \sigma_{\text{adj}}^2 = \sigma^2 \left( 1 \pm k \sqrt{\frac{2}{\pi \sigma^2 \Delta t}} \right)$$
 
 ## Variable Glossary
-- **\Pi_{\text{hedged}}**: Value of the delta-neutral portfolio (Option $+$ Short Stock).
-- **\Delta**: Delta hedge ratio ($N(d_1)$).
-- **\Gamma**: Gamma curvature ($\partial \Delta / \partial S$).
-- **\sigma_{\text{IV}}**: Implied volatility at which option was traded.
-- **\sigma_{\text{realized}}**: Realized volatility experienced during the hedging period.
-- **k**: Round-trip transaction cost percentage (bid-ask spread fraction).
-- **\Delta t**: Rebalancing frequency interval (e.g., $1/252$ for daily rebalancing).
+- **$\Pi_{\text{hedged}}$**: Value of the delta-neutral portfolio (Option $+$ Short Stock).
+- **$\Delta$**: Delta hedge ratio ($N(d_1)$).
+- **$\Gamma$**: Gamma curvature ($\partial \Delta / \partial S$).
+- **$\sigma_{\text{IV}}$**: Implied volatility at which option was traded.
+- **$\sigma_{\text{realized}}$**: Realized volatility experienced during the hedging period.
+- **$k$**: Round-trip transaction cost percentage (bid-ask spread fraction).
+- **$\Delta t$**: Rebalancing frequency interval (e.g., $1/252$ for daily rebalancing).
 
 ## Worked Example
 An options market-making desk sells 100 contracts of ATM 6-month Call options ($10{,}000$ shares notional) on a stock trading at $S = \$100.00$:

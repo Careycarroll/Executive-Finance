@@ -12,19 +12,19 @@ If interest rates drop after you purchase a 10-year bond, your interim coupons a
 To avoid the single-rate distortion of YTM, institutional quantitative finance uses **Spot Rates ($r_t$)**—the yields on zero-coupon bonds of tenor $t$—which price cash flows period-by-period without reinvestment risk.
 
 ## Formula
-P = \sum_{t=1}^{2T} \frac{C/2}{\left(1 + \frac{\text{YTM}}{2}\right)^t} + \frac{M}{\left(1 + \frac{\text{YTM}}{2}\right)^{2T}}
+$$P = \sum_{t=1}^{2T} \frac{C/2}{\left(1 + \frac{\text{YTM}}{2}\right)^t} + \frac{M}{\left(1 + \frac{\text{YTM}}{2}\right)^{2T}}$$
 
 $$\text{Pricing with Spot Yields: } P = \sum_{t=1}^{2T} \frac{C/2}{(1 + r_t/2)^t} + \frac{M}{(1 + r_{2T}/2)^{2T}}$$
 
 $$\text{Current Yield} = \frac{\text{Annual Coupon}}{P}$$
 
 ## Variable Glossary
-- **\text{YTM}**: Yield to Maturity (annualized bond IRR).
-- **P**: Current market price of the bond.
-- **C/2**: Semi-annual dollar coupon payment.
-- **M**: Principal / Par value at maturity.
-- **r_t**: Annualized spot rate for cash flows arriving at period $t$.
-- **T**: Tenor in years remaining.
+- **$\text{YTM}$**: Yield to Maturity (annualized bond IRR).
+- **$P$**: Current market price of the bond.
+- **$C/2$**: Semi-annual dollar coupon payment.
+- **$M$**: Principal / Par value at maturity.
+- **$r_t$**: Annualized spot rate for cash flows arriving at period $t$.
+- **$T$**: Tenor in years remaining.
 
 ## Worked Example
 Consider a 3-year bond with a $\$1{,}000$ face value, paying an annual coupon of $\$80$ ($8.0\%$). The bond currently trades at $\$950.25$.

@@ -11,7 +11,7 @@ International financial economics establishes four interrelated equilibrium cond
 4. **The Fisher Effect & International Fisher Effect (IFE):** Combines Relative PPP with the Fisher relationship ($i = r + \pi$), asserting that nominal interest rate differentials reflect expected long-run inflation differentials.
 
 ## Formula
-\text{Covered Interest Parity (Exact): } \frac{F_0}{S_0} = \frac{1 + r_d \cdot (T/360)}{1 + r_f \cdot (T/360)} \implies F_0 = S_0 \cdot \frac{1 + r_d \cdot (T/360)}{1 + r_f \cdot (T/360)}
+$$\text{Covered Interest Parity (Exact): } \frac{F_0}{S_0} = \frac{1 + r_d \cdot (T/360)}{1 + r_f \cdot (T/360)} \implies F_0 = S_0 \cdot \frac{1 + r_d \cdot (T/360)}{1 + r_f \cdot (T/360)}$$
 
 $$\text{Forward Premium / Discount (Linear): } \frac{F_0 - S_0}{S_0} \approx (r_d - r_f) \cdot \frac{T}{360}$$
 
@@ -20,13 +20,13 @@ $$\text{Relative Purchasing Power Parity: } \frac{\mathbb{E}[S_T] - S_0}{S_0} \a
 $$\text{Uncovered Interest Rate Parity: } \frac{\mathbb{E}[S_T] - S_0}{S_0} = r_d - r_f$$
 
 ## Variable Glossary
-- **S_0**: Spot exchange rate (domestic units per one unit of foreign currency, e.g., USD per EUR).
-- **F_0**: Forward exchange rate for settlement at tenor $T$.
-- **\mathbb{E}[S_T]**: Expected future spot exchange rate at time $T$.
-- **r_d**: Domestic risk-free annualized interest rate (e.g., SOFR / US Treasury rate).
-- **r_f**: Foreign risk-free annualized interest rate (e.g., EURIBOR / German Bund rate).
-- **\pi_d / \pi_f**: Domestic and foreign expected inflation rates.
-- **T**: Tenor of the contract or investment horizon in days (using money market count conventions, e.g., Actual/360).
+- **$S_0$**: Spot exchange rate (domestic units per one unit of foreign currency, e.g., USD per EUR).
+- **$F_0$**: Forward exchange rate for settlement at tenor $T$.
+- **$\mathbb{E}[S_T]$**: Expected future spot exchange rate at time $T$.
+- **$r_d$**: Domestic risk-free annualized interest rate (e.g., SOFR / US Treasury rate).
+- **$r_f$**: Foreign risk-free annualized interest rate (e.g., EURIBOR / German Bund rate).
+- **$\pi_d / \pi_f$**: Domestic and foreign expected inflation rates.
+- **$T$**: Tenor of the contract or investment horizon in days (using money market count conventions, e.g., Actual/360).
 
 ## Worked Example
 A corporate treasurer analyzes a 1-year foreign exchange exposure between the US Dollar (USD, domestic) and the Euro (EUR, foreign):

@@ -79,31 +79,31 @@
 <td><strong>Neutral / Range-Bound</strong></td>
 <td>High IV Rank + Steep Skew</td>
 <td><strong>Short Iron Condor / Strangle</strong></td>
-<td>Harvests Variance Risk Premium ($+\Theta, -\mathcal{V}$) from both tails.</td>
+<td>Harvests Variance Risk Premium (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo><mi mathvariant="normal">Θ</mi><mo separator="true">,</mo><mo>−</mo><mi mathvariant="script">V</mi></mrow><annotation encoding="application/x-tex">+\Theta, -\mathcal{V}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">+</span><span class="mord">Θ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">−</span><span class="mord mathcal" style="margin-right:0.0822em;">V</span></span></span></span>) from both tails.</td>
 </tr>
 <tr>
 <td><strong>Neutral / Volatility Pin</strong></td>
 <td>Moderate IV + Near Expiry</td>
 <td><strong>Long Butterfly Spread</strong></td>
-<td>High $4:1+$ payout ratio with strictly capped risk if market breaks out.</td>
+<td>High <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>:</mo><mn>1</mn><mo>+</mo></mrow><annotation encoding="application/x-tex">4:1+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mord">+</span></span></span></span> payout ratio with strictly capped risk if market breaks out.</td>
 </tr>
 <tr>
 <td><strong>Moderate Bullish</strong></td>
 <td>High Implied Volatility</td>
-<td><strong>Bull Put Credit Spread</strong> or <strong>$1 \times 2$ Put Ratio</strong></td>
+<td><strong>Bull Put Credit Spread</strong> or <strong><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1 \times 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span> Put Ratio</strong></td>
 <td>Sells expensive OTM put skew; profits from stock rising, staying flat, OR vol crushing!</td>
 </tr>
 <tr>
 <td><strong>Aggressive Bullish Breakout</strong></td>
 <td>Low Implied Volatility</td>
 <td><strong>Long Call</strong> or <strong>Call Backspread</strong></td>
-<td>Maximizes positive Gamma ($+\Gamma$) and Long Vega ($+\mathcal{V}$) when options are cheap.</td>
+<td>Maximizes positive Gamma (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo><mi mathvariant="normal">Γ</mi></mrow><annotation encoding="application/x-tex">+\Gamma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord">+</span><span class="mord">Γ</span></span></span></span>) and Long Vega (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo><mi mathvariant="script">V</mi></mrow><annotation encoding="application/x-tex">+\mathcal{V}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord">+</span><span class="mord mathcal" style="margin-right:0.0822em;">V</span></span></span></span>) when options are cheap.</td>
 </tr>
 <tr>
 <td><strong>Event Catalyst (Earnings)</strong></td>
 <td>Extreme Front-Month Backwardation</td>
 <td><strong>Long Calendar Spread</strong> or <strong>Iron Fly</strong></td>
-<td>Sells $100%+$ front-month event IV while hedging tail risk with back-month or wing legs.</td>
+<td>Sells <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mi mathvariant="normal">%</mi><mo>+</mo></mrow><annotation encoding="application/x-tex">100\%+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.0833em;"></span><span class="mord">100%</span><span class="mord">+</span></span></span></span> front-month event IV while hedging tail risk with back-month or wing legs.</td>
 </tr>
 </tbody></table>
 <pre><code>The 4-Gate Quantitative Trade Filtering Funnel
@@ -143,7 +143,7 @@
           </div>
           <div class="misconception-callout__text">
             <ul>
-<li><strong>Misconception 1: &quot;Adding more legs to an option strategy makes it more sophisticated and profitable.&quot;</strong><br><em>Reality:</em> Every additional leg you add to an option structure (e.g., a 4-legged Condor or Double Diagonal) <strong>multiplies your bid-ask slippage and exchange fees by $4\times$</strong> both on entry and exit! If a single-leg or two-leg vertical spread expresses 90% of the same Greek exposure with half the transaction friction, <strong>always choose the simpler structure</strong>.</li>
+<li><strong>Misconception 1: &quot;Adding more legs to an option strategy makes it more sophisticated and profitable.&quot;</strong><br><em>Reality:</em> Every additional leg you add to an option structure (e.g., a 4-legged Condor or Double Diagonal) <strong>multiplies your bid-ask slippage and exchange fees by <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>×</mo></mrow><annotation encoding="application/x-tex">4\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mord">×</span></span></span></span></strong> both on entry and exit! If a single-leg or two-leg vertical spread expresses 90% of the same Greek exposure with half the transaction friction, <strong>always choose the simpler structure</strong>.</li>
 <li><strong>Misconception 2: &quot;High Implied Volatility means you should always sell options.&quot;</strong><br><em>Reality:</em> High Implied Volatility means the market is pricing in a major move. Selling options before a binary biotech FDA ruling or an M&amp;A buyout rumor because &quot;IV is at the 99th percentile&quot; is picking up pennies in front of a steamroller. Only sell high IV when it represents <strong>structural risk-aversion hedging demand</strong> (the Variance Risk Premium), not informed event jump risk!</li>
 </ul>
 

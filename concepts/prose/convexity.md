@@ -13,17 +13,17 @@ Convexity is an asymmetric positive gift to bondholders:
 All else being equal, a bond or portfolio with higher convexity outperforms an otherwise identical portfolio with lower convexity in both rising and falling interest rate regimes! For this reason, positive convexity commands a price premium in the capital markets (investors accept lower baseline yields for higher convexity).
 
 ## Formula
-\text{Convexity} = \frac{1}{P \cdot (1 + y)^2} \sum_{t=1}^T \frac{t(t + 1) \cdot \text{CF}_t}{(1 + y)^t}
+$$\text{Convexity} = \frac{1}{P \cdot (1 + y)^2} \sum_{t=1}^T \frac{t(t + 1) \cdot \text{CF}_t}{(1 + y)^t}$$
 
 $$\frac{\Delta P}{P} \approx -D^* \cdot \Delta y + \frac{1}{2} \cdot \text{Convexity} \cdot (\Delta y)^2$$
 
 ## Variable Glossary
-- **\text{Convexity}**: Measure of the curvature of the bond price-yield function.
+- **$\text{Convexity}$**: Measure of the curvature of the bond price-yield function.
 - **D^***: Modified Duration.
-- **\Delta y**: Change in yield to maturity (in decimal, e.g. $+0.02$ for $+200\text{ bps}$).
-- **\frac{\Delta P}{P}**: Percentage change in bond price.
-- **\text{CF}_t**: Cash flow at period $t$.
-- **P**: Current bond price.
+- **$\Delta y$**: Change in yield to maturity (in decimal, e.g. $+0.02$ for $+200\text{ bps}$).
+- **$\frac{\Delta P}{P}$**: Percentage change in bond price.
+- **$\text{CF}_t$**: Cash flow at period $t$.
+- **$P$**: Current bond price.
 
 ## Worked Example
 A treasury portfolio holds a 20-year bond with the following metrics:

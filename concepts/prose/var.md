@@ -4,15 +4,15 @@
 Value at Risk (VaR) answers a concrete question for risk managers and regulators: *What is the maximum dollar loss expected over a given time horizon at a specified confidence level?* Rather than expressing risk as an abstract standard deviation ($\sigma$), VaR condenses multi-asset portfolio risk into a single currency metric that senior leadership can understand.
 
 ## Formula
-\text{VaR}_{(1-\alpha), T} = \Pi_0 \times \left( - \mu \Delta t + z_{\alpha} \, \sigma \sqrt{\Delta t} \right)
+$$\text{VaR}_{(1-\alpha), T} = \Pi_0 \times \left( - \mu \Delta t + z_{\alpha} \, \sigma \sqrt{\Delta t} \right)$$
 
 ## Variable Glossary
-- **\Pi_0**: Portfolio current market value.
-- **\alpha**: Significance level (e.g., $1\%$, implying $99\%$ confidence).
-- **z_{\alpha}**: Critical value from the standard normal distribution ($z_{0.05} \approx 1.645$, $z_{0.01} \approx 2.326$).
-- **\sigma**: Annualized portfolio volatility.
-- **\Delta t**: Holding period in years ($T$).
-- **\mu**: Expected return (frequently assumed to be zero over daily intervals).
+- **$\Pi_0$**: Portfolio current market value.
+- **$\alpha$**: Significance level (e.g., $1\%$, implying $99\%$ confidence).
+- **$z_{\alpha}$**: Critical value from the standard normal distribution ($z_{0.05} \approx 1.645$, $z_{0.01} \approx 2.326$).
+- **$\sigma$**: Annualized portfolio volatility.
+- **$\Delta t$**: Holding period in years ($T$).
+- **$\mu$**: Expected return (frequently assumed to be zero over daily intervals).
 
 ## Worked Example
 A trading desk holds a \$10,000,000 equity portfolio with annual volatility $\sigma = 20\%$. What is the 1-day 99% VaR assuming 252 trading days per year?

@@ -12,19 +12,19 @@ Credit spreads are quoted in basis points ($\text{bps}$) over the benchmark Trea
 - **High Yield / Speculative / "Junk" (BB+ down to CCC):** Elevated default probability ($2\%-15\%$ annually), wide spreads ($300-800+\text{ bps}$).
 
 ## Formula
-s = y_{\text{corporate}} - y_{\text{treasury}}
+$$s = y_{\text{corporate}} - y_{\text{treasury}}$$
 
 $$s \approx \lambda \cdot (1 - R) = \text{PD} \cdot \text{LGD}$$
 
 $$y_{\text{corporate}} = r_f + \text{Credit Spread} + \text{Liquidity Premium}$$
 
 ## Variable Glossary
-- **s**: Credit spread (in basis points or decimal).
-- **y_{\text{corporate}}**: Yield to maturity on corporate bond.
-- **y_{\text{treasury}} / r_f**: Yield to maturity on benchmark risk-free Treasury of matching maturity.
-- **\lambda / \text{PD}**: Hazard rate / annualized Probability of Default.
-- **R**: Expected Recovery Rate in bankruptcy (percentage of par recovered by creditors; historically $\approx 40\%$ for senior unsecured debt).
-- **\text{LGD}**: Loss Given Default ($= 1 - R$).
+- **$s$**: Credit spread (in basis points or decimal).
+- **$y_{\text{corporate}}$**: Yield to maturity on corporate bond.
+- **$y_{\text{treasury}} / r_f$**: Yield to maturity on benchmark risk-free Treasury of matching maturity.
+- **$\lambda / \text{PD}$**: Hazard rate / annualized Probability of Default.
+- **$R$**: Expected Recovery Rate in bankruptcy (percentage of par recovered by creditors; historically $\approx 40\%$ for senior unsecured debt).
+- **$\text{LGD}$**: Loss Given Default ($= 1 - R$).
 
 ## Worked Example
 A treasury team is analyzing debt refinancing terms for a $5$-year senior unsecured bond:

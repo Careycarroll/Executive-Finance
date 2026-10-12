@@ -9,19 +9,19 @@ Executive finance categorizes FX exposure into three distinct tiers:
 3. **Economic Exposure (Operating Exposure):** The long-term impact of structural currency realignments on the company’s global competitive position, pricing power, and future market share. If the Japanese Yen weakens by 30% against the US Dollar, a Japanese competitor's manufacturing costs drop by 30% in USD terms, enabling them to permanently undercut US producers worldwide.
 
 ## Formula
-\text{Unhedged Cash Flow in Base Currency: } \text{CF}_{\text{USD}} = \text{CF}_{\text{FX}} \cdot S_T
+$$\text{Unhedged Cash Flow in Base Currency: } \text{CF}_{\text{USD}} = \text{CF}_{\text{FX}} \cdot S_T$$
 
 $$\text{Forward Hedge: } \text{CF}_{\text{USD, hedged}} = \text{CF}_{\text{FX}} \cdot F_0 = \text{CF}_{\text{FX}} \cdot S_0 \left( \frac{1 + r_{\text{USD}}}{1 + r_{\text{FX}}} \right)^T$$
 
 $$\text{Money Market Hedge: } \text{Borrow FX Today} = \frac{\text{CF}_{\text{FX}}}{1 + r_{\text{FX}}}, \quad \text{Convert Spot to USD}, \quad \text{Repay with Customer FX Inflow}$$
 
 ## Variable Glossary
-- **\text{CF}_{\text{FX}}**: Foreign currency cash flow amount (e.g., €10,000,000).
-- **S_0 / S_T**: Spot exchange rate today and at settlement date $T$ (expressed as Base/Quote, e.g., USD per EUR).
-- **F_0**: Forward exchange rate locked in today.
-- **r_{\text{USD}}**: Domestic risk-free interest rate.
-- **r_{\text{FX}}**: Foreign risk-free interest rate.
-- **T**: Tenor of the exposure in years.
+- **$\text{CF}_{\text{FX}}$**: Foreign currency cash flow amount (e.g., €10,000,000).
+- **$S_0 / S_T$**: Spot exchange rate today and at settlement date $T$ (expressed as Base/Quote, e.g., USD per EUR).
+- **$F_0$**: Forward exchange rate locked in today.
+- **$r_{\text{USD}}$**: Domestic risk-free interest rate.
+- **$r_{\text{FX}}$**: Foreign risk-free interest rate.
+- **$T$**: Tenor of the exposure in years.
 
 ## Worked Example
 A US industrial software company signs an enterprise license agreement with a German automotive conglomerate for **€20,000,000**, payable in full in 6 months ($T = 0.50$):

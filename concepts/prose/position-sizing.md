@@ -13,7 +13,7 @@ The core insight of the Kelly Criterion is that **geometric compounding penalize
 Professional institutional traders and hedge funds universally employ **Fractional Kelly** (typically Half-Kelly or Quarter-Kelly, $f^* / 2$ or $f^* / 4$) to capture $75\%-90\%$ of optimal growth while slashing drawdown severity by half.
 
 ## Formula
-f^* = \frac{p \cdot b - q}{b} = \frac{p \cdot (b + 1) - 1}{b} = \frac{\text{Edge}}{\text{Odds}} \quad \text{(Binary Bets)}
+$$f^* = \frac{p \cdot b - q}{b} = \frac{p \cdot (b + 1) - 1}{b} = \frac{\text{Edge}}{\text{Odds}} \quad \text{(Binary Bets)}$$
 
 $$f^* = \frac{\mu - r}{\sigma^2} \quad \text{(Continuous Continuous-Time Asset Allocation)}$$
 
@@ -21,13 +21,13 @@ $$f_{\text{practical}} = c \cdot f^* \quad \text{where } c \in [0.25, 0.50] \tex
 
 ## Variable Glossary
 - **f^***: Optimal percentage of total capital/bankroll to commit to the trade.
-- **p**: Probability of winning the trade.
-- **q**: Probability of losing the trade ($1 - p$).
-- **b**: Net odds received on the wager ($\frac{\text{Dollar Profit on Win}}{\text{Dollar Loss on Loss}}$).
-- **\text{Edge}**: Mathematical advantage ($p \cdot b - q$).
-- **\mu - r**: Excess expected return over risk-free rate.
-- **\sigma^2**: Variance of returns.
-- **c**: Kelly fraction multiplier (e.g., $0.5$ for Half-Kelly).
+- **$p$**: Probability of winning the trade.
+- **$q$**: Probability of losing the trade ($1 - p$).
+- **$b$**: Net odds received on the wager ($\frac{\text{Dollar Profit on Win}}{\text{Dollar Loss on Loss}}$).
+- **$\text{Edge}$**: Mathematical advantage ($p \cdot b - q$).
+- **$\mu - r$**: Excess expected return over risk-free rate.
+- **$\sigma^2$**: Variance of returns.
+- **$c$**: Kelly fraction multiplier (e.g., $0.5$ for Half-Kelly).
 
 ## Worked Example
 A quantitative trading strategy identifies an asymmetric earnings options trade with the following parameters:

@@ -8,12 +8,14 @@ import renderMathInElement from 'katex/contrib/auto-render';
 // Render KaTeX for explicit elements and inline math in markdown prose
 function renderMath() {
   document.querySelectorAll('[data-katex]').forEach(el => {
+    if (el.querySelector('.katex')) return;
     const tex = el.getAttribute('data-katex');
     const displayMode = el.getAttribute('data-display') !== 'false';
     try {
       katex.render(tex, el, {
         displayMode,
-        throwOnError: false
+        throwOnError: false,
+        strict: false
       });
     } catch (err) {
       console.warn('KaTeX render error:', err);
@@ -31,7 +33,9 @@ function renderMath() {
           { left: '\\[', right: '\\]', display: true }
         ],
         ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-        throwOnError: false
+        ignoredClasses: ['katex', 'katex-display'],
+        throwOnError: false,
+        strict: false
       });
     } catch (err) {
       console.warn('KaTeX auto-render error:', err);

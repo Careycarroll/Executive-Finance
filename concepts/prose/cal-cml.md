@@ -10,20 +10,20 @@ The graph of all possible combinations of the risk-free asset and a specific ris
 When the risky portfolio chosen is the aggregate **Market Portfolio ($M$)** containing all investable assets in proportion to their market capitalization, the CAL becomes the **Capital Market Line (CML)**. The CML represents the ultimate macroeconomic efficiency frontier: no individual asset or sub-portfolio can lie above the CML.
 
 ## Formula
-E[R_c] = r_f + \left[ \frac{E[R_p] - r_f}{\sigma_p} \right] \cdot \sigma_c = r_f + \text{Sharpe}_p \cdot \sigma_c
+$$E[R_c] = r_f + \left[ \frac{E[R_p] - r_f}{\sigma_p} \right] \cdot \sigma_c = r_f + \text{Sharpe}_p \cdot \sigma_c$$
 
 $$\text{Capital Market Line (CML): } E[R_c] = r_f + \left[ \frac{E[R_m] - r_f}{\sigma_m} \right] \cdot \sigma_c$$
 
 ## Variable Glossary
-- **E[R_c]**: Expected return on the complete combined portfolio (risk-free + risky).
-- **\sigma_c**: Volatility (standard deviation) of the complete combined portfolio ($= y \cdot \sigma_p$).
-- **r_f**: Risk-free rate of return (zero standard deviation).
-- **E[R_p]**: Expected return on the risky portfolio.
-- **\sigma_p**: Volatility of the risky portfolio.
-- **E[R_m]**: Expected return on the aggregate broad market portfolio.
-- **\sigma_m**: Volatility of the aggregate broad market portfolio.
-- **y**: Proportion of total wealth allocated to the risky portfolio ($1 - y$ allocated to risk-free asset).
-- **\text{Sharpe}_p**: Slope of the CAL ($= \frac{E[R_p] - r_f}{\sigma_p}$).
+- **$E[R_c]$**: Expected return on the complete combined portfolio (risk-free + risky).
+- **$\sigma_c$**: Volatility (standard deviation) of the complete combined portfolio ($= y \cdot \sigma_p$).
+- **$r_f$**: Risk-free rate of return (zero standard deviation).
+- **$E[R_p]$**: Expected return on the risky portfolio.
+- **$\sigma_p$**: Volatility of the risky portfolio.
+- **$E[R_m]$**: Expected return on the aggregate broad market portfolio.
+- **$\sigma_m$**: Volatility of the aggregate broad market portfolio.
+- **$y$**: Proportion of total wealth allocated to the risky portfolio ($1 - y$ allocated to risk-free asset).
+- **$\text{Sharpe}_p$**: Slope of the CAL ($= \frac{E[R_p] - r_f}{\sigma_p}$).
 
 ## Worked Example
 An endowment foundation has the following investment parameters:
