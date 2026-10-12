@@ -1,6 +1,6 @@
 # ADR-0002: Registry-driven concept pages
 
-- Status: Accepted
+- Status: Accepted (Verified & Implemented, 2026-10-12)
 - Date: 2026-08-04
 - Deciders: Carey Carroll
 - Tags: architecture, content-model, data
@@ -32,7 +32,7 @@ the app renders them from that data. Adding a new tool means editing JSON.
 
 Make `concepts/registry.json` the **single source of truth** for concept
 content. Every concept page is generated at build time from its registry
-entry plus a template.
+entry plus a template (`scripts/generate-pages.js`).
 
 Adding a new concept = adding a JSON entry (+ optionally a prose file if
 the concept needs long-form explanation). No new page code required, as
@@ -84,7 +84,7 @@ Field definitions:
 - `related` (array of ids, optional) — cross-references to other concepts
 
 The JSON schema itself lives at `concepts/schema.json` (JSON Schema
-draft-07) and is enforced by the registry validator.
+draft-07) and is enforced by the registry validator (`scripts/validate-registry.js`).
 
 ## Consequences
 
@@ -95,7 +95,7 @@ draft-07) and is enforced by the registry validator.
   concepts exist?" in one command.
 - Bulk changes (add a field, rename a domain) are one script away.
 - The validator (M2) enforces schema and referential integrity on every PR.
-- Enables a future "browse the registry" index page for free.
+- Enables the searchable/filterable Learn index page (`/pages/learn/index.html`) for free.
 
 **Negative:**
 
@@ -107,7 +107,7 @@ draft-07) and is enforced by the registry validator.
   schema conservative and using optional fields liberally.
 - Prose still lives in separate files (`concepts/prose/*.md`) rather than
   inline in the registry, to avoid JSON escaping pain for anything longer
-  than a sentence.
+  than a sentence (and allowing portable Markdown export to Obsidian).
 
 ## Alternatives Considered
 
@@ -126,5 +126,6 @@ draft-07) and is enforced by the registry validator.
 - ADR-0001: Concept-organized structure
 - ADR-0003: Shared component toolbox — defines the component IDs referenced
   from registry entries
-- `concepts/schema.json` — the JSON Schema (produced in M2)
+- `concepts/schema.json` — the JSON Schema (implemented in M2)
+- `scripts/validate-registry.js` & `scripts/generate-pages.js`
 - Script-Launcher `registry.json` — pattern source

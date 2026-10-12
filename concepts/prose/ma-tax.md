@@ -30,3 +30,4 @@ When acquiring an S-Corporation or corporate subsidiary, **always model the §33
 1. Calculate the Present Value of the 15-year §197 tax amortization shield created for you (the Buyer) by the basis step-up.
 2. Calculate the incremental tax cost to the Sellers (often tiny, caused only by ordinary income recapture on depreciated equipment vs capital gains).
 3. Offer to **reimburse ("Gross Up") the Sellers in cash** for their incremental tax cost plus a $20\%$ sweetener! You secure tens of millions in net present value tax shields while leaving the sellers happier after tax.
+

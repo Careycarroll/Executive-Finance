@@ -82,5 +82,29 @@ describe('generate-pages output verification', () => {
     expect(bibHtml).toContain('Options, Futures and Other Derivatives');
     expect(bibHtml).toContain('Financial Statement Analysis and Security Valuation');
   });
+
+  it('cross-links all 32 formulas and all 635 glossary terms to valid concept pages', () => {
+    const regIds = new Set(registry.concepts.map(c => c.id));
+
+    const formulasCode = loadText('js/learn/formulas.js');
+    const formulas = new Function(formulasCode.match(/const FORMULAS = (\[[\s\S]*?\]);/)[1].replace(/^/, 'return '))();
+    expect(formulas.length).toBe(32);
+    for (const f of formulas) {
+      expect(f.conceptId, `Formula #${f.num} missing conceptId`).toBeTruthy();
+      expect(regIds.has(f.conceptId), `Formula #${f.num} conceptId ${f.conceptId} not in registry`).toBe(true);
+    }
+
+    const glossaryCode = loadText('js/learn/glossary.js');
+    const terms = new Function(glossaryCode.match(/const TERMS = (\[[\s\S]*?\]);/)[1].replace(/^/, 'return '))();
+    const cTitles = new Function(glossaryCode.match(/const CONCEPT_TITLES = (\{[\s\S]*?\});/)[1].replace(/^/, 'return '))();
+    const eMap = new Function(glossaryCode.match(/const EXACT_TERM_MAP = (\{[\s\S]*?\});/)[1].replace(/^/, 'return '))();
+    expect(terms.length).toBe(635);
+    for (const t of terms) {
+      const cid = eMap[t.term];
+      expect(cid, `Glossary term "${t.term}" missing concept cross-link`).toBeTruthy();
+      expect(cTitles[cid], `Concept "${cid}" missing title in CONCEPT_TITLES`).toBeTruthy();
+      expect(regIds.has(cid), `Concept "${cid}" not in registry`).toBe(true);
+    }
+  });
 });
 

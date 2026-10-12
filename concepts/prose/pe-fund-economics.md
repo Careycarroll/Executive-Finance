@@ -65,3 +65,4 @@ When reviewing alternative investment allocations or negotiating private equity 
 1. **Insist on European Waterfalls:** Institutional LPs should always mandate whole-fund European waterfalls over deal-by-deal American waterfalls to avoid chasing GPs for clawbacks 10 years later.
 2. **Scrutinize Fee Offsets:** Ensure the LP agreement mandates a **100% Management Fee Offset** for any monitoring fees, director fees, or transaction advisory fees charged directly to portfolio companies by the GP.
 3. **Verify GP Commitment ("Skin in the Game"):** Ensure the GP commits at least $2\%$ to $5\%$ of personal cash capital into the fund alongside LPs so management suffers real financial pain if the portfolio underperforms.
+

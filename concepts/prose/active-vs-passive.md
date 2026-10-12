@@ -37,3 +37,4 @@ $$\text{Grinold's Fundamental Law of Active Management: } \text{IR} \approx \tex
 Construct your personal and corporate endowment portfolios using **Core-Satellite Architecture**:
 1. **The Core (75%–85% of liquid capital):** Allocate to ultra-low-cost, tax-efficient passive index ETFs (charging $0.03\%-0.07\%$ expense ratios). Never pay a mutual fund manager $1.00\%$ ($100\text{ bps}$) for "closet indexing" (low tracking error to the S&P 500).
 2. **The Satellites (15%–25% of capital):** Deploy active risk budgets strictly into private markets, direct operational businesses, or specialized strategies where you possess proprietary informational edge, structural tax advantages, or active governance control.
+

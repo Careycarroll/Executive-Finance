@@ -44,3 +44,4 @@ Memorize the **"Last Nickel Trap"**:
 More options portfolios have blown up trying to squeeze the last $\$0.10$ out of a winning short option in expiration week than from almost any other mistake.
 - If you sold an option or spread for $\$2.00$ and it is now trading at $\$0.25$ with 10 days left to expiration, you have already won $87.5\%$ of the maximum possible profit.
 - Keeping that position open for the next 10 days means taking on maximum expiration Gamma risk just to earn $\$0.025$ per day. **Buy it back for $\$0.25$, free up 100% of your buying power margin, and redeploy into a fresh 45-day cycle.**
+

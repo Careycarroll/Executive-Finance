@@ -47,3 +47,4 @@ Free-Float Adjustment in Modern Market-Cap Indices
 When benchmarking your corporate stock performance or designing executive Long-Term Incentive Plan (LTIP) Relative Total Shareholder Return (rTSR) hurdles:
 - Never compare a mid-cap operating company against a top-heavy, mega-cap-dominated index without checking **equal-weighted vs. cap-weighted divergence**. In years where 5 mega-cap tech stocks drive 70% of the cap-weighted S&P 500 return, 80% of healthy operating businesses will appear to "underperform the market."
 - Use an **Equal-Weighted Industry Peer Index** for executive rTSR performance share vesting so management is rewarded for outperforming true operational peers rather than penalized for not being a trillion-dollar monopoly.
+

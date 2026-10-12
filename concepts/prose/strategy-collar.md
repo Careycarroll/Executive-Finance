@@ -47,3 +47,4 @@ The Collar is the premier tool for **Executive Concentrated Stock Wealth Managem
 If you hold $\$20\text{M}$ of low-basis company stock after an IPO or M&A lockup and cannot sell shares without triggering massive capital gains taxes or negative insider-selling signals:
 1. Structure a **12-Month Wide Collar** (e.g., $85\%$ Put Floor / $120\%$ Call Cap) that complies with IRC §1259 and §1092 (Straddle Rules).
 2. Pledge the collared stock—which now has a guaranteed minimum liquidation value of $85\%$—as collateral for a low-interest **Prepaid Variable Forward (PVF)** or securities-backed credit line, unlocking liquid cash at SOFR $+ 100\text{ bps}$ with zero immediate capital gains tax!
+

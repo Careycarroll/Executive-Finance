@@ -55,3 +55,4 @@ The ideal "LBO Target Profile" has five non-negotiable characteristics:
 3. **Defensible Economic Moat:** Pricing power that allows passing inflation through to customers without volume churn.
 4. **Strong Asset Collateral Base:** Substantial accounts receivable, inventory, or owned real estate to support cheap first-lien bank borrowing.
 5. **Clear Operational Exit Plan:** Identified carve-out cost reductions and strategic strategic acquirers ready to buy the scaled business in Year 5.
+

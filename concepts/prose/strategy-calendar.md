@@ -40,3 +40,4 @@ Payoff Profile of a Long Calendar Spread at Front-Month Expiration (T_1)
 The two golden rules for trading Calendar and Diagonal Spreads:
 1. **Check the Term Structure Slope First:** Only buy Long Calendar Spreads when the Volatility Term Structure is in **Contango** or flat ($\sigma_{\text{front}} \le \sigma_{\text{back}}$), or when you have a specific catalyst (like an earnings date in $T_1$) where front-month IV is $20+\text{ vol points}$ higher than $T_2$ and you expect a smaller-than-implied stock move.
 2. **Poor Man's Covered Call Rule:** When structuring a Bullish Call Diagonal (buying a $0.80\Delta$ back-month call and selling a $0.30\Delta$ front-month call), ensure the **Net Debit paid is less than the strike width ($K_2 - K_1$)**. That guarantees you cannot lose money if the stock explodes upward through your short strike!
+

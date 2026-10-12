@@ -45,3 +45,4 @@ Expiration Payoff Diagram of a Long Butterfly Spread
 Use **Directional OTM Butterflies** as a low-cost alternative to Vertical Spreads when Implied Volatility is extremely high:
 - If a stock is at $\$100$ ahead of an earnings report with $80\%$ IV, buying a $\$105/\$110$ Bull Call Spread is expensive due to elevated Vega.
 - Instead, buying a **$100 / 110 / 120$ OTM Call Butterfly** sells two units of overpriced $110$ volatility, cutting your upfront cost by $60\%$ while delivering up to $6\times-8\times$ payoff if the stock rallies moderately to your $\$110$ target and volatility crushes after earnings!
+

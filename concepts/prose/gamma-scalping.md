@@ -53,3 +53,4 @@ Never initiate a Long Gamma scalping book unless two conditions hold simultaneou
 1. **Valuation Edge:** Implied Volatility is trading at a verified discount to forecasted Realized Volatility ($\sigma_{\text{IV}} < \hat{\sigma}_{\text{RV}}$).
 2. **Low Bid-Ask Friction:** The underlying asset is an ultra-liquid futures contract or ETF (e.g., ES, NQ, SPY, QQQ) where delta-hedging execution costs less than 1 basis point per trade.
 If the stock gaps strongly in one direction without mean-reverting, remember that letting your Delta run slightly before hedging captures convex trend profits, whereas hedging too early leaves you under-participating in a breakout.
+

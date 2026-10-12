@@ -47,3 +47,4 @@ Worked Two-Sector Attribution Example (Total Benchmark Return R_B = 10.0%)
 Use Brinson-Fachler attribution as your **Manager Accountability Audit**:
 - If a fund manager markets themselves as a "bottom-up fundamental stock picker," their excess return should come overwhelmingly from the **Security Selection** bucket. If attribution reveals that $95\%$ of their outperformance came from an unhedged macro Allocation bet on Energy or Tech, they are charging stock-picking fees for a sector ETF bet!
 - Apply this exact same math in **Corporate FP&A Variance Analysis** to decompose division revenue variances into **Market Share Effect**, **Industry Growth Effect**, and **Price/Mix Effect**.
+

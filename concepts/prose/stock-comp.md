@@ -36,3 +36,4 @@ $$\text{Net Dilutive Shares Added} = N_{\text{options}} - \frac{N_{\text{options
 **Two Non-Negotiable Rules for Valuing Tech Companies:**
 1. **Treat SBC as a Cash Expense in DCF:** Never add back Stock-Based Compensation when calculating Free Cash Flow for a DCF valuation. Deduct 100% of SBC just like cash salaries.
 2. **Track Net Burn & Dilution Rate:** Always compare annual SBC as a percentage of revenue against the company's **Net Share Count Growth** ($\Delta \text{Diluted Shares} / \text{Total Shares}$). If a mature company spends $20\%$ of revenue on SBC and spends 100% of its Free Cash Flow on share buybacks just to keep its share count flat, its true economic Free Cash Flow to shareholders is **zero**.
+

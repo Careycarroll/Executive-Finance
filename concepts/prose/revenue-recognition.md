@@ -34,3 +34,4 @@ $$\text{Remaining Performance Obligations (RPO / Backlog)} = \text{Deferred Reve
 When conducting financial due diligence on a target company, immediately run the **Unbilled Receivable Diagnostic**:
 $$\text{Days Sales in Unbilled Receivables} = \frac{\text{Contract Assets (Unbilled A/R)}}{\text{Total Revenue}} \times 365$$
 If Contract Assets (Unbilled Receivables) are growing twice as fast as total revenue while Deferred Revenue is shrinking, management is almost certainly **pulling forward future revenue** ("channel stuffing" or aggressive percentage-of-completion estimates) to mask a commercial slowdown.
+
