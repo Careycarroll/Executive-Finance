@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROE Decomposition (Penman-Style) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">ROE Decomposition (Penman-Style)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Stephen H. Penman Ch. 11, 12</span>
+          <span class="concept-hero__citation-secondary">· also: Peter D. Easton Ch. 3</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>While traditional 3-stage or 5-stage DuPont analysis decomposes Return on Equity (ROE) using accounting ratios, it fundamentally conflates <strong>operating leverage</strong> with <strong>financial leverage</strong> because its asset turnover and leverage ratios lump operating assets (factories, inventory) together with financing assets (cash) and financing liabilities (debt).</p>
+<p>Stephen Penman’s advanced ROE decomposition cleanly separates the firm into two distinct economic engines:</p>
+<ol>
+<li><strong>The Operating Engine ($\text{RNOA}$):</strong> Return on Net Operating Assets ($\text{NOPAT} / \text{NOA}$). This measures how productively management creates operating profits from real business capital.</li>
+<li><strong>The Financing Engine ($\text{SPREAD} \times \text{FLEV}$):</strong> The financial leverage booster. If the operating engine earns a higher return than the after-tax cost of borrowing ($\text{RNOA} &gt; \text{NBC}$), then taking on net financial leverage ($\text{FLEV}$) magnifies equity returns. However, if operating returns slip below borrowing costs ($\text{RNOA} &lt; \text{NBC}$), leverage brutally penalizes equity holders.</li>
+</ol>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="\text{ROE} = \text{RNOA} + (\text{FLEV} \cdot \text{SPREAD}) = \text{RNOA} + \left( \frac{\text{NFO}}{\text{CSE}} \cdot [\text{RNOA} - \text{NBC}] \right)
+
+$$\text{RNOA} = \text{Operating Profit Margin (OPM)} \times \text{Asset Turnover (ATO)} = \frac{\text{NOPAT}}{\text{Sales}} \times \frac{\text{Sales}}{\text{NOA}}">
+            \text{ROE} = \text{RNOA} + (\text{FLEV} \cdot \text{SPREAD}) = \text{RNOA} + \left( \frac{\text{NFO}}{\text{CSE}} \cdot [\text{RNOA} - \text{NBC}] \right)
+
+$$\text{RNOA} = \text{Operating Profit Margin (OPM)} \times \text{Asset Turnover (ATO)} = \frac{\text{NOPAT}}{\text{Sales}} \times \frac{\text{Sales}}{\text{NOA}}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>\text{ROE}</strong>: Return on Common Shareholders&#39; Equity ($\text{Net Income} / \text{CSE}$).</li>
+<li><strong>\text{RNOA}</strong>: Return on Net Operating Assets ($\text{NOPAT} / \text{NOA}$).</li>
+<li><strong>\text{NOA}</strong>: Net Operating Assets ($\text{Operating Assets} - \text{Operating Liabilities}$).</li>
+<li><strong>\text{NOPAT}</strong>: Net Operating Profit After Tax.</li>
+<li><strong>\text{NFO}</strong>: Net Financial Obligations ($\text{Financial Debt} - \text{Financial Cash Assets}$).</li>
+<li><strong>\text{CSE}</strong>: Common Shareholders&#39; Equity (Book value of equity, where $\text{NOA} - \text{NFO} = \text{CSE}$).</li>
+<li><strong>\text{FLEV}</strong>: Financial Leverage Ratio ($\text{NFO} / \text{CSE}$).</li>
+<li><strong>\text{NBC}</strong>: Net Borrowing Cost ($\text{Net Financing Expense} / \text{NFO}$).</li>
+<li><strong>\text{SPREAD}</strong>: The operating-financing spread ($\text{RNOA} - \text{NBC}$).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A manufacturing company reports the following balance sheet and operating metrics:</p>
+<ul>
+<li>Net Operating Assets ($\text{NOA}$): $$1{,}000{,}000{,}000$</li>
+<li>Net Financial Obligations ($\text{NFO}$): $$400{,}000{,}000$</li>
+<li>Common Shareholders&#39; Equity ($\text{CSE}$): $$600{,}000{,}000$ ($\text{NOA} - \text{NFO}$)</li>
+<li>Annual NOPAT: $$140{,}000{,}000$</li>
+<li>After-tax Net Financing Expense ($\text{NFE}$): $$24{,}000{,}000$</li>
+<li>Net Income to Common: $$116{,}000{,}000$ ($$140\text{M} - $24\text{M}$)</li>
+</ul>
+<p><strong>Step 1: Compute Base Operating Return (RNOA)</strong>
+$$\text{RNOA} = \frac{$140{,}000{,}000}{$1{,}000{,}000{,}000} = 14.0%$$</p>
+<p><strong>Step 2: Compute Net Borrowing Cost (NBC)</strong>
+$$\text{NBC} = \frac{$24{,}000{,}000}{$400{,}000{,}000} = 6.0%$$</p>
+<p><strong>Step 3: Compute Financial Leverage (FLEV) and SPREAD</strong>
+$$\text{FLEV} = \frac{$400{,}000{,}000}{$600{,}000{,}000} = 0.667$$
+$$\text{SPREAD} = \text{RNOA} - \text{NBC} = 14.0% - 6.0% = +8.0%$$</p>
+<p><strong>Step 4: Decompose ROE</strong>
+$$\text{ROE} = \text{RNOA} + (\text{FLEV} \times \text{SPREAD}) = 14.0% + (0.667 \times 8.0%) = 14.0% + 5.33% = 19.33%$$</p>
+<p>Check against direct calculation: $\frac{$116\text{M}}{$600\text{M}} = 19.33%$.
+The operating core generated $14.0%$ ROE; smart, accretive debt leverage delivered the remaining $+5.33%$ equity kicker.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Deep forensic financial statement analysis, evaluating Private Equity LBO operating value creation vs financial leverage contribution, and benchmarking multi-division conglomerate return on capital.</li>
+<li><strong>When not to use / Caveats:</strong> Do not apply to pure financial institutions (commercial banks, broker-dealers) where borrowing and lending ARE the primary operating activities rather than financing activities.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Penman’s decomposition prevents you from overpaying for levered &quot;high-ROE&quot; companies. If two competing targets both boast a 20% ROE:</p>
+<ul>
+<li>Target A has an RNOA of 18% with almost zero debt ($\text{FLEV} = 0.1$).</li>
+<li>Target B has an RNOA of only 8% but is loaded to the gills with cheap debt ($\text{FLEV} = 3.0$, borrowing at 4% after-tax $\implies \text{ROE} = 8% + 3 \times [8% - 4%] = 20%$).</li>
+</ul>
+<p>Target A is an operational powerhouse with pricing power and massive untapped debt capacity. Target B is a mediocre operation teetering on a leverage tightrope: a tiny 2% margin dip collapses its RNOA to 6%, turning its spread razor-thin and threatening debt covenants!</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/dupont.html" class="related-chip">
+          <span>DuPont Analysis</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/reformulated-bs.html" class="related-chip">
+          <span>Reformulated Balance Sheet</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/reformulated-is.html" class="related-chip">
+          <span>Reformulated Income Statement & NOPAT</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

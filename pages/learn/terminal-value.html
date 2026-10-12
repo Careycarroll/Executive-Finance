@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terminal Value (Exit Multiple vs Perpetuity Growth) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Terminal Value (Exit Multiple vs Perpetuity Growth)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Russell Lundholm Ch. 6</span>
+          <span class="concept-hero__citation-secondary">· also: Stephen H. Penman Ch. 5</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Because an ongoing business is a going concern expected to generate cash flows in perpetuity, financial models cannot forecast individual line-item income statements out to infinity. Instead, valuation models split time into two phases:</p>
+<ol>
+<li><strong>Explicit Forecast Period ($t = 1 \dots T$):</strong> Typically 5 to 10 years, where detailed revenue growth, operational margins, working capital, and capital expenditures are modeled explicitly.</li>
+<li><strong>Terminal Period ($t &gt; T$):</strong> The infinite horizon beyond year $T$, captured in a single figure: the <strong>Terminal Value (TV)</strong>.</li>
+</ol>
+<p>Valuation professionals calculate Terminal Value using two primary methods:</p>
+<ul>
+<li><strong>Perpetuity Growth Method (Gordon Growth):</strong> Assumes the business reaches a mature, steady state where Free Cash Flow grows at a constant, sustainable long-term rate $g$ in perpetuity.</li>
+<li><strong>Exit Multiple Method:</strong> Assumes the business is sold or valued at year $T$ at a benchmark multiple of final-year EBITDA, NOPAT, or Revenues (e.g., $10.0\times$ EV/EBITDA).</li>
+</ul>
+<p>Best practice requires cross-checking both methods: an assumed exit multiple implicitly embeds a perpetual growth rate, and an assumed perpetual growth rate implies an exit multiple. Reconciling the two eliminates absurd hidden assumptions.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="\text{TV}_{\text{Perpetuity}} = \frac{\text{FCFF}_{T+1}}{\text{WACC} - g} = \frac{\text{FCFF}_T \cdot (1 + g)}{\text{WACC} - g}
+
+$$\text{TV}_{\text{Multiple}} = \text{EBITDA}_T \cdot \text{Exit Multiple}$$
+
+$$\text{Implied } g = \text{WACC} - \frac{\text{FCFF}_{T+1}}{\text{TV}_{\text{Multiple}}}">
+            \text{TV}_{\text{Perpetuity}} = \frac{\text{FCFF}_{T+1}}{\text{WACC} - g} = \frac{\text{FCFF}_T \cdot (1 + g)}{\text{WACC} - g}
+
+$$\text{TV}_{\text{Multiple}} = \text{EBITDA}_T \cdot \text{Exit Multiple}$$
+
+$$\text{Implied } g = \text{WACC} - \frac{\text{FCFF}_{T+1}}{\text{TV}_{\text{Multiple}}}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>\text{TV}</strong>: Terminal Value in nominal dollars at the end of year $T$.</li>
+<li><strong>\text{FCFF}_T</strong>: Free Cash Flow to the Firm in the final year of the explicit forecast horizon.</li>
+<li><strong>\text{FCFF}_{T+1}</strong>: Normalized steady-state Free Cash Flow in the first year of the terminal period.</li>
+<li><strong>\text{WACC}</strong>: Weighted Average Cost of Capital.</li>
+<li><strong>g</strong>: Perpetual sustainable growth rate.</li>
+<li><strong>\text{EBITDA}_T</strong>: Earnings Before Interest, Taxes, Depreciation, and Amortization in year $T$.</li>
+<li><strong>\text{Exit Multiple}</strong>: Target enterprise valuation multiple (e.g., EV/EBITDA) derived from comparable mature transactions.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A corporate strategy team is valuing a business unit with the following Year 5 projections:</p>
+<ul>
+<li>Year 5 FCFF ($\text{FCFF}_5$): $$50{,}000{,}000$</li>
+<li>Year 5 EBITDA: $$90{,}000{,}000$</li>
+<li>Discount Rate ($\text{WACC}$): $9.0%$ ($0.09$)</li>
+</ul>
+<p><strong>Method A: Perpetuity Growth Method</strong>
+Assume a long-term sustainable growth rate equal to long-term nominal GDP growth ($g = 2.5%$):
+$$\text{FCFF}<em>6 = $50{,}000{,}000 \times (1 + 0.025) = $51{,}250{,}000$$
+$$\text{TV}</em>{\text{Perpetuity}} = \frac{$51{,}250{,}000}{0.09 - 0.025} = \frac{$51{,}250{,}000}{0.065} = $788{,}461{,}538$$</p>
+<p>Discounted back to Year 0 present value:
+$$\text{PV}(\text{TV}) = \frac{$788{,}461{,}538}{(1 + 0.09)^5} = \frac{$788{,}461{,}538}{1.5386} = $512{,}446{,}593$$</p>
+<p><strong>Method B: Exit Multiple Cross-Check</strong>
+An M&amp;A banker suggests using a $10.0\times$ EV/EBITDA exit multiple:
+$$\text{TV}_{\text{Multiple}} = $90{,}000{,}000 \times 10.0 = $900{,}000{,}000$$</p>
+<p><strong>Implied Growth Rate Reality Check:</strong>
+What perpetual growth rate $g$ is the banker&#39;s $10.0\times$ multiple actually assuming?
+$$\text{Implied } g = \text{WACC} - \frac{\text{FCFF}_6}{\text{TV}} = 0.09 - \frac{$51{,}250{,}000}{$900{,}000{,}000} = 0.09 - 0.0569 = 3.31%$$
+A 3.31% perpetual growth rate exceeds projected long-term US GDP growth ($2.0%-2.5%$). The $10.0\times$ multiple implicitly assumes the company will grow faster than the global economy forever!</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Every DCF model, impairment testing of long-lived assets, private equity buyout returns modeling, and fair-value fairness opinions.</li>
+<li><strong>When not to use / Caveats:</strong> Do not assume a perpetual growth rate $g &gt; \text{WACC}$! If $g \ge \text{WACC}$, the Gordon Growth denominator $(\text{WACC} - g) \le 0$, resulting in an infinite or negative mathematical impossibility. Furthermore, $g$ should never exceed the projected long-run nominal growth rate of the economy in which the business operates (typically $2.0% - 3.0%$); otherwise, your single company would eventually become 100% of the entire world economy!</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Beware the <strong>&quot;Terminal Year Reinvestment Distortion&quot;</strong>: In year $T$, models frequently show high growth (e.g., 10% revenue growth) but show CapEx equal to Depreciation and zero working capital changes! In reality, if a company grows at $g$ in perpetuity, it MUST reinvest capital to support that growth:
+$$\text{Reinvestment Rate} = \frac{g}{\text{RONIC}}$$
+If you assume a 3% perpetual growth rate and a 10% Return on New Invested Capital (RONIC), the firm MUST reinvest $30%$ of its NOPAT every year ($3% / 10% = 30%$). If your model assumes $g = 3%$ but gives the company 100% free cash flow conversion, you are creating phantom value out of thin air.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/dcf.html" class="related-chip">
+          <span>Discounted Cash Flow Valuation (Enterprise vs Equity)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/multiples.html" class="related-chip">
+          <span>Relative Valuation & Comparable Multiples</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/wacc.html" class="related-chip">
+          <span>Weighted Average Cost of Capital (WACC)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

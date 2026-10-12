@@ -447,5 +447,210 @@
         ]
       }
     ]
+  },
+  "reformulated-is": {
+    "title": "Reformulated Income Statement & NOPAT",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "penman",
+        "chapters": [
+          "8",
+          "9"
+        ],
+        "primary": true
+      },
+      {
+        "book": "easton",
+        "chapters": [
+          "3"
+        ]
+      }
+    ]
+  },
+  "roe-decomposition": {
+    "title": "ROE Decomposition (Penman-Style)",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "penman",
+        "chapters": [
+          "11",
+          "12"
+        ],
+        "primary": true
+      },
+      {
+        "book": "easton",
+        "chapters": [
+          "3"
+        ]
+      }
+    ]
+  },
+  "accrual-quality": {
+    "title": "Accrual Quality & Earnings Persistence",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "penman",
+        "chapters": [
+          "16",
+          "17"
+        ],
+        "primary": true
+      },
+      {
+        "book": "easton",
+        "chapters": [
+          "6"
+        ]
+      }
+    ]
+  },
+  "cash-flow-analysis": {
+    "title": "Cash Flow Statement Analysis",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "easton",
+        "chapters": [
+          "4"
+        ],
+        "primary": true
+      },
+      {
+        "book": "penman",
+        "chapters": [
+          "10"
+        ]
+      }
+    ]
+  },
+  "dcf": {
+    "title": "Discounted Cash Flow Valuation (Enterprise vs Equity)",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "lundholm-sloan",
+        "chapters": [
+          "4",
+          "5"
+        ],
+        "primary": true
+      },
+      {
+        "book": "penman",
+        "chapters": [
+          "4"
+        ]
+      }
+    ]
+  },
+  "terminal-value": {
+    "title": "Terminal Value (Exit Multiple vs Perpetuity Growth)",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "lundholm-sloan",
+        "chapters": [
+          "6"
+        ],
+        "primary": true
+      },
+      {
+        "book": "penman",
+        "chapters": [
+          "5"
+        ]
+      }
+    ]
+  },
+  "residual-income": {
+    "title": "Residual Income & EVA Valuation",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "penman",
+        "chapters": [
+          "5",
+          "6"
+        ],
+        "primary": true
+      },
+      {
+        "book": "lundholm-sloan",
+        "chapters": [
+          "7"
+        ]
+      }
+    ]
+  },
+  "ddm": {
+    "title": "Dividend Discount Model (Gordon Growth)",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "18"
+        ],
+        "primary": true
+      },
+      {
+        "book": "lundholm-sloan",
+        "chapters": [
+          "3"
+        ]
+      }
+    ]
+  },
+  "multiples": {
+    "title": "Relative Valuation & Comparable Multiples",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "easton",
+        "chapters": [
+          "11"
+        ],
+        "primary": true
+      },
+      {
+        "book": "lundholm-sloan",
+        "chapters": [
+          "9"
+        ]
+      }
+    ]
+  },
+  "valuation-reconciliation": {
+    "title": "Valuation Reconciliation & Triangulation",
+    "domain": "fsa",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "penman",
+        "chapters": [
+          "13"
+        ],
+        "primary": true
+      },
+      {
+        "book": "lundholm-sloan",
+        "chapters": [
+          "8"
+        ]
+      }
+    ]
   }
 }
