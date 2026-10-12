@@ -428,8 +428,30 @@ function generateIndexHtml() {
     const cards = list.map(c => {
       const citations = formatCitations(c.sources);
       const tierBadge = `<span class="badge ${c.tier === 'core' ? 'badge-tier--core' : 'badge-tier--reference'}">${c.tier}</span>`;
+
+      let proseSnippet = '';
+      if (c.prose_ref && existsSync(resolve(repoRoot, c.prose_ref))) {
+        proseSnippet = readFileSync(resolve(repoRoot, c.prose_ref), 'utf8')
+          .replace(/[#*`$\\[\]()_|>-]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .slice(0, 600);
+      }
+
+      const searchBlob = [
+        c.id,
+        c.title,
+        c.domain,
+        label,
+        c.tier,
+        c.template,
+        citations.primary,
+        citations.also,
+        ...(c.related || []),
+        proseSnippet
+      ].join(' ').toLowerCase().replace(/"/g, '&quot;');
+
       return `
-        <a href="/pages/learn/${c.id}.html" class="concept-card" data-tier="${c.tier}">
+        <a href="/pages/learn/${c.id}.html" class="concept-card" data-tier="${c.tier}" data-domain="${c.domain}" data-search="${searchBlob}">
           <div class="concept-card__header">
             ${tierBadge}
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">${c.template}</span>
@@ -456,8 +478,23 @@ function generateIndexHtml() {
       </section>`;
   }
 
+  const totalConcepts = registry.concepts.length;
   const filterBarHtml = `
     <div class="concept-filter-bar">
+      <div class="concept-search-row">
+        <div class="concept-search-wrapper">
+          <span class="concept-search-icon" aria-hidden="true">🔍</span>
+          <input
+            type="search"
+            id="concept-search-input"
+            class="concept-search-input"
+            placeholder="Search ${totalConcepts} concepts by topic, keyword, formula, or book (e.g. WACC, Black-Scholes, 83(b), Penman, Kelly)..."
+            aria-label="Search concepts"
+            autocomplete="off"
+          />
+          <button type="button" id="concept-search-clear" class="concept-search-clear" title="Clear search" aria-label="Clear search">&times;</button>
+        </div>
+      </div>
       <div class="filter-group">
         <span class="filter-group__label">Tier:</span>
         <button type="button" class="filter-btn filter-btn--active" data-filter-type="tier" data-filter-value="all">All Tiers</button>
@@ -468,9 +505,32 @@ function generateIndexHtml() {
         <span class="filter-group__label">Domain:</span>
         <button type="button" class="filter-btn filter-btn--active" data-filter-type="domain" data-filter-value="all">All Domains</button>
         <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="corpfin">Corporate Finance</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="fsa">FSA &amp; Valuation</button>
         <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="invest">Investments</button>
         <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="deriv">Derivatives</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="risk">Risk</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="tax">Tax</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="macro">Macro</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="behav">Behavioral</button>
       </div>
+      <div class="concept-filter-meta">
+        <span id="concept-results-count">Showing all ${totalConcepts} concepts</span>
+        <span>Tip: Press <kbd style="padding: 1px 5px; background: var(--color-gray-100); border: 1px solid var(--color-border); border-radius: 3px; font-family: var(--font-mono);">/</kbd> to search</span>
+      </div>
+    </div>`;
+
+  const emptyStateHtml = `
+    <div id="concept-empty-state" class="concept-empty-state">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔎</div>
+      <p style="font-size: 1.05rem; font-weight: 700; color: var(--color-gray-900); margin-bottom: 0.35rem;">
+        No concepts match your search
+      </p>
+      <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 1rem;">
+        Try a broader keyword or reset the active domain and tier filters.
+      </p>
+      <button type="button" id="concept-reset-btn" class="filter-btn filter-btn--active" style="padding: 0.4rem 1rem;">
+        Reset Search &amp; Filters
+      </button>
     </div>`;
 
   if (registry.concepts.length === 0) {
@@ -508,7 +568,7 @@ function generateIndexHtml() {
         <div class="page__hero-label">Interactive Reference</div>
         <h1 class="page__hero-title">Concepts Library</h1>
         <p class="page__hero-subtitle" style="max-width: 650px;">
-          Personal reference library covering corporate finance, valuation, investments, and derivatives.
+          Personal reference library covering corporate finance, valuation, investments, derivatives, risk, and taxation.
           Organized by concept, driven by interactive tools, with notes for future-me.
         </p>
       </div>
@@ -517,6 +577,7 @@ function generateIndexHtml() {
     <section class="concept-content">
       <div class="container">
         ${filterBarHtml}
+        ${emptyStateHtml}
         ${sectionsHtml}
       </div>
     </section>

@@ -37,7 +37,7 @@
         <div class="page__hero-label">Interactive Reference</div>
         <h1 class="page__hero-title">Concepts Library</h1>
         <p class="page__hero-subtitle" style="max-width: 650px;">
-          Personal reference library covering corporate finance, valuation, investments, and derivatives.
+          Personal reference library covering corporate finance, valuation, investments, derivatives, risk, and taxation.
           Organized by concept, driven by interactive tools, with notes for future-me.
         </p>
       </div>
@@ -47,6 +47,20 @@
       <div class="container">
         
     <div class="concept-filter-bar">
+      <div class="concept-search-row">
+        <div class="concept-search-wrapper">
+          <span class="concept-search-icon" aria-hidden="true">🔍</span>
+          <input
+            type="search"
+            id="concept-search-input"
+            class="concept-search-input"
+            placeholder="Search 109 concepts by topic, keyword, formula, or book (e.g. WACC, Black-Scholes, 83(b), Penman, Kelly)..."
+            aria-label="Search concepts"
+            autocomplete="off"
+          />
+          <button type="button" id="concept-search-clear" class="concept-search-clear" title="Clear search" aria-label="Clear search">&times;</button>
+        </div>
+      </div>
       <div class="filter-group">
         <span class="filter-group__label">Tier:</span>
         <button type="button" class="filter-btn filter-btn--active" data-filter-type="tier" data-filter-value="all">All Tiers</button>
@@ -57,9 +71,31 @@
         <span class="filter-group__label">Domain:</span>
         <button type="button" class="filter-btn filter-btn--active" data-filter-type="domain" data-filter-value="all">All Domains</button>
         <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="corpfin">Corporate Finance</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="fsa">FSA &amp; Valuation</button>
         <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="invest">Investments</button>
         <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="deriv">Derivatives</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="risk">Risk</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="tax">Tax</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="macro">Macro</button>
+        <button type="button" class="filter-btn" data-filter-type="domain" data-filter-value="behav">Behavioral</button>
       </div>
+      <div class="concept-filter-meta">
+        <span id="concept-results-count">Showing all 109 concepts</span>
+        <span>Tip: Press <kbd style="padding: 1px 5px; background: var(--color-gray-100); border: 1px solid var(--color-border); border-radius: 3px; font-family: var(--font-mono);">/</kbd> to search</span>
+      </div>
+    </div>
+        
+    <div id="concept-empty-state" class="concept-empty-state">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔎</div>
+      <p style="font-size: 1.05rem; font-weight: 700; color: var(--color-gray-900); margin-bottom: 0.35rem;">
+        No concepts match your search
+      </p>
+      <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 1rem;">
+        Try a broader keyword or reset the active domain and tier filters.
+      </p>
+      <button type="button" id="concept-reset-btn" class="filter-btn filter-btn--active" style="padding: 0.4rem 1rem;">
+        Reset Search &amp; Filters
+      </button>
     </div>
         
       <section class="domain-section" data-domain="corpfin">
@@ -72,7 +108,7 @@
         </div>
         <div class="concept-grid">
           
-        <a href="/pages/learn/tvm.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/tvm.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="tvm time value of money corpfin corporate finance & foundations core interactive gabriel hawawini ch. 2 zvi bodie ch. 5 black-scholes inflation tax-shield  time value of money intuition a dollar received today is worth more than a dollar received tomorrow because a dollar today can be invested to earn a positive return, and because inflation erodes future purchasing power. every valuation model across corporate finance and investments is built on this foundation: converting cash flows across disparate points in time into a common denominator today. formula pv = sum {t=1}^{t} frac{cf t}{ 1 + r ^t} variable glossary pv : present value — the current worth of a future stream of cash flows discounted at rate r . cf t : cash flow at time t — the nomin">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -83,7 +119,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/dividend-policy.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/dividend-policy.html" class="concept-card" data-tier="reference" data-domain="corpfin" data-search="dividend-policy dividend policy and payout corpfin corporate finance & foundations reference explainer gabriel hawawini ch. 13  tvm entity-choice  dividend policy and payout intuition dividend policy governs how a firm distributes excess operating cash flow back to equity holders—primarily via cash dividends or share repurchases. under modigliani miller mm dividend irrelevance in frictionless, tax neutral markets with fixed investment policy , the timing and form of dividend payouts do not affect firm value or shareholder wealth. in the real world, taxation differences, agency frictions, and information signaling make payout policy a strategic decision. structure cash dividends: direct capital distribution resulting in an immediate taxa">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -94,7 +130,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/discount-rate.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/discount-rate.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="discount-rate discount rates and opportunity cost corpfin corporate finance & foundations core formula gabriel hawawini ch. 2, 12 zvi bodie ch. 5 tvm wacc cost-of-equity risk-return  discount rates and opportunity cost intuition the discount rate is the rate of return an investor or enterprise requires to commit capital to a specific project or asset rather than the next best alternative of identical risk. it is fundamentally an opportunity cost of capital : if capital can earn 10 % elsewhere in the market at the same risk level, deploying that capital into an internal project yielding only 8 % destroys shareholder value, even if the project is nominally &quot;profitable&quot; on an accounting income statement. in executive capital allocation, the discount rate serves as the hurdle">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -105,7 +141,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/risk-return.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/risk-return.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="risk-return risk-return tradeoff corpfin corporate finance & foundations core formula zvi bodie ch. 5, 6 gabriel hawawini ch. 12 discount-rate diversification cost-of-equity  risk return tradeoff intuition the risk return tradeoff is the bedrock principle of modern finance: rational investors will only tolerate higher variance or downside uncertainty if compensated by higher expected returns. in financial markets, capital is scarce, and risk averse investors bid up the prices of low variance cash flows lowering their prospective yields while demanding substantial discounts on volatile, cyclical cash flows raising their required expected yields . for corporate leaders and portfolio architects, the critical distinction is between total risk standard deviation sigma ">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -116,7 +152,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/diversification.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/diversification.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="diversification diversification and portfolio risk corpfin corporate finance & foundations core interactive zvi bodie ch. 6, 7 gabriel hawawini ch. 12 risk-return cost-of-equity var  diversification and portfolio risk intuition diversification has famously been called &quot;the only free lunch in finance&quot; harry markowitz, 1952 . by combining assets whose returns do not move in lockstep—meaning their correlation coefficient rho is strictly less than +1.0 —an investor or corporate enterprise can reduce overall portfolio variance below the weighted average variance of the individual assets, without sacrificing expected return. in an n asset portfolio, as n grows large, the contribution of individual asset variances shrinks toward zero, and the portfolio's total risk converges to ">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -127,7 +163,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/fcf.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/fcf.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="fcf free cash flow (fcff vs fcfe) corpfin corporate finance & foundations core formula gabriel hawawini ch. 3, 9 stephen h. penman ch. 4 tvm npv-irr wacc working-capital  free cash flow fcff vs fcfe intuition accounting earnings net income, ebitda are opinions; cash flow is fact. free cash flow fcf measures the actual cash generated by a business's operations that remains available for distribution to capital providers after funding all required operating expenses, working capital expansions, and capital expenditures capex needed to maintain and grow the asset base. executive finance distinguishes two fundamental tiers of free cash flow: 1. free cash flow to the firm fcff / unlevered free cash flow : cash available to all capital providers both debt holders an">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -138,7 +174,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/npv-irr.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/npv-irr.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="npv-irr net present value and internal rate of return corpfin corporate finance & foundations core interactive gabriel hawawini ch. 2 zvi bodie ch. 5 tvm discount-rate fcf capital-budgeting  net present value and internal rate of return intuition capital budgeting decisions define the long term trajectory of an enterprise. the two preeminent metrics for evaluating investment projects are net present value npv and internal rate of return irr . net present value npv : the dollar amount of economic value created today by undertaking the project. it equals the present value of all expected future cash inflows minus the present value of all initial and subsequent cash outlays, discounted at the project's required opportunity cost of capital r . decision rule: accept any project with t">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -149,7 +185,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/wacc.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/wacc.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="wacc weighted average cost of capital (wacc) corpfin corporate finance & foundations core interactive gabriel hawawini ch. 12 peter d. easton ch. 11 cost-of-equity cost-of-debt capital-structure tax-shield  weighted average cost of capital wacc intuition the weighted average cost of capital wacc represents the blended average hurdle rate that an enterprise must earn across its existing operating assets to satisfy all of its capital providers—both common equity shareholders and interest bearing debt lenders. because debt interest is tax deductible in most corporate tax codes, the effective economic cost of debt to the corporation is shielded by 1 t , making debt capital substantially cheaper than equity capital. however, adding debt increases financial leverage, elevating the volatility of residu">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -160,7 +196,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/cost-of-equity.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/cost-of-equity.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="cost-of-equity cost of equity (capm, ddm & build-up) corpfin corporate finance & foundations core formula gabriel hawawini ch. 12 zvi bodie ch. 9 wacc risk-return discount-rate  cost of equity capm, ddm & build up intuition the cost of equity r e is the expected rate of return that common shareholders require to invest capital into an enterprise rather than allocating to other equity investments of comparable risk. unlike debt, equity has no contractual coupon payment and no maturity date; its cost is entirely an implicit opportunity cost . because equity holders occupy the most junior residual position in the capital structure, they absorb all business operational variance and bankruptcy downside. therefore, the cost of equity is always strictly higher than the cost">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -171,7 +207,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/cost-of-debt.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/cost-of-debt.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="cost-of-debt cost of debt (pre-tax & after-tax) corpfin corporate finance & foundations core formula gabriel hawawini ch. 12 peter d. easton ch. 11 wacc tax-shield capital-structure  cost of debt pre tax & after tax intuition the cost of debt represents the effective interest rate an enterprise must pay to raise new debt financing in the capital markets. because debt holders have contractual seniority and collateral liens over company assets in liquidation, their downside is capped absent default , making the required pre tax cost of debt r d lower than the cost of equity. crucially, in the corporate tax systems of the united states and most developed jurisdictions, interest expense paid on corporate debt is a tax deductible expense subject to irc section 163 j limitation">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -182,7 +218,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/capital-structure.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/capital-structure.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="capital-structure capital structure & modigliani-miller theorems corpfin corporate finance & foundations core explainer gabriel hawawini ch. 11 myron scholes ch. 6 wacc tax-shield cost-of-debt dividend-policy  capital structure & modigliani miller theorems intro capital structure is the mix of long term debt and equity financing used by an enterprise to fund its overall operations and growth. the central question in corporate finance is: does the choice of capital structure affect the total market value of the firm, and is there an optimal debt to equity ratio that minimizes wacc? the theoretical foundation was established by franco modigliani and merton miller mm, nobel laureates 1958, 1963 : 1. mm proposition i without taxes irrelevance : in a frictionless world with perfect capital markets, zero">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -193,7 +229,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/working-capital.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/working-capital.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="working-capital working capital management & cash conversion cycle corpfin corporate finance & foundations core formula gabriel hawawini ch. 5, 6 peter d. easton ch. 4 fcf capital-budgeting reformulated-bs  working capital management & cash conversion cycle intuition working capital management governs the operational circulatory system of an enterprise. it balances two competing executive priorities: liquidity ensuring the business never defaults on short term payroll or supplier obligations and profitability minimizing the amount of expensive capital trapped idly in accounts receivable, raw materials, and unsold warehouse inventory . hawawini & viallet introduce a vital distinction often missed in generic accounting: working capital requirement wcr / operating net working capital : the net oper">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -204,7 +240,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/capital-budgeting.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/capital-budgeting.html" class="concept-card" data-tier="core" data-domain="corpfin" data-search="capital-budgeting capital budgeting & capital allocation decisions corpfin corporate finance & foundations core explainer gabriel hawawini ch. 2, 10 stephen h. penman ch. 10 npv-irr wacc fcf working-capital  capital budgeting & capital allocation decisions intro capital allocation is the preeminent, non delegable duty of the chief executive officer and senior leadership team. warren buffett once observed that over a ten year tenure, a ceo whose company retains 10% of earnings annually will allocate capital equal to more than 60% of the firm's entire starting net worth. doing this well creates enduring competitive advantage; doing it poorly squanders decades of operational brilliance. capital budgeting is the formalized process of planning, evaluating, and selecting long term investments in tangib">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -215,7 +251,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/real-options.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/real-options.html" class="concept-card" data-tier="reference" data-domain="corpfin" data-search="real-options real options in capital budgeting corpfin corporate finance & foundations reference explainer gabriel hawawini ch. 16 john c. hull ch. 35 capital-budgeting npv-irr binomial-pricing  real options in capital budgeting intuition traditional capital budgeting models dcf and npv assume an inflexible, &quot;now or never&quot; decision path: management commits upfront capital and passively watches cash flows unfold over a 10 year horizon. in volatile commercial reality, executives possess managerial flexibility : the ongoing right—without the obligation—to adapt, expand, defer, contract, or abandon capital projects as new market information emerges. because standard discounted cash flow penalizes uncertainty through higher discount rates, dcf systematically undervalues projects that poss">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -226,7 +262,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/ma-mechanics.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/ma-mechanics.html" class="concept-card" data-tier="reference" data-domain="corpfin" data-search="ma-mechanics m&a deal mechanics & accretion/dilution corpfin corporate finance & foundations reference explainer gabriel hawawini ch. 14 external sources dcf multiples ma-tax  m&a deal mechanics & accretion/dilution intuition mergers and acquisitions m&a represent the most capital intensive, high stakes decisions an executive team can execute. behind the strategic narrative lies rigorous transaction arithmetic: purchase consideration mix, synergy realization, purchase price allocation ppa , and pro forma eps accretion / dilution modeling. corporate buyers evaluate transaction financing across two primary modes: 1. cash / debt financing: buyer issues corporate debt or draws revolver liquidity. transaction cost is the after tax cost of debt: r { text{debt}} times 1 t">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -237,7 +273,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/lbo.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/lbo.html" class="concept-card" data-tier="reference" data-domain="corpfin" data-search="lbo leveraged buyout (lbo) structure & returns math corpfin corporate finance & foundations reference explainer gabriel hawawini ch. 14 external sources capital-structure fcf pe-fund-economics  leveraged buyout lbo structure & returns math intuition a leveraged buyout lbo is the acquisition of a mature company funded using a substantial proportion of borrowed capital typically 50% to 70% debt and a minority equity check 30% to 50% provided by a private equity sponsor. the financial engineering magic of an lbo relies on using the target company's own future operating free cash flows to service and pay down the acquisition debt . over a standard 3 to 7 year private equity holding period, as corporate debt is paid down, the private equity fund's equity value expands dramatically—even i">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -248,7 +284,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/pe-fund-economics.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/pe-fund-economics.html" class="concept-card" data-tier="reference" data-domain="corpfin" data-search="pe-fund-economics private equity fund economics (2-and-20 & waterfalls) corpfin corporate finance & foundations reference explainer external sources  lbo vc-mechanics npv-irr  private equity fund economics 2 and 20 & waterfalls intuition institutional private equity and venture capital funds operate as closed end limited partnerships governed by a private placement memorandum ppm and a limited partnership agreement lpa . the partnership unites two parties: limited partners lps : institutional asset owners pension funds, university endowments, sovereign wealth funds, family offices who commit capital and take zero operational management role. general partner gp : the fund sponsor and management team who source, execute, govern, and exit portfolio investments. fund e">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -259,7 +295,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/vc-mechanics.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/vc-mechanics.html" class="concept-card" data-tier="reference" data-domain="corpfin" data-search="vc-mechanics venture capital stages & term sheet mechanics corpfin corporate finance & foundations reference explainer external sources  pe-fund-economics private-company-val tax-comp  venture capital stages & term sheet mechanics intuition venture capital vc finances high growth, early stage technology and life science companies characterized by negative cash flows, zero tangible collateral, and extreme power law outcomes where 10 % of portfolio companies generate 90 % of total fund returns . because traditional debt covenants and dcf models fail on pre revenue startups, vc investors manage risk through preferred stock term sheet architecture : 1. valuation & dilution mechanics: text{post money valuation} = text{pre money valuation} + text{new investment capital} text{inve">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -281,7 +317,7 @@
         </div>
         <div class="concept-grid">
           
-        <a href="/pages/learn/reformulated-bs.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/reformulated-bs.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="reformulated-bs reformulated balance sheet fsa financial statement analysis core interactive stephen h. penman ch. 8 peter d. easton ch. mod. 3 dupont  reformulated balance sheet intuition standard gaap/ifrs balance sheets group assets and liabilities by liquidity current vs. non current . stephen penman's reformulated balance sheet regroups them by business purpose: operating activities vs. financing activities. operating activities create value through customer products and services; financing activities merely raise the capital to fund operations. untangling the two isolates net operating assets noa and net financial obligations nfo . structure text{noa} = text{operating assets} text{operating liabilities} text{nfo} = text{financial liabi">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -292,7 +328,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/dupont.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/dupont.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="dupont dupont analysis fsa financial statement analysis core formula peter d. easton ch. mod. 5 stephen h. penman ch. 11 reformulated-bs  dupont analysis intuition dupont analysis deconstructs return on equity roe into operational efficiency, asset utilization, and financial leverage. instead of evaluating roe in a vacuum, dupont isolates how management generated the return: by commanding strong profit margins, by rapidly turning over its asset base, or by gearing up with borrowed leverage. formula text{roe} = left frac{ text{net income}}{ text{sales}} right times left frac{ text{sales}}{ text{assets}} right times left frac{ text{assets}}{ text{equity}} right variable glossary net margin left frac{ text{net income}}{ text{sales">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -303,7 +339,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/whale-curve.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/whale-curve.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="whale-curve customer profitability and the whale curve fsa financial statement analysis core explainer robert s. kaplan ch. 5 peter d. easton ch. mod. 4 dupont reformulated-bs  customer profitability and the whale curve intuition standard financial statements report aggregate revenue, aggregate cogs, and a single net operating profit. this aggregation conceals a stark operational reality: not all revenue dollars are created equal. because conventional accounting allocates indirect selling, general, and administrative sg&a expenses as a uniform percentage of revenue, it disguises the fact that different customers consume wildly disparate corporate resources. when cost to serve is traced to individual accounts via activity based costing or tdabc , ranking customers fr">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -314,7 +350,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/reformulated-is.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/reformulated-is.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="reformulated-is reformulated income statement & nopat fsa financial statement analysis core explainer stephen h. penman ch. 8, 9 peter d. easton ch. 3 reformulated-bs roe-decomposition fcf  reformulated income statement & nopat intro standard gaap/ifrs income statements commingle two fundamentally distinct business activities: operating activities creating and selling goods/services, r&d, brand marketing and financing activities borrowing debt, issuing equity, investing surplus cash in marketable securities . stephen penman’s reformulated income statement draws a rigid line between these activities: 1. operating income nopat / core operating income : measures the true economic profitability generated by the enterprise's operating assets, entirely independent of financial leverag">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -325,7 +361,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/roe-decomposition.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/roe-decomposition.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="roe-decomposition roe decomposition (penman-style) fsa financial statement analysis core formula stephen h. penman ch. 11, 12 peter d. easton ch. 3 dupont reformulated-bs reformulated-is  roe decomposition penman style intuition while traditional 3 stage or 5 stage dupont analysis decomposes return on equity roe using accounting ratios, it fundamentally conflates operating leverage with financial leverage because its asset turnover and leverage ratios lump operating assets factories, inventory together with financing assets cash and financing liabilities debt . stephen penman’s advanced roe decomposition cleanly separates the firm into two distinct economic engines: 1. the operating engine text{rnoa} : return on net operating assets text{nopat} / text{noa} . this measures how ">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -336,7 +372,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/accrual-quality.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/accrual-quality.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="accrual-quality accrual quality & earnings persistence fsa financial statement analysis core formula stephen h. penman ch. 16, 17 peter d. easton ch. 6 cash-flow-analysis fcf reformulated-is  accrual quality & earnings persistence intuition under accrual accounting, revenues and expenses are recognized when economic performance obligations are satisfied, not when cash changes hands. consequently, net income = cash flow from operations + accruals . accruals are essential for matching revenues with expenses, but they require managerial judgment, estimates, and subjectivity revenue recognition milestones, bad debt allowances, inventory obsolescence provisions, capitalized software development . richard sloan’s seminal research 1996 documented the accrual anomaly : earnings driven by ">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -347,7 +383,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/cash-flow-analysis.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/cash-flow-analysis.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="cash-flow-analysis cash flow statement analysis fsa financial statement analysis core explainer peter d. easton ch. 4 stephen h. penman ch. 10 fcf accrual-quality working-capital  cash flow statement analysis intro the statement of cash flows is the ultimate truth teller of financial reporting. while the balance sheet provides a static snapshot of assets and liabilities at a specific moment, and the income statement reflects subjective accrual based revenues and expenses over a period, the cash flow statement reconciles exactly how cash entered and exited the business. cash flows are organized into three mandatory gaap/ifrs activities: 1. operating cash flow cfo : cash generated from or consumed by core commercial operations collections from customers minus payments to">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -358,7 +394,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/dcf.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/dcf.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="dcf discounted cash flow valuation (enterprise vs equity) fsa financial statement analysis core interactive russell lundholm ch. 4, 5 stephen h. penman ch. 4 fcf wacc terminal-value multiples  discounted cash flow valuation enterprise vs equity intuition discounted cash flow dcf valuation is the gold standard of fundamental intrinsic valuation. it embodies the core axiom of finance: an asset is worth the present value of the future cash flows it will generate for its owners, discounted at a rate reflecting the risk and timing of those cash flows. practitioners employ two primary dcf architectures: 1. the enterprise approach unlevered dcf : forecasts free cash flow to the firm fcff over an explicit forecast horizon plus a terminal value tv representing perpetual post forecast operat">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -369,7 +405,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/terminal-value.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/terminal-value.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="terminal-value terminal value (exit multiple vs perpetuity growth) fsa financial statement analysis core formula russell lundholm ch. 6 stephen h. penman ch. 5 dcf multiples wacc  terminal value exit multiple vs perpetuity growth intuition because an ongoing business is a going concern expected to generate cash flows in perpetuity, financial models cannot forecast individual line item income statements out to infinity. instead, valuation models split time into two phases: 1. explicit forecast period t = 1 dots t : typically 5 to 10 years, where detailed revenue growth, operational margins, working capital, and capital expenditures are modeled explicitly. 2. terminal period t t : the infinite horizon beyond year t , captured in a single figure: the terminal value tv . v">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -380,7 +416,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/residual-income.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/residual-income.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="residual-income residual income & eva valuation fsa financial statement analysis core formula stephen h. penman ch. 5, 6 russell lundholm ch. 7 dcf reformulated-bs wacc  residual income & eva valuation intuition traditional accounting net income declares a company &quot;profitable&quot; as long as revenues exceed explicit accounting expenses. however, this ignores the cost of equity capital: shareholders provided equity with an opportunity cost, yet the gaap income statement charges zero expense for using shareholder equity! residual income also formulated as economic value added / eva by stern stewart corrects this fatal blindspot: text{residual income} = text{accounting profit} text{capital employed} times text{cost of capital} a company only creates true economic we">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -391,7 +427,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/ddm.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/ddm.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="ddm dividend discount model (gordon growth) fsa financial statement analysis core formula zvi bodie ch. 18 russell lundholm ch. 3 cost-of-equity dcf dividend-policy  dividend discount model gordon growth intuition the dividend discount model ddm is the foundational valuation model developed by john burr williams 1938 and formalized by myron j. gordon 1956 . it posits that the intrinsic value of a share of common stock equals the present value of all future cash dividends paid to the shareholder in perpetuity. while free cash flow measures the cash generated by the underlying enterprise, dividends represent the actual cash receipts received by minority equity investors . under the gordon constant growth model , if dividends are assumed to grow at a constan">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -402,7 +438,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/multiples.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/multiples.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="multiples relative valuation & comparable multiples fsa financial statement analysis core interactive peter d. easton ch. 11 russell lundholm ch. 9 dcf terminal-value valuation-reconciliation  relative valuation & comparable multiples intuition relative valuation determines the value of an enterprise by comparing it to the market pricing of similar &quot;comparable&quot; peer companies or recent precedent transactions. it is the most ubiquitous valuation methodology in investment banking, equity research, and board pitch decks due to its apparent speed and market anchoring. multiples express the ratio of a market value measure to an operational performance metric: 1. enterprise value multiples ev/ebitda, ev/ebit, ev/sales : compare the value of the entire operating business text{ev} to opera">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -413,7 +449,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/valuation-reconciliation.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/valuation-reconciliation.html" class="concept-card" data-tier="core" data-domain="fsa" data-search="valuation-reconciliation valuation reconciliation & triangulation fsa financial statement analysis core explainer stephen h. penman ch. 13 russell lundholm ch. 8 dcf multiples residual-income terminal-value  valuation reconciliation & triangulation intro no single valuation methodology holds a monopoly on the truth. discounted cash flow dcf , residual operating income reoi , and comparable multiples comps each view the enterprise through a distinct analytical lens: dcf: anchors on long term operating cash flows and cost of capital, but is highly sensitive to terminal value growth and discount rate assumptions. residual operating income reoi : anchors on current audited balance sheet assets, forecasting the duration and magnitude of abnormal economic rents the competitive moat . under identical ac">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -424,7 +460,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/revenue-recognition.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/revenue-recognition.html" class="concept-card" data-tier="reference" data-domain="fsa" data-search="revenue-recognition revenue recognition (asc 606 / ifrs 15) fsa financial statement analysis reference explainer peter d. easton ch. mod. 6 stephen h. penman ch. 16 accrual-quality reformulated-is cash-flow-analysis  revenue recognition asc 606 / ifrs 15 intuition revenue is the single largest item on the corporate income statement and the primary target of aggressive earnings management. under converged global accounting standards asc 606 in us gaap and ifrs 15 internationally , companies cannot recognize revenue merely because cash is collected or an invoice is mailed. instead, the core principle mandates that revenue is recognized when or as control of promised goods or services is transferred to the customer , in an amount that reflects the consideration the company expects to be entitled to receive. ">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -435,7 +471,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/lease-accounting.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/lease-accounting.html" class="concept-card" data-tier="reference" data-domain="fsa" data-search="lease-accounting lease accounting (asc 842 / ifrs 16) fsa financial statement analysis reference explainer peter d. easton ch. mod. 10 stephen h. penman ch. 13 reformulated-bs cost-of-debt comparables  lease accounting asc 842 / ifrs 16 intuition for decades prior to 2019, airlines, retailers, and restaurant chains structured billions of dollars of aircraft and store obligations as &quot;operating leases&quot; to keep massive fixed debt obligations completely off balance sheet under legacy asc 840 . modern accounting standards asc 842 under us gaap and ifrs 16 internationally eliminated this off balance sheet loophole. today, virtually all leases with terms exceeding 12 months must be capitalized directly onto the corporate balance sheet by recording: 1. lease liability: the present value of future c">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -446,7 +482,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/stock-comp.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/stock-comp.html" class="concept-card" data-tier="reference" data-domain="fsa" data-search="stock-comp stock-based compensation (asc 718) fsa financial statement analysis reference explainer peter d. easton ch. mod. 9 stephen h. penman ch. 9 fcf dcf tax-comp  stock based compensation asc 718 intuition stock based compensation sbc —issued via restricted stock units rsus , employee stock options esos , and performance share units psus —is the primary mechanism technology and growth companies use to attract talent while conserving cash. under asc 718 , companies must measure the fair value of equity awards on the grant date using the stock price for rsus or black scholes/lattice models for options and recognize that cost as an operating expense on the income statement ratably over the employee's service vesting period typically 4 years . in modern fi">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -457,7 +493,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/deferred-tax-fsa.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/deferred-tax-fsa.html" class="concept-card" data-tier="reference" data-domain="fsa" data-search="deferred-tax-fsa deferred taxes on the financial statements fsa financial statement analysis reference explainer peter d. easton ch. mod. 10 stephen h. penman ch. 10 deferred-tax accrual-quality reformulated-bs  deferred taxes on the financial statements intuition while tax strategists focus on minimizing cash payments to tax authorities, financial statement analysts easton mod. 10; penman ch. 10 examine the income tax footnote to evaluate earnings quality, cash flow sustainability, and hidden balance sheet assets or liabilities. on the income statement, total gaap income tax expense provision is the sum of two components: text{total gaap tax provision} = text{current tax expense cash taxes payable } + text{deferred tax expense delta text{dtl} delta text{dta} } every public company's 10 k tax footnot">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -468,7 +504,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/comparables.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/comparables.html" class="concept-card" data-tier="reference" data-domain="fsa" data-search="comparables selecting comparables & peer benchmarking fsa financial statement analysis reference explainer peter d. easton ch. mod. 13 russell lundholm ch. 11 multiples dcf valuation-reconciliation  selecting comparables & peer benchmarking intuition relative valuation multiples analysis estimates an asset's value by pricing it relative to how the market currently prices similar assets. while mathematically simple, the entire validity of a multiples valuation rests on a single foundational discipline: how the comparable peer group &quot;comps&quot; is constructed and normalized easton mod. 13; lundholm & sloan ch. 11 . two companies in the same industry classification sic / naics / gics code do not automatically warrant the same valuation multiple. from fundamental valuation algebra gordon growth ">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -479,7 +515,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/private-company-val.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/private-company-val.html" class="concept-card" data-tier="reference" data-domain="fsa" data-search="private-company-val private company valuation adjustments (dlom & control) fsa financial statement analysis reference explainer russell lundholm ch. 12 peter d. easton ch. mod. 14 multiples dcf vc-mechanics  private company valuation adjustments dlom & control intuition valuing privately held businesses—for m&a acquisitions, shareholder buyouts, gift/estate tax filings, or employee 409a equity valuations—requires bridging public market valuation data to an illiquid, closely held environment lundholm & sloan ch. 12 . private company valuation differs from public equity valuation across two structural axes: 1. marketability liquidity : public shares can be sold in milliseconds on an exchange at near zero transaction cost. private shares have no public exchange, face contractual transfer restriction">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -501,7 +537,7 @@
         </div>
         <div class="concept-grid">
           
-        <a href="/pages/learn/market-efficiency.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/market-efficiency.html" class="concept-card" data-tier="core" data-domain="invest" data-search="market-efficiency market efficiency (emh forms) invest investments & fixed income core explainer zvi bodie ch. 11  black-scholes  market efficiency emh forms intuition the efficient market hypothesis emh , formulated by eugene fama, posits that security prices fully and rapidly reflect all available information. under market efficiency, active attempts to generate consistent risk adjusted excess returns &quot;alpha&quot; without inside information or bearing uncompensated risks are expected to yield zero economic profit after transaction costs. structure emh is historically categorized into three nested forms based on the definition of the available information set: 1. weak form efficiency: current prices reflect all information ">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -512,7 +548,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/efficient-frontier.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/efficient-frontier.html" class="concept-card" data-tier="core" data-domain="invest" data-search="efficient-frontier efficient frontier & portfolio optimization invest investments & fixed income core interactive zvi bodie ch. 6, 7, 8 gabriel hawawini ch. 12 cal-cml capm diversification  efficient frontier intuition the efficient frontier is the cornerstone of modern portfolio theory mpt , developed by harry markowitz in 1952. it represents the set of optimal portfolios in expected return–volatility space that offer the highest possible expected return for a given level of risk , or equivalently, the lowest possible risk variance for a targeted expected return . portfolios located below the frontier are economically sub optimal because an investor could achieve higher returns with the exact same volatility, or lower volatility with the same return, simply by adjusting portfol">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -523,7 +559,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/cal-cml.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/cal-cml.html" class="concept-card" data-tier="core" data-domain="invest" data-search="cal-cml capital allocation line and capital market line invest investments & fixed income core formula zvi bodie ch. 6, 7 gabriel hawawini ch. 12 efficient-frontier capm sml  capital allocation line and capital market line intuition modern portfolio theory proves that an investor's total asset allocation problem separates into two independent decisions james tobin’s two fund separation theorem : 1. the technical portfolio decision: identifying the single optimal tangency portfolio of risky assets that maximizes the sharpe ratio, completely independent of individual risk aversion. 2. the personal allocation decision: choosing how to split total wealth between that optimal risky portfolio and the risk free asset treasury bills based strictly on personal risk toleran">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -534,7 +570,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/capm.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/capm.html" class="concept-card" data-tier="core" data-domain="invest" data-search="capm capital asset pricing model (capm) invest investments & fixed income core formula zvi bodie ch. 9 gabriel hawawini ch. 12 sml factor-models cost-of-equity  capital asset pricing model capm intuition the capital asset pricing model capm , independently developed by william sharpe, john lintner, and jan mossin in the mid 1960s, provides the fundamental theoretical link between an asset's systematic risk and its equilibrium expected return. capm’s core breakthrough is that in an efficient market, investors are not compensated for taking diversifiable firm specific risk . because an investor can eliminate unsystematic variance at zero cost by holding the broad market portfolio, the only risk that commands an equilibrium premium is systematic risk —t">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -545,7 +581,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/sml.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/sml.html" class="concept-card" data-tier="core" data-domain="invest" data-search="sml security market line and alpha invest investments & fixed income core formula zvi bodie ch. 9 gabriel hawawini ch. 12 capm factor-models market-efficiency  security market line and alpha intuition the security market line sml is the graphical representation of the capital asset pricing model capm . while the capital market line cml plots expected return against total risk sigma for complete portfolios, the sml plots expected return against systematic risk beta for individual securities, portfolios, or corporate business units. in equilibrium, all correctly priced securities must lie directly on the sml. when a security's expected return diverges from its capm fair required return, it generates jensen’s alpha alpha : positive alpha alpha 0 : the ">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -556,7 +592,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/factor-models.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/factor-models.html" class="concept-card" data-tier="core" data-domain="invest" data-search="factor-models factor models (fama-french multi-factor asset pricing) invest investments & fixed income core explainer zvi bodie ch. 13 gabriel hawawini ch. 12 capm sml market-efficiency  factor models fama french multi factor asset pricing intro while the single factor capm was a monumental theoretical breakthrough, decades of empirical market data revealed that single factor market beta fails to explain why certain categories of stocks consistently outperform or underperform over long horizons. eugene fama and kenneth french 1992, 1993, 2015 revolutionized quantitative asset pricing by demonstrating that stock returns are driven by multiple systematic risk dimensions: 1. the fama french 3 factor model: market factor text{mkt} r f : broad equity market risk premium. size fact">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -567,7 +603,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/bond-pricing.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/bond-pricing.html" class="concept-card" data-tier="core" data-domain="invest" data-search="bond-pricing bond pricing mechanics invest investments & fixed income core formula zvi bodie ch. 14 gabriel hawawini ch. 12 ytm duration yield-curve  bond pricing mechanics intuition a standard fixed income bond is a contractual debt instrument that pays a stream of periodic interest payments coupons over a specified tenor, culminating in the repayment of the principal face value / par value at maturity. bond pricing is a direct application of the time value of money: the price of a bond equals the present value of its annuity coupon stream plus the present value of its single principal par lump sum , discounted at the market required rate of return yield to maturity / ytm . the fundamental rule of bond mechanics is the inverse relationshi">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -578,7 +614,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/ytm.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/ytm.html" class="concept-card" data-tier="core" data-domain="invest" data-search="ytm yield to maturity and spot yields invest investments & fixed income core formula zvi bodie ch. 14 gabriel hawawini ch. 12 bond-pricing duration credit-spreads  yield to maturity and spot yields intuition yield to maturity ytm is the internal rate of return irr of a bond: it is the single annualized discount rate that equates the present value of all remaining contractual coupon and principal cash flows to the bond's current market price. while ytm is the universal quotation standard across global fixed income markets, it contains two critical implicit assumptions that executives must understand: 1. hold to maturity: the investor holds the bond until final redemption without defaulting. 2. reinvestment assumption: all interim coupon cash flows can be">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -589,7 +625,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/duration.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/duration.html" class="concept-card" data-tier="core" data-domain="invest" data-search="duration macaulay and modified duration invest investments & fixed income core interactive zvi bodie ch. 16 gabriel hawawini ch. 12 convexity duration-hedging bond-pricing  macaulay and modified duration intuition a bond's maturity date states when the final principal is repaid, but it tells an executive very little about how sensitive the bond's market value is to interest rate swings. a 30 year bond paying a massive 10% coupon returns most of its cash flows in early years, making it far less volatile than a 30 year zero coupon bond that pays nothing until year 30. frederick macaulay 1938 solved this by introducing duration : 1. macaulay duration d { text{mac}} : the weighted average time in years until a bond's cash flows are received, where the weights are th">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -600,7 +636,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/convexity.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/convexity.html" class="concept-card" data-tier="core" data-domain="invest" data-search="convexity convexity and second-order price approximation invest investments & fixed income core formula zvi bodie ch. 16 john c. hull ch. 4 duration duration-hedging bond-pricing  convexity and second order price approximation intuition modified duration is a linear tangent line approximation to the bond price yield curve. however, the actual mathematical relationship between bond price and yield is non linear and bowed toward the origin: it is strictly convex . convexity is the second derivative of bond price with respect to interest rates the curvature . it captures how duration itself changes as yields shift: text{convexity} = frac{1}{p} frac{d^2 p}{dy^2} convexity is an asymmetric positive gift to bondholders: when interest rates rise, price falls by less than line">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -611,7 +647,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/duration-hedging.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/duration-hedging.html" class="concept-card" data-tier="core" data-domain="invest" data-search="duration-hedging duration-based hedging & immunization invest investments & fixed income core explainer zvi bodie ch. 16 john c. hull ch. 4 duration convexity yield-curve  duration based hedging & immunization intro financial institutions, corporate pension funds, and insurance companies face a structural balance sheet vulnerability: their liabilities future annuity payouts, pension payments, deposit withdrawals and their assets loans, corporate bonds, mortgage holdings respond differently to interest rate shocks. balance sheet immunization is the strategic technique of structuring asset portfolios so that their value changes identically to liabilities whenever interest rates shift, locking in a guaranteed rate of return regardless of whether yields rise or fal">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -622,7 +658,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/yield-curve.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/yield-curve.html" class="concept-card" data-tier="core" data-domain="invest" data-search="yield-curve yield curve and term structure of interest rates invest investments & fixed income core interactive zvi bodie ch. 15 john c. hull ch. 4 bond-pricing ytm duration-hedging  yield curve and term structure of interest rates intuition the yield curve plots the relationship between bond yields and their maturities for bonds of identical credit quality typically benchmark sovereign us treasuries . it is the single most watched macroeconomic thermometer in global finance, anchoring borrowing costs for mortgages, corporate loans, and equity discount rates. the curve takes four classic shapes: 1. normal upward sloping : longer maturities command higher yields. investors require a term premium to lock up capital over long horizons due to inflation uncertainty and interes">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -633,7 +669,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/credit-spreads.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/credit-spreads.html" class="concept-card" data-tier="core" data-domain="invest" data-search="credit-spreads credit spreads and default risk invest investments & fixed income core formula zvi bodie ch. 14 john c. hull ch. 24 bond-pricing ytm cost-of-debt  credit spreads and default risk intuition unlike sovereign governments that can print reserve currency to satisfy nominal debt obligations, corporate borrowers can default. lenders demand a premium over default free government bonds of identical maturity to compensate for this credit risk: this differential is the credit spread . credit spreads reflect two economic components: 1. expected loss text{pd} times text{lgd} : the actuarial probability of default text{pd} multiplied by the loss given default text{lgd} = 1 text{recovery rate} . 2. credit risk premium liquidity & systematic uncertaint">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -644,7 +680,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/active-vs-passive.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/active-vs-passive.html" class="concept-card" data-tier="reference" data-domain="invest" data-search="active-vs-passive active vs. passive management & alpha invest investments & fixed income reference explainer zvi bodie ch. 11, 24  market-efficiency capm performance-attribution  active vs. passive management & alpha intuition the debate between active management security selection and market timing to beat a benchmark and passive management holding a low cost market cap weighted index portfolio rests on two mathematical pillars: the efficient market hypothesis bodie ch. 11 and william sharpe's arithmetic of active management 1991 . sharpe's law requires zero assumptions about market efficiency; it is a pure accounting identity: 1. the market portfolio is the sum of allpassive investors plus all active investors. 2. since passive investors hold the exact market weight">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -655,7 +691,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/performance-attribution.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/performance-attribution.html" class="concept-card" data-tier="reference" data-domain="invest" data-search="performance-attribution performance attribution (brinson-fachler model) invest investments & fixed income reference explainer zvi bodie ch. 24  active-vs-passive factor-models index-construction  performance attribution brinson fachler model intuition when an investment portfolio outperforms or underperforms its benchmark by +250 text{ bps} , an investment committee must answer a fundamental diagnostic question: where did the excess return come from? did the manager make a brilliant macroeconomic call to overweight the technology sector asset allocation , or did they pick the best individual stocks within each sector security selection ? performance attribution bodie ch. 24; brinson, hood & beebower, 1986; brinson & fachler, 1985 mathematically decomposes total active portfolio return">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -666,7 +702,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/index-construction.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/index-construction.html" class="concept-card" data-tier="reference" data-domain="invest" data-search="index-construction market index construction mechanics invest investments & fixed income reference explainer zvi bodie ch. 2  active-vs-passive diversification capm  market index construction mechanics intuition a financial market index such as the s&p 500, dow jones industrial average, nasdaq 100, or russell 2000 serves two vital functions: it acts as a macroeconomic barometer of asset class performance and provides the investable benchmark for trillions of dollars of passive etfs and institutional mandates bodie ch. 2 . however, &quot;the market&quot; is not a single objective number. how an index is mathematically weighted fundamentally alters its sector concentration, turnover, rebalancing friction, and return trajectory. structure the three primary index weigh">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -677,7 +713,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/bootstrapping.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/bootstrapping.html" class="concept-card" data-tier="reference" data-domain="invest" data-search="bootstrapping bootstrapping the zero-coupon spot curve invest investments & fixed income reference explainer zvi bodie ch. 14, 15 john c. hull ch. 4 yield-curve bond-pricing ytm  bootstrapping the zero coupon spot curve intuition when pricing a multi year corporate cash flow stream or an interest rate swap, discounting every cash flow at a single yield to maturity ytm is mathematically imprecise when the yield curve is upward or downward sloping. in an arbitrage free market, a cash flow occurring at year t must be discounted at the zero coupon spot rate z t specific to that exact maturity t bodie ch. 14; hull ch. 4 . however, the us treasury and sovereign bond markets do not issue liquid zero coupon bonds at every maturity beyond 1 year—they issue coupon bearing bonds">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -688,7 +724,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/real-estate-val.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/real-estate-val.html" class="concept-card" data-tier="reference" data-domain="invest" data-search="real-estate-val commercial real estate valuation (noi & cap rates) invest investments & fixed income reference explainer external sources  dcf terminal-value lease-accounting  commercial real estate valuation noi & cap rates intuition commercial real estate cre —encompassing industrial warehouses, multifamily apartments, office towers, data centers, and retail centers—is valued as an income producing cash flow stream. whether an executive is evaluating a corporate headquarters sale leaseback, acquiring a manufacturing facility, or allocating institutional capital to real estate funds, the universal valuation language centers on two metrics: net operating income noi and the capitalization rate cap rate . direct capitalization applies the constant growth perpetuity f">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -710,7 +746,7 @@
         </div>
         <div class="concept-grid">
           
-        <a href="/pages/learn/black-scholes.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/black-scholes.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="black-scholes black-scholes option pricing deriv derivatives & options core interactive john c. hull ch. 15 sheldon natenberg ch. 5 · zvi bodie ch. 21 tvm var strategy-spread-vertical  black scholes option pricing intuition the black scholes merton model prices european options by constructing a continuously rebalanced, risk free replicating portfolio of the underlying stock and a cash borrowing. because this delta hedged portfolio has zero exposure to infinitesimal price movements, it must earn the risk free rate to prevent arbitrage. the option price depends on five variables: spot price, strike price, risk free rate, time to maturity, and volatility. noticeably absent: the expected growth rate drift of the underlying stock. formula c = s 0 n d 1 k e^{ r t} n d 2 variable">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -721,7 +757,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/strategy-spread-vertical.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/strategy-spread-vertical.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="strategy-spread-vertical vertical spreads (bull and bear spreads) deriv derivatives & options core interactive sheldon natenberg ch. 11 john c. hull ch. 12 black-scholes var  vertical spreads bull and bear spreads intuition a vertical spread involves buying and selling options of the same class calls or puts and same expiration date, but at different strike prices. vertical spreads define both maximum profit and maximum risk up front. instead of buying naked options and fighting relentless time decay negative theta and volatility crush, a vertical spread finances a portion of the long option premium by selling a further out of the money option. in a bull call spread , you buy a lower strike call k 1 and sell a higher strike call k 2 . you cap your upside above k 2">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -732,7 +768,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/forwards-futures.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/forwards-futures.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="forwards-futures forwards vs. futures mechanics deriv derivatives & options core explainer john c. hull ch. 2, 3 zvi bodie ch. 22 futures-pricing swaps-ir duration-hedging  forwards vs. futures mechanics intro forward contracts and futures contracts are the foundational linear derivatives: both represent firm commitments to buy or sell an underlying asset at a specified future date for a predetermined delivery price k . while economically equivalent at maturity under constant interest rates, their market architecture and risk profiles diverge dramatically: forward contracts: over the counter otc bilateral agreements between two private counterparties. completely customizable notional size, tenor, delivery terms , but carry counterparty credit risk and are illiqu">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -743,7 +779,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/futures-pricing.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/futures-pricing.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="futures-pricing cost of carry and futures pricing deriv derivatives & options core formula john c. hull ch. 5 zvi bodie ch. 22 forwards-futures put-call-parity yield-curve  cost of carry and futures pricing intuition the theoretical price of a forward or futures contract is governed by the law of one price and the principle of no arbitrage . to acquire an asset t years in the future, an investor has two equivalent choices: 1. buy a forward contract today agreeing to pay f 0 at time t . 2. buy the physical asset in the spot market today at s 0 , store it, insure it, pay storage costs, collect any interim cash yields dividends or interest , and finance the purchase with debt at interest rate r . because both strategies result in identical ownership of the asset at">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -754,7 +790,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/put-call-parity.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/put-call-parity.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="put-call-parity put-call parity and synthetic equivalence deriv derivatives & options core formula john c. hull ch. 11 sheldon natenberg ch. 3 black-scholes strategy-covered-call strategy-protective-put  put call parity and synthetic equivalence intuition put call parity is one of the most elegant and fundamental equilibrium laws in derivatives finance, proven by hans stoll in 1969. it establishes a static mathematical equality between the prices of european call options, european put options, the underlying stock, and a risk free zero coupon bond sharing the identical strike price k and expiration date t . the intuition rests on portfolio equivalence : portfolio a fiduciary call : buy one european call c and invest the present value of the strike k e^{ rt} in a risk free bond. portfolio b pr">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -765,7 +801,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/binomial-pricing.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/binomial-pricing.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="binomial-pricing binomial option pricing model deriv derivatives & options core interactive john c. hull ch. 13 sheldon natenberg ch. 15 black-scholes greeks-delta put-call-parity  binomial option pricing model intuition the cox ross rubinstein crr, 1979 binomial option pricing model is a discrete time lattice framework that models the price evolution of an underlying asset over a discrete number of steps until option expiration. at each step delta t , the underlying stock price s can only move to one of two possible values: upward to s cdot u with risk neutral probability p downward to s cdot d with risk neutral probability 1 p the breakthrough of the binomial model is that it does not require knowing the actual expected drift or return of the stock . because a delta h">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -776,7 +812,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/swaps-ir.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/swaps-ir.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="swaps-ir interest rate swaps and comparative advantage deriv derivatives & options core formula john c. hull ch. 7 zvi bodie ch. 23 forwards-futures yield-curve duration-hedging  interest rate swaps and comparative advantage intuition an interest rate swap irs is a bilateral derivative agreement in which two parties exchange periodic interest rate cash flows based on a specified notional principal amount , without ever exchanging the principal itself. the classic vanilla structure is a fixed for floating swap : party a fixed payer / floating receiver : pays a predetermined fixed interest rate r { text{swap}} and receives a floating reference rate e.g., sofr, euribor . party b floating payer / fixed receiver : pays the floating reference rate and receives the fixed rat">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -787,7 +823,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/greeks-delta.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/greeks-delta.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="greeks-delta delta sensitivity & directional hedge ratio deriv derivatives & options core interactive john c. hull ch. 19 sheldon natenberg ch. 6 greeks-gamma delta-hedging black-scholes  delta sensitivity & directional hedge ratio intuition delta delta is the premier first order greek in options finance. it measures the rate of change of an option’s theoretical price with respect to changes in the price of the underlying asset: delta = frac{ partial v}{ partial s} delta serves three critical executive functions: 1. directional sensitivity: if a call option has a delta of +0.60 , a 1.00 increase in the underlying stock price produces an immediate 0.60 increase in the option price. 2. hedge ratio: to create a delta neutral directionally immunized portfolio, an option seller mus">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -798,7 +834,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/greeks-gamma.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/greeks-gamma.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="greeks-gamma gamma curvature & convexity risk deriv derivatives & options core interactive john c. hull ch. 19 sheldon natenberg ch. 6 greeks-delta greeks-theta delta-hedging  gamma curvature & convexity risk intuition gamma gamma is the second order derivative of option price with respect to underlying asset price, and the first derivative of delta with respect to the asset price: gamma = frac{ partial^2 v}{ partial s^2} = frac{ partial delta}{ partial s} gamma measures the acceleration and stability of your hedge : long gamma gamma 0 : all long options calls and puts have positive gamma. as the stock rises, your delta increases making you longer ; as the stock falls, your delta decreases making you less long . gamma automatically works in your favor! in a delta n">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -809,7 +845,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/greeks-theta.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/greeks-theta.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="greeks-theta theta time decay deriv derivatives & options core interactive john c. hull ch. 19 sheldon natenberg ch. 6 greeks-gamma strategy-covered-call black-scholes  theta time decay intuition options are wasting assets with a finite lifespan. every calendar day that passes without a move in the underlying asset reduces the option’s remaining time value. theta theta measures the rate of decay of an option’s theoretical value with the passage of time: theta = frac{ partial v}{ partial t} for long options, theta is strictly negative: holding options costs money each day time decay bleed . for option sellers, theta is positive: the seller collects premium decay as the clock runs down toward expiration. the fundamental theta gamma tradeoff: in an efficient ma">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -820,7 +856,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/greeks-vega.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/greeks-vega.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="greeks-vega vega volatility exposure deriv derivatives & options core interactive john c. hull ch. 19 sheldon natenberg ch. 6 implied-vol vol-skew strategy-straddle  vega volatility exposure intuition unlike classical financial assets whose prices are driven primarily by directional movement and interest rates, options derived from non linear payoffs are intensely sensitive to market expectations of future turbulence. vega nu measures the sensitivity of an option’s theoretical price to changes in the underlying asset’s implied volatility sigma : nu = frac{ partial v}{ partial sigma} vega is strictly positive for all standard european and american long options both calls and puts . an increase in volatility expands the dispersion of future terminal stock p">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -831,7 +867,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/implied-vol.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/implied-vol.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="implied-vol implied vs. realized volatility deriv derivatives & options core formula sheldon natenberg ch. 4 euan sinclair ch. 2 greeks-vega vol-skew edge-and-ev  implied vs. realized volatility intuition volatility is the primary driver of option pricing and risk management. however, financial markets operate on two radically different manifestations of volatility: 1. realized volatility sigma { text{realized}} / historical volatility : the actual, backward looking statistical standard deviation of asset price returns observed over a historical window e.g., trailing 30, 60, or 252 trading days . it measures what actually happened in the physical world. 2. implied volatility sigma { text{implied}} / iv : the forward looking market consensus expectation">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -842,7 +878,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/vol-skew.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/vol-skew.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="vol-skew volatility skew, smile & fat tails deriv derivatives & options core explainer sheldon natenberg ch. 17 euan sinclair ch. 4 implied-vol black-scholes put-call-parity  volatility skew, smile & fat tails intro the black scholes merton model makes a foundational simplifying assumption: that returns follow a log normal distribution with constant volatility sigma across all strike prices and maturities. if this assumption were true, plotting black scholes implied volatility against strike price would yield a perfectly flat horizontal line. in real world financial markets, however, that line is never flat: the volatility smile: observed in foreign exchange fx markets, where both out of the money puts and out of the money calls trade at higher implied volatilitie">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -853,7 +889,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/delta-hedging.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/delta-hedging.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="delta-hedging dynamic delta hedging & rebalancing costs deriv derivatives & options core formula john c. hull ch. 19 euan sinclair ch. 3 greeks-delta greeks-gamma implied-vol  dynamic delta hedging & rebalancing costs intuition the entire theoretical architecture of black scholes merton option pricing rests on continuous dynamic delta hedging : an option position can be completely replicated or hedged by continuously buying or selling shares of the underlying asset so that the combined portfolio remains delta neutral delta = 0 at every instant. under continuous rebalancing in a frictionless world with zero transaction costs, the net p&l of a delta hedged short option position equals zero: the daily theta collected from time decay exactly offsets the daily gamma hed">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -864,7 +900,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/strategy-covered-call.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/strategy-covered-call.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="strategy-covered-call covered call strategy deriv derivatives & options core interactive sheldon natenberg ch. 7 john c. hull ch. 12 strategy-protective-put greeks-theta put-call-parity  covered call strategy intuition the covered call buy write is one of the most widely deployed yield enhancement strategies in equity portfolio management. it consists of owning shares of an underlying stock while simultaneously selling writing an out of the money otm call option against those identical shares . the strategy converts uncertain future upside appreciation into immediate, certain cash income today: downside buffer: the cash premium collected from selling the call provides a modest downside cushion against stock price declines. capped upside: in exchange for the upfront cash premi">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -875,7 +911,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/strategy-protective-put.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/strategy-protective-put.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="strategy-protective-put protective put strategy deriv derivatives & options core interactive john c. hull ch. 12 zvi bodie ch. 20 strategy-covered-call put-call-parity var  protective put strategy intuition the protective put portfolio insurance is the quintessential risk management strategy in institutional equity management. it consists of holding a long position in an underlying stock or portfolio while simultaneously purchasing a put option on that same asset . the strategy acts exactly like a homeowners casualty insurance policy: catastrophic floor: the strike price k of the put establishes a strictly guaranteed price floor below which portfolio losses cannot fall, regardless of how severe the market crash. uncapped upside: if the stock appreciates, the inv">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -886,7 +922,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/strategy-straddle.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/strategy-straddle.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="strategy-straddle long straddle strategy deriv derivatives & options core interactive sheldon natenberg ch. 12 john c. hull ch. 12 greeks-vega implied-vol strategy-spread-vertical  long straddle strategy intuition the long straddle is the quintessential pure volatility strategy in derivatives trading. it consists of buying an at the money atm call option and simultaneously buying an at the money put option with the exact same strike price k and expiration date t . the trade is directionally neutral delta approx 0 : the trader does not care whether the stock moves up or down. instead, the straddle is a pure bet on magnitude of movement large realized volatility : if the stock makes a massive move upward, the call gains unlimited profit while the put loss is capped at its">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -897,7 +933,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/position-sizing.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/position-sizing.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="position-sizing position sizing & the kelly criterion deriv derivatives & options core formula euan sinclair ch. 5 zvi bodie ch. 6 edge-and-ev var risk-return  position sizing & the kelly criterion intuition in quantitative trading and speculative capital allocation, having a positive mathematical edge text{ev} 0 is necessary, but wholly insufficient to prevent catastrophic bankruptcy. if a trader or enterprise bets too aggressively on favorable bets, sequential streaks of bad variance will trigger the gambler's ruin irreversible capital drawdown . conversely, betting too little leaves compounding wealth on the table. john l. kelly jr. bell labs, 1956 solved this by deriving the kelly criterion : the exact fraction of total bankroll or capital that ">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -908,7 +944,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/edge-and-ev.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/edge-and-ev.html" class="concept-card" data-tier="core" data-domain="deriv" data-search="edge-and-ev mathematical edge and expected value deriv derivatives & options core formula euan sinclair ch. 1, 2 sheldon natenberg ch. 18 position-sizing implied-vol risk-return  mathematical edge and expected value intuition at the core of all rational decision making in financial markets, casino gaming, and corporate capital allocation lies a single foundational metric: expected value mathbb{e} x / ev . expected value is the probability weighted average outcome of an uncertain decision repeated over an infinite number of identical trials: mathbb{e} x = sum {i=1}^n p i cdot x i in quantitative finance, edge is defined as having a strictly positive expected value net of all transaction costs, execution slippage, and borrow friction: text{edge} = frac{ mathbb{e} text{p">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -919,7 +955,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/american-options.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/american-options.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="american-options american options & early exercise mechanics deriv derivatives & options reference explainer john c. hull ch. 11 sheldon natenberg ch. 15 binomial-pricing black-scholes put-call-parity  american options & early exercise mechanics intuition while a european option can only be exercised on its final expiration date t , an american option grants the holder the right to exercise at any time on or before expiration 0 le t le t hull ch. 11 . almost all exchange traded single stock equity options in the united states are american style, whereas most broad index options such as spx are european style. because an american option includes every right of a european option plus the additional flexibility of early exercise, an american option is always worth at least as much as its europ">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -930,7 +966,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/swaps-fx.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/swaps-fx.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="swaps-fx cross-currency swaps (fx swaps) deriv derivatives & options reference explainer john c. hull ch. 7  swaps-ir fx-parity hedging-fx  cross currency swaps fx swaps intuition while a standard interest rate swap irs exchanges fixed vs. floating interest payments in a single currency without ever exchanging principal, a cross currency swap ccs exchanges both principal and interest payments across two different currencies e.g., us dollars and euros over a multi year tenor hull ch. 7 . cross currency swaps are engineered to exploit comparative advantage in global credit markets and hedge long term foreign asset balance sheets. for example, a us corporation may have brand recognition and cheap borrowing access in the us dollar bo">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -941,7 +977,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/exotic-options.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/exotic-options.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="exotic-options exotic options overview (barrier, asian, digital, lookback) deriv derivatives & options reference explainer john c. hull ch. 26  monte-carlo black-scholes corporate-hedging  exotic options overview barrier, asian, digital, lookback intuition standard exchange traded calls and puts are known as plain vanilla options : their payoff depends solely on the underlying asset price at a single point in time s t relative to a fixed strike price k . exotic options hull ch. 26 are custom over the counter otc derivatives engineered by investment banks for corporate treasuries, structured note issuers, and hedge funds. exotics modify the payoff rules—often making the payoff path dependent dependent on the price trajectory throughout the option's life —to achieve two primary c">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -952,7 +988,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/greeks-rho.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/greeks-rho.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="greeks-rho greeks: rho (interest rate sensitivity) deriv derivatives & options reference explainer john c. hull ch. 19 sheldon natenberg ch. 7 black-scholes greeks-delta greeks-theta  greeks: rho interest rate sensitivity intuition rho rho measures the sensitivity of an option's theoretical price to a 1 % 100 text{ bps} parallel change in the risk free interest rate r hull ch. 19 : rho = frac{ partial v}{ partial r} in short dated equity options expiring in 30 days during low interest rate regimes, rho is the least discussed of the five primary black scholes greeks because a 25 text{ bps} fed rate move barely nudges a 1 month option's price. however, rho becomes a dominant pricing driver in two major institutional domains : 1. long dated options leaps & executive stock opt">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -963,7 +999,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/greeks-charm.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/greeks-charm.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="greeks-charm greeks: charm (delta bleed / ddeltadtime) deriv derivatives & options reference explainer sheldon natenberg ch. 11  greeks-delta greeks-theta delta-hedging  greeks: charm delta bleed / ddeltadtime intuition standard first order greeks treat delta delta and theta theta as independent static numbers. in reality, as time passes toward expiration, an option's delta changes continuously even if the underlying stock price and implied volatility remain completely frozen! charm also known as delta bleed or ddeltadtime is a second order cross greek that measures the rate of change of delta with respect to the passage of time or equivalently, the sensitivity of theta to changes in the underlying price natenberg ch. 11 : text{charm} = frac{ partial delta}{ ">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -974,7 +1010,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/greeks-vanna.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/greeks-vanna.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="greeks-vanna greeks: vanna (volatility-spot cross-sensitivity) deriv derivatives & options reference explainer sheldon natenberg ch. 11  greeks-delta greeks-vega vol-skew  greeks: vanna volatility spot cross sensitivity intuition in real world financial markets, underlying asset prices s and implied volatility sigma are strongly correlated—especially in equity indices, where market sell offs trigger immediate spikes in the vix &quot;spot down, vol up&quot; . vanna is the pivotal second order cross greek that links directional risk and volatility risk natenberg ch. 11; hull ch. 19 . by young's theorem on mixed partial derivatives, vanna has two mathematically identical interpretations: 1. the sensitivity of delta delta to a change in implied volatility sigma : how much yo">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -985,7 +1021,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/vol-surface.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/vol-surface.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="vol-surface the implied volatility surface deriv derivatives & options reference explainer sheldon natenberg ch. 19 john c. hull ch. 20 implied-vol vol-skew greeks-vanna  the implied volatility surface intuition under the theoretical black scholes model, implied volatility sigma { text{iv}} is assumed to be a single constant number across all strike prices k and all expiration dates t . in real world derivatives markets, this assumption is completely false. the implied volatility surface is the three dimensional mapping of implied volatility sigma { text{iv}} k, t plotted across two independent axes natenberg ch. 19; hull ch. 20 : 1. the strike / moneyness axis vertical skew / smile : for a fixed expiration t , how implied volatility varies across strikes k / ">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -996,7 +1032,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/gamma-scalping.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/gamma-scalping.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="gamma-scalping gamma scalping (dynamic long-gamma trading) deriv derivatives & options reference explainer sheldon natenberg ch. 16 euan sinclair ch. 3 greeks-gamma greeks-theta delta-hedging  gamma scalping dynamic long gamma trading intuition when you buy an at the money straddle or delta hedged option , you hold a long gamma + gamma and short theta theta position. every day that passes costs you a fixed &quot;rent&quot; in time decay theta , while every volatile swing in the underlying asset price allows you to profit from convexity gamma . gamma scalping natenberg ch. 16; sinclair ch. 3 is the systematic institutional practice of dynamically trading the underlying stock or futures contract against a long gamma option position to buy low and sell high repeatedly , harvesting realized vola">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1007,7 +1043,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/strategy-collar.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/strategy-collar.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="strategy-collar option strategy: the collar (zero-cost risk reversal) deriv derivatives & options reference explainer sheldon natenberg ch. 13 john c. hull ch. 12 strategy-protective-put strategy-covered-call vol-skew  option strategy: the collar zero cost risk reversal hedge intuition an executive or institutional portfolio manager holding a large, concentrated equity position often faces a dilemma: they want downside crash insurance a protective put , but they do not want to pay 5 % to 8 % of their portfolio value per year in out of pocket cash premiums. the collar strategy natenberg ch. 13; hull ch. 12 solves this by combining three positions on the same underlying asset and expiration date: 1. long 100 shares of underlying stock s 0 2. long 1 out of the money put strike k p < s 0 : establishes a hard fl">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1018,7 +1054,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/strategy-condor.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/strategy-condor.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="strategy-condor option strategy: the iron condor deriv derivatives & options reference explainer sheldon natenberg ch. 13  strategy-spread-vertical strategy-straddle strategy-butterfly  option strategy: the iron condor intuition a short strangle selling a naked otm put and a naked otm call profits when the underlying asset remains range bound and implied volatility contracts, but exposes the trader to unlimited catastrophic tail risk if the market crashes or explodes upward. the iron condor natenberg ch. 13 is a four legged, defined risk, delta neutral income and short volatility strategy . it constructs a short strangle and immediately caps both tail risks by purchasing further out of the money wings—combining a bull put credit spread below the market with a bear call credi">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1029,7 +1065,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/strategy-butterfly.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/strategy-butterfly.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="strategy-butterfly option strategy: the butterfly spread deriv derivatives & options reference explainer sheldon natenberg ch. 13 john c. hull ch. 12 strategy-condor strategy-spread-vertical greeks-gamma  option strategy: the butterfly spread intuition the long butterfly spread natenberg ch. 13; hull ch. 12 is a classic three strike, four option neutral strategy designed to generate a high reward to risk ratio when the trader expects the underlying asset to pin near a specific target price k 2 with declining volatility. conceptually, a long butterfly is the simultaneous combination of a bull spread and a bear spread sharing the same center short strike k 2 or equivalently, a short straddle at k 2 hedged with tight long strangle wings at k 1 and k 3 : 1. buy 1 lower strike option k 1 = k 2 w 2.">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1040,7 +1076,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/strategy-calendar.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/strategy-calendar.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="strategy-calendar option strategy: calendar & diagonal spreads deriv derivatives & options reference explainer sheldon natenberg ch. 14 john c. hull ch. 12 greeks-theta greeks-vega vol-surface  option strategy: calendar & diagonal spreads intuition while vertical spreads, butterflies, and condors trade different strikes within the same expiration month, calendar spreads horizontal / time spreads and diagonal spreads exploit the term structure of volatility and differential theta decay across two different expiration dates t 1 < t 2 natenberg ch. 14; hull ch. 12 . a long calendar spread is constructed by: 1. selling 1 near term option expiration t 1 , strike k 2. buying 1 longer term option expiration t 2 t 1 , same strike k because theta decay is proportional to 1 / sqrt{t} , the sh">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1051,7 +1087,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/strategy-ratio.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/strategy-ratio.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="strategy-ratio option strategy: ratio spreads & backspreads deriv derivatives & options reference explainer sheldon natenberg ch. 14 euan sinclair ch. 4 vol-skew strategy-spread-vertical greeks-gamma  option strategy: ratio spreads & backspreads intuition while standard vertical spreads buy and sell an equal number of contracts 1 times 1 , ratio spreads buy and sell an unequal number of contracts typically 1 times 2 or 2 times 3 on the same expiration date to exploit steep volatility skew natenberg ch. 14; sinclair ch. 4 : 1. front ratio spread 1 times 2 ratio vertical : buy 1 closer to the money option k 1 and sell 2 further out of the money options k 2 for a net credit or zero cost. if the stock moves moderately toward k 2 , you earn maximum profit; if the stock goes the wrong way, you l">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1062,7 +1098,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/trade-selection.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/trade-selection.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="trade-selection quantitative trade selection & structure rules deriv derivatives & options reference explainer euan sinclair ch. 4 sheldon natenberg ch. 18 edge-and-ev position-sizing exit-rules  quantitative trade selection & structure rules intuition retail option traders almost universally follow a backward workflow: they pick a famous company in the news, guess whether the stock will go up or down, and buy a random call or put. because options are a multidimensional pricing surface governed by implied volatility, skew, term structure, and bid ask friction, being right on stock direction frequently still results in losing money due to post event volatility crush or theta decay . in institutional options trading sinclair ch. 4; natenberg ch. 18 , trade selection follows a strict thr">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1073,7 +1109,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/exit-rules.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/exit-rules.html" class="concept-card" data-tier="reference" data-domain="deriv" data-search="exit-rules disciplined exit rules & trade management deriv derivatives & options reference explainer euan sinclair ch. 6  trade-selection position-sizing prospect-theory  disciplined exit rules & trade management intuition in quantitative derivatives trading, entry selection generates your potential edge, but exit discipline determines your realized survival and sharpe ratio sinclair ch. 6 . because options possess non linear gamma and time dependent theta/vega profiles, the risk reward characteristics of an option position at day 25 are radically different from the day you entered it. moreover, human behavioral biases prospect theory , the disposition effect , and sunk cost escalation peak once a trade is live. professional trading desks eliminate emotional i">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1095,7 +1131,7 @@
         </div>
         <div class="concept-grid">
           
-        <a href="/pages/learn/var.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/var.html" class="concept-card" data-tier="core" data-domain="risk" data-search="var value at risk (var) risk risk management core formula john c. hull ch. 22 zvi bodie ch. 5 black-scholes  value at risk var intuition value at risk var answers a concrete question for risk managers and regulators: what is the maximum dollar loss expected over a given time horizon at a specified confidence level? rather than expressing risk as an abstract standard deviation sigma , var condenses multi asset portfolio risk into a single currency metric that senior leadership can understand. formula text{var} { 1 alpha , t} = pi 0 times left mu delta t + z { alpha} , sigma sqrt{ delta t} right variable glossary pi 0 : portfolio current market value. alpha : significance level e.g., 1 % , implying 99">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -1106,7 +1142,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/expected-shortfall.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/expected-shortfall.html" class="concept-card" data-tier="core" data-domain="risk" data-search="expected-shortfall expected shortfall (cvar) risk risk management core formula john c. hull ch. 22 zvi bodie ch. 5 var monte-carlo scenario-analysis  expected shortfall cvar intuition value at risk var has a notorious, fatal flaw that was brutally exposed during the 2008 global financial crisis: var tells you the minimum loss threshold on a bad day, but tells you absolutely nothing about how bad the loss will be once that threshold is breached. if a bank's 99% 1 day var is 10{,}000{,}000 , on the 1% of worst days, the bank might lose 10.1 text{m} —or it might lose 500{,}000{,}000 and go bankrupt! var is blind to the severity of the tail. furthermore, mathematically, var is not a coherent risk measure because it fails the axiom of subadditi">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -1117,7 +1153,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/monte-carlo.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/monte-carlo.html" class="concept-card" data-tier="core" data-domain="risk" data-search="monte-carlo monte carlo simulation risk risk management core interactive john c. hull ch. 21 zvi bodie ch. 13 expected-shortfall var scenario-analysis  monte carlo simulation in financial modeling intuition deterministic financial models such as static dcf spreadsheets rely on single point estimates: 8% revenue growth, 22% operating margin, 9% discount rate. this creates a dangerous illusion of precision, hiding the vast multi dimensional cone of uncertainty that surrounds real world corporate performance. monte carlo simulation invented by stanislaw ulam and john von neumann in 1946 replaces static single point inputs with probability distributions . by simulating thousands or millions of randomly generated paths using pseudo random samplin">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -1128,7 +1164,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/scenario-analysis.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/scenario-analysis.html" class="concept-card" data-tier="core" data-domain="risk" data-search="scenario-analysis scenario analysis & stress testing risk risk management core explainer gabriel hawawini ch. 10 john c. hull ch. 22 monte-carlo expected-shortfall var  scenario analysis & stress testing intro while sensitivity analysis tests what happens when one single variable moves in isolation e.g., &quot;what happens to project npv if unit sales fall by 10%?&quot; , the real economic world never moves in isolated variables. when a macroeconomic recession strikes, sales volume collapses, customer collection times blow out, credit borrowing spreads spike, and supplier raw material costs fluctuate simultaneously. scenario analysis and reverse stress testing evaluate the resilience of an enterprise across correlated, cohesive states of the world: 1. scenario analysi">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1139,7 +1175,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/hedging-fx.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/hedging-fx.html" class="concept-card" data-tier="core" data-domain="risk" data-search="hedging-fx foreign exchange hedging strategies risk risk management core formula gabriel hawawini ch. 15 john c. hull ch. 3 fx-parity forwards-futures hedging-ir  foreign exchange hedging strategies intuition multinational corporations operate across borders, creating continuous currency exposure. a profitable commercial contract denominated in euros or japanese yen can easily transform into a severe corporate loss if the foreign currency depreciates before invoice settlement. executive finance categorizes fx exposure into three distinct tiers: 1. transaction exposure: direct contractual cash flow risk on existing commercial obligations e.g., an outstanding accounts receivable invoice for €10,000,000 payable in 90 days . highly measurable and straightf">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -1150,7 +1186,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/hedging-ir.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/hedging-ir.html" class="concept-card" data-tier="core" data-domain="risk" data-search="hedging-ir interest rate risk & duration gaps risk risk management core formula gabriel hawawini ch. 14 john c. hull ch. 7 duration duration-hedging swaps-ir  interest rate risk management & duration gaps intuition enterprises and financial institutions face structural interest rate risk across two interrelated domains: 1. net interest income sensitivity earnings at risk : the short term impact of rate swings on annual accounting net interest margin, governed by the repricing gap : text{gap} = text{rate sensitive assets rsa } text{rate sensitive liabilities rsl } when text{gap} 0 asset sensitive , rising interest rates expand net interest income. when text{gap} < 0 liability sensitive , rising interest rates compress margins. 2. economic value of e">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -1161,7 +1197,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/corporate-hedging.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/corporate-hedging.html" class="concept-card" data-tier="reference" data-domain="risk" data-search="corporate-hedging corporate hedging strategy & risk governance risk risk management reference explainer gabriel hawawini ch. 15 john c. hull ch. 3 hedging-fx hedging-ir scenario-analysis  corporate hedging strategy & risk governance intuition in a frictionless modigliani miller world, corporate hedging is irrelevant: diversified shareholders can hedge currency, commodity, or interest rate risks in their own personal portfolios at the exact same cost as the corporation. in real world executive finance hawawini & viallet; froot, scharfstein & stein, 1993 , corporate hedging directly increases firm value by eliminating market frictions and financial distress costs: 1. avoiding costly external financing underinvestment problem : without hedging, a sudden commodity spike or currenc">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1183,7 +1219,7 @@
         </div>
         <div class="concept-grid">
           
-        <a href="/pages/learn/entity-choice.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/entity-choice.html" class="concept-card" data-tier="core" data-domain="tax" data-search="entity-choice entity choice (c-corp, s-corp, llc, partnership) tax business taxation core interactive myron scholes ch. 4, 5  tax-shield  entity choice c corp, s corp, llc, partnership intuition the legal and tax structure chosen for a business dictates whether income is subject to double taxation entity level plus shareholder distribution level or pass through taxation taxed solely at owner personal rates . choosing an entity requires trading off access to public equity markets and institutional venture capital against operational tax friction and self employment payroll taxes. structure c corporation: separate legal and tax taxpayer. entity pays corporate income tax t c = 21 % federal . dividends and share repurchases pay cap">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -1194,7 +1230,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/tax-shield.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/tax-shield.html" class="concept-card" data-tier="core" data-domain="tax" data-search="tax-shield tax shields and after-tax cost of debt tax business taxation core formula myron scholes ch. 4 gabriel hawawini ch. 12 entity-choice tvm  tax shields and after tax cost of debt intuition because interest expense on debt is tax deductible for corporations, issuing debt creates an interest tax shield that reduces the firm's total tax bill. this tax subsidy reduces the effective after tax cost of debt capital below the nominal borrowing coupon rate, creating the classical modigliani miller proposition ii tax advantage of leverage. formula r d^{ text{after tax}} = r d times 1 t c quad text{and} quad text{annual tax shield} = text{interest expense} times t c = d times r d times t c variable glossary r d : pre tax nominal borrowing r">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -1205,7 +1241,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/deferred-tax.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/deferred-tax.html" class="concept-card" data-tier="core" data-domain="tax" data-search="deferred-tax deferred taxes & net operating losses tax business taxation core formula myron scholes ch. 3 peter d. easton ch. 10 tax-shield tax-comp entity-choice  deferred taxes & net operating losses intuition financial reporting rules gaap / ifrs and statutory tax accounting rules irc / tax code serve two conflicting purposes: gaap accounting: designed to provide investors with an accurate picture of economic performance via accrual matching. tax accounting: designed by lawmakers to collect government revenue and incentivize corporate investment via accelerated deductions. because gaap and tax rules recognize revenues and expenses at different times, companies experience temporary book tax timing differences : 1. deferred tax liability dtl : occurs w">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -1216,7 +1252,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/tax-comp.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/tax-comp.html" class="concept-card" data-tier="core" data-domain="tax" data-search="tax-comp tax-efficient compensation & section 83(b) tax business taxation core interactive myron scholes ch. 8  deferred-tax entity-choice tax-shield  tax efficient executive compensation & section 83 b intuition executive compensation architecture sits at the intersection of corporate finance, behavioral alignment, and multi lateral tax optimization scholes & wolfson . the corporate objective is to maximize after tax compensation delivered to key talent while minimizing the after tax cost to the enterprise, subject to deduction caps irc §162 m 1m non performance cap . equity compensation forms the core of high growth executive incentives: 1. incentive stock options isos : favorable employee tax treatment no ordinary income tax at exercise;">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">interactive</span>
@@ -1227,7 +1263,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/ma-tax.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/ma-tax.html" class="concept-card" data-tier="reference" data-domain="tax" data-search="ma-tax m&a tax structuring (asset vs. stock vs. §338(h)(10)) tax business taxation reference explainer myron scholes ch. 13, 14  ma-mechanics deferred-tax entity-choice  m&a tax structuring asset vs. stock vs. §338 h 10 intuition in every corporate acquisition, the buyer and seller sit on opposite sides of a fundamental tax tension regarding the tax basis of the target company's assets scholes & wolfson ch. 13 : the buyer's objective: wants a step up in tax basis of the target's assets including amortizable goodwill under irc §197 over 15 years so the buyer can claim massive future tax depreciation and amortization deductions that shield future operating cash flows. the seller's objective: wants to pay only a single layer of long term capital gains tax or def">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1238,7 +1274,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/international-tax.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/international-tax.html" class="concept-card" data-tier="reference" data-domain="tax" data-search="international-tax international taxation & transfer pricing tax business taxation reference explainer myron scholes ch. 10, 11  hedging-fx deferred-tax entity-choice  international taxation & transfer pricing intuition multinational corporations operate across dozens of sovereign tax jurisdictions with statutory corporate tax rates ranging from 0 % – 12.5 % e.g., ireland, switzerland, singapore to 25 % – 35 % e.g., germany, japan . international tax strategy scholes & wolfson ch. 11 addresses two fundamental executive questions: 1. jurisdictional system: does the home country tax its corporations on worldwide income granting foreign tax credits for taxes paid abroad or on a territorial system exempting active foreign business dividends from domestic taxati">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1249,7 +1285,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/tax-clienteles.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/tax-clienteles.html" class="concept-card" data-tier="reference" data-domain="tax" data-search="tax-clienteles tax clienteles & implicit taxes tax business taxation reference explainer myron scholes ch. 5, 7  tax-shield entity-choice lease-accounting  tax clienteles & implicit taxes intuition in a competitive capital market where different assets are taxed at different statutory rates—for example, us municipal bonds are 100 % exempt from federal income tax, whereas corporate bonds are taxed at ordinary income rates up to 37 % —why doesn't every investor simply buy tax exempt municipal bonds? myron scholes and mark wolfson ch. 5, 7 solved this through two foundational pillars of modern tax strategy: 1. implicit taxes: competition among high tax investors bids up the price of tax favored assets driving down their pre tax yield! . the implici">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1271,7 +1307,7 @@
         </div>
         <div class="concept-grid">
           
-        <a href="/pages/learn/inflation.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/inflation.html" class="concept-card" data-tier="core" data-domain="macro" data-search="inflation real vs. nominal returns macro macro & rates core formula zvi bodie ch. 5  tvm  real vs. nominal returns intuition nominal returns measure the growth of raw dollars; real returns measure the growth of your actual purchasing power after adjusting for inflation. when inflation is elevated, high nominal interest rates can mask negative real purchasing power gains. the fisher equation mathematically separates the two. formula 1 + r = 1 + r 1 + i implies r = frac{1 + r}{1 + i} 1 approx r i variable glossary r : nominal rate of return. r : real rate of return purchasing power growth . i : rate of inflation measured via cpi / pce deflator . r i : standard first order fisher app">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -1282,7 +1318,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/fed-policy.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/fed-policy.html" class="concept-card" data-tier="core" data-domain="macro" data-search="fed-policy federal reserve monetary policy & transmission macro macro & rates core formula zvi bodie ch. 17 gabriel hawawini ch. 14 yield-curve fx-parity hedging-ir  federal reserve monetary policy & transmission mechanism intuition the federal reserve operates under a statutory dual mandate established by the us congress: maximum sustainable employment and price stability defined as a long run 2.0% inflation target for core personal consumption expenditures, or core pce . to implement monetary policy, the federal open market committee fomc adjusts the target range for the federal funds rate —the overnight interest rate at which depository institutions lend reserve balances to each other. the fed enforces this target range through an administered &quot;corrido">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -1293,7 +1329,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/fx-parity.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/fx-parity.html" class="concept-card" data-tier="core" data-domain="macro" data-search="fx-parity foreign exchange parity conditions macro macro & rates core formula zvi bodie ch. 17 john c. hull ch. 5 · gabriel hawawini ch. 15 hedging-fx fed-policy forwards-futures  foreign exchange parity conditions intuition international financial economics establishes four interrelated equilibrium conditions that link foreign exchange spot rates, forward contracts, nominal interest rates, and inflation rates across sovereign borders: 1. covered interest rate parity cirp : a strict no arbitrage condition stating that the return on a domestic risk free deposit must exactly equal the return on a foreign risk free deposit covered against currency risk via a forward exchange contract. if cirp is violated, international banks execute riskless covered interest arbitrage unt">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -1304,7 +1340,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/balance-of-payments.html" class="concept-card" data-tier="reference">
+        <a href="/pages/learn/balance-of-payments.html" class="concept-card" data-tier="reference" data-domain="macro" data-search="balance-of-payments balance of payments & global capital flows macro macro & rates reference explainer zvi bodie ch. 17 external sources fx-parity fed-policy hedging-fx  balance of payments & global capital flows intuition the balance of payments bop is the comprehensive double entry macroeconomic accounting statement that records all economic and financial transactions between residents of a nation and the rest of the world over a specific period bodie ch. 17 . every international transaction enters the bop twice—once as a credit + , foreign currency inflow and once as a debit , foreign currency outflow —such that the fundamental identity always balances to zero: text{current account ca } + text{capital & financial account ka } + text{official reserve accoun">
           <div class="concept-card__header">
             <span class="badge badge-tier--reference">reference</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
@@ -1326,7 +1362,7 @@
         </div>
         <div class="concept-grid">
           
-        <a href="/pages/learn/prospect-theory.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/prospect-theory.html" class="concept-card" data-tier="core" data-domain="behav" data-search="prospect-theory prospect theory & loss aversion behav behavioral finance core formula zvi bodie ch. 12  biases risk-return position-sizing  prospect theory & loss aversion intuition neoclassical financial theory such as expected utility theory under von neumann–morgenstern assumes that economic agents are hyper rational decision makers who evaluate choices based on total absolute terminal wealth w and display uniform risk aversion. in their seminal behavioral economics framework, daniel kahneman and amos tversky 1979, 1992 demonstrated that real human decision makers deviate systematically from expected utility theory through four core psychological phenomena: 1. reference dependence: people do not evaluate decisions based on abs">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">formula</span>
@@ -1337,7 +1373,7 @@
           </div>
         </a>
 
-        <a href="/pages/learn/biases.html" class="concept-card" data-tier="core">
+        <a href="/pages/learn/biases.html" class="concept-card" data-tier="core" data-domain="behav" data-search="biases cognitive biases in capital allocation behav behavioral finance core explainer zvi bodie ch. 12 gabriel hawawini ch. 10 prospect-theory scenario-analysis capital-budgeting  cognitive & behavioral biases in capital allocation intro standard corporate finance doctrine assumes that corporate executives and investment committees behave as rational stewards of shareholder capital, methodically calculating net present value, assessing statistical probabilities, and allocating funds to the highest yielding opportunities. in practice, executive suites and corporate boardrooms are human social systems subject to powerful, predictable cognitive biases and behavioral heuristics. from bidding wars in multi billion dollar m&a acquisitions to persistent over investment in fai">
           <div class="concept-card__header">
             <span class="badge badge-tier--core">core</span>
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">explainer</span>
