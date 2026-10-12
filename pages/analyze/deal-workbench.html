@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Executive Deal &amp; Capital Allocation Workbench — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="/css/analyze.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link">Toolbox</a>
+        <a href="/pages/analyze/" class="site-header__nav-link site-header__nav-link--active">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="analyze-hero" style="padding: 2rem 0 2.5rem;">
+      <div class="container">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom: 0.75rem;">
+          <a href="/pages/analyze/" style="color:#93c5fd; font-size:0.8rem; font-weight:700; text-decoration:none;">← Back to Analyze Suite Hub</a>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <a href="/pages/analyze/10k-analyzer.html" class="target-btn" style="background:rgba(255,255,255,0.12); color:#e2e8f0; text-decoration:none; padding:0.35rem 0.75rem; font-size:0.75rem;">📋 1. 10-K &amp; Penman FSA</a>
+            <a href="/pages/analyze/stock-valuator.html" class="target-btn" style="background:rgba(255,255,255,0.12); color:#e2e8f0; text-decoration:none; padding:0.35rem 0.75rem; font-size:0.75rem;">💎 2. Stock Valuator</a>
+            <a href="/pages/analyze/deal-workbench.html" class="target-btn" style="background:#3b82f6; color:#fff; text-decoration:none; padding:0.35rem 0.75rem; font-size:0.75rem;">🤝 3. Deal Workbench</a>
+            <a href="/pages/analyze/risk-analyzer.html" class="target-btn" style="background:rgba(255,255,255,0.12); color:#e2e8f0; text-decoration:none; padding:0.35rem 0.75rem; font-size:0.75rem;">🛡️ 4. Risk &amp; Hedging Lab</a>
+          </div>
+        </div>
+        <div class="analyze-hero__eyebrow">
+          <span>🤝</span>
+          <span>Workbench 3 · Corporate Development, LBO Sponsor Economics &amp; CapEx</span>
+        </div>
+        <h1 class="analyze-hero__title">Executive Deal &amp; Capital Allocation Workbench</h1>
+        <p class="analyze-hero__subtitle">
+          Model M&amp;A EPS accretion/dilution and §338(h)(10) tax step-up shields, 5-year LBO debt sweeps with 2-and-20 GP/LP waterfalls, and strategic CapEx budgeting with Black-Scholes Real Options.
+        </p>
+      </div>
+    </section>
+
+    <div class="container" style="padding-bottom: 3.5rem;">
+      <!-- Shared Target Company Banner -->
+      <div id="analyze-target-banner"></div>
+
+      <!-- Deal Workbench Root -->
+      <div id="wb-deal-root" style="margin-top: 1.25rem;"></div>
+    </div>
+  </main>
+
+  <script type="module" src="/js/analyze/deal-workbench.js"></script>
+</body>
+</html>
