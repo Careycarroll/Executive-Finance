@@ -51,63 +51,47 @@
     </header>
 
     <article class="concept-content">
-      <div class="concept-container">
+      <div class="concept-container concept-container--wide">
         
     <div class="concept-section">
       
-        <div class="concept-intuition">
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
           <div class="concept-intuition__heading">Intuition</div>
           <div class="concept-intuition__text"><p>A dollar received today is worth more than a dollar received tomorrow because a dollar today can be invested to earn a positive return, and because inflation erodes future purchasing power. Every valuation model across corporate finance and investments is built on this foundation: converting cash flows across disparate points in time into a common denominator today.</p>
 </div>
         </div>
 
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;discount_rate&quot;:0.1,&quot;growth_rate&quot;:0}">10-Year Annuity ($200/yr)</button>
+<button type="button" class="preset-btn" data-config="{&quot;discount_rate&quot;:0.18,&quot;growth_rate&quot;:0}">High Discount Rate (18%)</button>
+<button type="button" class="preset-btn" data-config="{&quot;discount_rate&quot;:0.1,&quot;growth_rate&quot;:0.05}">Growing Inflows (+5%/yr)</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="cash-flow-chart" data-defaults="{&quot;periods&quot;:10,&quot;cash_flows&quot;:[-1000,200,200,200,200,200,200,200,200,200,200],&quot;discount_rate&quot;:0.1,&quot;growth_rate&quot;:0,&quot;show_pv&quot;:true,&quot;show_cumulative&quot;:true}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
       
-        <div class="concept-formula-box">
-          <h2 class="concept-section__title">Formula</h2>
-          <div class="concept-formula-katex" data-katex="PV = \sum_{t=1}^{T} \frac{CF_t}{(1 + r)^t}">
-            PV = \sum_{t=1}^{T} \frac{CF_t}{(1 + r)^t}
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
           </div>
-          
-            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
-              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
-                Variable Glossary
-              </h3>
-              <ul>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="PV = \sum_{t=1}^{T} \frac{CF_t}{(1 + r)^t}">
+              PV = \sum_{t=1}^{T} \frac{CF_t}{(1 + r)^t}
+            </div>
+            <div style="margin-top: 1rem;"><ul>
 <li><strong>PV</strong>: Present Value — the current worth of a future stream of cash flows discounted at rate $r$.</li>
 <li><strong>CF_t</strong>: Cash Flow at time $t$ — the nominal dollar amount expected at period $t$.</li>
 <li><strong>r</strong>: Discount Rate / Opportunity Cost of Capital — the expected rate of return for an investment of equivalent risk.</li>
 <li><strong>t</strong>: Period index ($1, 2, \dots, T$).</li>
 <li><strong>T</strong>: Terminal period of the horizon.</li>
 </ul>
-
-            </div>
-        </div>
-
-      
-        <div class="worked-example-card">
-          <h2 class="concept-section__title">Worked Numerical Example</h2>
-          <div class="worked-example-card__content">
-            <p>Suppose an investment promises to pay $1,000 in 1 year, $2,000 in 2 years, and $3,000 in 3 years. If the relevant opportunity cost of capital is 8% ($r = 0.08$):</p>
-<ul>
-<li>$PV_1 = \frac{1000}{1.08^1} = $925.93$</li>
-<li>$PV_2 = \frac{2000}{1.08^2} = $1,714.68$</li>
-<li>$PV_3 = \frac{3000}{1.08^3} = $2,381.50$</li>
-<li><strong>Total PV</strong> $= 925.93 + 1714.68 + 2381.50 = $5,022.11$</li>
-</ul>
-<p>If the asset is offered for less than $5,022.11 today, it generates positive economic net present value (NPV).</p>
-
-          </div>
-        </div>
-
-      
-        <div class="concept-section">
-          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
-          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
-            <ul>
-<li><strong>When to use:</strong> Whenever comparing capital allocations, pricing securities (bonds, annuities, mortgages), or analyzing capital expenditure decisions.</li>
-<li><strong>When not to use / Caveats:</strong> Do not use a constant single discount rate $r$ when the term structure of interest rates is sharply upward-sloping or inverted; use tenor-specific spot rates $\left(r_t\right)$ or forward rates instead.</li>
-</ul>
-
+</div>
           </div>
         </div>
     </div>
