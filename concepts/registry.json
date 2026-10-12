@@ -234,7 +234,25 @@
       "sources": [
         { "book": "scholes-wolfson", "chapters": ["4", "5"], "primary": true }
       ],
-      "template": "explainer",
+      "template": "interactive",
+      "component": "decision-tree",
+      "defaults": {
+        "preset": "entity_choice"
+      },
+      "examples": [
+        {
+          "label": "Business Entity Selection",
+          "config": { "preset": "entity_choice" }
+        },
+        {
+          "label": "Section 83(b) Tax Election",
+          "config": { "preset": "section_83b" }
+        },
+        {
+          "label": "M&A Deal Architecture",
+          "config": { "preset": "deal_structure" }
+        }
+      ],
       "prose_ref": "concepts/prose/entity-choice.md",
       "related": ["tax-shield"]
     },
