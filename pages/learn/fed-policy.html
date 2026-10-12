@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Federal Reserve Monetary Policy & Transmission — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--macro">macro</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Federal Reserve Monetary Policy & Transmission</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 17</span>
+          <span class="concept-hero__citation-secondary">· also: Gabriel Hawawini Ch. 14</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The Federal Reserve operates under a statutory dual mandate established by the US Congress: <strong>maximum sustainable employment</strong> and <strong>price stability</strong> (defined as a long-run 2.0% inflation target for Core Personal Consumption Expenditures, or Core PCE).</p>
+<p>To implement monetary policy, the Federal Open Market Committee (FOMC) adjusts the target range for the <strong>Federal Funds Rate</strong>—the overnight interest rate at which depository institutions lend reserve balances to each other. The Fed enforces this target range through an administered &quot;corridor system&quot;:</p>
+<ul>
+<li><strong>Floor:</strong> The Overnight Reverse Repo Facility (ON RRP) offering rate.</li>
+<li><strong>Anchor/Ceiling:</strong> The Interest on Reserve Balances (IORB) rate.</li>
+</ul>
+<p>The canonical analytical benchmark for understanding how central banks adjust policy rates in response to macroeconomic conditions is the <strong>Taylor Rule</strong> (John B. Taylor, 1993). The Taylor Rule specifies that the nominal policy rate should respond systematically to two gaps:</p>
+<ol>
+<li><strong>The Inflation Gap:</strong> The deviation of current inflation from the central bank&#39;s target ($\pi_t - \pi^*$).</li>
+<li><strong>The Output Gap:</strong> The percentage deviation of actual real GDP from the economy&#39;s potential non-inflationary capacity ($y_t - \bar{y}_t$).</li>
+</ol>
+<p>Under the <strong>Taylor Principle</strong>, the policy coefficient on inflation must be strictly greater than $1.0$ ($\alpha_\pi &gt; 0$, implying nominal rates rise by more than $1:1$ with inflation). This ensures that when inflation rises, the <strong>real interest rate</strong> ($r = i - \pi$) increases, tightening financial conditions and dampening aggregate demand.</p>
+<h3>The Monetary Transmission Mechanism to Executive Finance</h3>
+<p>Monetary policy impacts corporate balance sheets through five primary transmission channels:</p>
+<ol>
+<li><strong>Interest Rate Channel:</strong> Higher short rates push up the entire Treasury yield curve, directly increasing the cost of floating-rate bank credit facilities and new corporate bond coupon rates.</li>
+<li><strong>Asset Valuation / Discount Rate Channel:</strong> Higher risk-free discount rates decrease the present value of future corporate cash flows, compressing equity valuation multiples (P/E, EV/EBITDA) and elevating the Weighted Average Cost of Capital (WACC).</li>
+<li><strong>Credit / Bank Lending Channel:</strong> Higher policy rates tighten commercial bank underwriting standards, reducing credit availability for corporate borrowers.</li>
+<li><strong>Exchange Rate Channel:</strong> Higher domestic rates attract global capital flows, strengthening the US Dollar and hurting multinational export competitiveness.</li>
+<li><strong>Balance Sheet Channel:</strong> Quantitative Easing (QE) expands central bank balance sheets to compress long-term term premiums; Quantitative Tightening (QT) shrinks the balance sheet, withdrawing liquidity and widening credit spreads.</li>
+</ol>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="i_t = r^* + \pi_t + \alpha_\pi (\pi_t - \pi^*) + \alpha_y (y_t - \bar{y}_t)
+
+$$\text{Taylor Rule with Policy Smoothing (Inertia): } i_t = \rho \, i_{t-1} + (1 - \rho) \left[ r^* + \pi_t + \alpha_\pi (\pi_t - \pi^*) + \alpha_y (y_t - \bar{y}_t) \right]$$
+
+$$\text{Fisher Equation: } r_t = i_t - \mathbb{E}[\pi_{t+1}]">
+            i_t = r^* + \pi_t + \alpha_\pi (\pi_t - \pi^*) + \alpha_y (y_t - \bar{y}_t)
+
+$$\text{Taylor Rule with Policy Smoothing (Inertia): } i_t = \rho \, i_{t-1} + (1 - \rho) \left[ r^* + \pi_t + \alpha_\pi (\pi_t - \pi^*) + \alpha_y (y_t - \bar{y}_t) \right]$$
+
+$$\text{Fisher Equation: } r_t = i_t - \mathbb{E}[\pi_{t+1}]
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>i_t</strong>: Prescribed target nominal federal funds rate.</li>
+<li><strong>r^</strong>*: Neutral real equilibrium interest rate (&quot;r-star&quot;, the real rate consistent with full employment and stable 2% inflation; typically estimated between $0.5%$ and $1.5%$).</li>
+<li><strong>\pi_t</strong>: Current trailing inflation rate (e.g., year-over-year Core PCE).</li>
+<li><strong>\pi^</strong>*: Central bank target inflation rate ($2.0%$).</li>
+<li><strong>y_t - \bar{y}_t</strong>: Output gap (percentage difference between actual real GDP $y_t$ and potential GDP $\bar{y}_t$).</li>
+<li><strong>\alpha_\pi</strong>: Policy weight on the inflation gap (standard Taylor specification $= 0.50$).</li>
+<li><strong>\alpha_y</strong>: Policy weight on the output gap (standard Taylor specification $= 0.50$; Taylor 1999 specification $= 1.00$).</li>
+<li><strong>\rho</strong>: Policy inertia / interest rate smoothing parameter (typically $0.70 - 0.85$).</li>
+<li><strong>r_t</strong>: Real policy interest rate.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>Evaluate the prescribed Federal Funds Rate under the classical Taylor Rule during an economic overheating cycle:</p>
+<ul>
+<li>Neutral Real Rate ($r^*$): $1.00%$</li>
+<li>Current Core Inflation ($\pi_t$): $4.50%$</li>
+<li>Target Inflation ($\pi^*$): $2.00%$</li>
+<li>Output Gap ($y_t - \bar{y}_t$): $+2.00%$ (economy operating $2%$ above potential GDP)</li>
+<li>Standard Taylor weights: $\alpha_\pi = 0.50$, $\alpha_y = 0.50$</li>
+</ul>
+<p><strong>Step 1: Compute the Inflation Gap Contribution</strong>
+$$\text{Inflation Gap} = 4.50% - 2.00% = +2.50%$$
+$$\text{Prescribed Adjustment} = \alpha_\pi \times (\pi_t - \pi^*) = 0.50 \times 2.50% = +1.25%$$</p>
+<p><strong>Step 2: Compute the Output Gap Contribution</strong>
+$$\text{Prescribed Adjustment} = \alpha_y \times (y_t - \bar{y}_t) = 0.50 \times 2.00% = +1.00%$$</p>
+<p><strong>Step 3: Calculate the Baseline Neutral Nominal Rate</strong>
+$$\text{Neutral Nominal Rate} = r^* + \pi_t = 1.00% + 4.50% = 5.50%$$</p>
+<p><strong>Step 4: Calculate the Total Prescribed Policy Rate</strong>
+$$i_t = 5.50% + 1.25% + 1.00% = 7.75%$$</p>
+<p><strong>Economic Interpretation:</strong>
+To halt inflationary momentum, the Fed must raise nominal interest rates to $7.75%$. At $i_t = 7.75%$, the real interest rate is $r = 7.75% - 4.50% = +3.25%$, well above the neutral real rate of $1.00%$. This restrictive monetary stance intentionally slows corporate capital investment, increases consumer borrowing costs, and tempers wage pressures.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Forecasting corporate borrowing costs across economic cycles, timing multi-billion dollar debt refinancings, calibrating hurdle rates for long-duration capital investments, and scenario modeling equity valuation multiple contractions.</li>
+<li><strong>When not to use / Caveats:</strong> Do not treat the Taylor Rule as a mechanical automated trading algorithm. Central banks exercise discretionary judgment: they pause rate hikes during banking liquidity strains, alter policy due to financial stability concerns (e.g., 2023 Silicon Valley Bank systemic risk exception), and adjust long-term balance sheet runoff (QT) independently of the short-term Fed funds rate.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>&quot;Never fight the Fed, but always anticipate the lag.&quot;
+Monetary policy operates with &quot;long and variable lags&quot; of 12 to 24 months. When the Fed embarks on an aggressive rate-hiking campaign, corporate earnings do not collapse on Day 1—liquidity buffers and fixed-rate debt cushion the blow. The real crunch hits two years later when debt maturities come due, floating revolvers reset, and commercial real estate refinancings stall.</p>
+<p><strong>Executive Playbook:</strong></p>
+<ol>
+<li><strong>Extend Debt Maturities Early:</strong> If the Taylor Rule indicates rates are heading higher, refinance upcoming 3-to-5 year debt into 10-year fixed notes immediately, before credit spreads blow out.</li>
+<li><strong>Elevate Hurdle Rates:</strong> Increase internal project hurdle rates to reflect rising cost of capital; avoid approving marginal CapEx projects that only work in a zero-interest-rate environment.</li>
+<li><strong>Preserve Cash Optionality:</strong> In late-stage tightening cycles, hold excess cash reserves in short-term Treasury bills yielding risk-free return; when the subsequent recession forces the Fed to pivot and slash rates, deploy that dry powder to acquire distressed competitors at rock-bottom valuations.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/yield-curve.html" class="related-chip">
+          <span>Yield Curve and Term Structure of Interest Rates</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/fx-parity.html" class="related-chip">
+          <span>Foreign Exchange Parity Conditions</span>
+          <span class="badge badge-domain--macro" style="font-size: 0.65rem; padding: 1px 5px;">macro</span>
+        </a>
+
+        <a href="/pages/learn/hedging-ir.html" class="related-chip">
+          <span>Interest Rate Risk & Duration Gaps</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

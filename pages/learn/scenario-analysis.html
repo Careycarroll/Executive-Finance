@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scenario Analysis & Stress Testing — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--risk">risk</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Scenario Analysis & Stress Testing</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Gabriel Hawawini Ch. 10</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 22</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><p>While sensitivity analysis tests what happens when one single variable moves in isolation (e.g., &quot;what happens to project NPV if unit sales fall by 10%?&quot;), the real economic world never moves in isolated variables. When a macroeconomic recession strikes, sales volume collapses, customer collection times blow out, credit borrowing spreads spike, and supplier raw material costs fluctuate simultaneously.</p>
+<p><strong>Scenario Analysis</strong> and <strong>Reverse Stress Testing</strong> evaluate the resilience of an enterprise across correlated, cohesive states of the world:</p>
+<ol>
+<li><strong>Scenario Analysis:</strong> Constructs internally consistent narratives of future states (Base Case, Bull Case, Bear Case / Stagflation, Tech Disruption) where all operational and financial variables shift simultaneously in an economically realistic manner.</li>
+<li><strong>Reverse Stress Testing (Pre-Mortem Analysis):</strong> Instead of asking <em>&quot;what happens if GDP drops 2%?&quot;</em>, the executive team starts with the catastrophic endpoint: <em>&quot;What specific combination of events would break our bank covenants, wipe out our equity, or force an emergency dilutive down-round?&quot;</em> Once the breaking point is identified, leadership assesses how likely that scenario is and implements preventative structural hedges.</li>
+</ol>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Three Core Modes of Uncertainty Modeling</h3>
+<table>
+<thead>
+<tr>
+<th>Methodology</th>
+<th>Nature of Input Variables</th>
+<th>Key Executive Question Answered</th>
+<th>Primary Limitation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Sensitivity Analysis</strong></td>
+<td>Single variable shifted in isolation ($\pm 10%$).</td>
+<td>Which individual parameter is the most sensitive driver of our NPV?</td>
+<td>Unrealistic; ignores correlations between economic variables.</td>
+</tr>
+<tr>
+<td><strong>Scenario Analysis</strong></td>
+<td>Multi-variable correlated bundles (Bull / Base / Bear).</td>
+<td>How does the entire enterprise hold up under coherent economic regimes?</td>
+<td>Captures only a handful of discrete scenarios chosen by humans.</td>
+</tr>
+<tr>
+<td><strong>Monte Carlo</strong></td>
+<td>Thousands of simulated joint probability paths.</td>
+<td>What is the complete continuous probability distribution of outcomes?</td>
+<td>Complex; requires rigorous estimation of joint distributions and copulas.</td>
+</tr>
+</tbody></table>
+<pre><code>Reverse Stress Testing Framework (Pre-Mortem)
+┌────────────────────────────────────────────────────────┐
+│ Catastrophic Threshold: Net Debt / EBITDA &gt; 4.5x       │
+│ (Bank Debt Covenant Breach &amp; Revolver Freeze)          │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+              Work Backwards to Identify Causes:
+┌────────────────────────────────────────────────────────┐
+│ • Scenario A: 25% Revenue Drop + Gross Margin down 300 bps │
+│ • Scenario B: 15% Revenue Drop + Benchmark SOFR rises to 7%│
+│ • Scenario C: Key Customer Bankruptcy (35% uncollected A/R)│
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+               Executive Mitigating Actions Taken TODAY:
+┌────────────────────────────────────────────────────────┐
+│ 1. Refinance short-term bank line into 7-year fixed bond│
+│ 2. Purchase credit insurance on top 3 customer accounts│
+│ 3. Insert operational flexibility clauses into CapEx   │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;The Base Case in our spreadsheet is what will actually happen.&quot;</strong>
+<em>Reality:</em> The probability that reality matches your Base Case spreadsheet is zero. The Base Case is merely a reference baseline. Corporate survival is determined by whether the enterprise can comfortably withstand the <strong>Bear Case</strong> without permanent impairment of capital.</li>
+<li><strong>Misconception 2: &quot;Our Bear Case models a 10% revenue decline, so we are being conservative.&quot;</strong>
+<em>Reality:</em> In modern technology and financial cycles, severe recessions and competitive disruptions do not produce gentle 10% declines—they produce $30%-60%$ revenue drops combined with complete debt market freezes (e.g., 2008, 2020, 2022 tech pullback). If your Bear Case doesn&#39;t hurt your feelings when you read it, it is not a Bear Case.</li>
+<li><strong>Misconception 3: &quot;Scenario analysis is only for the finance department.&quot;</strong>
+<em>Reality:</em> Scenario analysis is an operational strategy exercise. If the Bear Case requires cutting $20%$ of operating expenses within 60 days to avoid covenant breach, the executive team must pre-draft the exact operational playbook ahead of time.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Conduct a mandatory <strong>&quot;Pre-Mortem&quot;</strong> before approving any major M&amp;A acquisition or transformative capital project:
+Assemble the leadership team and declare: <em>&quot;It is now three years in the future. The acquisition has been an unmitigated disaster: we took a massive $150M goodwill write-down, our CFO resigned, and our stock price was cut in half. Spend the next 20 minutes writing down the exact sequence of events that caused this failure.&quot;</em></p>
+<p>This psychological framing instantly breaks corporate cheerleading and groupthink, unlocking deep, candid operational insights that no standard base-case pitch deck would ever reveal.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/monte-carlo.html" class="related-chip">
+          <span>Monte Carlo Simulation</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+
+        <a href="/pages/learn/expected-shortfall.html" class="related-chip">
+          <span>Expected Shortfall (CVaR)</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+
+        <a href="/pages/learn/var.html" class="related-chip">
+          <span>Value at Risk (VaR)</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

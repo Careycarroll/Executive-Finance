@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prospect Theory & Loss Aversion — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--behav">behav</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Prospect Theory & Loss Aversion</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 12</span>
+          
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Neoclassical financial theory (such as Expected Utility Theory under von Neumann–Morgenstern) assumes that economic agents are hyper-rational decision-makers who evaluate choices based on total absolute terminal wealth ($W$) and display uniform risk aversion.</p>
+<p>In their seminal behavioral economics framework, Daniel Kahneman and Amos Tversky (1979, 1992) demonstrated that real human decision-makers deviate systematically from expected utility theory through four core psychological phenomena:</p>
+<ol>
+<li><strong>Reference Dependence:</strong> People do not evaluate decisions based on absolute wealth, but on <strong>gains and losses relative to an internal psychological reference point ($R$)</strong> (such as original purchase price, current budget target, or industry peer benchmarks).</li>
+<li><strong>Loss Aversion:</strong> &quot;Losses loom larger than gains.&quot; The emotional and psychological pain of losing $$100{,}000$ is empirically measured to be <strong>2.0 to 2.5 times</strong> as intense as the joy of gaining $$100{,}000$ ($\lambda \approx 2.25$).</li>
+<li><strong>Diminishing Sensitivity (The S-Shaped Value Function):</strong> The subjective marginal value of both gains and losses decreases as the magnitude grows. The psychological difference between $$0$ and $$100$ feels vast; the difference between $$10,000$ and $$10,100$ feels negligible. Crucially, this creates an asymmetrical risk attitude:<ul>
+<li><strong>Concave in Gains $\implies$ Risk-Averse:</strong> When facing positive outcomes, executives lock in guaranteed profits rather than gamble for higher potential gains.</li>
+<li><strong>Convex in Losses $\implies$ Risk-Seeking:</strong> When facing losses, executives actively gamble with corporate capital, preferring a risky bet with a chance of breaking even over accepting a certain loss.</li>
+</ul>
+</li>
+<li><strong>Non-Linear Probability Weighting:</strong> People systematically <strong>overweight low-probability extreme tail events</strong> (explaining the purchase of lottery tickets and overpriced disaster insurance) and <strong>underweight moderate-to-high probabilities</strong> (discounting likely execution risks).</li>
+</ol>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="v(x) = \begin{cases} x^\alpha & \text{if } x \ge 0 \quad (\text{Domain of Gains}) \\ -\lambda (-x)^\beta & \text{if } x < 0 \quad (\text{Domain of Losses}) \end{cases}
+
+$$\text{Cumulative Prospect Value: } V = \sum_{i=1}^n \pi(p_i) \cdot v(x_i)$$
+
+$$\text{Tversky-Kahneman Probability Weighting: } w(p) = \frac{p^\gamma}{\left( p^\gamma + (1 - p)^\gamma \right)^{1/\gamma}}">
+            v(x) = \begin{cases} x^\alpha & \text{if } x \ge 0 \quad (\text{Domain of Gains}) \\ -\lambda (-x)^\beta & \text{if } x < 0 \quad (\text{Domain of Losses}) \end{cases}
+
+$$\text{Cumulative Prospect Value: } V = \sum_{i=1}^n \pi(p_i) \cdot v(x_i)$$
+
+$$\text{Tversky-Kahneman Probability Weighting: } w(p) = \frac{p^\gamma}{\left( p^\gamma + (1 - p)^\gamma \right)^{1/\gamma}}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>x</strong>: Outcome payoff relative to the psychological reference point ($x = W - R$).</li>
+<li><strong>v(x)</strong>: Subjective psychological value assigned to gain or loss $x$.</li>
+<li><strong>\lambda</strong>: Loss aversion coefficient (empirically estimated at $\approx 2.25$).</li>
+<li><strong>\alpha, \beta</strong>: Diminishing sensitivity curvature parameters (empirically estimated at $\approx 0.88$, creating concavity for gains and convexity for losses).</li>
+<li><strong>p</strong>: Objective probability of an outcome occurring.</li>
+<li><strong>w(p) / \pi(p)</strong>: Decision weight assigned to probability $p$.</li>
+<li><strong>\gamma</strong>: Probability distortion parameter (empirically $\approx 0.61$ for gains, $\approx 0.69$ for losses).</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>An executive vice president oversees a troubled strategic software division that has fallen behind schedule and faces an impending $$1,000,000$ write-down:</p>
+<ul>
+<li><strong>Baseline Reference Point ($R$):</strong> $0$ (break-even expectation).</li>
+<li><strong>Option A (Certain Loss):</strong> Shut down the initiative immediately and take a guaranteed loss of <strong>$-$500,000$</strong>.</li>
+<li><strong>Option B (The Hail Mary Gamble):</strong> Authorize an emergency $$500,000$ technical refactor with a $50%$ chance of fixing the system ($0$ net loss) and a $50%$ chance of catastrophic failure resulting in a total loss of <strong>$-$1,000,000$</strong>.</li>
+</ul>
+<p><strong>Step 1: Expected Monetary Value (Rational Baseline)</strong>
+$$\mathbb{E}[\text{Payoff}_A] = -$500{,}000$$
+$$\mathbb{E}[\text{Payoff}_B] = 0.50 \times $0 + 0.50 \times (-$1{,}000{,}000) = -$500{,}000$$
+A risk-neutral or risk-averse rational manager should prefer Option A (avoiding unnecessary variance).</p>
+<p><strong>Step 2: Prospect Theory Evaluation (Using $\lambda = 2.25$, $\beta = 0.88$, $w(0.50) \approx 0.42$)</strong></p>
+<ul>
+<li><strong>Subjective Value of Option A (Sure Loss):</strong>
+$$v(-$500{,}000) = -2.25 \times (500{,}000)^{0.88} = -2.25 \times 105{,}115 = -236{,}509$$</li>
+<li><strong>Subjective Value of Option B (Gamble in Loss Domain):</strong>
+$$v(-$1{,}000{,}000) = -2.25 \times (1{,}000{,}000)^{0.88} = -2.25 \times 193{,}463 = -435{,}292$$
+$$V_B = w(0.50) \times v(-$1{,}000{,}000) = 0.42 \times (-435{,}292) = -182{,}823$$</li>
+</ul>
+<p><strong>Behavioral Result:</strong>
+Because $-182{,}823 &gt; -236{,}509$, <strong>the executive strongly chooses Option B!</strong>
+The convexity of the loss function makes the sure loss feel intolerable. To avoid confronting the certainty of a $$500\text{k}$ failure, the executive gambles $$1\text{M}$ of shareholder capital on a low-probability turnaround.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Explaining capital market anomalies (the Equity Risk Premium Puzzle, post-earnings announcement drift, investor disposition effect), designing executive bonus compensation contracts (setting bonus thresholds where executives are in the gain domain), structuring M&amp;A earnouts, and calibrating consumer product pricing models.</li>
+<li><strong>When not to use / Caveats:</strong> Prospect Theory is a <strong>descriptive model of human psychological irrationality</strong>, not a normative prescription for corporate governance. A Chief Financial Officer or Board of Directors should never use Prospect Theory formulas to justify risk-seeking gambles in failing business units.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>&quot;Beware of leaders who are operating in the loss domain.&quot;
+When a division falls significantly behind its annual EBIT targets, human psychology dictates that management will instinctively abandon disciplined corporate risk limits and double down on reckless, high-variance gambles to &quot;get back to even&quot; before the annual audit.</p>
+<p><strong>Corporate Defense Architecture:</strong></p>
+<ol>
+<li><strong>Reset Reference Points Regularly:</strong> In prolonged project turnarounds, officially adjust the budget baseline down to current reality so team incentives operate in the <strong>gain domain</strong> (where humans are prudently risk-averse), rather than trapping managers in the toxic loss domain.</li>
+<li><strong>Enforce Objective Stop-Loss Gates:</strong> Strip failing projects of discretionary budget authority. Tie continuation decisions to pre-committed external operational milestones rather than manager optimism.</li>
+<li><strong>Neutralize Regret Aversion:</strong> Cultivate a culture that rewards fast, decisive terminations of unviable initiatives: <em>&quot;Killing a failing $$10M$ project after spending $$2M$ is a $$8M$ victory, not a $$2M$ defeat.&quot;</em></li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/biases.html" class="related-chip">
+          <span>Cognitive Biases in Capital Allocation</span>
+          <span class="badge badge-domain--behav" style="font-size: 0.65rem; padding: 1px 5px;">behav</span>
+        </a>
+
+        <a href="/pages/learn/risk-return.html" class="related-chip">
+          <span>Risk-Return Tradeoff</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/position-sizing.html" class="related-chip">
+          <span>Position Sizing & The Kelly Criterion</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

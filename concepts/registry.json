@@ -1549,6 +1549,181 @@
       "template": "formula",
       "prose_ref": "concepts/prose/edge-and-ev.md",
       "related": ["position-sizing", "implied-vol", "risk-return"]
+    },
+    {
+      "id": "expected-shortfall",
+      "domain": "risk",
+      "title": "Expected Shortfall (CVaR)",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["22"], "primary": true },
+        { "book": "bodie", "chapters": ["5"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/expected-shortfall.md",
+      "related": ["var", "monte-carlo", "scenario-analysis"]
+    },
+    {
+      "id": "monte-carlo",
+      "domain": "risk",
+      "title": "Monte Carlo Simulation",
+      "tier": "core",
+      "sources": [
+        { "book": "hull", "chapters": ["21"], "primary": true },
+        { "book": "bodie", "chapters": ["13"] }
+      ],
+      "template": "interactive",
+      "component": "monte-carlo",
+      "defaults": {
+        "s0": 100,
+        "drift": 0.08,
+        "vol": 0.20,
+        "horizon": 1.0,
+        "n_paths": 3000,
+        "seed": 42
+      },
+      "examples": [
+        {
+          "label": "Equities Baseline (8% drift, 20% vol, 1Y)",
+          "config": { "s0": 100, "drift": 0.08, "vol": 0.20, "horizon": 1.0, "n_paths": 3000, "seed": 42 }
+        },
+        {
+          "label": "High Volatility Growth (15% drift, 45% vol, 1Y)",
+          "config": { "s0": 100, "drift": 0.15, "vol": 0.45, "horizon": 1.0, "n_paths": 3000, "seed": 42 }
+        },
+        {
+          "label": "Conservative Horizon (4% drift, 10% vol, 3Y)",
+          "config": { "s0": 100, "drift": 0.04, "vol": 0.10, "horizon": 3.0, "n_paths": 3000, "seed": 42 }
+        }
+      ],
+      "prose_ref": "concepts/prose/monte-carlo.md",
+      "related": ["expected-shortfall", "var", "scenario-analysis"]
+    },
+    {
+      "id": "scenario-analysis",
+      "domain": "risk",
+      "title": "Scenario Analysis & Stress Testing",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["10"], "primary": true },
+        { "book": "hull", "chapters": ["22"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/scenario-analysis.md",
+      "related": ["monte-carlo", "expected-shortfall", "var"]
+    },
+    {
+      "id": "hedging-fx",
+      "domain": "risk",
+      "title": "Foreign Exchange Hedging Strategies",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["15"], "primary": true },
+        { "book": "hull", "chapters": ["3"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/hedging-fx.md",
+      "related": ["fx-parity", "forwards-futures", "hedging-ir"]
+    },
+    {
+      "id": "hedging-ir",
+      "domain": "risk",
+      "title": "Interest Rate Risk & Duration Gaps",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["14"], "primary": true },
+        { "book": "hull", "chapters": ["7"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/hedging-ir.md",
+      "related": ["duration", "duration-hedging", "swaps-ir"]
+    },
+    {
+      "id": "deferred-tax",
+      "domain": "tax",
+      "title": "Deferred Taxes & Net Operating Losses",
+      "tier": "core",
+      "sources": [
+        { "book": "scholes-wolfson", "chapters": ["3"], "primary": true },
+        { "book": "easton", "chapters": ["10"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/deferred-tax.md",
+      "related": ["tax-shield", "tax-comp", "entity-choice"]
+    },
+    {
+      "id": "tax-comp",
+      "domain": "tax",
+      "title": "Tax-Efficient Compensation & Section 83(b)",
+      "tier": "core",
+      "sources": [
+        { "book": "scholes-wolfson", "chapters": ["8"], "primary": true }
+      ],
+      "template": "interactive",
+      "component": "decision-tree",
+      "defaults": {
+        "preset": "section_83b"
+      },
+      "examples": [
+        {
+          "label": "Section 83(b) Decision Flowchart",
+          "config": { "preset": "section_83b" }
+        }
+      ],
+      "prose_ref": "concepts/prose/tax-comp.md",
+      "related": ["deferred-tax", "entity-choice", "tax-shield"]
+    },
+    {
+      "id": "fed-policy",
+      "domain": "macro",
+      "title": "Federal Reserve Monetary Policy & Transmission",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["17"], "primary": true },
+        { "book": "hawawini", "chapters": ["14"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/fed-policy.md",
+      "related": ["yield-curve", "fx-parity", "hedging-ir"]
+    },
+    {
+      "id": "fx-parity",
+      "domain": "macro",
+      "title": "Foreign Exchange Parity Conditions",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["17"], "primary": true },
+        { "book": "hull", "chapters": ["5"] },
+        { "book": "hawawini", "chapters": ["15"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/fx-parity.md",
+      "related": ["hedging-fx", "fed-policy", "forwards-futures"]
+    },
+    {
+      "id": "prospect-theory",
+      "domain": "behav",
+      "title": "Prospect Theory & Loss Aversion",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["12"], "primary": true }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/prospect-theory.md",
+      "related": ["biases", "risk-return", "position-sizing"]
+    },
+    {
+      "id": "biases",
+      "domain": "behav",
+      "title": "Cognitive Biases in Capital Allocation",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["12"], "primary": true },
+        { "book": "hawawini", "chapters": ["10"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/biases.md",
+      "related": ["prospect-theory", "scenario-analysis", "capital-budgeting"]
     }
   ]
 }
