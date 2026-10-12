@@ -6,7 +6,7 @@
 const TOOL_DEFINITIONS = {
   'cash-flow-chart': {
     name: 'Cash Flow Chart',
-    path: '../tools/cash-flow-chart.js',
+    path: './tools/cash-flow-chart.js',
     milestone: 'M4',
     description: 'Discounted cash flow series, NPV profile, and discount rate sensitivity curve (Hawawini Ch. 2; Bodie Ch. 5).',
     defaults: {
@@ -20,7 +20,7 @@ const TOOL_DEFINITIONS = {
   },
   'payoff-diagram': {
     name: 'Multi-Leg Payoff Diagram',
-    path: '../tools/payoff-diagram.js',
+    path: './tools/payoff-diagram.js',
     milestone: 'M4',
     description: 'Options strategy payoff and PnL curve with live Black-Scholes current value curve (Natenberg Ch. 11; Hull Ch. 12).',
     defaults: {
@@ -37,7 +37,7 @@ const TOOL_DEFINITIONS = {
   },
   'sensitivity-panel': {
     name: 'Sensitivity Panel & Heatmap',
-    path: '../tools/sensitivity-panel.js',
+    path: './tools/sensitivity-panel.js',
     milestone: 'M4',
     description: 'Black-Scholes valuation sensitivities with dual-parameter 2D heatmap matrix (Hull Ch. 15).',
     defaults: {
@@ -50,7 +50,7 @@ const TOOL_DEFINITIONS = {
   },
   'fs-reformulator': {
     name: 'Financial Statement Reformulator',
-    path: '../tools/fs-reformulator.js',
+    path: './tools/fs-reformulator.js',
     milestone: 'M4',
     description: 'Operating vs financing reformulation with Penman ROE decomposition and spread analysis (Penman Ch. 8, 11).',
     defaults: {
@@ -64,7 +64,7 @@ const TOOL_DEFINITIONS = {
   },
   'greeks-visualizer': {
     name: 'Greeks Visualizer',
-    path: '../tools/greeks-visualizer.js',
+    path: './tools/greeks-visualizer.js',
     milestone: 'M5',
     description: 'First and second-order option Greeks (Delta, Gamma, Theta, Vega, Rho, Charm, Vanna) across spot and expiry (Hull Ch. 19; Natenberg Ch. 6).',
     defaults: {
@@ -78,7 +78,7 @@ const TOOL_DEFINITIONS = {
   },
   'frontier-plotter': {
     name: 'Efficient Frontier & CAL Plotter',
-    path: '../tools/frontier-plotter.js',
+    path: './tools/frontier-plotter.js',
     milestone: 'M5',
     description: 'Markowitz Modern Portfolio Theory: Minimum Variance Portfolio (MVP), Tangency portfolio, and Capital Allocation Line (Bodie Ch. 6, 7).',
     defaults: {
@@ -92,7 +92,7 @@ const TOOL_DEFINITIONS = {
   },
   'monte-carlo': {
     name: 'Monte Carlo Runner & VaR',
-    path: '../tools/monte-carlo.js',
+    path: './tools/monte-carlo.js',
     milestone: 'M5',
     description: 'Geometric Brownian Motion (GBM) stochastic paths, terminal return distribution, 95% VaR, and Expected Shortfall (Hull Ch. 21, 22).',
     defaults: {
@@ -106,7 +106,7 @@ const TOOL_DEFINITIONS = {
   },
   'yield-curve': {
     name: 'Yield Curve & Term Structure Plotter',
-    path: '../tools/yield-curve.js',
+    path: './tools/yield-curve.js',
     milestone: 'M5',
     description: 'Term structure spot rates, forward rate bootstrapping, parallel shifts, slope twists, and 10Y-2Y recession spread (Bodie Ch. 15).',
     defaults: {
@@ -117,7 +117,7 @@ const TOOL_DEFINITIONS = {
   },
   'binomial-tree': {
     name: 'Binomial Tree Stepper',
-    path: '../tools/binomial-tree.js',
+    path: './tools/binomial-tree.js',
     milestone: 'M5',
     description: 'Cox-Ross-Rubinstein (CRR) discrete lattice tree with backward induction and American early-exercise detection (Hull Ch. 13).',
     defaults: {
@@ -132,7 +132,7 @@ const TOOL_DEFINITIONS = {
   },
   'multiples-table': {
     name: 'Multiples & Comparables Table',
-    path: '../tools/multiples-table.js',
+    path: './tools/multiples-table.js',
     milestone: 'M5',
     description: 'Peer valuation matrix with EV/EBITDA, P/E, P/B, harmonic mean bias correction, and football-field valuation bars (Easton Mod. 14; Lundholm Ch. 11).',
     defaults: {
@@ -148,7 +148,7 @@ const TOOL_DEFINITIONS = {
   },
   'correlation-heatmap': {
     name: 'Correlation Heatmap & Diversification',
-    path: '../tools/correlation-heatmap.js',
+    path: './tools/correlation-heatmap.js',
     milestone: 'M5',
     description: 'N×N cross-asset correlation matrix visualizer with color-coded divergence, symmetric live editing, and Bodie diversification ratio (Bodie Ch. 7).',
     defaults: {
@@ -164,7 +164,7 @@ const TOOL_DEFINITIONS = {
   },
   'decision-tree': {
     name: 'Rules-Based Decision Flowchart',
-    path: '../tools/decision-tree.js',
+    path: './tools/decision-tree.js',
     milestone: 'M5',
     description: 'Interactive choice wizard for entity choice, Section 83(b) election, and M&A deal structure (Scholes & Wolfson Ch. 4, 8, 13).',
     defaults: {
@@ -200,7 +200,7 @@ async function mountTool(toolKey) {
   `;
 
   try {
-    const module = await import(meta.path);
+    const module = await import(`./tools/${toolKey}.js`);
     container.innerHTML = '';
     if (typeof module.create === 'function') {
       currentInstance = module.create(container, JSON.parse(JSON.stringify(meta.defaults)));
@@ -233,3 +233,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mount initial tool (cash-flow-chart)
   mountTool('cash-flow-chart');
 });
+
