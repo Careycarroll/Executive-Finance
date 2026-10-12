@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Component Toolbox Gallery — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    .toolbox-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      align-items: start;
+      margin-top: 2rem;
+      margin-bottom: 3rem;
+    }
+    @media (max-width: 900px) {
+      .toolbox-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .toolbox-sidebar {
+      background: var(--color-surface, #ffffff);
+      border: 1px solid var(--color-border, #e5e7eb);
+      border-radius: var(--radius-lg, 0.75rem);
+      padding: 1.25rem;
+      position: sticky;
+      top: 1.5rem;
+    }
+    .toolbox-group-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-secondary, #6b7280);
+      margin: 1.25rem 0 0.5rem 0;
+    }
+    .toolbox-group-title:first-child {
+      margin-top: 0;
+    }
+    .toolbox-nav-btn {
+      width: 100%;
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+      border-radius: var(--radius-md, 0.375rem);
+      background: transparent;
+      color: var(--color-gray-800, #374151);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.15s ease;
+      margin-bottom: 0.25rem;
+    }
+    .toolbox-nav-btn:hover {
+      background: var(--color-gray-50, #f9fafb);
+      color: var(--color-primary, #1e40af);
+    }
+    .toolbox-nav-btn.active {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1d4ed8;
+      font-weight: 700;
+    }
+    .toolbox-main-panel {
+      background: var(--color-surface, #ffffff);
+      border: 1px solid var(--color-border, #e5e7eb);
+      border-radius: var(--radius-lg, 0.75rem);
+      padding: 2rem;
+      min-height: 600px;
+    }
+    .tool-info-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: var(--color-gray-50, #f8fafc);
+      border: 1px solid var(--color-border, #e2e8f0);
+      border-radius: var(--radius-md, 0.375rem);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .tool-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      background: #dcfce7;
+      color: #15803d;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link site-header__nav-link--active">Toolbox</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page__hero" style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); color: #ffffff; padding: 3rem 0;">
+      <div class="container">
+        <div class="page__hero-label" style="color: #93c5fd; font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+          Architectural Verification & Demo Gallery
+        </div>
+        <h1 class="page__hero-title" style="font-size: 2.25rem; font-weight: 800; margin: 0 0 0.75rem 0; color: #ffffff;">
+          Interactive Component Toolbox
+        </h1>
+        <p class="page__hero-subtitle" style="max-width: 720px; font-size: 1.0625rem; line-height: 1.5; color: #cbd5e1; margin: 0;">
+          Live visual playground for all 12 reusable financial components delivered in Milestones 4 & 5 per ADR-0003 contract. Click any tool below to inspect its live controls, charts, and mathematical models.
+        </p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="toolbox-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="toolbox-sidebar">
+          <div class="toolbox-group-title">Milestone 4: Core Primitives</div>
+          <button class="toolbox-nav-btn active" data-tool="cash-flow-chart">
+            <span>1. Cash Flow Chart</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M4</span>
+          </button>
+          <button class="toolbox-nav-btn" data-tool="payoff-diagram">
+            <span>2. Payoff Diagram</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M4</span>
+          </button>
+          <button class="toolbox-nav-btn" data-tool="sensitivity-panel">
+            <span>3. Sensitivity Panel</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M4</span>
+          </button>
+          <button class="toolbox-nav-btn" data-tool="fs-reformulator">
+            <span>4. FS Reformulator</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M4</span>
+          </button>
+
+          <div class="toolbox-group-title">Milestone 5: Specialist Tools</div>
+          <button class="toolbox-nav-btn" data-tool="greeks-visualizer">
+            <span>5. Greeks Visualizer</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M5</span>
+          </button>
+          <button class="toolbox-nav-btn" data-tool="frontier-plotter">
+            <span>6. Frontier / CAL Plotter</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M5</span>
+          </button>
+          <button class="toolbox-nav-btn" data-tool="monte-carlo">
+            <span>7. Monte Carlo Runner</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M5</span>
+          </button>
+          <button class="toolbox-nav-btn" data-tool="yield-curve">
+            <span>8. Yield Curve Plotter</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M5</span>
+          </button>
+          <button class="toolbox-nav-btn" data-tool="binomial-tree">
+            <span>9. Binomial Tree Stepper</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M5</span>
+          </button>
+          <button class="toolbox-nav-btn" data-tool="multiples-table">
+            <span>10. Multiples Table</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M5</span>
+          </button>
+          <button class="toolbox-nav-btn" data-tool="correlation-heatmap">
+            <span>11. Correlation Heatmap</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M5</span>
+          </button>
+          <button class="toolbox-nav-btn" data-tool="decision-tree">
+            <span>12. Decision Flowchart</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">M5</span>
+          </button>
+        </aside>
+
+        <!-- Main Tool Mount Area -->
+        <section class="toolbox-main-panel">
+          <div class="tool-info-bar">
+            <div>
+              <span id="tool-meta-id" style="font-family: var(--font-mono, monospace); font-weight: 700; color: #1e40af; font-size: 0.875rem;">
+                js/tools/cash-flow-chart.js
+              </span>
+              <div id="tool-meta-desc" style="font-size: 0.8125rem; color: #64748b; margin-top: 0.15rem;">
+                DCF cash flow series, NPV, and discount rate sensitivity curve.
+              </div>
+            </div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <span class="tool-badge">
+                <span>●</span> ADR-0003 Contract Mounted
+              </span>
+            </div>
+          </div>
+
+          <div id="active-tool-container"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/js/toolbox-page.js"></script>
+</body>
+</html>

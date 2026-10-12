@@ -74,3 +74,4 @@ describe('Tool: binomial-tree (ADR-0003 contract & Hull Ch. 13)', () => {
     expect(container.innerHTML).toBe('');
   });
 });
+

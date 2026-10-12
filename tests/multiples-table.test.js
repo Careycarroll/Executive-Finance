@@ -158,3 +158,4 @@ describe('Tool: multiples-table (ADR-0003 contract)', () => {
     tool.destroy();
   });
 });
+

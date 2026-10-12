@@ -138,3 +138,4 @@ export function runGBMSimulation({
 function binMidIsTail(binMin, binMax, cutoff) {
   return (binMin + binMax) / 2 <= cutoff;
 }
+

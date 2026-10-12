@@ -64,3 +64,4 @@ describe('Tool: frontier-plotter (ADR-0003 contract & Bodie Ch. 6/7/8)', () => {
     expect(container.innerHTML).toBe('');
   });
 });
+

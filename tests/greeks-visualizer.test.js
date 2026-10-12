@@ -79,3 +79,4 @@ describe('Tool: greeks-visualizer (ADR-0003 contract & Hull Ch. 19)', () => {
     expect(container.innerHTML).toBe('');
   });
 });
+

@@ -120,3 +120,4 @@ describe('Tool: correlation-heatmap (ADR-0003 contract)', () => {
     tool.destroy();
   });
 });
+

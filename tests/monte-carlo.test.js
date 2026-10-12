@@ -75,3 +75,4 @@ describe('Tool: monte-carlo (ADR-0003 contract & Hull Ch. 21/22)', () => {
     expect(container.innerHTML).toBe('');
   });
 });
+
