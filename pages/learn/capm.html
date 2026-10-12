@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capital Asset Pricing Model (CAPM) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--invest">invest</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Capital Asset Pricing Model (CAPM)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 9</span>
+          <span class="concept-hero__citation-secondary">· also: Gabriel Hawawini Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The Capital Asset Pricing Model (CAPM), independently developed by William Sharpe, John Lintner, and Jan Mossin in the mid-1960s, provides the fundamental theoretical link between an asset&#39;s systematic risk and its equilibrium expected return.</p>
+<p>CAPM’s core breakthrough is that <strong>in an efficient market, investors are not compensated for taking diversifiable (firm-specific) risk</strong>. Because an investor can eliminate unsystematic variance at zero cost by holding the broad market portfolio, the only risk that commands an equilibrium premium is <strong>systematic risk</strong>—the asset&#39;s sensitivity to aggregate macroeconomic shocks.</p>
+<p>This sensitivity is captured entirely by <strong>Beta ($\beta$)</strong>:</p>
+<ul>
+<li>$\beta = 1.0$: The asset moves in lockstep with the broad market.</li>
+<li>$\beta &gt; 1.0$: Aggressive, cyclical asset (e.g., semiconductors, luxury goods, high-growth tech) that amplifies market swings.</li>
+<li>$\beta &lt; 1.0$: Defensive asset (e.g., regulated electric utilities, healthcare, consumer staples) that dampens market swings.</li>
+</ul>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="E[R_i] = r_f + \beta_i \cdot \left( E[R_m] - r_f \right) = r_f + \beta_i \cdot \text{ERP}
+
+$$\beta_i = \frac{\text{Cov}(R_i, R_m)}{\text{Var}(R_m)} = \rho_{i,m} \cdot \frac{\sigma_i}{\sigma_m}">
+            E[R_i] = r_f + \beta_i \cdot \left( E[R_m] - r_f \right) = r_f + \beta_i \cdot \text{ERP}
+
+$$\beta_i = \frac{\text{Cov}(R_i, R_m)}{\text{Var}(R_m)} = \rho_{i,m} \cdot \frac{\sigma_i}{\sigma_m}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>E[R_i]</strong>: Expected equilibrium rate of return on security $i$ (cost of equity $r_e$).</li>
+<li><strong>r_f</strong>: Risk-free rate of return (yield on 10-year US Treasury bond).</li>
+<li><strong>E[R_m] - r_f</strong>: Equity Risk Premium ($\text{ERP}$), the excess return demanded by investors to hold the market portfolio over cash.</li>
+<li><strong>\beta_i</strong>: Systematic risk coefficient of security $i$.</li>
+<li><strong>\text{Cov}(R_i, R_m)</strong>: Covariance between returns of asset $i$ and market $m$.</li>
+<li><strong>\sigma_i, \sigma_m</strong>: Volatilities of asset $i$ and market $m$.</li>
+<li><strong>\rho_{i,m}</strong>: Correlation coefficient between asset $i$ and the market index.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>An investment committee is estimating the required return on equity for an enterprise software provider:</p>
+<ol>
+<li><strong>Risk-free rate ($r_f$):</strong> 10-year US Treasury yield $= 4.10%$.</li>
+<li><strong>Equity Risk Premium ($\text{ERP}$):</strong> $5.50%$ based on long-term historical excess returns.</li>
+<li><strong>Statistical Regression Analysis:</strong><ul>
+<li>60-month regression of monthly excess returns against the S&amp;P 500 gives an unadjusted raw beta of $\beta_{\text{raw}} = 1.35$.</li>
+<li>Apply the <strong>Blume adjustment</strong> to correct for mean-reversion toward 1.0:
+$$\beta_{\text{adj}} = \frac{2}{3}(1.35) + \frac{1}{3}(1.0) = 0.90 + 0.333 = 1.233$$</li>
+</ul>
+</li>
+</ol>
+<p><strong>Calculate Expected Return via CAPM:</strong>
+$$E[R_i] = 4.10% + 1.233 \times 5.50% = 4.10% + 6.78% = 10.88%$$</p>
+<p>The stock must offer an expected return of at least $10.88%$ to clear its risk hurdle.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Estimating the Cost of Equity ($r_e$) in WACC calculations, setting hurdle rates for corporate capital budgeting projects, evaluating hedge fund alpha, and benchmarking portfolio managers.</li>
+<li><strong>When not to use / Caveats:</strong> CAPM assumes single-factor risk (market variance). In reality, empirical asset pricing (Fama &amp; French) shows that size, value, profitability, and momentum factors also systematically drive returns. Additionally, historical regression betas are notoriously noisy: a 5-year monthly beta often has a standard error of $\pm 0.25$ to $0.40$!</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Never accept a beta without checking the regression $R^2$. If a stock has a beta of 1.2 but an $R^2$ of only $0.15$ against the S&amp;P 500, that means $85%$ of the company&#39;s return variance is driven by company-specific drama, not macroeconomic market swings. In that situation, CAPM is only explaining a tiny sliver of the company&#39;s risk profile. Always cross-check single-stock regression betas against industry-wide peer average unlevered betas.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/sml.html" class="related-chip">
+          <span>Security Market Line and Alpha</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/factor-models.html" class="related-chip">
+          <span>Factor Models (Fama-French Multi-Factor Asset Pricing)</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/cost-of-equity.html" class="related-chip">
+          <span>Cost of Equity (CAPM, DDM & Build-Up)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
