@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deferred Taxes & Net Operating Losses — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--tax">tax</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Deferred Taxes & Net Operating Losses</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Myron Scholes Ch. 3</span>
+          <span class="concept-hero__citation-secondary">· also: Peter D. Easton Ch. 10</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Financial reporting rules (GAAP / IFRS) and statutory tax accounting rules (IRC / Tax Code) serve two conflicting purposes:</p>
+<ul>
+<li><strong>GAAP Accounting:</strong> Designed to provide investors with an accurate picture of economic performance via accrual matching.</li>
+<li><strong>Tax Accounting:</strong> Designed by lawmakers to collect government revenue and incentivize corporate investment via accelerated deductions.</li>
+</ul>
+<p>Because GAAP and tax rules recognize revenues and expenses at different times, companies experience <strong>temporary book-tax timing differences</strong>:</p>
+<ol>
+<li><strong>Deferred Tax Liability (DTL):</strong> Occurs when GAAP pre-tax income is higher than taxable income today, meaning taxable income will be higher in future years. The most common driver is <strong>accelerated tax depreciation (MACRS / Section 168(k) Bonus Depreciation)</strong>: companies deduct equipment immediately on tax returns (paying low taxes today), but depreciate straight-line over 10 years on GAAP income statements. A DTL represents future taxes owed.</li>
+<li><strong>Deferred Tax Asset (DTA):</strong> Occurs when taxable income is higher than GAAP pre-tax income today, meaning future taxes will be lower. Driven by warranty accruals, deferred revenue, stock-based compensation, and <strong>Net Operating Loss (NOL) carryforwards</strong>.</li>
+</ol>
+<p><strong>The Valuation Allowance Reality:</strong> Under ASC 740, if management determines it is &quot;more likely than not&quot; ($&gt; 50%$ probability) that the company will not generate sufficient future taxable income to utilize its DTAs before expiration, it must establish a <strong>Valuation Allowance</strong>, writing down the DTA directly against GAAP earnings.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="\text{Book-Tax Temporary Difference} = \text{GAAP Carrying Value of Asset/Liability} - \text{Tax Basis of Asset/Liability}
+
+$$\text{Deferred Tax Asset / Liability} = \text{Temporary Difference} \times t_{\text{statutory}}$$
+
+$$\text{GAAP Income Tax Provision} = \text{Current Cash Tax Paid} + \Delta\text{DTL} - \Delta\text{DTA} + \Delta\text{Valuation Allowance}$$
+
+$$\text{NOL Utilization Cap (TCJA §172)}: \text{Max Annual Offset} = 80\% \times \text{Taxable Income}">
+            \text{Book-Tax Temporary Difference} = \text{GAAP Carrying Value of Asset/Liability} - \text{Tax Basis of Asset/Liability}
+
+$$\text{Deferred Tax Asset / Liability} = \text{Temporary Difference} \times t_{\text{statutory}}$$
+
+$$\text{GAAP Income Tax Provision} = \text{Current Cash Tax Paid} + \Delta\text{DTL} - \Delta\text{DTA} + \Delta\text{Valuation Allowance}$$
+
+$$\text{NOL Utilization Cap (TCJA §172)}: \text{Max Annual Offset} = 80\% \times \text{Taxable Income}
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>\text{DTL}</strong>: Deferred Tax Liability (future tax cash outflow liability).</li>
+<li><strong>\text{DTA}</strong>: Deferred Tax Asset (future tax cash savings asset).</li>
+<li><strong>\text{Tax Basis}</strong>: The value of an asset or liability recognized on tax returns filed with the IRS.</li>
+<li><strong>t_{\text{statutory}}</strong>: Enacted statutory corporate income tax rate expected to apply when timing difference reverses.</li>
+<li><strong>\text{Valuation Allowance}</strong>: Contra-asset account offsetting DTAs when future realization is in doubt.</li>
+<li><strong>\text{NOL}</strong>: Net Operating Loss carryforward.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A high-tech manufacturer purchases $$100{,}000{,}000$ in advanced robotics equipment at the start of Year 1:</p>
+<ul>
+<li>Statutory Corporate Tax Rate ($t$): $25%$</li>
+<li><strong>GAAP Accounting:</strong> Straight-line depreciation over 5 years with zero salvage value ($$20{,}000{,}000$ per year).</li>
+<li><strong>Tax Accounting:</strong> 100% Bonus Depreciation under IRC Section 168(k) in Year 1 ($$100{,}000{,}000$ deduction immediately).</li>
+</ul>
+<p><strong>At the End of Year 1:</strong></p>
+<ul>
+<li><strong>GAAP Book Carrying Value:</strong> $$100\text{M} - $20\text{M} = $80{,}000{,}000$.</li>
+<li><strong>Tax Basis of Equipment:</strong> $$100\text{M} - $100\text{M} = $0$.</li>
+<li><strong>Temporary Taxable Difference:</strong> $$80{,}000{,}000 - $0 = $80{,}000{,}000$.</li>
+</ul>
+<p><strong>Calculate Deferred Tax Liability (DTL):</strong>
+$$\text{DTL}_1 = $80{,}000{,}000 \times 25% = $20{,}000{,}000$$</p>
+<p>The company records a $$20{,}000{,}000$ liability on its balance sheet.
+Over Years 2 through 5, the company will take zero tax depreciation but will record $$20\text{M}$ annually of GAAP depreciation, causing the DTL to reverse by $$5{,}000{,}000$ each year until it reaches $$0$ at Year 5.</p>
+<p><strong>Economic Reality:</strong>
+The company saved $$25{,}000{,}000$ in cash taxes in Year 1 ($100\text{M} \times 25%$). The DTL serves as an <strong>interest-free loan from the government</strong> for 5 years!</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> M&amp;A transaction structuring (Section 338(h)(10) elections to step up tax basis and wipe out DTLs), valuing distressed turnaround targets with NOL carryforwards, and projecting cash taxes vs. GAAP tax expense in DCF models.</li>
+<li><strong>When not to use / Caveats (Section 382 NOL Limitation):</strong> When acquiring a target with massive accumulated Net Operating Losses (NOLs), do NOT assume you can immediately use all those NOLs to wipe out your own corporate taxes! Under IRC Section 382, an &quot;ownership change&quot; ($&gt; 50%$ shift) imposes an <strong>annual limit on NOL utilization</strong>:
+$$\text{Annual Section 382 Cap} = \text{Target Equity Value at Acquisition} \times \text{Long-Term Tax-Exempt Rate}$$</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Treat DTLs with analytical sophistication in valuation:
+In a high-growth company that continually reinvests in new CapEx year after year, old DTLs reverse, but are immediately replaced by even larger new DTLs on new equipment! Consequently, the aggregate DTL balance on the balance sheet <strong>never actually gets paid down</strong>—it compounds perpetually into the future as long as the business grows.</p>
+<p>In DCF valuation models, never treat a compounding, growing DTL as immediate debt that reduces equity value. Model actual projected cash taxes paid in Free Cash Flow instead of relying on distorted GAAP tax provision accruals.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/tax-shield.html" class="related-chip">
+          <span>Tax Shields and After-Tax Cost of Debt</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+
+        <a href="/pages/learn/tax-comp.html" class="related-chip">
+          <span>Tax-Efficient Compensation & Section 83(b)</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+
+        <a href="/pages/learn/entity-choice.html" class="related-chip">
+          <span>Entity Choice (C-Corp, S-Corp, LLC, Partnership)</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

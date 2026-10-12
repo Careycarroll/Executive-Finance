@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expected Shortfall (CVaR) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--risk">risk</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Expected Shortfall (CVaR)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: John C. Hull Ch. 22</span>
+          <span class="concept-hero__citation-secondary">· also: Zvi Bodie Ch. 5</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Value at Risk (VaR) has a notorious, fatal flaw that was brutally exposed during the 2008 global financial crisis: <strong>VaR tells you the minimum loss threshold on a bad day, but tells you absolutely nothing about how bad the loss will be once that threshold is breached.</strong></p>
+<p>If a bank&#39;s 99% 1-day VaR is $$10{,}000{,}000$, on the 1% of worst days, the bank might lose $$10.1\text{M}$—or it might lose $$500{,}000{,}000$ and go bankrupt! VaR is blind to the severity of the tail. Furthermore, mathematically, VaR is <strong>not a coherent risk measure</strong> because it fails the axiom of <strong>subadditivity</strong>: merging two portfolios can sometimes produce a total VaR that is <em>greater</em> than the sum of the individual VaRs!</p>
+<p><strong>Expected Shortfall (ES / Conditional VaR / CVaR)</strong> solves both problems:
+$$\text{Expected Shortfall} = \text{The expected (average) loss, given that the loss exceeds the VaR threshold}$$</p>
+<p>Expected Shortfall answers the critical boardroom question: <em>&quot;When disaster strikes and we breach our risk threshold, what is our average expected loss?&quot;</em> In Basel III/IV international banking regulations, global regulators officially replaced VaR with Expected Shortfall as the primary metric for market risk capital requirements.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="\text{ES}_\alpha = \mathbb{E}\left[ L \mid L \ge \text{VaR}_\alpha \right] = \frac{1}{1 - \alpha} \int_\alpha^1 \text{VaR}_u \, du
+
+$$\text{For a Normal Distribution } L \sim \mathcal{N}(\mu, \sigma): \quad \text{ES}_\alpha = \mu + \sigma \cdot \frac{\phi(z_\alpha)}{1 - \alpha}$$
+
+$$\text{Subadditivity (Coherent Risk Measure): } \text{ES}(A + B) \le \text{ES}(A) + \text{ES}(B)">
+            \text{ES}_\alpha = \mathbb{E}\left[ L \mid L \ge \text{VaR}_\alpha \right] = \frac{1}{1 - \alpha} \int_\alpha^1 \text{VaR}_u \, du
+
+$$\text{For a Normal Distribution } L \sim \mathcal{N}(\mu, \sigma): \quad \text{ES}_\alpha = \mu + \sigma \cdot \frac{\phi(z_\alpha)}{1 - \alpha}$$
+
+$$\text{Subadditivity (Coherent Risk Measure): } \text{ES}(A + B) \le \text{ES}(A) + \text{ES}(B)
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>\text{ES}_\alpha / \text{CVaR}</strong>: Expected Shortfall at confidence level $\alpha$ (e.g., $97.5%$ or $99%$).</li>
+<li><strong>\text{VaR}_\alpha</strong>: Value at Risk at confidence level $\alpha$.</li>
+<li><strong>L</strong>: Dollar loss of the portfolio.</li>
+<li><strong>\alpha</strong>: Confidence level (e.g., $0.975$ or $0.99$).</li>
+<li><strong>\mu</strong>: Mean portfolio return or expected profit.</li>
+<li><strong>\sigma</strong>: Standard deviation (volatility) of portfolio returns.</li>
+<li><strong>z_\alpha</strong>: Standard normal critical cutoff score ($z_{0.975} \approx 1.96$, $z_{0.99} \approx 2.326$).</li>
+<li><strong>\phi(\cdot)</strong>: Standard normal probability density function.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A corporate treasury manages a $$50{,}000{,}000$ liquid investment portfolio with daily return volatility $\sigma = 1.2%$ ($$600{,}000$) and expected daily drift $\mu \approx $0$.</p>
+<p><strong>Step 1: Compute 99% 1-Day VaR (Gaussian)</strong>
+$$z_{0.99} = 2.326$$
+$$\text{VaR}_{99%} = 2.326 \times $600{,}000 = $1{,}395{,}600$$
+The treasury expects losses to exceed $$1.40\text{M}$ on $1%$ of trading days (about 2.5 days per year).</p>
+<p><strong>Step 2: Compute 99% 1-Day Expected Shortfall (CVaR)</strong>
+Evaluate the standard normal density at $z = 2.326$:
+$$\phi(2.326) = \frac{1}{\sqrt{2\pi}} e^{-\frac{2.326^2}{2}} \approx 0.39894 \times e^{-2.705} \approx 0.39894 \times 0.06687 = 0.02668$$
+$$\text{Tail Multiplier} = \frac{\phi(z_\alpha)}{1 - \alpha} = \frac{0.02668}{1 - 0.99} = \frac{0.02668}{0.01} = 2.668$$
+$$\text{ES}_{99%} = $600{,}000 \times 2.668 = $1{,}600{,}800$$</p>
+<p><strong>Step 3: Fat-Tail Historical Reality Check</strong>
+Under actual historical simulation during a stress period (accounting for fat tails and credit defaults), while the 99% VaR threshold was $$1.40\text{M}$, the average loss on days exceeding that threshold was <strong>$$2{,}850{,}000$</strong>!
+Expected Shortfall captured the $$2.85\text{M}$ reality, whereas Gaussian VaR hid the true severity of the tail risk.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Sizing corporate emergency cash reserves, bank regulatory capital adequacy (Basel III/IV Fundamental Review of the Trading Book / FRTB), hedge fund risk parity allocation, and reinsurance loss modeling.</li>
+<li><strong>When not to use / Caveats:</strong> Expected Shortfall requires substantially more historical simulation data points than VaR because it estimates the <em>entire shape of the tail distribution</em>, not just a single percentile point. In small sample sizes, empirical ES estimates have higher estimation variance.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>&quot;Never measure risk with a ruler that ignores the cliff.&quot; If a risk manager reports that a trade has a VaR of $5M, always ask: <em>&quot;And what is our Expected Shortfall if the trade blows through that $5M limit?&quot;</em> If the Expected Shortfall is $6M, you have a well-behaved Gaussian position. If the Expected Shortfall is $85M, you are holding a hidden blow-up machine (like selling naked out-of-the-money puts or writing uncollateralized credit default swaps). Always insist on Expected Shortfall.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/var.html" class="related-chip">
+          <span>Value at Risk (VaR)</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+
+        <a href="/pages/learn/monte-carlo.html" class="related-chip">
+          <span>Monte Carlo Simulation</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+
+        <a href="/pages/learn/scenario-analysis.html" class="related-chip">
+          <span>Scenario Analysis & Stress Testing</span>
+          <span class="badge badge-domain--risk" style="font-size: 0.65rem; padding: 1px 5px;">risk</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

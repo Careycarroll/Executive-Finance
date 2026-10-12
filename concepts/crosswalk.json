@@ -1237,5 +1237,219 @@
         ]
       }
     ]
+  },
+  "expected-shortfall": {
+    "title": "Expected Shortfall (CVaR)",
+    "domain": "risk",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "22"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "5"
+        ]
+      }
+    ]
+  },
+  "monte-carlo": {
+    "title": "Monte Carlo Simulation",
+    "domain": "risk",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hull",
+        "chapters": [
+          "21"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "13"
+        ]
+      }
+    ]
+  },
+  "scenario-analysis": {
+    "title": "Scenario Analysis & Stress Testing",
+    "domain": "risk",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "10"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hull",
+        "chapters": [
+          "22"
+        ]
+      }
+    ]
+  },
+  "hedging-fx": {
+    "title": "Foreign Exchange Hedging Strategies",
+    "domain": "risk",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "15"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hull",
+        "chapters": [
+          "3"
+        ]
+      }
+    ]
+  },
+  "hedging-ir": {
+    "title": "Interest Rate Risk & Duration Gaps",
+    "domain": "risk",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "14"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hull",
+        "chapters": [
+          "7"
+        ]
+      }
+    ]
+  },
+  "deferred-tax": {
+    "title": "Deferred Taxes & Net Operating Losses",
+    "domain": "tax",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "scholes-wolfson",
+        "chapters": [
+          "3"
+        ],
+        "primary": true
+      },
+      {
+        "book": "easton",
+        "chapters": [
+          "10"
+        ]
+      }
+    ]
+  },
+  "tax-comp": {
+    "title": "Tax-Efficient Compensation & Section 83(b)",
+    "domain": "tax",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "scholes-wolfson",
+        "chapters": [
+          "8"
+        ],
+        "primary": true
+      }
+    ]
+  },
+  "fed-policy": {
+    "title": "Federal Reserve Monetary Policy & Transmission",
+    "domain": "macro",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "17"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "14"
+        ]
+      }
+    ]
+  },
+  "fx-parity": {
+    "title": "Foreign Exchange Parity Conditions",
+    "domain": "macro",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "17"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hull",
+        "chapters": [
+          "5"
+        ]
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "15"
+        ]
+      }
+    ]
+  },
+  "prospect-theory": {
+    "title": "Prospect Theory & Loss Aversion",
+    "domain": "behav",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "12"
+        ],
+        "primary": true
+      }
+    ]
+  },
+  "biases": {
+    "title": "Cognitive Biases in Capital Allocation",
+    "domain": "behav",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "12"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "10"
+        ]
+      }
+    ]
   }
 }

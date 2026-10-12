@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interest Rate Risk & Duration Gaps — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--risk">risk</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Interest Rate Risk & Duration Gaps</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Gabriel Hawawini Ch. 14</span>
+          <span class="concept-hero__citation-secondary">· also: John C. Hull Ch. 7</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Enterprises and financial institutions face structural interest rate risk across two interrelated domains:</p>
+<ol>
+<li><strong>Net Interest Income Sensitivity (Earnings at Risk):</strong> The short-term impact of rate swings on annual accounting net interest margin, governed by the <strong>Repricing Gap</strong>:
+$$\text{GAP} = \text{Rate-Sensitive Assets (RSA)} - \text{Rate-Sensitive Liabilities (RSL)}$$
+When $\text{GAP} &gt; 0$ (asset-sensitive), rising interest rates expand net interest income. When $\text{GAP} &lt; 0$ (liability-sensitive), rising interest rates compress margins.</li>
+<li><strong>Economic Value of Equity (EVE Sensitivity):</strong> The long-term impact of rate swings on the total net worth of the institution, governed by the <strong>Duration Gap ($DG$)</strong>:
+$$\text{Duration Gap} = D_A - \left(\frac{L}{A}\right) \cdot D_L$$</li>
+</ol>
+<p>If an institution&#39;s assets have longer duration than its liabilities ($DG &gt; 0$), a sudden spike in interest rates destroys asset values faster than liabilities decline, creating a severe drain on equity capital.</p>
+<p>Treasury teams manage interest rate risk using three primary tools:</p>
+<ul>
+<li><strong>Interest Rate Swaps (IRS):</strong> Swapping floating-rate bank credit facility interest for fixed-rate payments.</li>
+<li><strong>Interest Rate Caps &amp; Collars:</strong> Purchasing an interest rate cap sets a ceiling on maximum floating borrowing costs while preserving downside savings if rates fall.</li>
+<li><strong>Eurodollar / SOFR Futures:</strong> Adjusting portfolio duration dynamically using exchange-traded interest rate contracts.</li>
+</ul>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="\Delta \text{EVE} \approx -\left[ D_A - \left(\frac{L}{A}\right) \cdot D_L \right] \cdot A \cdot \Delta y = -DG \cdot A \cdot \Delta y
+
+$$\text{Number of Swap Contracts to Immunize: } N^* = \frac{DG \cdot A}{D_{\text{swap}} \cdot V_{\text{swap}}}$$
+
+$$\text{Annual Net Interest Income Impact: } \Delta \text{NII} = \text{GAP} \cdot \Delta y">
+            \Delta \text{EVE} \approx -\left[ D_A - \left(\frac{L}{A}\right) \cdot D_L \right] \cdot A \cdot \Delta y = -DG \cdot A \cdot \Delta y
+
+$$\text{Number of Swap Contracts to Immunize: } N^* = \frac{DG \cdot A}{D_{\text{swap}} \cdot V_{\text{swap}}}$$
+
+$$\text{Annual Net Interest Income Impact: } \Delta \text{NII} = \text{GAP} \cdot \Delta y
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>\Delta \text{EVE}</strong>: Change in Economic Value of Equity (market value of net worth).</li>
+<li><strong>DG</strong>: Duration Gap ($D_A - \frac{L}{A} D_L$).</li>
+<li><strong>D_A / D_L</strong>: Modified duration of total assets and total liabilities.</li>
+<li><strong>A / L</strong>: Market value of total assets and total liabilities.</li>
+<li><strong>\Delta y</strong>: Parallel interest rate shift across the yield curve.</li>
+<li><strong>\text{NII}</strong>: Net Interest Income ($\text{Interest Revenues} - \text{Interest Expenses}$).</li>
+<li><strong>\text{GAP}</strong>: Dollar volume of assets maturing/repricing within 1 year minus liabilities repricing within 1 year.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>A regional financial institution reports the following balance sheet metrics:</p>
+<ul>
+<li>Total Assets ($A$): $$1{,}000{,}000{,}000$ with asset duration $D_A = 5.0\text{ years}$</li>
+<li>Total Liabilities ($L$): $$900{,}000{,}000$ with liability duration $D_L = 1.5\text{ years}$</li>
+<li>Total Equity Capital: $$100{,}000{,}000$ (Equity-to-Assets ratio $= 10%$)</li>
+<li>Interest Rate Shock: Central bank raises benchmark rates by $+200\text{ bps}$ ($\Delta y = +0.02$).</li>
+</ul>
+<p><strong>Step 1: Calculate the Duration Gap ($DG$)</strong>
+$$DG = D_A - \left(\frac{L}{A}\right) D_L = 5.0 - \left(\frac{$900\text{M}}{$1{,}000\text{M}}\right) \times 1.5 = 5.0 - (0.90 \times 1.5) = 5.0 - 1.35 = +3.65\text{ years}$$</p>
+<p><strong>Step 2: Calculate Economic Value of Equity Impact</strong>
+$$\Delta \text{EVE} \approx -DG \cdot A \cdot \Delta y = -3.65 \times $1{,}000{,}000{,}000 \times (+0.02) = -$73{,}000{,}000$$</p>
+<p><strong>Catastrophic Balance Sheet Evaluation:</strong>
+A $+200\text{ bps}$ rate hike wipes out <strong>$$73,000,000$ of the bank’s $$100,000,000$ equity capital</strong> ($73%$ of net worth eliminated overnight!).
+To immunize the balance sheet ($DG \to 0$), the treasurer must either shorten asset duration (selling long bonds, originating floating loans) or enter a pay-fixed / receive-floating interest rate swap portfolio with notional value of $$73\text{M} / \Delta y$.</p>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Corporate debt issuance structuring (floating vs. fixed mix), bank asset-liability committee (ALCO) oversight, commercial real estate mortgage debt hedging, and pension liability matching.</li>
+<li><strong>When not to use / Caveats:</strong> Duration gaps assume parallel shifts across the yield curve. If the short end of the curve spikes by 300 bps while the 10-year yield stays flat (curve inversion), standard duration gap models fail to predict earnings compression. Multi-bucket key-rate duration analysis is required.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>&quot;The cost of hedging is an insurance premium; the cost of unhedged leverage is bankruptcy.&quot; 
+When corporate borrowing rates are at cyclical lows (e.g., 2%–3%), CEOs are tempted to stay on floating bank revolvers because floating rates are 50 bps cheaper than 10-year fixed bonds. This is the ultimate penny-wise, pound-foolish mistake: you save 50 bps in good times, and when rates spike to 7%, your entire operating cash flow is consumed by interest debt service! Always lock in long-term fixed rates or buy interest rate caps when rates are historically low.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/duration.html" class="related-chip">
+          <span>Macaulay and Modified Duration</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/duration-hedging.html" class="related-chip">
+          <span>Duration-Based Hedging & Immunization</span>
+          <span class="badge badge-domain--invest" style="font-size: 0.65rem; padding: 1px 5px;">invest</span>
+        </a>
+
+        <a href="/pages/learn/swaps-ir.html" class="related-chip">
+          <span>Interest Rate Swaps and Comparative Advantage</span>
+          <span class="badge badge-domain--deriv" style="font-size: 0.65rem; padding: 1px 5px;">deriv</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
