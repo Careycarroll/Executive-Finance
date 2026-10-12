@@ -51,3 +51,4 @@ Every public company's 10-K tax footnote provides an **Effective Tax Rate (ETR) 
 Use the **Book-Tax Earnings Quality Signal** when screening financial statements:
 If a company's GAAP Pre-Tax Income is surging by $25\%$ per year, but its **Current Tax Expense (taxable income reported to the IRS)** is flat or declining, pause immediately!
 When managers manipulate GAAP earnings upward via aggressive revenue recognition or capitalizing operating expenses, they rarely want to pay real cash taxes to the IRS on those fake earnings. A widening gap between book income and taxable income (reflected in unexplained spikes in non-CapEx DTLs) is one of the most reliable forensic predictors of accounting restatements.
+

@@ -49,3 +49,4 @@ Exit Waterfall: $50M Acquisition on $10M Invested (at $40M Post-Money = 25% VC O
 ## Notes for Future-Me
 "You set the price, I'll set the terms."
 Never obsess over maximizing the headline Pre-Money Valuation at the expense of clean structure. A high valuation paired with Participating Preferred stock, Full-Ratchet anti-dilution, or cumulative dividends is a ticking time bomb. Always prioritize **clean $1\times$ Non-Participating Preferred stock** and Broad-Based Weighted Average anti-dilution—even if it means accepting a $15\%$ lower headline valuation.
+

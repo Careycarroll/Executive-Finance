@@ -50,3 +50,4 @@ $$V_{\text{swap}} = B_D - S_t \cdot B_F$$
 ## Notes for Future-Me
 Use Cross-Currency Swaps for **Synthetic Foreign Debt Issuance**:
 Even if your company has zero operations overseas, check global cross-currency basis spreads before issuing a large domestic corporate bond! Frequently, a US investment-grade corporation can issue a Euro-denominated bond in Europe ("Reverse Yankee Bond") and immediately swap 100% of the Euro proceeds and coupons back into fixed US Dollars via a Cross-Currency Swap at an all-in interest rate **15 to 30 basis points cheaper** than issuing a straight USD bond in New York.
+

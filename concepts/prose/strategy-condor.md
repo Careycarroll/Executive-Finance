@@ -47,3 +47,4 @@ Expiration Payoff Diagram of a Short Iron Condor
 How to structure high-expectancy Iron Condors:
 1. **Enter Only When IV Rank Is High ($>50$th Percentile):** You are net short Vega ($\mathcal{V} < 0$). Entering when implied volatility is elevated gives you a structural tailwind as volatility mean-reverts downward, allowing you to hit $50\%$ profit in half the time.
 2. **Respect Skew When Selecting Strikes:** Select short strikes by **Option Delta** (e.g., selling the $16\Delta$ Put and the $16\Delta$ Call for an $\approx 68\%$ probability of profit), not by equal dollar distance from spot. Because of negative equity skew, the $16\Delta$ Put will be much further below spot than the $16\Delta$ Call is above spot.
+

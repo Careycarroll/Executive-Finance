@@ -1,6 +1,6 @@
 # ADR-0001: Concept-organized structure
 
-- Status: Accepted
+- Status: Accepted (Verified & Implemented, 2026-10-12)
 - Date: 2026-08-04
 - Deciders: Carey Carroll
 - Tags: architecture, content-model
@@ -13,12 +13,12 @@ Executives*, 6e. Chapter 1 was built out with five interactive tools; chapters
 2–18 were planned but not started.
 
 Since then, the scope has expanded substantially. The reference library now
-spans ten books across four domains:
+spans twelve books across eight domains:
 
 - **Corporate finance:** Hawawini & Viallet
 - **Investments / portfolio theory:** Bodie, Kane & Marcus
 - **Derivatives:** Hull; Natenberg (+ Workbook); Sinclair
-- **Financial statement analysis & valuation:** Penman; Easton; Lundholm & Sloan
+- **Financial statement analysis & valuation:** Penman; Easton; Lundholm & Sloan; Horngren
 - **Business taxation:** Scholes, Wolfson, Erickson et al.
 
 The original chapter-per-page structure no longer fits the goal. Many concepts
@@ -41,7 +41,7 @@ Organize the app around **concepts**, not chapters or books.
   a designated primary source.
 - Chapter membership is metadata on a concept, not the organizing principle.
 - The concept list itself becomes a spec artifact
-  (`docs/specs/concept-list.md`) with ~100 entries, tagged Core or Reference.
+  (`docs/specs/concept-list.md`) with 109 entries (72 Core, 37 Reference).
 
 ## Consequences
 
@@ -59,11 +59,11 @@ Organize the app around **concepts**, not chapters or books.
   (`docs/reference/concept-to-book-crosswalk.md`).
 - Requires deciding, per concept, which book is the primary source. Some
   overlap (Penman vs. Easton vs. Lundholm on FSA) will need judgment calls.
-- Chapter 1's existing hardcoded pages need to be retired or migrated to
-  the concept model in M3.
+- Chapter 1's existing hardcoded pages were retired and migrated to the
+  concept model in M3 (`pages/learn/<concept-id>.html`).
 
 **Neutral:**
-- The app's URL structure changes from `/learn/ch1/...` to `/learn/<concept-id>`.
+- The app's URL structure is `/pages/learn/<concept-id>.html`.
   No external users, so no backward-compatibility burden.
 
 ## Alternatives Considered
@@ -85,8 +85,8 @@ Organize the app around **concepts**, not chapters or books.
 
 ## References
 
-- `docs/specs/concept-list.md` — the ~100 concepts organized by domain
-- `docs/reference/bibliography.md` — the 10-book library
+- `docs/specs/concept-list.md` — the 109 concepts organized by domain
+- `docs/reference/bibliography.md` — the 12-book library
 - `docs/reference/concept-to-book-crosswalk.md` — every concept mapped to
   its book chapter(s)
 - ADR-0002: Registry-driven concept pages

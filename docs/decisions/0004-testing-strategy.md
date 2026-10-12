@@ -1,6 +1,6 @@
 # ADR-0004: Testing strategy
 
-- Status: Accepted
+- Status: Accepted (Verified & Implemented, 2026-10-12)
 - Date: 2026-08-04
 - Deciders: Carey Carroll
 - Tags: testing, quality
@@ -58,10 +58,10 @@ tiers are non-negotiable; lower tiers are opportunistic.
 
 ### Tier 3 — UI smoke tests
 
-- Runs on every PR via `pr-validate.yml` (optional; may be added mid-M3).
+- Runs on every PR via `pr-validate.yml`.
 - 1–2 tests per component: "does it render without throwing?"
-- Playwright headless, kept intentionally shallow.
-- Opportunistic. Failing smoke tests block merge; missing smoke tests do not.
+- Vitest + `jsdom` DOM mounting and template rendering tests, kept intentionally shallow.
+- Failing smoke tests block merge.
 
 ### Explicitly not adopted
 
@@ -75,11 +75,10 @@ tiers are non-negotiable; lower tiers are opportunistic.
 ### Tooling
 
 - **Vitest** as the test runner (Vite-native, minimal config, Jest-like API).
-  Wired in during M2 when the registry validator gets its real implementation.
-- **Playwright** for UI smoke tests, added in M3 when there is actual UI to
-  smoke-test.
-- **JSON Schema (Ajv)** for registry validation, invoked from a plain Node
-  script (`tests/validate-registry.js`).
+  Wired in during M2 when the registry validator got its real implementation.
+- **jsdom** for DOM component mounting and template/generator smoke tests.
+- **JSON Schema (Ajv)** for registry validation, invoked from
+  `scripts/validate-registry.js` and tested in `tests/validate-registry.test.js`.
 
 ## Consequences
 
@@ -120,6 +119,5 @@ tiers are non-negotiable; lower tiers are opportunistic.
   enforces
 - ADR-0003: Shared component toolbox — defines the components that Tier 2
   tests
-- `tests/validate-registry.js` — Tier 1 implementation (real version lands
-  in M2)
+- `scripts/validate-registry.js` — Tier 1 implementation
 - `docs/reference/bibliography.md` — source citations for Tier 2 golden values

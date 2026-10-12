@@ -56,3 +56,4 @@ Establish three ironclad rules in your Board Risk Committee charter:
 1. **Net Across the Enterprise First:** Never allow Division A to pay bank spreads to buy EUR/USD forwards while Division B pays bank spreads to sell EUR/USD forwards. Centralize all exposures in a single global treasury netting center and hedge only the **net residual exposure**.
 2. **Watch Liquidity Margin Calls (The Metallgesellschaft Trap):** Never hedge long-term illiquid physical assets with short-term rolling futures unless you have massive credit lines to fund daily variation margin calls. A mismatch between cash margin outflows today and physical asset inflows 5 years from now can bankrupt a solvent company.
 3. **Match Instrument to Exposure:** Certain cash flow $\to$ Forward/Swap. Uncertain or competitive cash flow $\to$ Option Cap/Floor.
+

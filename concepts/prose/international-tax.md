@@ -45,3 +45,4 @@ Intercompany Transfer Pricing Profit-Shifting & Arm's-Length Audit
 When expanding internationally or managing cross-border supply chains:
 1. **Pair FDII vs. GILTI Before Moving IP:** Do the math before spending millions in legal fees to migrate Intellectual Property offshore. With the US **FDII deduction** offering a $13.125\%$ tax rate on export income kept *inside* the US and **OECD Pillar Two** imposing a $15\%$ minimum tax offshore, keeping IP onshore in Delaware is now frequently more tax-efficient and vastly simpler than offshore tax structures!
 2. **Secure an Advance Pricing Agreement (APA):** For large, recurring intercompany royalty or manufacturing flows, negotiate a bilateral **Advance Pricing Agreement** directly with the IRS and the foreign tax authority upfront to lock in guaranteed transfer pricing methodology and eliminate double-taxation audit risk.
+

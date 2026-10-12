@@ -53,3 +53,4 @@ Apply **Tax Clientele Arbitrage** in corporate financing and capital budgeting:
 - If your company has accumulated massive **Net Operating Losses (NOLs)** and will pay $0\%$ cash taxes for the next 5 years, you are in the **Low-Tax Clientele ($t \approx 0\%$)**.
 - Do **not** issue expensive straight debt (you can't use the interest deduction today!) and do **not** buy heavy machinery outright (you can't use the bonus depreciation today!).
 - Instead, issue preferred equity or enter **Tax-Oriented Leases** with a highly profitable bank or lessor ($t = 21\%+$). Let the bank take ownership of the equipment, claim the $100\%$ upfront tax depreciation deduction, and pass that tax savings back to you in the form of a below-market lease interest rate!
+

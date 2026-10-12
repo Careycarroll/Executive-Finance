@@ -42,3 +42,4 @@ Suppose you bought 100 shares of a high-quality stock at $\$100$, and it dropped
 2. **Buy 1 ATM $\$80$ Call** and **Sell 2 OTM $\$90$ Calls** for **$\$0.00$ net cost** (a $1 \times 2$ Call Ratio Spread).
 3. Because you already own 100 shares of stock, the extra short $\$90$ Call is **100% covered** (zero naked upside risk!).
 4. Now, if the stock merely recovers halfway to **$\$90$**, you earn $\$10$ on your stock plus $\$10$ on your $\$80/\$90$ call spread—**breaking even completely at $\$90$ instead of $\$100$** for zero out-of-pocket cash!
+

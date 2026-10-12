@@ -51,3 +51,4 @@ The Twin Deficits & Capital Flow Transmission Loop
 When evaluating international expansion or emerging-market M&A targets, always inspect the **composition of the target country's Financial Account**:
 - If a country's Current Account deficit is funded by **long-term Foreign Direct Investment (FDI)** (global multinationals building factories), the currency regime is structurally resilient.
 - If the deficit is funded by **short-term USD-denominated portfolio debt ("Hot Money")**, the country is vulnerable to a sudden stop crisis (like the 1997 Asian Financial Crisis). Hedge local currency exposures aggressively or require USD-indexed customer contracts before committing capital.
+

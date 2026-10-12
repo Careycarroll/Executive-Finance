@@ -65,3 +65,4 @@ Most large M&A transactions fail to earn back the buyer's cost of capital. Befor
    $$\text{ROIC}_{\text{deal}} = \frac{\text{Target NOPAT} + \text{After-Tax Synergies}}{\text{Total Purchase Price} + \text{Transaction Fees} + \text{Integration CapEx}}$$
    If projected Year 3 ROIC is less than the combined entity WACC, the deal destroys shareholder wealth, regardless of what investment bankers claim about EPS accretion.
 2. **Calculate Break-Even Synergies:** Determine the minimum dollar amount of annual synergies required just to cover the acquisition premium paid. If the required synergy number exceeds 20% of the target's operating costs, walk away.
+

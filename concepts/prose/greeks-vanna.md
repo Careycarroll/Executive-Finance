@@ -50,3 +50,4 @@ Vanna
 Understand the link between **Vanna and the Volatility Skew**:
 - Why do equity index OTM puts trade at a massive implied volatility premium over OTM calls (Negative Skew)? Because spot and volatility are negatively correlated ($\rho_{S,\sigma} \approx -0.75$).
 - In a market sell-off, long OTM puts benefit from both **Gamma** (spot falling) and **Vanna** (vol spiking simultaneously). Market makers charge a steeper implied volatility price upfront for OTM puts to compensate for this adverse Vanna-Gamma covariance.
+

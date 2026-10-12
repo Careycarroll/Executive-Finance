@@ -57,3 +57,4 @@ The 4-Gate Quantitative Trade Filtering Funnel
 Before clicking "Transmit" on any options order, answer the **"Who Is On The Other Side?" Test**:
 - If a counterparty is paying you a massive premium, ask *why*: Are they a price-insensitive hedger (e.g., a pension fund forced by mandate to buy monthly S&P 500 puts regardless of price)? If yes, you are getting paid to provide liquidity and insurance—**take the trade**.
 - Or is the counterparty an informed institutional flow trader aggressively sweeping the offer on 2-week Out-of-the-Money calls in an illiquid mid-cap stock? If yes, you are being adverse-selected by informed flow—**step aside immediately**.
+

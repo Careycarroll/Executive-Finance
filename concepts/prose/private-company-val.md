@@ -59,3 +59,4 @@ $$\text{Relationship Between Control Premium (CP) and DLOC: } \text{DLOC} = 1 - 
 How to estimate the **Discount for Lack of Marketability (DLOM)** rigorously without guessing:
 1. **Restricted Stock Studies / Pre-IPO Studies:** Empirical price discounts observed on restricted Rule 144 stock placements compared to freely traded shares ($15\%-30\%$).
 2. **Option-Pricing DLOM Models (Chaffe / Finnerty / Longstaff):** Model the cost of illiquidity as the value of an **At-the-Money Put Option** (or Asian lookback put) with time to expiration equal to the expected years until a liquidity event ($T$) and volatility equal to peer stock volatility ($\sigma$). Higher volatility and longer lock-up horizons mathematically justify a larger DLOM.
+

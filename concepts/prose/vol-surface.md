@@ -46,3 +46,4 @@ For a volatility surface to be free of static arbitrage:
 Before entering any multi-leg option strategy, inspect where the current Volatility Surface sits relative to its 1-year historical percentile:
 - **Steep Contango + Low ATM Vol:** Ideal regime for **Calendar Spreads** or **Long Diagonal Spreads** (selling slightly elevated back-month vol or buying cheap front-month gamma).
 - **Inverted Backwardation + Extreme Skew:** Never buy naked front-month OTM puts at the height of a panic—you are paying peak implied volatility and peak skew simultaneously. Use **Put Ratio Spreads** or **Collars** to sell the overpriced skew leg to fund your protection.
+

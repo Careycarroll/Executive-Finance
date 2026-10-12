@@ -34,3 +34,4 @@ $$\text{Lease Liability}_0 = \sum_{t=1}^T \frac{\text{Lease Payment}_t}{(1 + r_{
 When negotiating bank credit facilities or analyzing lease-heavy industries (airlines, retail, data centers, logistics):
 1. **Standardize on EBITDAR:** Always compute $\text{EV} / \text{EBITDAR}$ where Enterprise Value includes capitalized operating lease liabilities on the balance sheet.
 2. **Audit Debt Covenant Definitions:** Ensure your corporate credit agreement explicitly specifies **"Frozen GAAP"** or excludes ASC 842 Operating Lease Liabilities from the definition of "Total Funded Debt." Otherwise, signing a new 10-year headquarters office lease will artificially spike your $\text{Net Debt} / \text{EBITDA}$ covenant ratio!
+

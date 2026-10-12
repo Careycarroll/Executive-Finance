@@ -35,3 +35,4 @@ $$\rho_{\text{Put}} = \frac{\partial P}{\partial r} = -K \cdot T \cdot e^{-rT} \
 ## Notes for Future-Me
 When valuing **Long-Term Employee Stock Options (ASC 718)**, **M&A Contingent Value Rights**, or **2-Year LEAPS**:
 Never ignore Rho during interest rate regime shifts. Moving from a $0.5\%$ zero-rate environment to a $5.0\%$ risk-free rate increases the Black-Scholes value of an at-the-money 3-year Call option by **over $20\%$** even if stock price and implied volatility do not move an inch! Always pull the exact maturity-matched US Treasury Strip yield when pricing multi-year equity derivatives.
+

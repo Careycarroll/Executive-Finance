@@ -49,3 +49,4 @@ $$(1 + z_{t_2})^{t_2} = (1 + z_{t_1})^{t_1} \cdot (1 + f_{t_1, t_2})^{t_2 - t_1}
 
 ## Notes for Future-Me
 In corporate bond issuance and fixed-income analysis, always request the **Z-Spread (Zero-Volatility Spread)** rather than the simplistic nominal **G-Spread** (spread over a single interpolated benchmark Treasury yield). The Z-Spread measures the constant basis-point spread added to every point along the entire bootstrapped Treasury spot curve required to equate the present value of a corporate bond's cash flows to its market price—capturing the full shape of the term structure.
+

@@ -30,3 +30,4 @@ $$\text{Early Exercise Premium} = V_{\text{American}} - V_{\text{European}} \ge 
 ## Notes for Future-Me
 If you are trading **Covered Calls** or **Vertical Call Spreads** on dividend-paying equities, watch out for **Dividend Assignment Risk**:
 If your short call is in-the-money the afternoon before the stock goes ex-dividend, and the remaining extrinsic time value of the corresponding put is less than the upcoming cash dividend ($P_{\text{extrinsic}} < D$), institutional arbitrageurs will **automatically exercise your short call overnight** to capture the dividend! Close or roll in-the-money short calls the day *before* the ex-dividend date to avoid unexpected short-stock dividend liabilities.
+

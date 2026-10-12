@@ -56,3 +56,4 @@ Commercial Property Cash Flow Statement Architecture
 When evaluating **Corporate Sale-Leaseback Transactions** (selling company-owned factories or headquarters to a REIT and leasing them back under a 15-year Triple-Net / NNN lease):
 - Compare the **Lease Cap Rate** (initial annual rent divided by sale proceeds) against your corporate **After-Tax Cost of Debt** and **WACC**.
 - A sale-leaseback is simply an alternative form of 100% LTV financing! If you can issue senior secured corporate bonds at $6.0\%$, selling your mission-critical factory to a REIT at an $8.5\%$ Cap Rate with $3\%$ annual rent escalators is value-destructive financing—unless your internal ROIC on redeploying that cash exceeds $15\%+$.
+

@@ -30,3 +30,4 @@ $$\text{In-Out Parity (European Barrier Options): } C_{\text{Vanilla}} = C_{\tex
 For corporate currency and commodity hedging, **Asian Options are the gold standard; Barrier Options are usually a trap**:
 - **Always favor Asian Options:** A multinational corporation does not earn 100% of its European revenue on December 31 at 4:00 PM—it earns revenue smoothly every week of the year. Hedging annual foreign cash flows with a single Asian Average-Rate Option is $35\%+$ cheaper than buying a vanilla option and matches your actual cash flow timing.
 - **Avoid Complex Structured Notes:** When an investment bank pitches a "Zero-Cost Structured FX Accumulator" or "Target Redemption Forward (TARF)" loaded with knock-out barriers, walk away. Those structures give you small gains in calm markets and saddle you with $2\times$ leveraged losses when currencies break out.
+

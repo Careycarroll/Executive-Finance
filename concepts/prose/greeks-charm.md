@@ -47,3 +47,4 @@ Delta (Δ)
 ## Notes for Future-Me
 Always monitor **Weekend Charm** when managing an options book or institutional equity hedge:
 On Friday afternoon, institutional desks calculate their **Monday Morning Delta** (assuming 72 hours of Charm bleed over the weekend). If your portfolio protection relies on short-dated OTM puts, never let them enter the final 14 days to expiration—roll your protective hedges out to 60–90 days before Charm erodes both your Theta value and your Delta protection.
+

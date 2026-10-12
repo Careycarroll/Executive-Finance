@@ -54,3 +54,4 @@ Never allow an investment banker or corporate development analyst to cherry-pick
 - A regional brick-and-mortar retailer launching a website is **not** comparable to Amazon.
 - An automotive manufacturer developing electric batteries is **not** comparable to a pure-play AI software company.
 Whenever presented with a comparable valuation table, immediately inspect the **dispersion (interquartile range)** and ask: *"Which specific company was excluded from this peer list, and how does the median change if we put them back in?"*
+
