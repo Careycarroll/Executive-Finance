@@ -325,7 +325,7 @@ export function compute10KAnalysis(company, opts = {}) {
     flags.push({
       severity: 'positive',
       title: `High Cash Earnings Quality (Sloan Accrual Ratio = ${(latest.sloanAccrualRatio * 100).toFixed(1)}%)`,
-      detail: `Operating Cash Flow ($${fmtMoney(latest.ocf)}) strongly backs reported Net Income ($${fmtMoney(latest.ni)}), signaling conservative revenue recognition and strong cash conversion.`,
+      detail: `Operating Cash Flow (${fmtMoney(latest.ocf)}) strongly backs reported Net Income (${fmtMoney(latest.ni)}), signaling conservative revenue recognition and strong cash conversion.`,
       concept: 'accrual-quality'
     });
   }
@@ -337,7 +337,7 @@ export function compute10KAnalysis(company, opts = {}) {
     flags.push({
       severity: 'danger',
       title: `Heavy Stock-Based Compensation Dilution (SBC = ${(latest.sbcPctRev * 100).toFixed(1)}% of Revenue)`,
-      detail: `SBC ($${fmtMoney(latest.sbc)}) consumes ${(latest.sbc / Math.max(1, latest.ocf) * 100).toFixed(0)}% of Operating Cash Flow. Treating SBC as a real economic expense reduces Operating Margin to ${(latest.sbcAdjustedOpMargin * 100).toFixed(1)}%.`,
+      detail: `SBC (${fmtMoney(latest.sbc)}) consumes ${(latest.sbc / Math.max(1, latest.ocf) * 100).toFixed(0)}% of Operating Cash Flow. Treating SBC as a real economic expense reduces Operating Margin to ${(latest.sbcAdjustedOpMargin * 100).toFixed(1)}%.`,
       concept: 'stock-comp'
     });
   } else if (latest.sbcPctRev > 0.04) {
@@ -345,7 +345,7 @@ export function compute10KAnalysis(company, opts = {}) {
     flags.push({
       severity: 'warning',
       title: `Moderate Stock-Based Compensation (${(latest.sbcPctRev * 100).toFixed(1)}% of Revenue)`,
-      detail: `Equity compensation ($${fmtMoney(latest.sbc)}) represents a meaningful recurring claim on equity value; ensure DCF models deduct SBC rather than adding it back unadjusted.`,
+      detail: `Equity compensation (${fmtMoney(latest.sbc)}) represents a meaningful recurring claim on equity value; ensure DCF models deduct SBC rather than adding it back unadjusted.`,
       concept: 'stock-comp'
     });
   } else {
@@ -359,15 +359,15 @@ export function compute10KAnalysis(company, opts = {}) {
     flags.push({
       severity: 'danger',
       title: `Elevated Leverage / Tight Coverage (Net Debt/EBITDA = ${latest.netDebtToEbitda.toFixed(2)}x, EBIT/Int = ${latest.interestCoverage.toFixed(1)}x)`,
-      detail: `Net Financial Obligations ($${fmtMoney(latest.NFO)}) create significant fixed financial burden. Rising refinancing rates could compress Net Income via higher NFE.`,
+      detail: `Net Financial Obligations (${fmtMoney(latest.NFO)}) create significant fixed financial burden. Rising refinancing rates could compress Net Income via higher NFE.`,
       concept: 'capital-structure'
     });
   } else if (latest.NFO <= 0) {
     healthPoints += 20;
     flags.push({
       severity: 'positive',
-      title: `Net Cash Fortress (NFO = $${fmtMoney(latest.NFO)})`,
-      detail: `Financial Assets ($${fmtMoney(latest.FA)}) exceed total debt ($${fmtMoney(latest.FO)}), giving the firm negative Net Financial Obligations and strategic flexibility.`,
+      title: `Net Cash Fortress (NFO = ${fmtMoney(latest.NFO)})`,
+      detail: `Financial Assets (${fmtMoney(latest.FA)}) exceed total debt (${fmtMoney(latest.FO)}), giving the firm negative Net Financial Obligations and strategic flexibility.`,
       concept: 'reformulated-bs'
     });
   } else {
@@ -411,7 +411,7 @@ export function compute10KAnalysis(company, opts = {}) {
     flags.push({
       severity: 'warning',
       title: `High Acquisition Goodwill & Intangibles (${(latest.goodwillPctAssets * 100).toFixed(1)}% of Total Assets)`,
-      detail: `Goodwill & intangibles ($${fmtMoney(latest.gwIntang)}) inflate Operating Assets (OA), depressing NOAT and creating impairment risk if acquired units underperform.`,
+      detail: `Goodwill & intangibles (${fmtMoney(latest.gwIntang)}) inflate Operating Assets (OA), depressing NOAT and creating impairment risk if acquired units underperform.`,
       concept: 'ma-mechanics'
     });
   } else {

@@ -3,7 +3,7 @@
  */
 
 import { listSnapshots } from './snapshots.js';
-import { fetchSECData, parseUploadedCompanyFacts } from './sec-api.js';
+import { fetchSECData, parseUploadedCompanyFacts, resolveSECLinks } from './sec-api.js';
 import { fetchStockData, getApiKeys, saveApiKey } from './api-manager.js';
 import {
   getActiveCompany,
@@ -100,6 +100,11 @@ export function mountTargetBanner(container, onChange) {
               <input type="text" class="analyze-input" id="sec-ticker-input" placeholder="Ticker (e.g. NVDA, JPM)" />
               <button type="button" class="btn btn--primary btn--sm" id="sec-fetch-btn">Fetch 10-K</button>
             </div>
+            <div class="analyze-sec-links">
+              <a href="https://www.sec.gov/edgar/searchedgar/companysearch" target="_blank" rel="noopener noreferrer" class="analyze-sec-link">
+                &#128269; Search SEC EDGAR Company &amp; Ticker Lookup &nearr;
+              </a>
+            </div>
           </div>
 
           <div class="analyze-data-box">
@@ -111,7 +116,7 @@ export function mountTargetBanner(container, onChange) {
               <input type="text" class="analyze-input" id="api-ticker-input" placeholder="Ticker (e.g. AMZN, GOOGL)" />
               <button type="button" class="btn btn--primary btn--sm" id="api-fetch-btn">Fetch API</button>
             </div>
-            <div class="analyze-inline-form">
+            <div class="analyze-inline-form analyze-inline-form--wrap">
               <input type="password" class="analyze-input" id="fmp-key-input" placeholder="FMP API Key" value="${keys.fmp || ''}" />
               <input type="password" class="analyze-input" id="av-key-input" placeholder="AlphaVantage Key" value="${keys.alphavantage || ''}" />
               <button type="button" class="btn btn--secondary btn--sm" id="save-api-keys-btn">Save Keys</button>
@@ -123,7 +128,21 @@ export function mountTargetBanner(container, onChange) {
             <div class="analyze-data-box__desc">
               Works 100% offline without a proxy: drop any SEC EDGAR <code>CIK##########.json</code> file or exported company JSON.
             </div>
-            <input type="file" accept=".json" id="upload-sec-json-input" class="analyze-input" />
+            <input type="file" accept=".json" id="upload-sec-json-input" class="analyze-input" style="width:100%; margin-bottom:8px;" />
+            <div class="analyze-inline-form" style="margin-bottom:6px;">
+              <input type="text" class="analyze-input" id="sec-cik-helper-input" placeholder="Ticker or CIK (e.g. NVDA, 0001045810)" />
+              <button type="button" class="btn btn--secondary btn--sm" id="sec-open-cik-json-btn" title="Open raw SEC XBRL CIK.json in a new tab to save and upload">
+                Get CIK.json &nearr;
+              </button>
+            </div>
+            <div class="analyze-sec-links">
+              <a href="https://www.sec.gov/edgar/searchedgar/companysearch" target="_blank" rel="noopener noreferrer" class="analyze-sec-link">
+                &#128269; Search SEC EDGAR for Company Tickers &amp; CIKs &nearr;
+              </a>
+              <a href="https://www.sec.gov/files/company_tickers.json" target="_blank" rel="noopener noreferrer" class="analyze-sec-link">
+                &#128203; Official SEC Ticker-to-CIK Directory (<code>company_tickers.json</code>) &nearr;
+              </a>
+            </div>
           </div>
         </div>
         <div class="analyze-status-msg" id="analyze-data-status"></div>
@@ -211,6 +230,27 @@ export function mountTargetBanner(container, onChange) {
           if (onChange) onChange(data);
         } catch (err) {
           setStatus(err.message, true);
+        }
+      });
+    }
+
+    // Quick SEC CIK.json Link Opener under Option 3
+    const cikHelperInput = container.querySelector('#sec-cik-helper-input');
+    const cikHelperBtn = container.querySelector('#sec-open-cik-json-btn');
+    if (cikHelperBtn && cikHelperInput) {
+      cikHelperBtn.addEventListener('click', () => {
+        const query = cikHelperInput.value.trim();
+        const res = resolveSECLinks(query);
+        if (res.found && res.factsUrl) {
+          window.open(res.factsUrl, '_blank', 'noopener,noreferrer');
+          setStatus(`Opened CIK${res.cik}.json (${res.name}) in a new tab. Save the file (Cmd/Ctrl+S) and drop it into the file upload above.`);
+        } else {
+          window.open(res.edgarSearchUrl, '_blank', 'noopener,noreferrer');
+          setStatus(
+            query
+              ? `"${query.toUpperCase()}" isn't in the built-in shortcut list—opened SEC EDGAR Search so you can copy its 10-digit CIK and paste it above.`
+              : 'Opened SEC EDGAR Company Search in a new tab.'
+          );
         }
       });
     }
