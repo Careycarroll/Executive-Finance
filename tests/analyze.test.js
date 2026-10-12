@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { SNAPSHOTS, SNAPSHOT_LIST, getSnapshot } from '../js/analyze/snapshots.js';
-import { parseSecJsonToSnapshot, resolveSECLinks } from '../js/analyze/sec-api.js';
+import { parseSecJsonToSnapshot, parseUploadedIXBRLOrXML, resolveSECLinks } from '../js/analyze/sec-api.js';
 import { compute10KAnalysis, calcCAGR } from '../js/analyze/10k-analyzer.js';
 import { computeStockValuation } from '../js/analyze/stock-valuator.js';
 import { computeMAAnalysis, computeLBOModel, computeCapExModel } from '../js/analyze/deal-workbench.js';
@@ -71,11 +71,17 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
       expect(parsed.incomeStatements[0].netIncome).toBeCloseTo(93736, 0);
     });
 
-    it('resolves tickers and CIK numbers to SEC EDGAR XBRL CompanyFacts and search URLs', () => {
+    it('resolves tickers, CIK numbers, and SEC EDGAR .htm viewer URLs to XBRL CompanyFacts JSON URLs', () => {
       const nvda = resolveSECLinks('nvda');
       expect(nvda.found).toBe(true);
       expect(nvda.cik).toBe('0001045810');
       expect(nvda.factsUrl).toBe('https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json');
+
+      const iqvUrl = resolveSECLinks('https://www.sec.gov/ix?doc=/Archives/edgar/data/0001478242/000162828026008322/iqv-20251231.htm');
+      expect(iqvUrl.found).toBe(true);
+      expect(iqvUrl.cik).toBe('0001478242');
+      expect(iqvUrl.ticker).toBe('IQV');
+      expect(iqvUrl.factsUrl).toBe('https://data.sec.gov/api/xbrl/companyfacts/CIK0001478242.json');
 
       const cikDirect = resolveSECLinks('320193');
       expect(cikDirect.found).toBe(true);
@@ -85,6 +91,42 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
       const unknown = resolveSECLinks('ZZZZ');
       expect(unknown.found).toBe(false);
       expect(unknown.edgarSearchUrl).toBe('https://www.sec.gov/edgar/searchedgar/companysearch');
+    });
+
+    it('parses an uploaded SEC Inline XBRL (.htm) 10-K filing directly into a company snapshot', () => {
+      const sampleIxbrl = `
+        <html><body>
+          <ix:header>
+            <ix:resources>
+              <xbrli:context id="c-fy25">
+                <xbrli:period>
+                  <xbrli:startDate>2025-01-01</xbrli:startDate>
+                  <xbrli:endDate>2025-12-31</xbrli:endDate>
+                </xbrli:period>
+              </xbrli:context>
+              <xbrli:context id="c-bs25">
+                <xbrli:period>
+                  <xbrli:instant>2025-12-31</xbrli:instant>
+                </xbrli:period>
+              </xbrli:context>
+            </ix:resources>
+          </ix:header>
+          <ix:nonNumeric name="dei:EntityRegistrantName">IQVIA HOLDINGS INC.</ix:nonNumeric>
+          <ix:nonNumeric name="dei:TradingSymbol">IQV</ix:nonNumeric>
+          <ix:nonNumeric name="dei:EntityCentralIndexKey">0001478242</ix:nonNumeric>
+          <ix:nonFraction name="us-gaap:Revenues" contextRef="c-fy25" scale="6">15,405</ix:nonFraction>
+          <ix:nonFraction name="us-gaap:OperatingIncomeLoss" contextRef="c-fy25" scale="6">2,180</ix:nonFraction>
+          <ix:nonFraction name="us-gaap:NetIncomeLoss" contextRef="c-fy25" scale="6">1,375</ix:nonFraction>
+          <ix:nonFraction name="us-gaap:Assets" contextRef="c-bs25" scale="6">26,850</ix:nonFraction>
+          <ix:nonFraction name="us-gaap:StockholdersEquity" contextRef="c-bs25" scale="6">6,120</ix:nonFraction>
+        </body></html>
+      `;
+      const snap = parseUploadedIXBRLOrXML(sampleIxbrl, 'iqv-20251231.htm');
+      expect(snap.ticker).toBe('IQV');
+      expect(snap.name).toBe('IQVIA HOLDINGS INC.');
+      expect(snap.incomeStatements[0].revenue).toBeCloseTo(15405, 0);
+      expect(snap.incomeStatements[0].netIncome).toBeCloseTo(1375, 0);
+      expect(snap.balanceSheets[0].totalAssets).toBeCloseTo(26850, 0);
     });
   });
 
