@@ -375,7 +375,7 @@ function renderHubCards(company) {
 }
 
 if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', () => {
+  const initHub = () => {
     const bannerEl = document.getElementById('analyze-target-banner') || document.getElementById('analyze-target-mount');
     const hubGrid = document.getElementById('analyze-hub-grid') || document.getElementById('analyze-hub-cards');
     if (bannerEl && hubGrid) {
@@ -384,5 +384,10 @@ if (typeof document !== 'undefined') {
       });
       renderHubCards(getActiveCompany());
     }
-  });
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHub);
+  } else {
+    initHub();
+  }
 }

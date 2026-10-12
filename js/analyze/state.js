@@ -79,3 +79,4 @@ export function fmtMult(val, decimals = 1) {
 export function conceptPill(conceptId, label = 'Concept') {
   return `<a class="analyze-concept-pill" href="../learn/${conceptId}.html" title="Open Learn concept page: ${conceptId}">${label} &rarr;</a>`;
 }
+

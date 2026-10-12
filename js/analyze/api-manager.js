@@ -323,3 +323,4 @@ export async function fetchStockData(ticker, preferredProvider = 'fmp') {
 
   throw new Error('No API key configured. Open API Settings to save a Financial Modeling Prep (FMP) or Alpha Vantage key, or select one of the 6 built-in 10-K snapshots.');
 }
+
