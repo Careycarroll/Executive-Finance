@@ -218,19 +218,39 @@ async function mountTool(toolKey) {
   }
 }
 
-// Bind button clicks
+// Bind button clicks and quick-select dropdown
 document.addEventListener('DOMContentLoaded', () => {
   const buttons = document.querySelectorAll('.toolbox-nav-btn');
+  const quickSelect = document.getElementById('toolbox-quick-select');
+
+  function selectTool(toolKey) {
+    buttons.forEach(b => {
+      if (b.getAttribute('data-tool') === toolKey) {
+        b.classList.add('active');
+      } else {
+        b.classList.remove('active');
+      }
+    });
+    if (quickSelect && quickSelect.value !== toolKey) {
+      quickSelect.value = toolKey;
+    }
+    mountTool(toolKey);
+  }
+
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
       const toolKey = btn.getAttribute('data-tool');
-      mountTool(toolKey);
+      selectTool(toolKey);
     });
   });
 
+  if (quickSelect) {
+    quickSelect.addEventListener('change', (e) => {
+      selectTool(e.target.value);
+    });
+  }
+
   // Mount initial tool (cash-flow-chart)
-  mountTool('cash-flow-chart');
+  selectTool('cash-flow-chart');
 });
 

@@ -117,11 +117,13 @@ export class Chart {
     });
 
     this.canvas.addEventListener('wheel', e => {
-      e.preventDefault();
-      const pos     = this._canvasPos(e);
-      const zoomIn  = e.deltaY < 0;
-      this._applyZoom(pos.x, zoomIn);
-      this.draw();
+      if (e.ctrlKey || e.metaKey || this.config.enableWheelZoom) {
+        e.preventDefault();
+        const pos     = this._canvasPos(e);
+        const zoomIn  = e.deltaY < 0;
+        this._applyZoom(pos.x, zoomIn);
+        this.draw();
+      }
     }, { passive: false });
 
     this.canvas.addEventListener('dblclick', () => {
