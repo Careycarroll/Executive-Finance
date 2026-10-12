@@ -5,6 +5,12 @@ import { compute10KAnalysis, calcCAGR } from '../js/analyze/10k-analyzer.js';
 import { computeStockValuation } from '../js/analyze/stock-valuator.js';
 import { computeMAAnalysis, computeLBOModel, computeCapExModel } from '../js/analyze/deal-workbench.js';
 import { computePortfolioRisk, computeOptionOverlay, blackScholesFull } from '../js/analyze/risk-analyzer.js';
+import {
+  computeConsultingBusinessCase,
+  computeEbitdaBridge,
+  computePricingAndUnitEconomics,
+  computeConsultingScenarios
+} from '../js/analyze/consulting-workbench.js';
 
 describe('M7 Executive Analyze Suite & Workbenches', () => {
   describe('1. Pre-Loaded 10-K Snapshots & SEC EDGAR Parser', () => {
@@ -244,6 +250,46 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
       // At a -25% market crash, both Collar and Protective Put lose much less than -25%
       expect(collar.crashPoint.hedgedPnlPct).toBeGreaterThan(-0.15);
       expect(protPut.crashPoint.hedgedPnlPct).toBeGreaterThan(-0.15);
+    });
+  });
+
+  describe('6. Workbench 5: Management Consulting & Business Case Studio', () => {
+    it('computes project NPV, IRR, MIRR, ROI, Profitability Index, and Payback across consulting templates', () => {
+      const aapl = getSnapshot('AAPL');
+      const bc = computeConsultingBusinessCase(aapl, { template: 'digital' });
+
+      expect(bc.schedule.length).toBe(6); // Years 0..5
+      expect(bc.npv).toBeGreaterThan(0);
+      expect(bc.irr).toBeGreaterThan(bc.hurdleRate);
+      expect(bc.mirr).toBeGreaterThan(bc.hurdleRate);
+      expect(bc.profitabilityIndex).toBeGreaterThan(1.0);
+      expect(bc.simpleRoiPct).toBeGreaterThan(0);
+      expect(bc.simplePaybackYears).toBeGreaterThan(0);
+      expect(bc.simplePaybackYears).toBeLessThan(5);
+    });
+
+    it('decomposes EBITDA Bridge waterfall steps and computes CVP price elasticity & LTV/CAC unit economics', () => {
+      const msft = getSnapshot('MSFT');
+      const bridge = computeEbitdaBridge(msft, { template: 'pricing' });
+      expect(bridge.steps.length).toBe(7);
+      expect(bridge.targetEbitda).toBeCloseTo(bridge.baseEbitda + bridge.netEbitdaLift, 2);
+      expect(bridge.impliedEvCreation).toBeGreaterThan(0);
+
+      const unitEcon = computePricingAndUnitEconomics(msft, {
+        unitPrice: 250,
+        unitVarCost: 100,
+        proposedPriceChangePct: 0.05
+      });
+      // Contribution margin = (250 - 100)/250 = 60%. Indifference volume loss for +5% price = -0.05 / (0.60 + 0.05) = -7.692%
+      expect(unitEcon.contributionMarginPct).toBeCloseTo(0.60, 4);
+      expect(unitEcon.maxVolumeLossForPriceHike).toBeCloseTo(-0.05 / 0.65, 4);
+      expect(unitEcon.ltvToCac).toBeGreaterThan(2.0);
+
+      const scen = computeConsultingScenarios(msft, { template: 'digital' });
+      expect(scen.bullCase.npv).toBeGreaterThan(scen.baseCase.npv);
+      expect(scen.baseCase.npv).toBeGreaterThan(scen.bearCase.npv);
+      expect(scen.drivers.length).toBe(5);
+      expect(scen.feeModels.length).toBe(3);
     });
   });
 });

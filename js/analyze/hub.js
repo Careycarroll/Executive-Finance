@@ -422,6 +422,34 @@ function renderHubCards(company) {
         <span class="analyze-wb-card__cta">Open Portfolio &amp; Risk Lab &rarr;</span>
       </div>
     </a>
+
+    <a href="consulting-workbench.html" class="analyze-wb-card">
+      <div class="analyze-wb-card__header">
+        <span class="analyze-wb-card__badge">Workbench 5 &middot; Strategy &amp; Advisory</span>
+        <span>&#128188;</span>
+      </div>
+      <div class="analyze-wb-card__title">Management Consulting &amp; Business Case Studio</div>
+      <p class="analyze-wb-card__desc">
+        Build board-ready transformation business cases (<code>NPV</code>, <code>IRR</code>, <code>MIRR</code>, <code>ROI</code>, Payback &amp; J-Curve), EBITDA Bridge Waterfalls across Pricing/Volume/COGS/SG&amp;A levers, CVP Pricing Elasticity &amp; <code>LTV/CAC</code> unit economics, and Tornado sensitivity.
+      </p>
+      <div class="analyze-wb-card__preview">
+        <div>
+          <div class="analyze-wb-card__metric-label">Digital Case Outlay</div>
+          <div class="analyze-wb-card__metric-val">${fmtMoney(Math.round((inc.revenue || 10000) * 0.022))}</div>
+        </div>
+        <div>
+          <div class="analyze-wb-card__metric-label">EBITDA Bridge Lift</div>
+          <div class="analyze-wb-card__metric-val">+${fmtMoney(Math.round((inc.ebitda || 2000) * 0.14))}</div>
+        </div>
+        <div>
+          <div class="analyze-wb-card__metric-label">Target ROI Multiple</div>
+          <div class="analyze-wb-card__metric-val">2.4x</div>
+        </div>
+      </div>
+      <div class="analyze-wb-card__footer">
+        <span class="analyze-wb-card__cta">Open Consulting &amp; ROI Studio &rarr;</span>
+      </div>
+    </a>
   `;
 }
 
