@@ -976,15 +976,17 @@ function renderDealWorkbench(company) {
   bindVal('#capex-vol', capexOverrides, 'projectVol');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const bannerEl = document.getElementById('analyze-target-banner');
-  const rootEl = document.getElementById('wb-deal-root');
-  if (!rootEl) return;
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const bannerEl = document.getElementById('analyze-target-banner');
+    const rootEl = document.getElementById('wb-deal-root');
+    if (!rootEl) return;
 
-  if (bannerEl) {
-    mountTargetBanner(bannerEl, (company) => {
-      renderDealWorkbench(company);
-    });
-  }
-  renderDealWorkbench(getActiveCompany());
-});
+    if (bannerEl) {
+      mountTargetBanner(bannerEl, (company) => {
+        renderDealWorkbench(company);
+      });
+    }
+    renderDealWorkbench(getActiveCompany());
+  });
+}

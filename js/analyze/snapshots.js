@@ -826,35 +826,43 @@ export const BENCHMARK_SNAPSHOTS = {
         period: 'FY2024', fy: 2024, fp: 'FY', end: '2024-01-31',
         operatingCashFlow: 1290, investingCashFlow: -520, financingCashFlow: 180,
         capitalExpenditures: 140, freeCashFlow: 1150, depreciation: 148,
+        stockBasedCompensation: 690,
         dividendsPaid: 0, shareBuybacks: 0, debtIssued: 0, debtRepaid: 0
       },
       {
         period: 'FY2023', fy: 2023, fp: 'FY', end: '2023-01-31',
         operatingCashFlow: 940, investingCashFlow: -460, financingCashFlow: 150,
         capitalExpenditures: 115, freeCashFlow: 825, depreciation: 122,
+        stockBasedCompensation: 560,
         dividendsPaid: 0, shareBuybacks: 0, debtIssued: 0, debtRepaid: 0
       },
       {
         period: 'FY2022', fy: 2022, fp: 'FY', end: '2022-01-31',
         operatingCashFlow: 640, investingCashFlow: -390, financingCashFlow: 190,
         capitalExpenditures: 90, freeCashFlow: 550, depreciation: 98,
+        stockBasedCompensation: 440,
         dividendsPaid: 0, shareBuybacks: 0, debtIssued: 150, debtRepaid: 0
       },
       {
         period: 'FY2021', fy: 2021, fp: 'FY', end: '2021-01-31',
         operatingCashFlow: 390, investingCashFlow: -290, financingCashFlow: 170,
         capitalExpenditures: 70, freeCashFlow: 320, depreciation: 75,
+        stockBasedCompensation: 330,
         dividendsPaid: 0, shareBuybacks: 0, debtIssued: 100, debtRepaid: 0
       },
       {
         period: 'FY2020', fy: 2020, fp: 'FY', end: '2020-01-31',
         operatingCashFlow: 210, investingCashFlow: -180, financingCashFlow: 110,
         capitalExpenditures: 50, freeCashFlow: 160, depreciation: 55,
+        stockBasedCompensation: 230,
         dividendsPaid: 0, shareBuybacks: 0, debtIssued: 0, debtRepaid: 0
       }
     ]
   }
 };
+
+export const SNAPSHOTS = BENCHMARK_SNAPSHOTS;
+export const SNAPSHOT_LIST = Object.values(BENCHMARK_SNAPSHOTS);
 
 export function getSnapshot(ticker) {
   const key = (ticker || 'AAPL').toUpperCase().trim();
