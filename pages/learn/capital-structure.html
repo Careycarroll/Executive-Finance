@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capital Structure & Modigliani-Miller Theorems — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--corpfin">corpfin</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Capital Structure & Modigliani-Miller Theorems</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Gabriel Hawawini Ch. 11</span>
+          <span class="concept-hero__citation-secondary">· also: Myron Scholes Ch. 6</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><p>Capital structure is the mix of long-term debt and equity financing used by an enterprise to fund its overall operations and growth. The central question in corporate finance is: <strong>Does the choice of capital structure affect the total market value of the firm, and is there an optimal debt-to-equity ratio that minimizes WACC?</strong></p>
+<p>The theoretical foundation was established by Franco Modigliani and Merton Miller (MM, Nobel laureates 1958, 1963):</p>
+<ol>
+<li><strong>MM Proposition I (Without Taxes - Irrelevance):</strong> In a frictionless world with perfect capital markets, zero taxes, zero bankruptcy costs, and symmetric information, the total market value of a firm is determined solely by the earning power and risk of its underlying assets, completely independent of how those assets are financed ($V_L = V_U$). Financial leverage merely reshuffles the slices of the pie between debt and equity without changing the size of the pie.</li>
+<li><strong>MM Proposition II (Without Taxes - Cost of Equity):</strong> As debt increases, the required return on equity ($r_e$) rises linearly to exactly offset the apparent benefit of cheaper debt: $r_e = r_0 + \frac{D}{E}(r_0 - r_d)$. Consequently, WACC remains perfectly flat across all leverage ratios.</li>
+<li><strong>MM Proposition I (With Taxes - Tax Shield):</strong> Because interest payments are tax-deductible while equity dividends are not, debt creates a corporate tax shield. The levered firm value equals the unlevered firm value plus the present value of the debt tax shield ($V_L = V_U + t \cdot D$). In this world without bankruptcy costs, the optimal capital structure would be 100% debt!</li>
+<li><strong>Trade-Off Theory (Modern Real World):</strong> In reality, increasing debt elevates the probability of financial distress. The <strong>Static Trade-Off Theory</strong> posits that optimal capital structure balances the marginal tax shield benefit of debt against the marginal expected costs of bankruptcy, debt-holder agency friction, and financial distress.</li>
+</ol>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Static Trade-Off Model of Capital Structure</h3>
+<table>
+<thead>
+<tr>
+<th>Leverage Level ($D/E$)</th>
+<th>Tax Shield Benefit ($t \cdot D$)</th>
+<th>Financial Distress Costs</th>
+<th>Impact on WACC</th>
+<th>Enterprise Value Impact</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Zero Debt (Unlevered)</strong></td>
+<td>Zero</td>
+<td>Zero</td>
+<td>High (100% Equity Cost)</td>
+<td>Baseline $V_U$</td>
+</tr>
+<tr>
+<td><strong>Moderate Debt (Optimal Zone)</strong></td>
+<td>High &amp; Growing</td>
+<td>Low (Minimal Default Risk)</td>
+<td><strong>WACC Minimized</strong></td>
+<td><strong>Value Maximized ($V^*$)</strong></td>
+</tr>
+<tr>
+<td><strong>Excessive Debt (Over-levered)</strong></td>
+<td>Diminishing (Tax Cap §163(j))</td>
+<td>Severe (Covenants, Supplier Freeze, Distress)</td>
+<td>WACC Spikes Sharply</td>
+<td>Value Destroyed ($V_L &lt; V_U$)</td>
+</tr>
+</tbody></table>
+<pre><code>Enterprise Value (V)
+       ▲
+       │                  Peak Value (V*)
+       │                     ┌───┐
+       │               . · &#39;       &#39; · .   Trade-off Curve: Tax Shield vs Distress
+       │          . · &#39;                 &#39; · .
+       │     . · &#39;                            &#39; · .
+  V_U  ├─── &#39; ──────────────────────────────────────  Unlevered Firm Value (Zero Debt)
+       │
+       │                                     . · &#39;  PV of Financial Distress Costs
+       │                               . · &#39;
+       │                         . · &#39;
+       └─────────────────────────────────────────────► Financial Leverage (D / E)
+                            Optimal D*
+</code></pre>
+<h3>Key Theories Compared</h3>
+<ul>
+<li><strong>Trade-Off Theory:</strong> Firms identify a target debt-equity ratio balancing tax shields against distress costs. High-profit, asset-heavy firms (utilities, real estate) maintain higher debt capacity than volatile R&amp;D firms.</li>
+<li><strong>Pecking Order Theory (Myers &amp; Majluf):</strong> Due to asymmetric information, management follows a strict financing hierarchy: (1) Internal cash flow / retained earnings first, (2) Straight debt second, and (3) External equity issuance only as a desperate last resort to avoid market undervaluation signaling.</li>
+</ul>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;Debt is cheaper than equity, so increasing debt always reduces WACC.&quot;</strong>
+<em>Reality:</em> Adding debt increases financial leverage risk, driving up the required return on equity ($r_e$) via the Hamada effect. At high leverage, credit spreads explode. WACC only drops until the optimal debt capacity is reached; beyond that point, WACC rises.</li>
+<li><strong>Misconception 2: &quot;Bankruptcy costs only matter if the firm actually files for Chapter 11.&quot;</strong>
+<em>Reality:</em> Indirect financial distress costs hit long before formal bankruptcy. High leverage causes talented executives and engineers to jump ship, customers to hesitate signing multi-year contracts for fear of orphan software, and suppliers to shorten payment terms from Net-60 to Cash-on-Delivery, strangling working capital.</li>
+<li><strong>Misconception 3: &quot;A zero-debt company is the most conservatively and optimally run enterprise.&quot;</strong>
+<em>Reality:</em> An all-equity firm with stable, predictable operating cash flows leaves substantial tax shields on the table and invites managerial slack (Jensen&#39;s Free Cash Flow hypothesis). Moderate leverage imposes capital discipline.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>When sizing debt capacity for your enterprise or an M&amp;A transaction, do not look at peak-cycle EBITDA multiples (e.g., &quot;banks will lend us $5.5\times$ EBITDA today!&quot;). Size debt against a <strong>trough-cycle stress test</strong>: if revenue contracts by 25% and gross margins compress by 400 basis points, can operating cash flow still cover interest payments by at least $1.5\times$ (Fixed Charge Coverage Ratio)?</p>
+<p>Debt is a magnifying glass: it magnifies equity returns on the upside, but it robs management of strategic agility on the downside. The ultimate luxury in a downturn is having dry powder while debt-encumbered competitors are paralyzed by bank covenants.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/wacc.html" class="related-chip">
+          <span>Weighted Average Cost of Capital (WACC)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/tax-shield.html" class="related-chip">
+          <span>Tax Shields and After-Tax Cost of Debt</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+
+        <a href="/pages/learn/cost-of-debt.html" class="related-chip">
+          <span>Cost of Debt (Pre-Tax & After-Tax)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/dividend-policy.html" class="related-chip">
+          <span>Dividend Policy and Payout</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

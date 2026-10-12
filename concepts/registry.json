@@ -306,6 +306,271 @@
       "template": "explainer",
       "prose_ref": "concepts/prose/whale-curve.md",
       "related": ["dupont", "reformulated-bs"]
+    },
+    {
+      "id": "discount-rate",
+      "domain": "corpfin",
+      "title": "Discount Rates and Opportunity Cost",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["2", "12"], "primary": true },
+        { "book": "bodie", "chapters": ["5"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/discount-rate.md",
+      "related": ["tvm", "wacc", "cost-of-equity", "risk-return"]
+    },
+    {
+      "id": "risk-return",
+      "domain": "corpfin",
+      "title": "Risk-Return Tradeoff",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["5", "6"], "primary": true },
+        { "book": "hawawini", "chapters": ["12"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/risk-return.md",
+      "related": ["discount-rate", "diversification", "cost-of-equity"]
+    },
+    {
+      "id": "diversification",
+      "domain": "corpfin",
+      "title": "Diversification and Portfolio Risk",
+      "tier": "core",
+      "sources": [
+        { "book": "bodie", "chapters": ["6", "7"], "primary": true },
+        { "book": "hawawini", "chapters": ["12"] }
+      ],
+      "template": "interactive",
+      "component": "correlation-heatmap",
+      "defaults": {
+        "assets": ["US Equities", "Treasury Bonds", "Gold", "Real Estate"],
+        "matrix": [
+          [1.0, -0.30, 0.10, 0.60],
+          [-0.30, 1.0, 0.20, -0.10],
+          [0.10, 0.20, 1.0, 0.15],
+          [0.60, -0.10, 0.15, 1.0]
+        ],
+        "vols": [0.18, 0.08, 0.15, 0.20]
+      },
+      "examples": [
+        {
+          "label": "Standard 4-Asset Allocation",
+          "config": {
+            "assets": ["US Equities", "Treasury Bonds", "Gold", "Real Estate"],
+            "matrix": [
+              [1.0, -0.30, 0.10, 0.60],
+              [-0.30, 1.0, 0.20, -0.10],
+              [0.10, 0.20, 1.0, 0.15],
+              [0.60, -0.10, 0.15, 1.0]
+            ],
+            "vols": [0.18, 0.08, 0.15, 0.20]
+          }
+        },
+        {
+          "label": "Flight to Safety (Negative Correlation)",
+          "config": {
+            "assets": ["Equities", "Treasuries"],
+            "matrix": [
+              [1.0, -0.65],
+              [-0.65, 1.0]
+            ],
+            "vols": [0.22, 0.09]
+          }
+        },
+        {
+          "label": "Correlated Growth Basket",
+          "config": {
+            "assets": ["Tech", "Growth", "Discretionary"],
+            "matrix": [
+              [1.0, 0.88, 0.78],
+              [0.88, 1.0, 0.72],
+              [0.78, 0.72, 1.0]
+            ],
+            "vols": [0.25, 0.24, 0.21]
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/diversification.md",
+      "related": ["risk-return", "cost-of-equity", "var"]
+    },
+    {
+      "id": "fcf",
+      "domain": "corpfin",
+      "title": "Free Cash Flow (FCFF vs FCFE)",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["3", "9"], "primary": true },
+        { "book": "penman", "chapters": ["4"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/fcf.md",
+      "related": ["tvm", "npv-irr", "wacc", "working-capital"]
+    },
+    {
+      "id": "npv-irr",
+      "domain": "corpfin",
+      "title": "Net Present Value and Internal Rate of Return",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["2"], "primary": true },
+        { "book": "bodie", "chapters": ["5"] }
+      ],
+      "template": "interactive",
+      "component": "cash-flow-chart",
+      "defaults": {
+        "periods": 5,
+        "cash_flows": [-1000, 300, 350, 400, 300, 200],
+        "discount_rate": 0.10,
+        "growth_rate": 0.00,
+        "show_pv": true,
+        "show_cumulative": true
+      },
+      "examples": [
+        {
+          "label": "Standard CapEx Project",
+          "config": {
+            "discount_rate": 0.10,
+            "cash_flows": [-1000, 300, 350, 400, 300, 200]
+          }
+        },
+        {
+          "label": "High Hurdle Rate (16%)",
+          "config": {
+            "discount_rate": 0.16,
+            "cash_flows": [-1000, 300, 350, 400, 300, 200]
+          }
+        },
+        {
+          "label": "Front-Loaded Inflows",
+          "config": {
+            "discount_rate": 0.10,
+            "cash_flows": [-1000, 500, 400, 300, 200, 100]
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/npv-irr.md",
+      "related": ["tvm", "discount-rate", "fcf", "capital-budgeting"]
+    },
+    {
+      "id": "wacc",
+      "domain": "corpfin",
+      "title": "Weighted Average Cost of Capital (WACC)",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["12"], "primary": true },
+        { "book": "easton", "chapters": ["11"] }
+      ],
+      "template": "interactive",
+      "component": "sensitivity-panel",
+      "defaults": {
+        "compute": "wacc",
+        "equityVal": 600,
+        "debtVal": 400,
+        "costOfEquity": 0.12,
+        "costOfDebt": 0.06,
+        "taxRate": 0.25
+      },
+      "examples": [
+        {
+          "label": "Balanced Capital Structure (60/40)",
+          "config": {
+            "equityVal": 600,
+            "debtVal": 400,
+            "costOfEquity": 0.12,
+            "costOfDebt": 0.06,
+            "taxRate": 0.25
+          }
+        },
+        {
+          "label": "All-Equity Unlevered",
+          "config": {
+            "equityVal": 1000,
+            "debtVal": 0,
+            "costOfEquity": 0.11,
+            "costOfDebt": 0.05,
+            "taxRate": 0.25
+          }
+        },
+        {
+          "label": "High Leverage LBO (25/75)",
+          "config": {
+            "equityVal": 250,
+            "debtVal": 750,
+            "costOfEquity": 0.18,
+            "costOfDebt": 0.085,
+            "taxRate": 0.25
+          }
+        }
+      ],
+      "prose_ref": "concepts/prose/wacc.md",
+      "related": ["cost-of-equity", "cost-of-debt", "capital-structure", "tax-shield"]
+    },
+    {
+      "id": "cost-of-equity",
+      "domain": "corpfin",
+      "title": "Cost of Equity (CAPM, DDM & Build-Up)",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["12"], "primary": true },
+        { "book": "bodie", "chapters": ["9"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/cost-of-equity.md",
+      "related": ["wacc", "risk-return", "discount-rate"]
+    },
+    {
+      "id": "cost-of-debt",
+      "domain": "corpfin",
+      "title": "Cost of Debt (Pre-Tax & After-Tax)",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["12"], "primary": true },
+        { "book": "easton", "chapters": ["11"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/cost-of-debt.md",
+      "related": ["wacc", "tax-shield", "capital-structure"]
+    },
+    {
+      "id": "capital-structure",
+      "domain": "corpfin",
+      "title": "Capital Structure & Modigliani-Miller Theorems",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["11"], "primary": true },
+        { "book": "scholes-wolfson", "chapters": ["6"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/capital-structure.md",
+      "related": ["wacc", "tax-shield", "cost-of-debt", "dividend-policy"]
+    },
+    {
+      "id": "working-capital",
+      "domain": "corpfin",
+      "title": "Working Capital Management & Cash Conversion Cycle",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["5", "6"], "primary": true },
+        { "book": "easton", "chapters": ["4"] }
+      ],
+      "template": "formula",
+      "prose_ref": "concepts/prose/working-capital.md",
+      "related": ["fcf", "capital-budgeting", "reformulated-bs"]
+    },
+    {
+      "id": "capital-budgeting",
+      "domain": "corpfin",
+      "title": "Capital Budgeting & Capital Allocation Decisions",
+      "tier": "core",
+      "sources": [
+        { "book": "hawawini", "chapters": ["2", "10"], "primary": true },
+        { "book": "penman", "chapters": ["10"] }
+      ],
+      "template": "explainer",
+      "prose_ref": "concepts/prose/capital-budgeting.md",
+      "related": ["npv-irr", "wacc", "fcf", "working-capital"]
     }
   ]
 }

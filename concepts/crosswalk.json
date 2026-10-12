@@ -221,5 +221,231 @@
         ]
       }
     ]
+  },
+  "discount-rate": {
+    "title": "Discount Rates and Opportunity Cost",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "2",
+          "12"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "5"
+        ]
+      }
+    ]
+  },
+  "risk-return": {
+    "title": "Risk-Return Tradeoff",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "5",
+          "6"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "diversification": {
+    "title": "Diversification and Portfolio Risk",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "bodie",
+        "chapters": [
+          "6",
+          "7"
+        ],
+        "primary": true
+      },
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ]
+      }
+    ]
+  },
+  "fcf": {
+    "title": "Free Cash Flow (FCFF vs FCFE)",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "3",
+          "9"
+        ],
+        "primary": true
+      },
+      {
+        "book": "penman",
+        "chapters": [
+          "4"
+        ]
+      }
+    ]
+  },
+  "npv-irr": {
+    "title": "Net Present Value and Internal Rate of Return",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "2"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "5"
+        ]
+      }
+    ]
+  },
+  "wacc": {
+    "title": "Weighted Average Cost of Capital (WACC)",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ],
+        "primary": true
+      },
+      {
+        "book": "easton",
+        "chapters": [
+          "11"
+        ]
+      }
+    ]
+  },
+  "cost-of-equity": {
+    "title": "Cost of Equity (CAPM, DDM & Build-Up)",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ],
+        "primary": true
+      },
+      {
+        "book": "bodie",
+        "chapters": [
+          "9"
+        ]
+      }
+    ]
+  },
+  "cost-of-debt": {
+    "title": "Cost of Debt (Pre-Tax & After-Tax)",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "12"
+        ],
+        "primary": true
+      },
+      {
+        "book": "easton",
+        "chapters": [
+          "11"
+        ]
+      }
+    ]
+  },
+  "capital-structure": {
+    "title": "Capital Structure & Modigliani-Miller Theorems",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "11"
+        ],
+        "primary": true
+      },
+      {
+        "book": "scholes-wolfson",
+        "chapters": [
+          "6"
+        ]
+      }
+    ]
+  },
+  "working-capital": {
+    "title": "Working Capital Management & Cash Conversion Cycle",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "5",
+          "6"
+        ],
+        "primary": true
+      },
+      {
+        "book": "easton",
+        "chapters": [
+          "4"
+        ]
+      }
+    ]
+  },
+  "capital-budgeting": {
+    "title": "Capital Budgeting & Capital Allocation Decisions",
+    "domain": "corpfin",
+    "tier": "core",
+    "sources": [
+      {
+        "book": "hawawini",
+        "chapters": [
+          "2",
+          "10"
+        ],
+        "primary": true
+      },
+      {
+        "book": "penman",
+        "chapters": [
+          "10"
+        ]
+      }
+    ]
   }
 }

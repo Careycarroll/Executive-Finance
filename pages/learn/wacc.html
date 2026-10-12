@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weighted Average Cost of Capital (WACC) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--corpfin">corpfin</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Weighted Average Cost of Capital (WACC)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Gabriel Hawawini Ch. 12</span>
+          <span class="concept-hero__citation-secondary">· also: Peter D. Easton Ch. 11</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The Weighted Average Cost of Capital (WACC) represents the blended average hurdle rate that an enterprise must earn across its existing operating assets to satisfy all of its capital providers—both common equity shareholders and interest-bearing debt lenders.</p>
+<p>Because debt interest is tax-deductible in most corporate tax codes, the effective economic cost of debt to the corporation is shielded by $(1 - t)$, making debt capital substantially cheaper than equity capital. However, adding debt increases financial leverage, elevating the volatility of residual earnings and increasing the probability of financial distress, which drives up the required <strong>Cost of Equity ($r_e$)</strong> and credit spreads.</p>
+<p>WACC serves as:</p>
+<ol>
+<li><strong>The Company-Wide Hurdle Rate:</strong> The minimum return on invested capital (ROIC) needed to maintain shareholder value. When $\text{ROIC} &gt; \text{WACC}$, the enterprise generates positive Economic Value Added (EVA).</li>
+<li><strong>The Discount Rate in Enterprise DCF:</strong> The rate used to discount Unlevered Free Cash Flows (FCFF) to calculate Enterprise Value.</li>
+</ol>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;equityVal&quot;:600,&quot;debtVal&quot;:400,&quot;costOfEquity&quot;:0.12,&quot;costOfDebt&quot;:0.06,&quot;taxRate&quot;:0.25}">Balanced Capital Structure (60/40)</button>
+<button type="button" class="preset-btn" data-config="{&quot;equityVal&quot;:1000,&quot;debtVal&quot;:0,&quot;costOfEquity&quot;:0.11,&quot;costOfDebt&quot;:0.05,&quot;taxRate&quot;:0.25}">All-Equity Unlevered</button>
+<button type="button" class="preset-btn" data-config="{&quot;equityVal&quot;:250,&quot;debtVal&quot;:750,&quot;costOfEquity&quot;:0.18,&quot;costOfDebt&quot;:0.085,&quot;taxRate&quot;:0.25}">High Leverage LBO (25/75)</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="sensitivity-panel" data-defaults="{&quot;compute&quot;:&quot;wacc&quot;,&quot;equityVal&quot;:600,&quot;debtVal&quot;:400,&quot;costOfEquity&quot;:0.12,&quot;costOfDebt&quot;:0.06,&quot;taxRate&quot;:0.25}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\text{WACC} = \left(\frac{E}{D + E}\right) \cdot r_e + \left(\frac{D}{D + E}\right) \cdot r_d \cdot (1 - t)">
+              \text{WACC} = \left(\frac{E}{D + E}\right) \cdot r_e + \left(\frac{D}{D + E}\right) \cdot r_d \cdot (1 - t)
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>\text{WACC}</strong>: Weighted Average Cost of Capital (after-tax blended rate).</li>
+<li><strong>E</strong>: Market value of equity (share price $\times$ diluted shares outstanding, NOT accounting book value).</li>
+<li><strong>D</strong>: Market value of interest-bearing net debt.</li>
+<li><strong>\frac{E}{D + E}</strong>: Equity weighting in the target capital structure ($w_e$).</li>
+<li><strong>\frac{D}{D + E}</strong>: Debt weighting in the target capital structure ($w_d$).</li>
+<li><strong>r_e</strong>: Cost of equity (typically estimated via CAPM: $r_f + \beta \times \text{ERP}$).</li>
+<li><strong>r_d</strong>: Pre-tax marginal cost of debt (the current yield-to-maturity on newly issued debt, NOT the historical coupon on existing bonds).</li>
+<li><strong>t</strong>: Marginal corporate income tax rate (interest tax shield factor).</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Common executive errors in calculating WACC:</p>
+<ol>
+<li><strong>Using Book Value instead of Market Value:</strong> Accounting book value of equity records historical retained earnings and par value, which is useless for opportunity cost. Always use current market values (or target debt-to-equity ratios for private firms). If market equity is $5B and debt is $1B, the weights are 83% equity and 17% debt, regardless of what the balance sheet book equity says!</li>
+<li><strong>Using Historical Coupon Rates instead of Current YTM:</strong> A bond issued at 3% five years ago that now trades at a 7% yield-to-maturity costs the company 7% if it attempts to raise debt today. Marginal cost of capital is forward-looking.</li>
+<li><strong>The Leverage Fallacy:</strong> Executives frequently think: <em>&quot;Debt is 5% after-tax and equity is 12%. If we replace all equity with debt, our WACC will plummet to 5%!&quot;</em> This ignores Modigliani-Miller Proposition II: as debt increases, financial risk compounds, and remaining equity holders demand a skyrocketing cost of equity $r_e$. At excessive leverage, bankruptcy and agency costs spike debt yields $r_d$ as well.</li>
+</ol>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/cost-of-equity.html" class="related-chip">
+          <span>Cost of Equity (CAPM, DDM & Build-Up)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/cost-of-debt.html" class="related-chip">
+          <span>Cost of Debt (Pre-Tax & After-Tax)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/capital-structure.html" class="related-chip">
+          <span>Capital Structure & Modigliani-Miller Theorems</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/tax-shield.html" class="related-chip">
+          <span>Tax Shields and After-Tax Cost of Debt</span>
+          <span class="badge badge-domain--tax" style="font-size: 0.65rem; padding: 1px 5px;">tax</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

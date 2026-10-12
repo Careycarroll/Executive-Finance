@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Risk-Return Tradeoff — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--corpfin">corpfin</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Risk-Return Tradeoff</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Zvi Bodie Ch. 5, 6</span>
+          <span class="concept-hero__citation-secondary">· also: Gabriel Hawawini Ch. 12</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>The risk-return tradeoff is the bedrock principle of modern finance: rational investors will only tolerate higher variance or downside uncertainty if compensated by higher expected returns. In financial markets, capital is scarce, and risk-averse investors bid up the prices of low-variance cash flows (lowering their prospective yields) while demanding substantial discounts on volatile, cyclical cash flows (raising their required expected yields).</p>
+<p>For corporate leaders and portfolio architects, the critical distinction is between <strong>total risk</strong> (standard deviation $\sigma$, encompassing all fluctuations) and <strong>systematic risk</strong> (covariance with the broader macro economy $\beta$). Because diversified market participants can costlessly eliminate idiosyncratic company-specific risks, capital markets only price and reward systematic risk. Projects or portfolios that bear massive idiosyncratic volatility without systematic exposure do not earn an equilibrium risk premium.</p>
+</div>
+        </div>
+
+      
+        <div class="concept-formula-box">
+          <h2 class="concept-section__title">Formula</h2>
+          <div class="concept-formula-katex" data-katex="E[R_p] = r_f + \left[ \frac{E[R_m] - r_f}{\sigma_m} \right] \cdot \sigma_p \cdot \rho_{p,m} = r_f + \beta_p \cdot \left( E[R_m] - r_f \right)">
+            E[R_p] = r_f + \left[ \frac{E[R_m] - r_f}{\sigma_m} \right] \cdot \sigma_p \cdot \rho_{p,m} = r_f + \beta_p \cdot \left( E[R_m] - r_f \right)
+          </div>
+          
+            <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
+              <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Variable Glossary
+              </h3>
+              <ul>
+<li><strong>E[R_p]</strong>: Expected rate of return on the asset or portfolio $p$.</li>
+<li><strong>r_f</strong>: Risk-free rate of return (zero covariance with the market portfolio).</li>
+<li><strong>E[R_m] - r_f</strong>: Market risk premium (the excess return demanded to hold the aggregate market portfolio).</li>
+<li><strong>\sigma_p</strong>: Total volatility (standard deviation of portfolio returns).</li>
+<li><strong>\sigma_m</strong>: Volatility of the aggregate market benchmark.</li>
+<li><strong>\rho_{p,m}</strong>: Correlation coefficient between asset returns and market returns.</li>
+<li><strong>\beta_p</strong>: Beta coefficient of systematic risk, defined as $\frac{\text{Cov}(R_p, R_m)}{\sigma_m^2} = \rho_{p,m} \frac{\sigma_p}{\sigma_m}$.</li>
+<li><strong>\text{Sharpe Ratio}</strong>: $\frac{E[R_p] - r_f}{\sigma_p}$, measuring excess return generated per unit of total risk.</li>
+</ul>
+
+            </div>
+        </div>
+
+      
+        <div class="worked-example-card">
+          <h2 class="concept-section__title">Worked Numerical Example</h2>
+          <div class="worked-example-card__content">
+            <p>An executive investment committee is comparing two potential strategic investments:</p>
+<ul>
+<li><strong>Project Alpha (Biotech R&amp;D Venture):</strong> Expected return $= 20%$, annual volatility $\sigma = 40%$, correlation with market $\rho = 0.25$.</li>
+<li><strong>Project Beta (Industrial Supply Chain Expansion):</strong> Expected return $= 13%$, annual volatility $\sigma = 18%$, correlation with market $\rho = 0.85$.</li>
+<li><strong>Macro parameters:</strong> Risk-free rate $r_f = 4.0%$, market return $E[R_m] = 10.0%$, market volatility $\sigma_m = 15.0%$.</li>
+</ul>
+<p>Calculate the systematic beta for each project:
+$$\beta_{\text{Alpha}} = 0.25 \times \frac{40%}{15%} = 0.67$$
+$$\beta_{\text{Beta}} = 0.85 \times \frac{18%}{15%} = 1.02$$</p>
+<p>Compute CAPM required return based on systematic risk:
+$$r_{\text{req, Alpha}} = 4.0% + 0.67 \times (10.0% - 4.0%) = 4.0% + 4.02% = 8.02%$$
+$$r_{\text{req, Beta}} = 4.0% + 1.02 \times (10.0% - 4.0%) = 4.0% + 6.12% = 10.12%$$</p>
+<p><strong>Evaluation:</strong></p>
+<ul>
+<li>Project Alpha generates an expected return of $20%$ against a required hurdle of only $8.02%$ (Alpha generates $+11.98%$ abnormal spread $\alpha$), because its high total volatility ($40%$) is largely idiosyncratic R&amp;D trial risk that can be diversified away across an enterprise pipeline.</li>
+<li>Project Beta generates $13%$ against a required hurdle of $10.12%$ ($+2.88%$ spread). While Beta feels &quot;safer&quot; due to lower total variance ($18%$), its high systematic correlation makes it cyclical and macroeconomic-sensitive.</li>
+</ul>
+
+          </div>
+        </div>
+
+      
+        <div class="concept-section">
+          <h2 class="concept-section__title">When to Use / When Not to Use</h2>
+          <div style="background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--color-border);">
+            <ul>
+<li><strong>When to use:</strong> Portfolio optimization, asset allocation hurdle setting, benchmarking executive performance compensation (Sharpe, Treynor, and Information Ratios), and structuring capital expenditure risk tiers.</li>
+<li><strong>When not to use / Caveats:</strong> Do not assume normal distributions of returns when assessing extreme tail events. Volatility ($\sigma$) penalizes upside spikes equally with catastrophic downside drawdowns; in leveraged, derivative, or illiquid private equity contexts, supplement standard deviation with Value-at-Risk (VaR), Maximum Drawdown, and Semi-variance.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Managers often fall in love with projects that have massive total volatility and believe they deserve high returns simply because the project was &quot;hard or risky.&quot; Remember: markets and capital providers do not reward you for taking dumb, unhedged idiosyncratic risks that could have been diversified away. If an operational failure in a single warehouse can sink the firm, that is uncompensated operational fragility, not a priced risk factor. Always translate strategic risk back to: <em>Does this covary with macroeconomic downturns when capital is expensive, or is this independent risk that we can absorb across our broader portfolio?</em></p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/discount-rate.html" class="related-chip">
+          <span>Discount Rates and Opportunity Cost</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/diversification.html" class="related-chip">
+          <span>Diversification and Portfolio Risk</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/cost-of-equity.html" class="related-chip">
+          <span>Cost of Equity (CAPM, DDM & Build-Up)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
