@@ -602,3 +602,453 @@
   color: var(--color-primary);
   border-bottom-color: var(--color-primary);
 }
+
+
+/* ── Analyze Hero & Workbench Switcher Bar ──────────────────── */
+.analyze-hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+  color: #ffffff;
+  padding: 2.5rem 0 2.75rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.analyze-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #93c5fd;
+  margin-bottom: 0.5rem;
+}
+
+.analyze-hero__title {
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 0.6rem 0;
+  letter-spacing: -0.02em;
+}
+
+.analyze-hero__subtitle {
+  max-width: 780px;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.target-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.target-btn:hover {
+  background: rgba(255, 255, 255, 0.24) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+}
+
+.target-select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+}
+
+/* ── Concept Cross-Link Pill (.concept-pill & .analyze-concept-pill) ── */
+.concept-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.concept-pill:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* ── Workbench KPI Strip (.wb-kpi-grid / .wb-kpi-card) ──────── */
+.wb-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.wb-kpi-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1rem 1.1rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.wb-kpi-card__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  margin-bottom: 0.4rem;
+}
+
+.wb-kpi-card__value {
+  font-family: var(--font-mono);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+.wb-kpi-card__sub {
+  font-size: 0.73rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+/* ── Workbench Layout, Sidebar & Controls (.wb-layout / .wb-sidebar) ── */
+.wb-layout {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.wb-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 960px) {
+  .wb-layout {
+    grid-template-columns: 1fr;
+  }
+  .wb-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wb-sidebar {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  position: sticky;
+  top: 80px;
+}
+
+.wb-control-group {
+  margin-bottom: 1rem;
+}
+
+.wb-control-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 0.35rem;
+}
+
+.wb-control-val {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #1e40af;
+}
+
+.wb-range {
+  width: 100%;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+/* ── Workbench Tabs (.wb-tabs / .wb-tab) ────────────────────── */
+.wb-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.wb-tab {
+  padding: 0.65rem 1.1rem;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  margin-bottom: -2px;
+  transition: all 0.15s ease;
+}
+
+.wb-tab:hover {
+  color: #1e40af;
+  background: #f8fafc;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.wb-tab.active {
+  color: #1e40af;
+  border-bottom-color: #2563eb;
+  background: #eff6ff;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+/* ── Workbench Panels & Financial Tables (.wb-panel / .wb-table) ── */
+.wb-panel {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  margin-bottom: 1.35rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+}
+
+.wb-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.35rem;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.wb-panel__title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.2rem 0;
+}
+
+.wb-panel__subtitle {
+  font-size: 0.76rem;
+  color: #64748b;
+}
+
+.wb-panel__body {
+  padding: 1.25rem 1.35rem;
+}
+
+.wb-table-wrap {
+  overflow-x: auto;
+}
+
+.wb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.wb-table th {
+  text-align: right;
+  padding: 0.65rem 0.9rem;
+  background: #f1f5f9;
+  border-bottom: 2px solid #cbd5e1;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.wb-table th:first-child {
+  text-align: left;
+}
+
+.wb-table td {
+  text-align: right;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid #f1f5f9;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: #1e293b;
+}
+
+.wb-table td:first-child {
+  text-align: left;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.wb-table tr:hover td {
+  background: #f8fafc;
+}
+
+.wb-table tr.wb-row-section td {
+  background: #e2e8f0;
+  color: #0f172a;
+  font-family: var(--font-sans);
+  font-size: 0.73rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.45rem 0.9rem;
+}
+
+.wb-table tr.wb-row-total td {
+  background: #f8fafc;
+  font-weight: 700;
+  color: #0f172a;
+  border-top: 1px solid #cbd5e1;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+.wb-td-cagr {
+  font-weight: 700;
+}
+
+.wb-td-cagr.pos {
+  color: #15803d !important;
+}
+
+.wb-td-cagr.neg {
+  color: #b91c1c !important;
+}
+
+/* ── Formula Breakdown Boxes (.wb-formula-breakdown) ────────── */
+.wb-formula-breakdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.wb-formula-box {
+  flex: 1;
+  min-width: 105px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6rem;
+  padding: 0.65rem 0.75rem;
+  text-align: center;
+}
+
+.wb-formula-box__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #475569;
+  margin-bottom: 0.2rem;
+}
+
+.wb-formula-box__val {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.wb-formula-op {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #64748b;
+  padding: 0 0.15rem;
+}
+
+/* ── Executive Red Flags & Diagnostics (.wb-flag-list / .wb-flag) ── */
+.wb-flag-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.wb-flag {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1rem 1.15rem;
+  border-radius: 0.65rem;
+  border: 1px solid #e2e8f0;
+  border-left-width: 5px;
+}
+
+.wb-flag--positive {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  border-left-color: #16a34a;
+}
+
+.wb-flag--warning {
+  background: #fffbeb;
+  border-color: #fde68a;
+  border-left-color: #d97706;
+}
+
+.wb-flag--danger {
+  background: #fef2f2;
+  border-color: #fecaca;
+  border-left-color: #dc2626;
+}
+
+.wb-flag__title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.wb-flag__desc {
+  font-size: 0.82rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.wb-canvas-wrap {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 0.5rem;
+}

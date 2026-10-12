@@ -1148,7 +1148,7 @@ function render10KAnalyzer(company, opCashPct = 0.015) {
 }
 
 if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', () => {
+  const init10K = () => {
     const bannerEl = document.getElementById('analyze-target-banner');
     const rootEl = document.getElementById('wb-10k-root');
     if (!rootEl) return;
@@ -1159,5 +1159,10 @@ if (typeof document !== 'undefined') {
       });
     }
     render10KAnalyzer(getActiveCompany(), 0.015);
-  });
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init10K);
+  } else {
+    init10K();
+  }
 }

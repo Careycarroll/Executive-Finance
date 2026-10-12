@@ -967,7 +967,7 @@ function renderStockValuator(company) {
 }
 
 if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', () => {
+  const initValuator = () => {
     const bannerEl = document.getElementById('analyze-target-banner');
     const rootEl = document.getElementById('wb-valuator-root');
     if (!rootEl) return;
@@ -985,5 +985,10 @@ if (typeof document !== 'undefined') {
         drawFootballFieldChart(canvas, computeStockValuation(getActiveCompany(), currentOverrides));
       }
     });
-  });
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initValuator);
+  } else {
+    initValuator();
+  }
 }

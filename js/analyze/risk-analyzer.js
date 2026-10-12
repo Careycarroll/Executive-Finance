@@ -827,7 +827,7 @@ function renderRiskAnalyzer(company) {
 }
 
 if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', () => {
+  const initRisk = () => {
     const bannerEl = document.getElementById('analyze-target-banner');
     const rootEl = document.getElementById('wb-risk-root');
     if (!rootEl) return;
@@ -838,5 +838,10 @@ if (typeof document !== 'undefined') {
       });
     }
     renderRiskAnalyzer(getActiveCompany());
-  });
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRisk);
+  } else {
+    initRisk();
+  }
 }

@@ -977,7 +977,7 @@ function renderDealWorkbench(company) {
 }
 
 if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', () => {
+  const initDeal = () => {
     const bannerEl = document.getElementById('analyze-target-banner');
     const rootEl = document.getElementById('wb-deal-root');
     if (!rootEl) return;
@@ -988,5 +988,10 @@ if (typeof document !== 'undefined') {
       });
     }
     renderDealWorkbench(getActiveCompany());
-  });
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDeal);
+  } else {
+    initDeal();
+  }
 }
