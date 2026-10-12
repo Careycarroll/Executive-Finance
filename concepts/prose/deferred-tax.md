@@ -58,3 +58,4 @@ Treat DTLs with analytical sophistication in valuation:
 In a high-growth company that continually reinvests in new CapEx year after year, old DTLs reverse, but are immediately replaced by even larger new DTLs on new equipment! Consequently, the aggregate DTL balance on the balance sheet **never actually gets paid down**—it compounds perpetually into the future as long as the business grows.
 
 In DCF valuation models, never treat a compounding, growing DTL as immediate debt that reduces equity value. Model actual projected cash taxes paid in Free Cash Flow instead of relying on distorted GAAP tax provision accruals.
+

@@ -55,3 +55,4 @@ To immunize the balance sheet ($DG \to 0$), the treasurer must either shorten as
 ## Notes for Future-Me
 "The cost of hedging is an insurance premium; the cost of unhedged leverage is bankruptcy." 
 When corporate borrowing rates are at cyclical lows (e.g., 2%–3%), CEOs are tempted to stay on floating bank revolvers because floating rates are 50 bps cheaper than 10-year fixed bonds. This is the ultimate penny-wise, pound-foolish mistake: you save 50 bps in good times, and when rates spike to 7%, your entire operating cash flow is consumed by interest debt service! Always lock in long-term fixed rates or buy interest rate caps when rates are historically low.
+

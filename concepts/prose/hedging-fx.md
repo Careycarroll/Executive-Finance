@@ -48,3 +48,4 @@ Leaving the contract unhedged would have incinerated **$\$2,362,000$** of corpor
 
 ## Notes for Future-Me
 Prioritize **Natural Hedges (Operational Hedging)** over financial derivatives whenever possible. If your European operations generate €50M in annual revenue, don't just buy rolling currency forwards—finance your European factories with €50M of Euro-denominated debt and source raw materials from Eurozone suppliers! When your operating expenses and debt service are denominated in the exact same currency as your customer sales, currency risk cancels out naturally at zero ongoing derivative friction cost.
+

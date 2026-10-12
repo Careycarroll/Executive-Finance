@@ -51,3 +51,4 @@ Expected Shortfall captured the $\$2.85\text{M}$ reality, whereas Gaussian VaR h
 
 ## Notes for Future-Me
 "Never measure risk with a ruler that ignores the cliff." If a risk manager reports that a trade has a VaR of \$5M, always ask: *"And what is our Expected Shortfall if the trade blows through that \$5M limit?"* If the Expected Shortfall is \$6M, you have a well-behaved Gaussian position. If the Expected Shortfall is \$85M, you are holding a hidden blow-up machine (like selling naked out-of-the-money puts or writing uncollateralized credit default swaps). Always insist on Expected Shortfall.
+

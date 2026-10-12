@@ -32,3 +32,4 @@ The 30-day Section 83(b) deadline is **absolute and unforgiving**. There is zero
 1. Whenever you join an early-stage startup or receive unvested equity, file the Section 83(b) election via USPS Certified Mail with Return Receipt Requested within 14 days of grant.
 2. Keep a permanent PDF copy of the letter, the certified mail tracking number, and the stamped IRS acknowledgement in your personal safe deposit box.
 3. If you leave the company before shares vest, remember that the upfront tax paid on unvested forfeited shares is **non-refundable**.
+

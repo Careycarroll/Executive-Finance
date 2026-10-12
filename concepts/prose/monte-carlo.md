@@ -33,3 +33,4 @@ Beware of **"Garbage In, Gaussian Out"**:
 The most common mistake in corporate Monte Carlo models is assuming that all input variables are normally distributed and statistically independent! In reality:
 1. **Correlations Collapse in Crises:** If you model oil prices, currency rates, and customer demand as independent distributions, your model will never simulate a real-world supply chain shock where all three variables crash simultaneously! Always use **Cholesky decomposition** to enforce a correlation matrix across random variables.
 2. **Convergence Speed:** Because the standard error decays with $1 / \sqrt{M}$, quadrupling the number of paths ($4\times$) only cuts your estimation error in half ($2\times$). To achieve high precision without burning computing hours, use variance reduction techniques: **antithetic variates**, **control variates**, or **quasi-random low-discrepancy Sobol sequences**.
+

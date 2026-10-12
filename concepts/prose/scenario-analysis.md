@@ -53,3 +53,4 @@ Conduct a mandatory **"Pre-Mortem"** before approving any major M&A acquisition 
 Assemble the leadership team and declare: *"It is now three years in the future. The acquisition has been an unmitigated disaster: we took a massive \$150M goodwill write-down, our CFO resigned, and our stock price was cut in half. Spend the next 20 minutes writing down the exact sequence of events that caused this failure."*
 
 This psychological framing instantly breaks corporate cheerleading and groupthink, unlocking deep, candid operational insights that no standard base-case pitch deck would ever reveal.
+

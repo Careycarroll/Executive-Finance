@@ -75,3 +75,4 @@ Monetary policy operates with "long and variable lags" of 12 to 24 months. When 
 1. **Extend Debt Maturities Early:** If the Taylor Rule indicates rates are heading higher, refinance upcoming 3-to-5 year debt into 10-year fixed notes immediately, before credit spreads blow out.
 2. **Elevate Hurdle Rates:** Increase internal project hurdle rates to reflect rising cost of capital; avoid approving marginal CapEx projects that only work in a zero-interest-rate environment.
 3. **Preserve Cash Optionality:** In late-stage tightening cycles, hold excess cash reserves in short-term Treasury bills yielding risk-free return; when the subsequent recession forces the Fed to pivot and slash rates, deploy that dry powder to acquire distressed competitors at rock-bottom valuations.
+

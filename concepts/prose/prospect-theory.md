@@ -62,3 +62,4 @@ When a division falls significantly behind its annual EBIT targets, human psycho
 1. **Reset Reference Points Regularly:** In prolonged project turnarounds, officially adjust the budget baseline down to current reality so team incentives operate in the **gain domain** (where humans are prudently risk-averse), rather than trapping managers in the toxic loss domain.
 2. **Enforce Objective Stop-Loss Gates:** Strip failing projects of discretionary budget authority. Tie continuation decisions to pre-committed external operational milestones rather than manager optimism.
 3. **Neutralize Regret Aversion:** Cultivate a culture that rewards fast, decisive terminations of unviable initiatives: *"Killing a failing $\$10M$ project after spending $\$2M$ is a $\$8M$ victory, not a $\$2M$ defeat."*
+
