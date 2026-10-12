@@ -8,20 +8,20 @@ Stephen Penman’s advanced ROE decomposition cleanly separates the firm into tw
 2. **The Financing Engine ($\text{SPREAD} \times \text{FLEV}$):** The financial leverage booster. If the operating engine earns a higher return than the after-tax cost of borrowing ($\text{RNOA} > \text{NBC}$), then taking on net financial leverage ($\text{FLEV}$) magnifies equity returns. However, if operating returns slip below borrowing costs ($\text{RNOA} < \text{NBC}$), leverage brutally penalizes equity holders.
 
 ## Formula
-\text{ROE} = \text{RNOA} + (\text{FLEV} \cdot \text{SPREAD}) = \text{RNOA} + \left( \frac{\text{NFO}}{\text{CSE}} \cdot [\text{RNOA} - \text{NBC}] \right)
+$$\text{ROE} = \text{RNOA} + (\text{FLEV} \cdot \text{SPREAD}) = \text{RNOA} + \left( \frac{\text{NFO}}{\text{CSE}} \cdot [\text{RNOA} - \text{NBC}] \right)$$
 
 $$\text{RNOA} = \text{Operating Profit Margin (OPM)} \times \text{Asset Turnover (ATO)} = \frac{\text{NOPAT}}{\text{Sales}} \times \frac{\text{Sales}}{\text{NOA}}$$
 
 ## Variable Glossary
-- **\text{ROE}**: Return on Common Shareholders' Equity ($\text{Net Income} / \text{CSE}$).
-- **\text{RNOA}**: Return on Net Operating Assets ($\text{NOPAT} / \text{NOA}$).
-- **\text{NOA}**: Net Operating Assets ($\text{Operating Assets} - \text{Operating Liabilities}$).
-- **\text{NOPAT}**: Net Operating Profit After Tax.
-- **\text{NFO}**: Net Financial Obligations ($\text{Financial Debt} - \text{Financial Cash Assets}$).
-- **\text{CSE}**: Common Shareholders' Equity (Book value of equity, where $\text{NOA} - \text{NFO} = \text{CSE}$).
-- **\text{FLEV}**: Financial Leverage Ratio ($\text{NFO} / \text{CSE}$).
-- **\text{NBC}**: Net Borrowing Cost ($\text{Net Financing Expense} / \text{NFO}$).
-- **\text{SPREAD}**: The operating-financing spread ($\text{RNOA} - \text{NBC}$).
+- **$\text{ROE}$**: Return on Common Shareholders' Equity ($\text{Net Income} / \text{CSE}$).
+- **$\text{RNOA}$**: Return on Net Operating Assets ($\text{NOPAT} / \text{NOA}$).
+- **$\text{NOA}$**: Net Operating Assets ($\text{Operating Assets} - \text{Operating Liabilities}$).
+- **$\text{NOPAT}$**: Net Operating Profit After Tax.
+- **$\text{NFO}$**: Net Financial Obligations ($\text{Financial Debt} - \text{Financial Cash Assets}$).
+- **$\text{CSE}$**: Common Shareholders' Equity (Book value of equity, where $\text{NOA} - \text{NFO} = \text{CSE}$).
+- **$\text{FLEV}$**: Financial Leverage Ratio ($\text{NFO} / \text{CSE}$).
+- **$\text{NBC}$**: Net Borrowing Cost ($\text{Net Financing Expense} / \text{NFO}$).
+- **$\text{SPREAD}$**: The operating-financing spread ($\text{RNOA} - \text{NBC}$).
 
 ## Worked Example
 A manufacturing company reports the following balance sheet and operating metrics:

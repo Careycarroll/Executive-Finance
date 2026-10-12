@@ -10,20 +10,20 @@ Practitioners employ two primary DCF architectures:
 The Enterprise approach is universally preferred for non-financial corporations because it isolates the core operating performance of the business from arbitrary leverage and capital structure decisions.
 
 ## Formula
-\text{Enterprise Value (EV)} = \sum_{t=1}^T \frac{\text{FCFF}_t}{(1 + \text{WACC})^t} + \frac{\text{Terminal Value}_T}{(1 + \text{WACC})^T}
+$$\text{Enterprise Value (EV)} = \sum_{t=1}^T \frac{\text{FCFF}_t}{(1 + \text{WACC})^t} + \frac{\text{Terminal Value}_T}{(1 + \text{WACC})^T}$$
 
 $$\text{Terminal Value}_T = \frac{\text{FCFF}_{T+1}}{\text{WACC} - g} = \frac{\text{FCFF}_T \cdot (1 + g)}{\text{WACC} - g}$$
 
 $$\text{Equity Value} = \text{EV} + \text{Cash \& Marketable Securities} - \text{Total Debt} - \text{Preferred Stock} - \text{Minority Interests}$$
 
 ## Variable Glossary
-- **\text{EV}**: Enterprise Value (market value of the core operating business).
-- **\text{FCFF}_t**: Free Cash Flow to the Firm in year $t$ ($\text{NOPAT} + \text{D\&A} - \Delta\text{NWC} - \text{CapEx}$).
-- **\text{WACC}**: Weighted Average Cost of Capital (discount rate matching unlevered cash flows).
-- **T**: Explicit forecast horizon (typically 5 to 10 years).
-- **\text{Terminal Value}_T**: Value of all expected cash flows beyond year $T$.
-- **g**: Perpetual long-term sustainable growth rate (theoretically capped by long-term nominal GDP growth, $\le 2.5\% - 3.5\%$).
-- **\text{Net Debt}**: Total interest-bearing debt minus unrestricted cash reserves.
+- **$\text{EV}$**: Enterprise Value (market value of the core operating business).
+- **$\text{FCFF}_t$**: Free Cash Flow to the Firm in year $t$ ($\text{NOPAT} + \text{D\&A} - \Delta\text{NWC} - \text{CapEx}$).
+- **$\text{WACC}$**: Weighted Average Cost of Capital (discount rate matching unlevered cash flows).
+- **$T$**: Explicit forecast horizon (typically 5 to 10 years).
+- **$\text{Terminal Value}_T$**: Value of all expected cash flows beyond year $T$.
+- **$g$**: Perpetual long-term sustainable growth rate (theoretically capped by long-term nominal GDP growth, $\le 2.5\% - 3.5\%$).
+- **$\text{Net Debt}$**: Total interest-bearing debt minus unrestricted cash reserves.
 
 ## Notes for Future-Me
 DCF models suffer from the **"Terminal Value Domination Problem"**: in a standard 5-year DCF, the Terminal Value typically represents $65\%-85\%$ of the total calculated Enterprise Value! This means the 40-tab financial model detailing quarterly revenues, gross margins, and headcount across the 5-year forecast horizon is driving less than a third of the total valuation; the remaining two-thirds hangs entirely on two subjective assumptions: the exit WACC and the perpetuity growth rate $g$.

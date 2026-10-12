@@ -12,18 +12,18 @@ Equity compensation forms the core of high-growth executive incentives:
 By filing an explicit election under IRC Section 83(b) within **30 days of stock grant**, the executive elects to pay ordinary income tax on the fair market value *at the date of grant* (which is near zero at early founding). All subsequent multi-million dollar appreciation is completely transformed from 37% ordinary income into **Long-Term Capital Gains (maximum 20%)**, and starts the 5-year clock for **Section 1202 Qualified Small Business Stock (QSBS)** 100% tax exemption!
 
 ## Formula
-\text{Tax Without 83(b) [Section 83(a)]} = \sum_{t=1}^T \left[ \text{FMV}_t - \text{Purchase Price} \right] \cdot t_{\text{ordinary}}
+$$\text{Tax Without 83(b) [Section 83(a)]} = \sum_{t=1}^T \left[ \text{FMV}_t - \text{Purchase Price} \right] \cdot t_{\text{ordinary}}$$
 
 $$\text{Tax With 83(b) Election} = \left[ \text{FMV}_0 - \text{Purchase Price} \right] \cdot t_{\text{ordinary}} + \left[ \text{Exit Price} - \text{FMV}_0 \right] \cdot t_{\text{LTCG}}$$
 
 $$\text{Net Tax Savings} \approx \Delta\text{Appreciation} \cdot \left( t_{\text{ordinary}} - t_{\text{LTCG}} \right) \approx \text{Appreciation} \cdot (37\% - 20\%) = 17\%+$$
 
 ## Variable Glossary
-- **\text{FMV}_0**: Fair Market Value of the stock on the date of grant.
-- **\text{FMV}_t**: Fair Market Value of the stock on the future date when tranche $t$ vests.
-- **t_{\text{ordinary}}**: Federal plus state marginal ordinary income tax rate (up to $45\%-50\%$ in CA/NY).
-- **t_{\text{LTCG}}**: Long-Term Capital Gains tax rate (typically $20\%$ federal $+ 3.8\%$ NIIT).
-- **\text{QSBS (IRC §1202)}**: 100% federal capital gains tax exclusion up to $\$10\text{M}$ or $10\times$ basis for qualified small business stock held $> 5$ years.
+- **$\text{FMV}_0$**: Fair Market Value of the stock on the date of grant.
+- **$\text{FMV}_t$**: Fair Market Value of the stock on the future date when tranche $t$ vests.
+- **$t_{\text{ordinary}}$**: Federal plus state marginal ordinary income tax rate (up to $45\%-50\%$ in CA/NY).
+- **$t_{\text{LTCG}}$**: Long-Term Capital Gains tax rate (typically $20\%$ federal $+ 3.8\%$ NIIT).
+- **$\text{QSBS (IRC §1202)}$**: 100% federal capital gains tax exclusion up to $\$10\text{M}$ or $10\times$ basis for qualified small business stock held $> 5$ years.
 
 ## Notes for Future-Me
 The 30-day Section 83(b) deadline is **absolute and unforgiving**. There is zero IRS relief, no good-faith excuses, and no late filings allowed under any circumstances. If you miss the postmark by one day, the election is invalid, and you will be stuck with Section 83(a) ordinary income tax on every future vesting date.

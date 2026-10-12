@@ -15,9 +15,107 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { marked } from 'marked';
+import katex from 'katex';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..');
+
+/**
+ * Parse Markdown while protecting $$...$$ and $...$ LaTeX expressions from marked's
+ * underscore/backslash stripping, then pre-rendering math via KaTeX.
+ */
+function parseMarkdownWithMath(md) {
+  if (!md) return '';
+
+  // 0. Protect fenced code blocks ```...``` and inline code `...` so $100 inside ASCII diagrams is untouched
+  const codeBlocks = [];
+  let protectedCode = md.replace(/```[\s\S]*?```|`[^`\n]+`/g, (match) => {
+    const idx = codeBlocks.length;
+    codeBlocks.push(match);
+    return `@@CODETOKEN_${idx}@@`;
+  });
+
+  // Ensure bold glossary variables like `- **\text{ReOI}_t**:` have $...$ delimiters
+  const normalized = protectedCode.replace(
+    /^(\s*[-*]\s+\*\*)([^$*\n]+?)(\*\*\s*:)/gm,
+    (full, pre, expr, post) => {
+      const trimmed = expr.trim();
+      if (trimmed.includes('&') || trimmed.includes('@@CODETOKEN_')) return full;
+      if (/[\\_^()]/.test(trimmed) || /^[A-Za-z0-9\s/+=-]{1,4}$/.test(trimmed)) {
+        return `${pre}$${trimmed}$${post}`;
+      }
+      return full;
+    }
+  );
+
+  const mathBlocks = [];
+
+  // 1. Extract display math $$...$$
+  let protectedMd = normalized.replace(/\$\$([\s\S]+?)\$\$/g, (_, tex) => {
+    const idx = mathBlocks.length;
+    mathBlocks.push({ tex: tex.trim(), displayMode: true });
+    return `@@MATHTOKEN_${idx}@@`;
+  });
+
+  // 2. Extract inline math $...$ (allowing escaped \$ inside the math expression)
+  protectedMd = protectedMd.replace(/(?<!\\)\$((?:\\\$|[^$\n])+?)(?<!\\)\$/g, (_, tex) => {
+    const idx = mathBlocks.length;
+    mathBlocks.push({ tex: tex.trim(), displayMode: false });
+    return `@@MATHTOKEN_${idx}@@`;
+  });
+
+  // Restore code blocks before marked.parse so marked renders <pre><code> properly
+  protectedMd = protectedMd.replace(/@@CODETOKEN_(\d+)@@/g, (_, idxStr) => codeBlocks[Number(idxStr)] || '');
+
+  const html = marked.parse(protectedMd);
+
+  return html.replace(/@@MATHTOKEN_(\d+)@@/g, (_, idxStr) => {
+    const item = mathBlocks[Number(idxStr)];
+    if (!item) return '';
+    try {
+      return katex.renderToString(item.tex, {
+        displayMode: item.displayMode,
+        throwOnError: false,
+        strict: false
+      });
+    } catch {
+      return item.displayMode ? `$$${item.tex}$$` : `$${item.tex}$`;
+    }
+  });
+}
+
+/**
+ * Split a ## Formula section into individual equation blocks and pre-render each with KaTeX
+ */
+function renderFormulaBlocks(formulaRaw) {
+  if (!formulaRaw) return '';
+  const stripped = formulaRaw
+    .replace(/^```(latex|math)?\n?/i, '')
+    .replace(/\n?```$/i, '')
+    .trim();
+  if (!stripped) return '';
+
+  const blocks = stripped
+    .split(/\$\$/)
+    .flatMap(chunk => (/\\begin\{/.test(chunk) ? [chunk] : chunk.split(/\n\s*\n/)))
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  if (blocks.length === 0) return '';
+
+  return blocks
+    .map(eq => {
+      const rendered = katex.renderToString(eq, {
+        displayMode: true,
+        throwOnError: false,
+        strict: false
+      });
+      const safeAttr = eq.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+      return `<div class="concept-formula-katex" data-katex="${safeAttr}">${rendered}</div>`;
+    })
+    .join('\n          ');
+}
+
 
 const loadJson = (rel) => JSON.parse(readFileSync(resolve(repoRoot, rel), 'utf8'));
 
@@ -141,7 +239,7 @@ function renderConceptHero(concept) {
 // Generate concept footer (Future-Me notes + Related links)
 function renderConceptFooter(concept, sections) {
   const futureMeText = sections['notes for future-me'] || sections['notes for future me'] || '';
-  const futureMeHtml = futureMeText ? marked.parse(futureMeText) : `
+  const futureMeHtml = futureMeText ? parseMarkdownWithMath(futureMeText) : `
     <p class="future-me-box__placeholder">
       No notes yet — future-you hasn’t recorded personal intuition on this concept yet.
     </p>`;
@@ -187,26 +285,21 @@ function renderConceptFooter(concept, sections) {
 // Render body for 'formula' template
 function renderFormulaBody(concept, sections) {
   const intuitionText = sections['intuition'] || sections['intro'] || '';
-  const intuitionHtml = intuitionText ? marked.parse(intuitionText) : '';
+  const intuitionHtml = intuitionText ? parseMarkdownWithMath(intuitionText) : '';
 
   const formulaRaw = sections['formula'] || '';
-  // Clean raw LaTeX equation if wrapped in code blocks or math delimiters
-  const cleanLatex = formulaRaw
-    .replace(/^```(latex|math)?\n?/, '')
-    .replace(/\n?```$/, '')
-    .replace(/^\$\$|\$\$$/g, '')
-    .trim();
+  const formulaBlocksHtml = renderFormulaBlocks(formulaRaw);
 
   const glossaryHtml = sections['variable glossary'] || sections['variables']
-    ? marked.parse(sections['variable glossary'] || sections['variables'])
+    ? parseMarkdownWithMath(sections['variable glossary'] || sections['variables'])
     : '';
 
   const exampleHtml = sections['worked example'] || sections['example']
-    ? marked.parse(sections['worked example'] || sections['example'])
+    ? parseMarkdownWithMath(sections['worked example'] || sections['example'])
     : '';
 
   const whenToUseHtml = sections['when to use'] || sections['usage']
-    ? marked.parse(sections['when to use'] || sections['usage'])
+    ? parseMarkdownWithMath(sections['when to use'] || sections['usage'])
     : '';
 
   return `
@@ -217,12 +310,10 @@ function renderFormulaBody(concept, sections) {
           <div class="concept-intuition__text">${intuitionHtml}</div>
         </div>` : ''}
 
-      ${cleanLatex ? `
+      ${formulaBlocksHtml ? `
         <div class="concept-formula-box">
           <h2 class="concept-section__title">Formula</h2>
-          <div class="concept-formula-katex" data-katex="${cleanLatex.replace(/"/g, '&quot;')}">
-            ${cleanLatex}
-          </div>
+          ${formulaBlocksHtml}
           ${glossaryHtml ? `
             <div class="variable-glossary-wrapper" style="margin-top: 1.5rem;">
               <h3 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.75rem;">
@@ -253,15 +344,15 @@ function renderFormulaBody(concept, sections) {
 // Render body for 'explainer' template
 function renderExplainerBody(concept, sections) {
   const introHtml = sections['intro'] || sections['intuition']
-    ? marked.parse(sections['intro'] || sections['intuition'])
+    ? parseMarkdownWithMath(sections['intro'] || sections['intuition'])
     : '';
 
   const diagramHtml = sections['diagram'] || sections['structure']
-    ? marked.parse(sections['diagram'] || sections['structure'])
+    ? parseMarkdownWithMath(sections['diagram'] || sections['structure'])
     : '';
 
   const misconceptionsHtml = sections['common misconceptions'] || sections['misconceptions']
-    ? marked.parse(sections['common misconceptions'] || sections['misconceptions'])
+    ? parseMarkdownWithMath(sections['common misconceptions'] || sections['misconceptions'])
     : '';
 
   return `
@@ -294,7 +385,7 @@ function renderExplainerBody(concept, sections) {
 // Render body for 'interactive' template
 function renderInteractiveBody(concept, sections) {
   const intuitionText = sections['intuition'] || sections['intro'] || '';
-  const intuitionHtml = intuitionText ? marked.parse(intuitionText) : '';
+  const intuitionHtml = intuitionText ? parseMarkdownWithMath(intuitionText) : '';
 
   const defaultsStr = JSON.stringify(concept.defaults || {});
   
@@ -314,11 +405,7 @@ function renderInteractiveBody(concept, sections) {
   }
 
   const formulaRaw = sections['formula'] || '';
-  const cleanLatex = formulaRaw
-    .replace(/^```(latex|math)?\n?/, '')
-    .replace(/\n?```$/, '')
-    .replace(/^\$\$|\$\$$/g, '')
-    .trim();
+  const formulaBlocksHtml = renderFormulaBlocks(formulaRaw);
 
   return `
     <div class="concept-section">
@@ -335,17 +422,15 @@ function renderInteractiveBody(concept, sections) {
         </div>
       </div>
 
-      ${cleanLatex ? `
+      ${formulaBlocksHtml ? `
         <div class="collapsible-box">
           <div class="collapsible-box__header">
             <span>Underlying Mathematical Formula</span>
             <span class="collapsible-icon">▶</span>
           </div>
           <div class="collapsible-box__content">
-            <div class="concept-formula-katex" data-katex="${cleanLatex.replace(/"/g, '&quot;')}">
-              ${cleanLatex}
-            </div>
-            ${sections['variable glossary'] ? `<div style="margin-top: 1rem;">${marked.parse(sections['variable glossary'])}</div>` : ''}
+            ${formulaBlocksHtml}
+            ${sections['variable glossary'] ? `<div style="margin-top: 1rem;">${parseMarkdownWithMath(sections['variable glossary'])}</div>` : ''}
           </div>
         </div>` : ''}
     </div>`;

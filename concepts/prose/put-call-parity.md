@@ -17,7 +17,7 @@ $$c + K e^{-rT} = p + S_0$$
 This relationship allows traders to construct **synthetic positions**: any asset in the formula can be replicated synthetically using the other three.
 
 ## Formula
-c + K \cdot e^{-r T} = p + S_0
+$$c + K \cdot e^{-r T} = p + S_0$$
 
 $$\text{Synthetic Stock: } S_0 = c - p + K \cdot e^{-r T}$$
 
@@ -26,13 +26,13 @@ $$\text{Synthetic Call: } c = p + S_0 - K \cdot e^{-r T}$$
 $$\text{Synthetic Put: } p = c - S_0 + K \cdot e^{-r T}$$
 
 ## Variable Glossary
-- **c**: European Call option price today.
-- **p**: European Put option price today.
-- **S_0**: Current spot market price of the underlying asset.
-- **K**: Strike price common to both options.
-- **r**: Continuously compounded risk-free interest rate.
-- **T**: Time to expiration in years.
-- **K e^{-rT}**: Present value of the strike price payable at expiration.
+- **$c$**: European Call option price today.
+- **$p$**: European Put option price today.
+- **$S_0$**: Current spot market price of the underlying asset.
+- **$K$**: Strike price common to both options.
+- **$r$**: Continuously compounded risk-free interest rate.
+- **$T$**: Time to expiration in years.
+- **$K e^{-rT}$**: Present value of the strike price payable at expiration.
 
 ## Worked Example
 A proprietary trading desk observes the following 1-year European option quotes on a non-dividend paying stock:

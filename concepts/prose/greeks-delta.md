@@ -14,22 +14,22 @@ Delta ranges strictly between:
 - **Put Options:** $-1.0 \le \Delta_{\text{put}} \le 0.0$ (Deep OTM puts approach $0$; ATM puts $\approx -0.50$; Deep ITM puts approach $-1.0$).
 
 ## Formula
-\Delta_{\text{call}} = e^{-q T} N(d_1), \quad \Delta_{\text{put}} = -e^{-q T} N(-d_1) = \Delta_{\text{call}} - e^{-q T}
+$$\Delta_{\text{call}} = e^{-q T} N(d_1), \quad \Delta_{\text{put}} = -e^{-q T} N(-d_1) = \Delta_{\text{call}} - e^{-q T}$$
 
 $$d_1 = \frac{\ln(S / K) + \left(r - q + \frac{\sigma^2}{2}\right) T}{\sigma \sqrt{T}}$$
 
 $$\text{Position Delta} = \sum_{i=1}^n \text{Qty}_i \cdot \text{Multiplier}_i \cdot \Delta_i$$
 
 ## Variable Glossary
-- **\Delta**: Delta sensitivity ($\partial V / \partial S$).
-- **S**: Current spot price of the underlying asset.
-- **K**: Strike price.
-- **r**: Risk-free interest rate.
-- **q**: Continuous dividend yield.
-- **\sigma**: Annualized volatility.
-- **T**: Time to expiration in years.
-- **N(\cdot)**: Cumulative standard normal distribution function.
-- **d_1**: Black-Scholes normalized log-moneyness parameter.
+- **$\Delta$**: Delta sensitivity ($\partial V / \partial S$).
+- **$S$**: Current spot price of the underlying asset.
+- **$K$**: Strike price.
+- **$r$**: Risk-free interest rate.
+- **$q$**: Continuous dividend yield.
+- **$\sigma$**: Annualized volatility.
+- **$T$**: Time to expiration in years.
+- **$N(\cdot)$**: Cumulative standard normal distribution function.
+- **$d_1$**: Black-Scholes normalized log-moneyness parameter.
 
 ## Notes for Future-Me
 Never treat delta as static! Delta changes constantly as the stock moves (governed by **Gamma**) and as time passes (governed by **Charm**). A portfolio that is delta-neutral today at 9:30 AM will develop a significant directional bias by 3:00 PM if the market moves or if implied volatility shifts. 

@@ -11,7 +11,7 @@ Frederick Macaulay (1938) solved this by introducing **Duration**:
 If a bond portfolio has a Modified Duration of $7.5\text{ years}$, a $100\text{ bps}$ ($+1.0\%$) rise in market interest rates causes an immediate $\approx 7.5\%$ drop in the portfolio's market value.
 
 ## Formula
-D_{\text{Mac}} = \frac{\sum_{t=1}^T t \cdot \frac{\text{CF}_t}{(1 + y)^t}}{P} = \sum_{t=1}^T t \cdot w_t
+$$D_{\text{Mac}} = \frac{\sum_{t=1}^T t \cdot \frac{\text{CF}_t}{(1 + y)^t}}{P} = \sum_{t=1}^T t \cdot w_t$$
 
 $$D^* = \frac{D_{\text{Mac}}}{1 + \frac{y}{k}}$$
 
@@ -20,14 +20,14 @@ $$\frac{\Delta P}{P} \approx -D^* \cdot \Delta y$$
 $$\text{Dollar Duration (DV01)} = D^* \cdot P \cdot 0.0001$$
 
 ## Variable Glossary
-- **D_{\text{Mac}}**: Macaulay Duration in years.
+- **$D_{\text{Mac}}$**: Macaulay Duration in years.
 - **D^***: Modified Duration (interest rate elasticity).
-- **\text{CF}_t**: Cash flow received at period $t$.
-- **y**: Annualized Yield to Maturity.
-- **k**: Compounding frequency per year ($k = 1$ annual, $k = 2$ semi-annual).
-- **P**: Total current price of the bond.
-- **w_t**: Weight of period $t$ cash flow ($= \frac{\text{PV}(\text{CF}_t)}{P}$).
-- **\text{DV01} / \text{PV01}**: Dollar value of a basis point (dollar change in bond price for a 1 basis point $[0.01\%]$ move in yield).
+- **$\text{CF}_t$**: Cash flow received at period $t$.
+- **$y$**: Annualized Yield to Maturity.
+- **$k$**: Compounding frequency per year ($k = 1$ annual, $k = 2$ semi-annual).
+- **$P$**: Total current price of the bond.
+- **$w_t$**: Weight of period $t$ cash flow ($= \frac{\text{PV}(\text{CF}_t)}{P}$).
+- **$\text{DV01} / \text{PV01}$**: Dollar value of a basis point (dollar change in bond price for a 1 basis point $[0.01\%]$ move in yield).
 
 ## Notes for Future-Me
 Duration is a linear first-order approximation. For tiny rate movements ($\pm 10-25\text{ bps}$), duration predicts price changes with near-flawless accuracy. But because the price-yield curve is convex (curved upward), for large interest rate shocks ($\ge 150-200\text{ bps}$), duration systematically underestimates price gains when rates fall and overestimates price drops when rates rise!

@@ -4,13 +4,13 @@
 Nominal returns measure the growth of raw dollars; real returns measure the growth of your actual purchasing power after adjusting for inflation. When inflation is elevated, high nominal interest rates can mask negative real purchasing power gains. The Fisher Equation mathematically separates the two.
 
 ## Formula
-1 + R = (1 + r)(1 + i)
-\implies r = \frac{1 + R}{1 + i} - 1 \approx R - i
+$$1 + R = (1 + r)(1 + i)
+\implies r = \frac{1 + R}{1 + i} - 1 \approx R - i$$
 
 ## Variable Glossary
-- **R**: Nominal rate of return.
-- **r**: Real rate of return (purchasing power growth).
-- **i**: Rate of inflation (measured via CPI / PCE deflator).
+- **$R$**: Nominal rate of return.
+- **$r$**: Real rate of return (purchasing power growth).
+- **$i$**: Rate of inflation (measured via CPI / PCE deflator).
 - **R - i**: Standard first-order Fisher approximation (valid when rates are small).
 
 ## Worked Example

@@ -9,20 +9,20 @@ Vega is strictly positive for all standard European and American long options (b
 Vega reaches its maximum peak **at-the-money (ATM)** and scales directly with the square root of time to expiration ($\sqrt{T}$). A 1-year option has far greater vega than a 1-week option because implied volatility has more time to compound over a multi-month horizon.
 
 ## Formula
-\nu = S e^{-q T} \sqrt{T} N'(d_1) = S e^{-q T} \sqrt{T} \frac{1}{\sqrt{2\pi}} e^{-\frac{d_1^2}{2}}
+$$\nu = S e^{-q T} \sqrt{T} N'(d_1) = S e^{-q T} \sqrt{T} \frac{1}{\sqrt{2\pi}} e^{-\frac{d_1^2}{2}}$$
 
 $$\text{Price Impact: } \Delta V \approx \nu \cdot \Delta\sigma$$
 
 $$\text{1-Point Vega} = \frac{\nu}{100} \quad \text{(Dollar change per } 1.0\% \text{ move in IV)}$$
 
 ## Variable Glossary
-- **\nu**: Vega sensitivity ($\partial V / \partial \sigma$). Identical for calls and puts with the same strike and maturity.
-- **S**: Current spot price of the underlying asset.
-- **\sigma**: Annualized implied volatility.
-- **T**: Time to expiration in years.
-- **q**: Continuous dividend yield.
-- **N'(d_1)**: Standard normal probability density function.
-- **\Delta\sigma**: Change in implied volatility (e.g., $+0.05$ for $+5$ percentage points of IV).
+- **$\nu$**: Vega sensitivity ($\partial V / \partial \sigma$). Identical for calls and puts with the same strike and maturity.
+- **$S$**: Current spot price of the underlying asset.
+- **$\sigma$**: Annualized implied volatility.
+- **$T$**: Time to expiration in years.
+- **$q$**: Continuous dividend yield.
+- **$N'(d_1)$**: Standard normal probability density function.
+- **$\Delta\sigma$**: Change in implied volatility (e.g., $+0.05$ for $+5$ percentage points of IV).
 
 ## Notes for Future-Me
 Beware the **"Earnings Volatility Crush"**: Before major corporate catalyst events (earnings releases, FDA drug trials, Supreme Court patent rulings), implied volatility spikes dramatically as market participants bid up option protection. At this moment, options trade with massive implied volatility (e.g., IV jumps from 30% to 90%). 

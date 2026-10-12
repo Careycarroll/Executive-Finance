@@ -11,16 +11,16 @@ Capital budgeting decisions define the long-term trajectory of an enterprise. Th
 **The Executive Conflict:** While executives often prefer IRR because it communicates a convenient percentage hurdle (e.g., "this venture delivers a 28% IRR!"), NPV is mathematically superior. When choosing between mutually exclusive projects of differing scales or cash flow timing, IRR often yields distorted rankings due to the **reinvestment rate trap** and **scale neglect**. NPV measures absolute shareholder wealth creation in actual currency.
 
 ## Formula
-\text{NPV} = -C_0 + \sum_{t=1}^T \frac{\text{CF}_t}{(1 + r)^t} = 0 \iff r = \text{IRR}
+$$\text{NPV} = -C_0 + \sum_{t=1}^T \frac{\text{CF}_t}{(1 + r)^t} = 0 \iff r = \text{IRR}$$
 
 ## Variable Glossary
-- **\text{NPV}**: Net Present Value in currency units today.
-- **\text{IRR}**: Internal Rate of Return (the discount rate $r^*$ such that $\text{NPV}(r^*) = 0$).
-- **C_0**: Initial capital outlay / upfront CapEx at period $0$.
-- **\text{CF}_t**: Net cash inflow or outflow generated in period $t$.
-- **r**: Opportunity cost of capital (hurdle rate / WACC).
-- **T**: Useful economic life or projection horizon of the investment.
-- **\text{PI}**: Profitability Index ($= \frac{\text{PV of Inflows}}{C_0} = 1 + \frac{\text{NPV}}{C_0}$), useful for capital rationing.
+- **$\text{NPV}$**: Net Present Value in currency units today.
+- **$\text{IRR}$**: Internal Rate of Return (the discount rate $r^*$ such that $\text{NPV}(r^*) = 0$).
+- **$C_0$**: Initial capital outlay / upfront CapEx at period $0$.
+- **$\text{CF}_t$**: Net cash inflow or outflow generated in period $t$.
+- **$r$**: Opportunity cost of capital (hurdle rate / WACC).
+- **$T$**: Useful economic life or projection horizon of the investment.
+- **$\text{PI}$**: Profitability Index ($= \frac{\text{PV of Inflows}}{C_0} = 1 + \frac{\text{NPV}}{C_0}$), useful for capital rationing.
 
 ## Notes for Future-Me
 Whenever a finance presentation leads with IRR, put on your skepticism goggles:

@@ -12,7 +12,7 @@ Because GAAP and tax rules recognize revenues and expenses at different times, c
 **The Valuation Allowance Reality:** Under ASC 740, if management determines it is "more likely than not" ($> 50\%$ probability) that the company will not generate sufficient future taxable income to utilize its DTAs before expiration, it must establish a **Valuation Allowance**, writing down the DTA directly against GAAP earnings.
 
 ## Formula
-\text{Book-Tax Temporary Difference} = \text{GAAP Carrying Value of Asset/Liability} - \text{Tax Basis of Asset/Liability}
+$$\text{Book-Tax Temporary Difference} = \text{GAAP Carrying Value of Asset/Liability} - \text{Tax Basis of Asset/Liability}$$
 
 $$\text{Deferred Tax Asset / Liability} = \text{Temporary Difference} \times t_{\text{statutory}}$$
 
@@ -21,12 +21,12 @@ $$\text{GAAP Income Tax Provision} = \text{Current Cash Tax Paid} + \Delta\text{
 $$\text{NOL Utilization Cap (TCJA §172)}: \text{Max Annual Offset} = 80\% \times \text{Taxable Income}$$
 
 ## Variable Glossary
-- **\text{DTL}**: Deferred Tax Liability (future tax cash outflow liability).
-- **\text{DTA}**: Deferred Tax Asset (future tax cash savings asset).
-- **\text{Tax Basis}**: The value of an asset or liability recognized on tax returns filed with the IRS.
-- **t_{\text{statutory}}**: Enacted statutory corporate income tax rate expected to apply when timing difference reverses.
-- **\text{Valuation Allowance}**: Contra-asset account offsetting DTAs when future realization is in doubt.
-- **\text{NOL}**: Net Operating Loss carryforward.
+- **$\text{DTL}$**: Deferred Tax Liability (future tax cash outflow liability).
+- **$\text{DTA}$**: Deferred Tax Asset (future tax cash savings asset).
+- **$\text{Tax Basis}$**: The value of an asset or liability recognized on tax returns filed with the IRS.
+- **$t_{\text{statutory}}$**: Enacted statutory corporate income tax rate expected to apply when timing difference reverses.
+- **$\text{Valuation Allowance}$**: Contra-asset account offsetting DTAs when future realization is in doubt.
+- **$\text{NOL}$**: Net Operating Loss carryforward.
 
 ## Worked Example
 A high-tech manufacturer purchases $\$100{,}000{,}000$ in advanced robotics equipment at the start of Year 1:

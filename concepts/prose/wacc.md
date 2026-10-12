@@ -10,17 +10,17 @@ WACC serves as:
 2. **The Discount Rate in Enterprise DCF:** The rate used to discount Unlevered Free Cash Flows (FCFF) to calculate Enterprise Value.
 
 ## Formula
-\text{WACC} = \left(\frac{E}{D + E}\right) \cdot r_e + \left(\frac{D}{D + E}\right) \cdot r_d \cdot (1 - t)
+$$\text{WACC} = \left(\frac{E}{D + E}\right) \cdot r_e + \left(\frac{D}{D + E}\right) \cdot r_d \cdot (1 - t)$$
 
 ## Variable Glossary
-- **\text{WACC}**: Weighted Average Cost of Capital (after-tax blended rate).
-- **E**: Market value of equity (share price $\times$ diluted shares outstanding, NOT accounting book value).
-- **D**: Market value of interest-bearing net debt.
-- **\frac{E}{D + E}**: Equity weighting in the target capital structure ($w_e$).
-- **\frac{D}{D + E}**: Debt weighting in the target capital structure ($w_d$).
-- **r_e**: Cost of equity (typically estimated via CAPM: $r_f + \beta \times \text{ERP}$).
-- **r_d**: Pre-tax marginal cost of debt (the current yield-to-maturity on newly issued debt, NOT the historical coupon on existing bonds).
-- **t**: Marginal corporate income tax rate (interest tax shield factor).
+- **$\text{WACC}$**: Weighted Average Cost of Capital (after-tax blended rate).
+- **$E$**: Market value of equity (share price $\times$ diluted shares outstanding, NOT accounting book value).
+- **$D$**: Market value of interest-bearing net debt.
+- **$\frac{E}{D + E}$**: Equity weighting in the target capital structure ($w_e$).
+- **$\frac{D}{D + E}$**: Debt weighting in the target capital structure ($w_d$).
+- **$r_e$**: Cost of equity (typically estimated via CAPM: $r_f + \beta \times \text{ERP}$).
+- **$r_d$**: Pre-tax marginal cost of debt (the current yield-to-maturity on newly issued debt, NOT the historical coupon on existing bonds).
+- **$t$**: Marginal corporate income tax rate (interest tax shield factor).
 
 ## Notes for Future-Me
 Common executive errors in calculating WACC:

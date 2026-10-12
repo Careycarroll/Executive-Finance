@@ -4,7 +4,7 @@
 DuPont analysis deconstructs Return on Equity (ROE) into operational efficiency, asset utilization, and financial leverage. Instead of evaluating ROE in a vacuum, DuPont isolates *how* management generated the return: by commanding strong profit margins, by rapidly turning over its asset base, or by gearing up with borrowed leverage.
 
 ## Formula
-\text{ROE} = \left(\frac{\text{Net Income}}{\text{Sales}}\right) \times \left(\frac{\text{Sales}}{\text{Assets}}\right) \times \left(\frac{\text{Assets}}{\text{Equity}}\right)
+$$\text{ROE} = \left(\frac{\text{Net Income}}{\text{Sales}}\right) \times \left(\frac{\text{Sales}}{\text{Assets}}\right) \times \left(\frac{\text{Assets}}{\text{Equity}}\right)$$
 
 ## Variable Glossary
 - **Net Margin** $\left(\frac{\text{Net Income}}{\text{Sales}}\right)$: Operating profitability; cents of profit kept per dollar of revenue.

@@ -9,14 +9,14 @@ $$r_{d,\text{after-tax}} = r_d \cdot (1 - t)$$
 If a company borrows at $8\%$ with a $25\%$ marginal corporate tax rate, the government effectively subsidizes $2\%$, leaving an actual net economic cost of $6\%$.
 
 ## Formula
-r_{d,\text{after-tax}} = r_d \cdot (1 - t) = (r_f + \text{Credit Spread}) \cdot (1 - t)
+$$r_{d,\text{after-tax}} = r_d \cdot (1 - t) = (r_f + \text{Credit Spread}) \cdot (1 - t)$$
 
 ## Variable Glossary
-- **r_{d,\text{after-tax}}**: Effective after-tax cost of debt used directly in the WACC formula.
-- **r_d**: Pre-tax marginal cost of debt (the current market yield-to-maturity on newly issued bonds or revolving credit lines).
-- **r_f**: Benchmark risk-free interest rate matching the maturity of the debt.
-- **\text{Credit Spread}**: Risk premium demanded by lenders based on the company's credit rating / default probability (e.g., BBB, BB, B).
-- **t**: Marginal corporate income tax rate (federal + state effective rate).
+- **$r_{d,\text{after-tax}}$**: Effective after-tax cost of debt used directly in the WACC formula.
+- **$r_d$**: Pre-tax marginal cost of debt (the current market yield-to-maturity on newly issued bonds or revolving credit lines).
+- **$r_f$**: Benchmark risk-free interest rate matching the maturity of the debt.
+- **$\text{Credit Spread}$**: Risk premium demanded by lenders based on the company's credit rating / default probability (e.g., BBB, BB, B).
+- **$t$**: Marginal corporate income tax rate (federal + state effective rate).
 
 ## Worked Example
 A corporate treasurer is evaluating the capital structure impact of issuing $\$200{,}000{,}000$ of 10-year senior unsecured notes to finance plant modernization:

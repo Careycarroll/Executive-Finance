@@ -14,19 +14,19 @@ Interest rate swaps serve two primary executive purposes:
 Because a swap is essentially a portfolio of forward rate agreements (FRAs), the **Par Swap Rate** is the fixed rate that sets the net present value of the swap to exactly zero at inception.
 
 ## Formula
-V_{\text{swap}} = B_{\text{floating}} - B_{\text{fixed}} \quad \text{(For Fixed Payer)}
+$$V_{\text{swap}} = B_{\text{floating}} - B_{\text{fixed}} \quad \text{(For Fixed Payer)}$$
 
 $$R_{\text{swap}} = \frac{1 - P(0, T_N)}{\sum_{i=1}^N \Delta t_i \cdot P(0, T_i)}$$
 
 $$\text{Net Payment}_i = \text{Notional} \cdot \left[ R_{\text{floating}, i-1} - R_{\text{fixed}} \right] \cdot \Delta t_i$$
 
 ## Variable Glossary
-- **R_{\text{swap}}**: Par swap rate (the fixed rate that sets initial swap value to zero).
-- **P(0, T_i)**: Discount factor for cash flows maturing at payment date $T_i$ ($= e^{-r_i T_i}$).
-- **B_{\text{floating}}**: Value of a floating-rate bond (which resets to par value $100\%$ on every reset date).
-- **B_{\text{fixed}}**: Value of a fixed-rate bond paying coupon $R_{\text{swap}}$.
-- **\Delta t_i**: Accrual period day-count fraction (e.g., $0.25$ for quarterly payments).
-- **\text{Notional}**: Principal balance used solely to compute interest payments (not exchanged).
+- **$R_{\text{swap}}$**: Par swap rate (the fixed rate that sets initial swap value to zero).
+- **$P(0, T_i)$**: Discount factor for cash flows maturing at payment date $T_i$ ($= e^{-r_i T_i}$).
+- **$B_{\text{floating}}$**: Value of a floating-rate bond (which resets to par value $100\%$ on every reset date).
+- **$B_{\text{fixed}}$**: Value of a fixed-rate bond paying coupon $R_{\text{swap}}$.
+- **$\Delta t_i$**: Accrual period day-count fraction (e.g., $0.25$ for quarterly payments).
+- **$\text{Notional}$**: Principal balance used solely to compute interest payments (not exchanged).
 
 ## Worked Example
 Company AAA (high-grade credit) and Company BBB (speculative-grade credit) need $\$100{,}000{,}000$ in 5-year debt.

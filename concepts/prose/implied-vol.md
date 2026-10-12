@@ -11,19 +11,19 @@ $$\text{VRP} = \sigma_{\text{implied}} - \sigma_{\text{realized}}$$
 Empirical market data shows that across broad equity indices (S&P 500 VIX), implied volatility trades higher than subsequent realized volatility approximately $80\%-85\%$ of the time! Option buyers systematically pay an insurance risk premium to protect against catastrophic tail risk, creating an enduring structural edge for disciplined options sellers.
 
 ## Formula
-\sigma_{\text{realized}} = \sqrt{\frac{252}{N - 1} \sum_{i=1}^N \left( \ln\left(\frac{S_i}{S_{i-1}}\right) - \bar{r} \right)^2}
+$$\sigma_{\text{realized}} = \sqrt{\frac{252}{N - 1} \sum_{i=1}^N \left( \ln\left(\frac{S_i}{S_{i-1}}\right) - \bar{r} \right)^2}$$
 
 $$\text{Implied Volatility: } \sigma_{\text{IV}} \text{ such that } C_{\text{BSM}}(S, K, r, T, \sigma_{\text{IV}}) = C_{\text{market}}$$
 
 $$\text{Expected 1-Day Range} \approx S_0 \cdot \frac{\sigma_{\text{IV}}}{\sqrt{252}} \approx S_0 \cdot \frac{\sigma_{\text{IV}}}{16}$$
 
 ## Variable Glossary
-- **\sigma_{\text{realized}}**: Annualized realized historical standard deviation of daily logarithmic returns.
-- **\sigma_{\text{IV}}**: Annualized Black-Scholes implied volatility.
-- **N**: Number of trading days in the calculation window (typically 20, 30, or 60 days).
-- **S_i / S_{i-1}**: Consecutive closing prices.
-- **\bar{r}**: Mean daily logarithmic return over the sample window.
-- **\text{Rule of 16}**: Quick mental math: since $\sqrt{252} \approx 15.87 \approx 16$, dividing annualized IV by 16 gives the expected 1-standard-deviation daily price move in percent!
+- **$\sigma_{\text{realized}}$**: Annualized realized historical standard deviation of daily logarithmic returns.
+- **$\sigma_{\text{IV}}$**: Annualized Black-Scholes implied volatility.
+- **$N$**: Number of trading days in the calculation window (typically 20, 30, or 60 days).
+- **$S_i / S_{i-1}$**: Consecutive closing prices.
+- **$\bar{r}$**: Mean daily logarithmic return over the sample window.
+- **$\text{Rule of 16}$**: Quick mental math: since $\sqrt{252} \approx 15.87 \approx 16$, dividing annualized IV by 16 gives the expected 1-standard-deviation daily price move in percent!
 
 ## Worked Example
 A risk manager is evaluating hedging costs for a portfolio holding $\$10{,}000{,}000$ of tech shares trading at $\$200.00$:

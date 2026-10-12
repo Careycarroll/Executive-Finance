@@ -10,18 +10,18 @@ The curve takes four classic shapes:
 4. **Humped:** Intermediate rates (2Y to 5Y) peak above both short-term bills and 30-year long bonds.
 
 ## Formula
-(1 + y_n)^n = (1 + y_1) \cdot (1 + f_{1,2}) \cdot (1 + f_{2,3}) \dots (1 + f_{n-1,n})
+$$(1 + y_n)^n = (1 + y_1) \cdot (1 + f_{1,2}) \cdot (1 + f_{2,3}) \dots (1 + f_{n-1,n})$$
 
 $$\text{Implied Forward Rate: } f_{n,n+1} = \frac{(1 + y_{n+1})^{n+1}}{(1 + y_n)^n} - 1$$
 
 $$\text{10Y - 2Y Spread} = y_{10} - y_2$$
 
 ## Variable Glossary
-- **y_n**: Spot rate / yield to maturity on an $n$-year zero-coupon bond.
-- **f_{n,n+1}**: 1-year forward interest rate starting at year $n$ and ending at year $n+1$.
-- **y_{10} - y_2**: The benchmark 10-year minus 2-year yield spread (recession warning indicator).
-- **\text{Pure Expectations Hypothesis}**: Assumes forward rates reflect market consensus of future spot rates ($f_{t,t+1} = E[y_{t+1}]$).
-- **\text{Liquidity Preference Theory}**: Assumes forward rates exceed expected spot rates by an upward-sloping liquidity/term premium.
+- **$y_n$**: Spot rate / yield to maturity on an $n$-year zero-coupon bond.
+- **$f_{n,n+1}$**: 1-year forward interest rate starting at year $n$ and ending at year $n+1$.
+- **$y_{10} - y_2$**: The benchmark 10-year minus 2-year yield spread (recession warning indicator).
+- **$\text{Pure Expectations Hypothesis}$**: Assumes forward rates reflect market consensus of future spot rates ($f_{t,t+1} = E[y_{t+1}]$).
+- **$\text{Liquidity Preference Theory}$**: Assumes forward rates exceed expected spot rates by an upward-sloping liquidity/term premium.
 
 ## Notes for Future-Me
 When the yield curve inverts, do not panic and freeze all business operations immediately: the historical lag between curve inversion and the actual onset of recession averages **12 to 18 months**. In fact, equities frequently rally during the early months of an inversion! 

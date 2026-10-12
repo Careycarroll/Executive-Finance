@@ -7,12 +7,14 @@ In a **Bull Call Spread**, you buy a lower strike call $K_1$ and sell a higher s
 
 ## Formula
 $$\text{Max Profit (Debit Spread)} = (K_2 - K_1) - \text{Net Debit}$$
+
 $$\text{Max Loss} = \text{Net Debit Paid}$$
+
 $$\text{Breakeven (Bull Call)} = K_1 + \text{Net Debit}$$
 
 ## Variable Glossary
-- **K_1**: Lower strike price.
-- **K_2**: Higher strike price.
+- **$K_1$**: Lower strike price.
+- **$K_2$**: Higher strike price.
 - **Net Debit**: Upfront cost paid to establish the spread ($\text{Premium Paid} - \text{Premium Received}$).
 - **Width**: Spread width between strikes ($K_2 - K_1$).
 
