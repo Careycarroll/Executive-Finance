@@ -581,3 +581,5 @@ export async function fetchSECData(ticker, years = 5, formType = '10-K') {
   parsed.formType = formType;
   return parsed;
 }
+
+export const parseSecJsonToSnapshot = parseUploadedCompanyFacts;

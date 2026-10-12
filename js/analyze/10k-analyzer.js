@@ -40,9 +40,71 @@ export function calcCAGR(oldestVal, newestVal, periods) {
  * @param {object} company - Normalized company snapshot
  * @param {object} [opts] - Optional overrides (e.g. operatingCashPctSales = 0.015)
  */
+export function normalizeCompanyAnnual(company) {
+  if (!company) return [];
+  if (company.profile) {
+    company.price = company.price ?? company.profile.price;
+    company.beta = company.beta ?? company.profile.beta;
+    company.marketCap = company.marketCap ?? company.profile.marketCap;
+    company.sharesOut = company.sharesOut ?? company.profile.sharesOutstanding;
+  }
+  if (Array.isArray(company?.financials?.annual) && company.financials.annual.length > 0) {
+    return company.financials.annual.slice(0, 5);
+  }
+  const incs = company.incomeStatements || [];
+  const bss = company.balanceSheets || [];
+  const cfs = company.cashFlows || [];
+  const len = Math.min(5, Math.max(incs.length, bss.length, cfs.length));
+  const merged = [];
+  for (let i = 0; i < len; i++) {
+    const inc = incs[i] || {};
+    const bs = bss[i] || {};
+    const cf = cfs[i] || {};
+    merged.push({
+      year: inc.fy || bs.fy || cf.fy || inc.year || (2024 - i),
+      revenue: inc.revenue ?? 0,
+      cogs: inc.costOfRevenue ?? inc.cogs ?? 0,
+      grossProfit: inc.grossProfit,
+      rd: inc.researchAndDevelopment ?? inc.rd ?? 0,
+      sga: inc.sellingGeneralAndAdmin ?? inc.sga ?? 0,
+      operatingIncome: inc.operatingIncome ?? inc.ebit ?? 0,
+      depreciation: inc.depreciation ?? cf.depreciation ?? 0,
+      interestExpense: inc.interestExpense ?? 0,
+      pretaxIncome: inc.ebt ?? inc.pretaxIncome,
+      taxExpense: inc.taxExpense ?? 0,
+      netIncome: inc.netIncome ?? 0,
+      epsDiluted: inc.epsDiluted ?? 0,
+      sharesDiluted: inc.sharesDiluted ?? bs.sharesOutstanding ?? company.sharesOut ?? 1000,
+      sbc: cf.stockBasedCompensation ?? inc.sbc ?? 0,
+      cash: bs.cash ?? 0,
+      shortTermInvestments: bs.shortTermInvestments ?? 0,
+      accountsReceivable: bs.accountsReceivable ?? 0,
+      inventory: bs.inventory ?? 0,
+      currentAssets: bs.currentAssets ?? 0,
+      ppeNet: bs.propertyPlantEquipment ?? bs.ppeNet ?? 0,
+      goodwill: bs.goodwill ?? 0,
+      intangibles: bs.intangibleAssets ?? bs.intangibles ?? 0,
+      totalAssets: bs.totalAssets ?? 1,
+      accountsPayable: bs.accountsPayable ?? 0,
+      shortTermDebt: bs.shortTermDebt ?? 0,
+      currentLiabilities: bs.currentLiabilities ?? 0,
+      longTermDebt: bs.longTermDebt ?? 0,
+      totalLiabilities: bs.totalLiabilities ?? 0,
+      stockholdersEquity: bs.totalEquity ?? bs.stockholdersEquity,
+      operatingCashFlow: cf.operatingCashFlow ?? 0,
+      capex: cf.capitalExpenditures ?? cf.capex ?? 0,
+      freeCashFlow: cf.freeCashFlow,
+      dividendsPaid: cf.dividendsPaid ?? 0,
+      shareRepurchases: cf.shareBuybacks ?? cf.shareRepurchases ?? 0
+    });
+  }
+  company.financials = { annual: merged };
+  return merged;
+}
+
 export function compute10KAnalysis(company, opts = {}) {
   const opCashPctSales = opts.operatingCashPctSales ?? 0.015;
-  const rawAnnual = (company?.financials?.annual || []).slice(0, 5);
+  const rawAnnual = normalizeCompanyAnnual(company);
   // Chronological order (oldest -> newest) for multi-year table display
   const yearsAsc = [...rawAnnual].reverse();
   const numYears = yearsAsc.length;
@@ -1085,15 +1147,17 @@ function render10KAnalyzer(company, opCashPct = 0.015) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const bannerEl = document.getElementById('analyze-target-banner');
-  const rootEl = document.getElementById('wb-10k-root');
-  if (!rootEl) return;
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const bannerEl = document.getElementById('analyze-target-banner');
+    const rootEl = document.getElementById('wb-10k-root');
+    if (!rootEl) return;
 
-  if (bannerEl) {
-    mountTargetBanner(bannerEl, (company) => {
-      render10KAnalyzer(company, 0.015);
-    });
-  }
-  render10KAnalyzer(getActiveCompany(), 0.015);
-});
+    if (bannerEl) {
+      mountTargetBanner(bannerEl, (company) => {
+        render10KAnalyzer(company, 0.015);
+      });
+    }
+    render10KAnalyzer(getActiveCompany(), 0.015);
+  });
+}

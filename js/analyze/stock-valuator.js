@@ -966,22 +966,24 @@ function renderStockValuator(company) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const bannerEl = document.getElementById('analyze-target-banner');
-  const rootEl = document.getElementById('wb-valuator-root');
-  if (!rootEl) return;
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const bannerEl = document.getElementById('analyze-target-banner');
+    const rootEl = document.getElementById('wb-valuator-root');
+    if (!rootEl) return;
 
-  if (bannerEl) {
-    mountTargetBanner(bannerEl, (company) => {
-      renderStockValuator(company);
-    });
-  }
-  renderStockValuator(getActiveCompany());
-
-  window.addEventListener('resize', () => {
-    const canvas = document.getElementById('football-field-canvas');
-    if (canvas) {
-      drawFootballFieldChart(canvas, computeStockValuation(getActiveCompany(), currentOverrides));
+    if (bannerEl) {
+      mountTargetBanner(bannerEl, (company) => {
+        renderStockValuator(company);
+      });
     }
+    renderStockValuator(getActiveCompany());
+
+    window.addEventListener('resize', () => {
+      const canvas = document.getElementById('football-field-canvas');
+      if (canvas) {
+        drawFootballFieldChart(canvas, computeStockValuation(getActiveCompany(), currentOverrides));
+      }
+    });
   });
-});
+}

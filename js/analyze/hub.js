@@ -241,7 +241,7 @@ export function mountTargetBanner(container, onChange) {
 }
 
 function renderHubCards(company) {
-  const grid = document.getElementById('analyze-hub-cards');
+  const grid = document.getElementById('analyze-hub-grid') || document.getElementById('analyze-hub-cards');
   if (!grid) return;
 
   const inc = company.incomeStatements?.[0] || {};
@@ -374,12 +374,15 @@ function renderHubCards(company) {
   `;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const bannerEl = document.getElementById('analyze-target-mount');
-  if (bannerEl && document.getElementById('analyze-hub-cards')) {
-    mountTargetBanner(bannerEl, (updated) => {
-      renderHubCards(updated);
-    });
-    renderHubCards(getActiveCompany());
-  }
-});
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const bannerEl = document.getElementById('analyze-target-banner') || document.getElementById('analyze-target-mount');
+    const hubGrid = document.getElementById('analyze-hub-grid') || document.getElementById('analyze-hub-cards');
+    if (bannerEl && hubGrid) {
+      mountTargetBanner(bannerEl, (updated) => {
+        renderHubCards(updated);
+      });
+      renderHubCards(getActiveCompany());
+    }
+  });
+}
