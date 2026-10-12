@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discounted Cash Flow Valuation (Enterprise vs Equity) — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Discounted Cash Flow Valuation (Enterprise vs Equity)</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Russell Lundholm Ch. 4, 5</span>
+          <span class="concept-hero__citation-secondary">· also: Stephen H. Penman Ch. 4</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Discounted Cash Flow (DCF) valuation is the gold standard of fundamental intrinsic valuation. It embodies the core axiom of finance: <strong>an asset is worth the present value of the future cash flows it will generate for its owners, discounted at a rate reflecting the risk and timing of those cash flows.</strong></p>
+<p>Practitioners employ two primary DCF architectures:</p>
+<ol>
+<li><strong>The Enterprise Approach (Unlevered DCF):</strong> Forecasts <strong>Free Cash Flow to the Firm (FCFF)</strong> over an explicit forecast horizon plus a <strong>Terminal Value (TV)</strong> representing perpetual post-forecast operations. FCFF is discounted at the <strong>Weighted Average Cost of Capital (WACC)</strong> to determine <strong>Enterprise Value (EV)</strong>. Equity value is derived by adding non-operating cash and subtracting net debt ($\text{Equity Value} = \text{EV} + \text{Cash} - \text{Debt}$).</li>
+<li><strong>The Equity Approach (Levered DCF):</strong> Forecasts <strong>Free Cash Flow to Equity (FCFE)</strong> directly, discounted at the <strong>Cost of Equity ($r_e$)</strong> to arrive directly at <strong>Equity Value</strong>.</li>
+</ol>
+<p>The Enterprise approach is universally preferred for non-financial corporations because it isolates the core operating performance of the business from arbitrary leverage and capital structure decisions.</p>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;discount_rate&quot;:0.085,&quot;growth_rate&quot;:0.025,&quot;cash_flows&quot;:[-2500,450,520,610,720,850]}">Enterprise DCF (FCFF @ WACC)</button>
+<button type="button" class="preset-btn" data-config="{&quot;discount_rate&quot;:0.11,&quot;growth_rate&quot;:0.035,&quot;cash_flows&quot;:[-1800,150,300,550,900,1400]}">High Growth SaaS Profile</button>
+<button type="button" class="preset-btn" data-config="{&quot;discount_rate&quot;:0.075,&quot;growth_rate&quot;:0.015,&quot;cash_flows&quot;:[-3000,600,620,640,660,680]}">Mature Industrial Profile</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="cash-flow-chart" data-defaults="{&quot;periods&quot;:5,&quot;cash_flows&quot;:[-2500,450,520,610,720,850],&quot;discount_rate&quot;:0.085,&quot;growth_rate&quot;:0.025,&quot;show_pv&quot;:true,&quot;show_cumulative&quot;:true}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\text{Enterprise Value (EV)} = \sum_{t=1}^T \frac{\text{FCFF}_t}{(1 + \text{WACC})^t} + \frac{\text{Terminal Value}_T}{(1 + \text{WACC})^T}
+
+$$\text{Terminal Value}_T = \frac{\text{FCFF}_{T+1}}{\text{WACC} - g} = \frac{\text{FCFF}_T \cdot (1 + g)}{\text{WACC} - g}$$
+
+$$\text{Equity Value} = \text{EV} + \text{Cash \& Marketable Securities} - \text{Total Debt} - \text{Preferred Stock} - \text{Minority Interests}">
+              \text{Enterprise Value (EV)} = \sum_{t=1}^T \frac{\text{FCFF}_t}{(1 + \text{WACC})^t} + \frac{\text{Terminal Value}_T}{(1 + \text{WACC})^T}
+
+$$\text{Terminal Value}_T = \frac{\text{FCFF}_{T+1}}{\text{WACC} - g} = \frac{\text{FCFF}_T \cdot (1 + g)}{\text{WACC} - g}$$
+
+$$\text{Equity Value} = \text{EV} + \text{Cash \& Marketable Securities} - \text{Total Debt} - \text{Preferred Stock} - \text{Minority Interests}
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>\text{EV}</strong>: Enterprise Value (market value of the core operating business).</li>
+<li><strong>\text{FCFF}_t</strong>: Free Cash Flow to the Firm in year $t$ ($\text{NOPAT} + \text{D&amp;A} - \Delta\text{NWC} - \text{CapEx}$).</li>
+<li><strong>\text{WACC}</strong>: Weighted Average Cost of Capital (discount rate matching unlevered cash flows).</li>
+<li><strong>T</strong>: Explicit forecast horizon (typically 5 to 10 years).</li>
+<li><strong>\text{Terminal Value}_T</strong>: Value of all expected cash flows beyond year $T$.</li>
+<li><strong>g</strong>: Perpetual long-term sustainable growth rate (theoretically capped by long-term nominal GDP growth, $\le 2.5% - 3.5%$).</li>
+<li><strong>\text{Net Debt}</strong>: Total interest-bearing debt minus unrestricted cash reserves.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>DCF models suffer from the <strong>&quot;Terminal Value Domination Problem&quot;</strong>: in a standard 5-year DCF, the Terminal Value typically represents $65%-85%$ of the total calculated Enterprise Value! This means the 40-tab financial model detailing quarterly revenues, gross margins, and headcount across the 5-year forecast horizon is driving less than a third of the total valuation; the remaining two-thirds hangs entirely on two subjective assumptions: the exit WACC and the perpetuity growth rate $g$.</p>
+<p>Always run a two-variable sensitivity table crossing WACC against $g$ (or against exit EV/EBITDA multiple). If the valuation drops by 35% when WACC rises from 8.5% to 9.5% or when $g$ falls from 3% to 2%, your model is not providing certainty—it is mapping vulnerability.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/fcf.html" class="related-chip">
+          <span>Free Cash Flow (FCFF vs FCFE)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/wacc.html" class="related-chip">
+          <span>Weighted Average Cost of Capital (WACC)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/terminal-value.html" class="related-chip">
+          <span>Terminal Value (Exit Multiple vs Perpetuity Growth)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/multiples.html" class="related-chip">
+          <span>Relative Valuation & Comparable Multiples</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

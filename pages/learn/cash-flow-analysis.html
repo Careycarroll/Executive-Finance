@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cash Flow Statement Analysis — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Cash Flow Statement Analysis</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Peter D. Easton Ch. 4</span>
+          <span class="concept-hero__citation-secondary">· also: Stephen H. Penman Ch. 10</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><p>The Statement of Cash Flows is the ultimate truth-teller of financial reporting. While the balance sheet provides a static snapshot of assets and liabilities at a specific moment, and the income statement reflects subjective accrual-based revenues and expenses over a period, the cash flow statement reconciles exactly how cash entered and exited the business.</p>
+<p>Cash flows are organized into three mandatory GAAP/IFRS activities:</p>
+<ol>
+<li><strong>Operating Cash Flow (CFO):</strong> Cash generated from or consumed by core commercial operations (collections from customers minus payments to suppliers, employees, and operating taxes).</li>
+<li><strong>Investing Cash Flow (CFI):</strong> Capital deployed into or harvested from long-term productive assets (CapEx, acquisitions, software capitalization, or sales of plant and equipment).</li>
+<li><strong>Financing Cash Flow (CFF):</strong> Capital raised from or returned to external capital providers (debt issuances/repayments, equity issuances/buybacks, and dividend payments).</li>
+</ol>
+<p>Analyzing the sign patterns and magnitude of these three cash streams reveals the true corporate lifecycle stage of the enterprise far more accurately than revenue size or marketing narrative.</p>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>Corporate Lifecycle Cash Flow Archetypes</h3>
+<table>
+<thead>
+<tr>
+<th>Lifecycle Stage</th>
+<th>CFO</th>
+<th>CFI</th>
+<th>CFF</th>
+<th>Strategic Reality &amp; Executive Context</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Startup / Early Stage</strong></td>
+<td><strong>$-$</strong></td>
+<td><strong>$-$</strong></td>
+<td><strong>$+$</strong></td>
+<td>Burning cash in operations; heavy initial build-out; reliant on external VC/angel equity funding.</td>
+</tr>
+<tr>
+<td><strong>Rapid Growth</strong></td>
+<td><strong>$+$</strong></td>
+<td><strong>$-$</strong></td>
+<td><strong>$+$</strong></td>
+<td>Positive operating cash, but massive CapEx &amp; M&amp;A requirements exceed CFO; requires external debt/equity.</td>
+</tr>
+<tr>
+<td><strong>Mature Cash Cow</strong></td>
+<td><strong>$+$</strong></td>
+<td><strong>$-$</strong></td>
+<td><strong>$-$</strong></td>
+<td>Massive internal operating cash generation; modest maintenance CapEx; returning capital via buybacks and dividends.</td>
+</tr>
+<tr>
+<td><strong>Declining / Restructuring</strong></td>
+<td><strong>$-$</strong></td>
+<td><strong>$+$</strong></td>
+<td><strong>$-$</strong></td>
+<td>Core operations burning cash; selling off divisions/real estate (CFI $+$) to survive and pay down maturing debt (CFF $-$).</td>
+</tr>
+</tbody></table>
+<pre><code>Cash Flow Statement Architecture
+┌────────────────────────────────────────────────────────┐
+│ Net Income (GAAP Starting Point)                       │
+├────────────────────────────────────────────────────────┤
+│ + Non-Cash Charges (Depreciation, Amortization, SBC)   │
+│ - Non-Cash Gains (Asset sales)                         │
+│ ± Working Capital Changes (-ΔReceivables, -ΔInventory) │
+├────────────────────────────────────────────────────────┤
+│ = Cash Flow from Operations (CFO)                      │  ◄── Engine of the Business
+├────────────────────────────────────────────────────────┤
+│ - Capital Expenditures (CapEx: PP&amp;E + Intangibles)     │
+│ - Cash Paid for Strategic M&amp;A Acquisitions             │
+├────────────────────────────────────────────────────────┤
+│ = Cash Flow from Investing (CFI)                       │  ◄── Future Growth Reinvestment
+├────────────────────────────────────────────────────────┤
+│ + New Debt Borrowed / - Debt Principal Repaid          │
+│ + New Equity Issued / - Share Buybacks Repurchased     │
+│ - Common Cash Dividends Distributed                    │
+├────────────────────────────────────────────────────────┤
+│ = Cash Flow from Financing (CFF)                       │  ◄── Capital Provider Interactions
+├────────────────────────────────────────────────────────┤
+│ = Net Change in Cash Balance (Ending Cash - Beg. Cash) │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;A company with positive operating cash flow (CFO) is generating positive Free Cash Flow.&quot;</strong>
+<em>Reality:</em> CFO measures cash before mandatory capital expenditures. A telecom carrier or airline can generate $$5\text{B}$ in CFO, but if it must spend $$6\text{B}$ annually on 5G spectrum and aircraft replacements just to avoid losing customers, its Free Cash Flow is negative $-$1\text{B}$!</li>
+<li><strong>Misconception 2: &quot;Stock-Based Compensation (SBC) added back in CFO is &#39;free money&#39;.&quot;</strong>
+<em>Reality:</em> GAAP allows SBC to be added back to CFO as a non-cash expense. In tech companies, SBC often accounts for $30%-60%$ of total operating cash flow! While SBC consumes no immediate cash from the bank account, it creates massive share dilution, quietly transferring equity value from existing shareholders to employees. Treat SBC as a real economic compensation cost.</li>
+<li><strong>Misconception 3: &quot;An overall increase in cash on the balance sheet means the business had a great year.&quot;</strong>
+<em>Reality:</em> Check the source: did cash increase because core operations were wildly profitable (CFO $+$), or did cash increase because the company sold off its primary manufacturing facility (CFI $+$) or issued dilutive emergency convertible debt (CFF $+$)?</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Look at the <strong>CFO-to-CapEx ratio</strong>:
+$$\text{Reinvestment Ratio} = \frac{\text{CFO}}{\text{CapEx}}$$
+If this ratio is consistently $&gt; 2.0$, you are looking at a compounding monopoly that generates twice the cash it needs to sustain itself. If the ratio is $&lt; 1.0$, the company is a capital incinerator that cannot self-fund its own asset depreciation and will be perpetually at the mercy of capital markets.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/fcf.html" class="related-chip">
+          <span>Free Cash Flow (FCFF vs FCFE)</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+
+        <a href="/pages/learn/accrual-quality.html" class="related-chip">
+          <span>Accrual Quality & Earnings Persistence</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/working-capital.html" class="related-chip">
+          <span>Working Capital Management & Cash Conversion Cycle</span>
+          <span class="badge badge-domain--corpfin" style="font-size: 0.65rem; padding: 1px 5px;">corpfin</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

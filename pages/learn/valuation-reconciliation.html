@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valuation Reconciliation & Triangulation — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Valuation Reconciliation & Triangulation</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Stephen H. Penman Ch. 13</span>
+          <span class="concept-hero__citation-secondary">· also: Russell Lundholm Ch. 8</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="font-size: 1rem; line-height: 1.7;">
+          <div class="concept-intuition__heading">Overview & Intuition</div>
+          <div><p>No single valuation methodology holds a monopoly on the truth. Discounted Cash Flow (DCF), Residual Operating Income (ReOI), and Comparable Multiples (Comps) each view the enterprise through a distinct analytical lens:</p>
+<ul>
+<li><strong>DCF:</strong> Anchors on long-term operating cash flows and cost of capital, but is highly sensitive to terminal value growth and discount rate assumptions.</li>
+<li><strong>Residual Operating Income (ReOI):</strong> Anchors on current audited balance sheet assets, forecasting the duration and magnitude of abnormal economic rents (the competitive moat). Under identical accounting assumptions, DCF and ReOI yield mathematically identical valuations!</li>
+<li><strong>Comparable Multiples:</strong> Anchors on real-time capital market pricing of peer firms, capturing current market sentiment, but assumes the target is economically identical to the peer average.</li>
+</ul>
+<p><strong>Valuation Reconciliation (Triangulation)</strong> is the executive discipline of synthesizing these diverse methodologies into a coherent, defensible valuation range—typically displayed in a <strong>&quot;Football Field&quot;</strong> chart—to guide M&amp;A bidding, IPO pricing, or strategic fairness opinions.</p>
+</div>
+        </div>
+
+      
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+          <h2 class="concept-section__title">Framework & Structure</h2>
+          <div><h3>The Valuation Football Field Triangulation</h3>
+<pre><code>Valuation Method                      Implied Enterprise Value ($ Millions)
+                                 $200M          $300M          $400M          $500M
+─────────────────────────────────┼──────────────┼──────────────┼──────────────┼─────────►
+1. DCF Valuation (Base WACC)                    ├═════════════════════┤
+   ($280M - $420M)                              │                     │
+                                                │                     │
+2. Residual Operating Income (ReOI)             ├══════════════════┤  │
+   ($290M - $395M)                              │                  │  │
+                                                │                  │  │
+3. Public Comps (Harmonic EV/EBITDA)     ├══════════════════┤      │  │
+   ($240M - $350M)                       │                  │      │  │
+                                         │                  │      │  │
+4. Precedent M&amp;A Transactions                   │       ├═════════════════════════┤
+   ($330M - $480M, Control Premium)             │       │                         │
+─────────────────────────────────┼──────────────┼──────────────┼──────────────┼─────────►
+★ Executive Consensus Target:                   ▲ ── $340M - $370M ── ▲
+</code></pre>
+<h3>The Three Pillars of Triangulation</h3>
+<table>
+<thead>
+<tr>
+<th>Methodology</th>
+<th>Primary Anchor</th>
+<th>Key Vulnerability</th>
+<th>Best Used For</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>DCF (Enterprise FCFF)</strong></td>
+<td>5-10 year cash flow projections &amp; WACC</td>
+<td>Terminal value assumptions dominate total result.</td>
+<td>Standalone intrinsic value independent of market froth.</td>
+</tr>
+<tr>
+<td><strong>Residual Income (ReOI)</strong></td>
+<td>Balance sheet Net Operating Assets today ($\text{NOA}_0$)</td>
+<td>Requires clean-surplus accounting adjustments.</td>
+<td>Cross-checking DCF when terminal growth is contentious.</td>
+</tr>
+<tr>
+<td><strong>Trading Multiples</strong></td>
+<td>Current peer market multiples (EV/EBITDA)</td>
+<td>Bubbles or market troughs distort entire peer sector.</td>
+<td>Realistic near-term IPO or market exit pricing.</td>
+</tr>
+<tr>
+<td><strong>Precedent M&amp;A Deals</strong></td>
+<td>Historical transaction prices paid for targets</td>
+<td>Includes control premiums and idiosyncratic synergies.</td>
+<td>Bidding wars and M&amp;A fairness opinions.</td>
+</tr>
+</tbody></table>
+</div>
+        </div>
+
+      
+        <div class="misconception-callout">
+          <div class="misconception-callout__title">
+            <span>⚠️</span>
+            <span>Common Misconceptions</span>
+          </div>
+          <div class="misconception-callout__text">
+            <ul>
+<li><strong>Misconception 1: &quot;If DCF and Comps disagree by 50%, one of them must be completely wrong.&quot;</strong>
+<em>Reality:</em> Discrepancies between DCF and Comps reveal market mispricing or flawed assumptions. If DCF says $$400\text{M}$ while Comps say $$250\text{M}$, the market either does not believe management&#39;s growth forecast, or the target possesses unique intellectual property and margin advantages that the public comps lack.</li>
+<li><strong>Misconception 2: &quot;Precedent transactions should match public trading comps.&quot;</strong>
+<em>Reality:</em> Precedent M&amp;A transactions almost always trade at a $25%-40%$ premium over public trading comps because corporate acquirers pay a <strong>control premium</strong> and price in buyer-specific cost and revenue synergies.</li>
+<li><strong>Misconception 3: &quot;A football field chart is just an average of all the methods.&quot;</strong>
+<em>Reality:</em> Never take a mechanical unweighted average of different valuation methods! If comps are distorted by an artificial industry bubble or if DCF terminal growth is disconnected from reality, averaging them merely averages your errors.</li>
+</ul>
+
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>When presenting to a board of directors or investment committee, never present a single-point valuation number (e.g., &quot;The company is worth exactly $$342.5\text{M}$&quot;). Precision is not accuracy. A single number invites endless debate over micro-assumptions. </p>
+<p>Instead, present the <strong>Triangulated Range</strong>:
+<em>&quot;Under intrinsic DCF at an 8.5% WACC, value is $$320\text{M}-$380\text{M}$; under peer market trading multiples, value is $$300\text{M}-$350\text{M}$; with full control synergies in an M&amp;A auction, precedent deals suggest $$360\text{M}-$420\text{M}$. We recommend bidding between $$330\text{M}$ and $$350\text{M}$ to capture attractive risk-adjusted upside.&quot;</em></p>
+<p>That framing turns a theoretical accounting debate into an actionable strategic negotiation posture.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/dcf.html" class="related-chip">
+          <span>Discounted Cash Flow Valuation (Enterprise vs Equity)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/multiples.html" class="related-chip">
+          <span>Relative Valuation & Comparable Multiples</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/residual-income.html" class="related-chip">
+          <span>Residual Income & EVA Valuation</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/terminal-value.html" class="related-chip">
+          <span>Terminal Value (Exit Multiple vs Perpetuity Growth)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>

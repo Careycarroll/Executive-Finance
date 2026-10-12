@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relative Valuation & Comparable Multiples — Executive Finance</title>
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/concepts.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="/" class="site-header__logo">
+        <span>📈</span>
+        <span>Executive Finance</span>
+      </a>
+      <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
+        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="/pages/toolbox.html" class="site-header__nav-link ">Toolbox</a>
+        <a href="/pages/apply/" class="site-header__nav-link ">Analyze</a>
+        <a href="/pages/formulas.html" class="site-header__nav-link ">Formulas</a>
+        <a href="/pages/glossary.html" class="site-header__nav-link ">Glossary</a>
+        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ">Bibliography</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <header class="concept-hero">
+      <div class="concept-container">
+        <div class="concept-hero__nav">
+          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <div class="concept-hero__badges">
+            <span class="badge badge-tier--core">core</span>
+            <span class="badge badge-domain--fsa">fsa</span>
+          </div>
+        </div>
+        <h1 class="concept-hero__title">Relative Valuation & Comparable Multiples</h1>
+        <div class="concept-hero__citations">
+          <span class="concept-hero__citation-primary">Primary: Peter D. Easton Ch. 11</span>
+          <span class="concept-hero__citation-secondary">· also: Russell Lundholm Ch. 9</span>
+        </div>
+      </div>
+    </header>
+
+    <article class="concept-content">
+      <div class="concept-container concept-container--wide">
+        
+    <div class="concept-section">
+      
+        <div class="concept-intuition" style="margin-bottom: 1.5rem;">
+          <div class="concept-intuition__heading">Intuition</div>
+          <div class="concept-intuition__text"><p>Relative valuation determines the value of an enterprise by comparing it to the market pricing of similar (&quot;comparable&quot;) peer companies or recent precedent transactions. It is the most ubiquitous valuation methodology in investment banking, equity research, and board pitch decks due to its apparent speed and market anchoring.</p>
+<p>Multiples express the ratio of a market value measure to an operational performance metric:</p>
+<ol>
+<li><strong>Enterprise Value Multiples (EV/EBITDA, EV/EBIT, EV/Sales):</strong> Compare the value of the entire operating business ($\text{EV}$) to operating metrics generated before debt payments. These multiples are capital-structure neutral, making them ideal for comparing companies with differing debt levels.</li>
+<li><strong>Equity Multiples (P/E, P/B, P/CF):</strong> Compare the market price of common equity to earnings or book value after debt interest and taxes.</li>
+</ol>
+<p><strong>The Aggregation Trap: Arithmetic vs. Harmonic Mean</strong>
+When calculating peer group average multiples, standard financial analysts almost universally use the simple arithmetic average. However, academic finance (Easton, Lundholm, Baker &amp; Ruback) proves that <strong>the arithmetic mean of price ratios suffers from severe upward Jensen&#39;s inequality bias</strong>: outliers with tiny denominators (near-zero earnings or EBITDA) create massive ratio spikes that drag the arithmetic average artificially upward!</p>
+<p>To eliminate this upward distortion, valuation rigor requires using the <strong>harmonic mean</strong> or <strong>median</strong>:
+$$\text{Harmonic Mean} = \frac{n}{\sum_{i=1}^n \frac{1}{x_i}}$$</p>
+</div>
+        </div>
+
+      <div class="tool-mount-wrapper">
+        
+      <div class="tool-presets-bar">
+        <span class="tool-presets-bar__label">Load Scenario:</span>
+        <button type="button" class="preset-btn" data-config="{&quot;target&quot;:{&quot;ebitda&quot;:100,&quot;earnings&quot;:60,&quot;book_value&quot;:400,&quot;net_debt&quot;:50,&quot;shares&quot;:25},&quot;comps&quot;:[{&quot;name&quot;:&quot;Peer Alpha&quot;,&quot;ev_ebitda&quot;:12,&quot;pe&quot;:20,&quot;pb&quot;:2.5},{&quot;name&quot;:&quot;Peer Beta&quot;,&quot;ev_ebitda&quot;:10,&quot;pe&quot;:18,&quot;pb&quot;:2},{&quot;name&quot;:&quot;Peer Gamma&quot;,&quot;ev_ebitda&quot;:14,&quot;pe&quot;:22,&quot;pb&quot;:3},{&quot;name&quot;:&quot;Peer Delta&quot;,&quot;ev_ebitda&quot;:11,&quot;pe&quot;:19,&quot;pb&quot;:2.2}],&quot;meanType&quot;:&quot;harmonic&quot;}">Baseline Peer Group</button>
+<button type="button" class="preset-btn" data-config="{&quot;target&quot;:{&quot;ebitda&quot;:80,&quot;earnings&quot;:45,&quot;book_value&quot;:200,&quot;net_debt&quot;:-20,&quot;shares&quot;:15},&quot;comps&quot;:[{&quot;name&quot;:&quot;CloudScale Inc&quot;,&quot;ev_ebitda&quot;:22,&quot;pe&quot;:35,&quot;pb&quot;:6.5},{&quot;name&quot;:&quot;DataCore Labs&quot;,&quot;ev_ebitda&quot;:18.5,&quot;pe&quot;:28,&quot;pb&quot;:5.2},{&quot;name&quot;:&quot;OmniSaaS&quot;,&quot;ev_ebitda&quot;:25,&quot;pe&quot;:42,&quot;pb&quot;:7.8}],&quot;meanType&quot;:&quot;harmonic&quot;}">Tech & Growth Comps</button>
+<button type="button" class="preset-btn" data-config="{&quot;target&quot;:{&quot;ebitda&quot;:250,&quot;earnings&quot;:140,&quot;book_value&quot;:1200,&quot;net_debt&quot;:350,&quot;shares&quot;:50},&quot;comps&quot;:[{&quot;name&quot;:&quot;Apex Heavy&quot;,&quot;ev_ebitda&quot;:7.5,&quot;pe&quot;:12,&quot;pb&quot;:1.4},{&quot;name&quot;:&quot;Continental Fab&quot;,&quot;ev_ebitda&quot;:8.2,&quot;pe&quot;:13.5,&quot;pb&quot;:1.6},{&quot;name&quot;:&quot;Vanguard Foundries&quot;,&quot;ev_ebitda&quot;:6.8,&quot;pe&quot;:11.2,&quot;pb&quot;:1.3}],&quot;meanType&quot;:&quot;harmonic&quot;}">Mature Industrials Comps</button>
+      </div>
+        <div id="tool-mount" class="tool-mount-container" data-component="multiples-table" data-defaults="{&quot;target&quot;:{&quot;ebitda&quot;:100,&quot;earnings&quot;:60,&quot;book_value&quot;:400,&quot;net_debt&quot;:50,&quot;shares&quot;:25},&quot;comps&quot;:[{&quot;name&quot;:&quot;Peer Alpha&quot;,&quot;ev_ebitda&quot;:12,&quot;pe&quot;:20,&quot;pb&quot;:2.5},{&quot;name&quot;:&quot;Peer Beta&quot;,&quot;ev_ebitda&quot;:10,&quot;pe&quot;:18,&quot;pb&quot;:2},{&quot;name&quot;:&quot;Peer Gamma&quot;,&quot;ev_ebitda&quot;:14,&quot;pe&quot;:22,&quot;pb&quot;:3},{&quot;name&quot;:&quot;Peer Delta&quot;,&quot;ev_ebitda&quot;:11,&quot;pe&quot;:19,&quot;pb&quot;:2.2}],&quot;weights&quot;:{&quot;ev_ebitda&quot;:0.5,&quot;pe&quot;:0.3,&quot;pb&quot;:0.2},&quot;meanType&quot;:&quot;harmonic&quot;}">
+          <!-- Interactive tool mounts here -->
+        </div>
+      </div>
+
+      
+        <div class="collapsible-box">
+          <div class="collapsible-box__header">
+            <span>Underlying Mathematical Formula</span>
+            <span class="collapsible-icon">▶</span>
+          </div>
+          <div class="collapsible-box__content">
+            <div class="concept-formula-katex" data-katex="\text{EV / EBITDA} = \frac{\text{Market Value of Equity} + \text{Total Debt} - \text{Cash}}{\text{EBITDA}}
+
+$$\text{P / E} = \frac{\text{Price per Share}}{\text{Earnings per Share (EPS)}} = \frac{\text{Market Capitalization}}{\text{Net Income}}$$
+
+$$\text{Harmonic Mean Multiple} = \frac{n}{\sum_{i=1}^n \left(\frac{1}{\text{Multiple}_i}\right)}$$
+
+$$\text{Implied Enterprise Value} = \text{Target Operating Metric} \times \text{Peer Harmonic Multiple}">
+              \text{EV / EBITDA} = \frac{\text{Market Value of Equity} + \text{Total Debt} - \text{Cash}}{\text{EBITDA}}
+
+$$\text{P / E} = \frac{\text{Price per Share}}{\text{Earnings per Share (EPS)}} = \frac{\text{Market Capitalization}}{\text{Net Income}}$$
+
+$$\text{Harmonic Mean Multiple} = \frac{n}{\sum_{i=1}^n \left(\frac{1}{\text{Multiple}_i}\right)}$$
+
+$$\text{Implied Enterprise Value} = \text{Target Operating Metric} \times \text{Peer Harmonic Multiple}
+            </div>
+            <div style="margin-top: 1rem;"><ul>
+<li><strong>\text{EV}</strong>: Enterprise Value ($= \text{Market Equity} + \text{Debt} + \text{Preferred} + \text{Minority Interest} - \text{Cash}$).</li>
+<li><strong>\text{EBITDA}</strong>: Earnings Before Interest, Taxes, Depreciation, and Amortization.</li>
+<li><strong>\text{P / E}</strong>: Price-to-Earnings ratio.</li>
+<li><strong>\text{P / B}</strong>: Price-to-Book ratio ($\text{Market Equity} / \text{Common Shareholders&#39; Equity}$).</li>
+<li><strong>n</strong>: Number of comparable companies in the peer benchmark set.</li>
+<li><strong>\text{Multiple}_i</strong>: Valuation multiple observed for peer company $i$.</li>
+</ul>
+</div>
+          </div>
+        </div>
+    </div>
+        
+    <footer class="concept-footer">
+      <div class="future-me-box">
+        <div class="future-me-box__header">
+          <span>📝</span>
+          <span>Notes for Future-Me</span>
+        </div>
+        <div class="future-me-box__body">
+          <p>Multiples are shorthand heuristics, not substitutes for fundamental analysis. Every multiple is an implicit DCF model in disguise:
+$$\frac{\text{EV}}{\text{EBITDA}} \approx \frac{(1 - t) \times (1 - \text{Reinvestment Rate})}{\text{WACC} - g}$$</p>
+<p>When an analyst says <em>&quot;Our company deserves a 15x EV/EBITDA multiple because the peer group trades at 15x,&quot;</em> they are implicitly asserting that your company has the identical growth rate ($g$), identical reinvestment requirements, identical tax profile ($t$), and identical operating risk ($\text{WACC}$) as the peer group!</p>
+<p>If your target company has lower ROIC, higher customer churn, or slower projected growth than its peers, applying the peer average multiple will cause you to dramatically overpay. Always adjust multiples for differences in growth and return on capital using regression analysis or PEG ratios.</p>
+
+        </div>
+      </div>
+      
+      <section class="related-concepts-section">
+        <h3 class="related-concepts-section__title">Related Concepts</h3>
+        <div class="related-chips">
+          
+        <a href="/pages/learn/dcf.html" class="related-chip">
+          <span>Discounted Cash Flow Valuation (Enterprise vs Equity)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/terminal-value.html" class="related-chip">
+          <span>Terminal Value (Exit Multiple vs Perpetuity Growth)</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+
+        <a href="/pages/learn/valuation-reconciliation.html" class="related-chip">
+          <span>Valuation Reconciliation & Triangulation</span>
+          <span class="badge badge-domain--fsa" style="font-size: 0.65rem; padding: 1px 5px;">fsa</span>
+        </a>
+        </div>
+      </section>
+    </footer>
+      </div>
+    </article>
+  </main>
+
+  <script type="module" src="/js/templates/concept-page.js"></script>
+</body>
+</html>
