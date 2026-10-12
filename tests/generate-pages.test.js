@@ -63,9 +63,14 @@ describe('generate-pages output verification', () => {
     expect(penmanHtml).toContain('data-component="fs-reformulator"');
   });
 
-  it('generates domain-grouped learn index.html', () => {
+  it('generates domain-grouped learn index.html with search bar and domain filters', () => {
     const indexHtml = loadText('pages/learn/index.html');
     expect(indexHtml).toContain('Concepts Library');
+    expect(indexHtml).toContain('id="concept-search-input"');
+    expect(indexHtml).toContain('data-search=');
+    expect(indexHtml).toContain('data-filter-value="fsa"');
+    expect(indexHtml).toContain('data-filter-value="risk"');
+    expect(indexHtml).toContain('data-filter-value="tax"');
     expect(indexHtml).toContain('Corporate Finance & Foundations');
     expect(indexHtml).toContain('Time Value of Money');
     expect(indexHtml).toContain('Black-Scholes Option Pricing');
