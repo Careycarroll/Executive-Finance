@@ -311,14 +311,26 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
       expect(bridge.impliedEvCreation).toBeGreaterThan(0);
 
       const unitEcon = computePricingAndUnitEconomics(msft, {
+        unit: 'K',
         unitPrice: 250,
         unitVarCost: 100,
+        fixedCosts: 450,
         proposedPriceChangePct: 0.05
       });
-      // Contribution margin = (250 - 100)/250 = 60%. Indifference volume loss for +5% price = -0.05 / (0.60 + 0.05) = -7.692%
+      // Contribution margin = (250 - 100)/250 = 60% ($150/unit). Fixed costs = $450K ($450,000) -> Break-Even = 3,000 units
       expect(unitEcon.contributionMarginPct).toBeCloseTo(0.60, 4);
+      expect(unitEcon.breakEvenUnits).toBeCloseTo(3000, 2);
       expect(unitEcon.maxVolumeLossForPriceHike).toBeCloseTo(-0.05 / 0.65, 4);
       expect(unitEcon.ltvToCac).toBeGreaterThan(2.0);
+
+      // Hundreds ($100s) scale: 4,500 * $100 = $450,000 -> Break-Even = 3,000 units
+      const unitEconHundreds = computePricingAndUnitEconomics(null, {
+        unit: 'H',
+        unitPrice: 250,
+        unitVarCost: 100,
+        fixedCosts: 4500
+      });
+      expect(unitEconHundreds.breakEvenUnits).toBeCloseTo(3000, 2);
 
       const scen = computeConsultingScenarios(msft, { template: 'digital' });
       expect(scen.bullCase.npv).toBeGreaterThan(scen.baseCase.npv);
