@@ -215,6 +215,62 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
         }
       }
     });
+
+    it('computes all 36 executive ratios across margins, ROIC moat, WCR, capital allocation, solvency, and quality', () => {
+      for (const company of SNAPSHOT_LIST) {
+        const res = compute10KAnalysis(company);
+        for (const yr of res.byYear) {
+          // Category 1: Margins
+          expect(yr.grossMargin).toBeGreaterThanOrEqual(0);
+          expect(Number.isFinite(yr.ebitMargin)).toBe(true);
+          expect(Number.isFinite(yr.sbcAdjustedOpMargin)).toBe(true);
+          expect(Number.isFinite(yr.netMargin)).toBe(true);
+          expect(Number.isFinite(yr.fcfMargin)).toBe(true);
+
+          // Category 2: Returns & Moat
+          expect(Number.isFinite(yr.roic)).toBe(true);
+          expect(Number.isFinite(yr.roce)).toBe(true);
+          expect(Number.isFinite(yr.roe)).toBe(true);
+          expect(Number.isFinite(yr.roa)).toBe(true);
+          expect(Number.isFinite(yr.croic)).toBe(true);
+          expect(yr.assetTurnover).toBeGreaterThanOrEqual(0);
+          expect(yr.fixedAssetTurnover).toBeGreaterThanOrEqual(0);
+
+          // Category 3: Working Capital & CCC
+          expect(Number.isFinite(yr.wcr)).toBe(true);
+          expect(Number.isFinite(yr.wcrToSales)).toBe(true);
+          expect(yr.dso).toBeGreaterThanOrEqual(0);
+          expect(yr.dio).toBeGreaterThanOrEqual(0);
+          expect(yr.dpo).toBeGreaterThanOrEqual(0);
+          expect(yr.ccc).toBeCloseTo(yr.dso + yr.dio - yr.dpo, 2);
+
+          // Category 4: Capital Allocation & Reinvestment
+          expect(yr.capexToDa).toBeGreaterThanOrEqual(0);
+          expect(yr.capexIntensity).toBeGreaterThanOrEqual(0);
+          expect(Number.isFinite(yr.reinvestmentRate)).toBe(true);
+          expect(yr.fcfPayoutRatio).toBeGreaterThanOrEqual(0);
+          expect(yr.dividendPayoutRatio).toBeGreaterThanOrEqual(0);
+
+          // Category 5: Solvency & Coverage
+          expect(yr.currentRatio).toBeGreaterThan(0);
+          expect(yr.quickRatio).toBeGreaterThan(0);
+          expect(yr.cashRatio).toBeGreaterThanOrEqual(0);
+          expect(yr.debtToEquity).toBeGreaterThanOrEqual(0);
+          expect(yr.debtToCapital).toBeGreaterThanOrEqual(0);
+          expect(yr.debtToCapital).toBeLessThanOrEqual(1.0);
+          expect(Number.isFinite(yr.netDebtToEbitda)).toBe(true);
+          expect(Number.isFinite(yr.interestCoverage)).toBe(true);
+          expect(Number.isFinite(yr.ocfToDebt)).toBe(true);
+
+          // Category 6: Operating Leverage & Quality
+          expect(yr.rdIntensity).toBeGreaterThanOrEqual(0);
+          expect(yr.sgaIntensity).toBeGreaterThanOrEqual(0);
+          expect(Number.isFinite(yr.ruleOf40)).toBe(true);
+          expect(yr.gmroi).toBeGreaterThanOrEqual(0);
+          expect(Number.isFinite(yr.sloanAccrualRatio)).toBe(true);
+        }
+      }
+    });
   });
 
   describe('3. Workbench 2: Multi-Method Stock & Valuation Triangulator', () => {

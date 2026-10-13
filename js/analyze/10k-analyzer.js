@@ -282,6 +282,36 @@ export function compute10KAnalysis(company, opts = {}) {
     const sloanAccrualRatio = OA > 0 ? totalAccruals / OA : 0;
     const goodwillPctAssets = ta > 0 ? gwIntang / ta : 0;
 
+    // Capital Returns & Economic Moat:
+    const investedCapital = NOA > 10 ? NOA : Math.max(100, (FO + cse - FA));
+    const roic = investedCapital > 10 ? NOPAT / investedCapital : 0;
+    const capitalEmployed = (ta - cl) > 10 ? (ta - cl) : Math.max(100, cse + ltd);
+    const roce = capitalEmployed > 10 ? ebit / capitalEmployed : 0;
+    const roe = cse > 10 ? ni / cse : ROE;
+    const croic = investedCapital > 10 ? fcf / investedCapital : 0;
+    const fixedAssetTurnover = ppe > 0 ? rev / ppe : (rev > 0 ? 5.0 : 0);
+
+    // Capital Allocation, Reinvestment & Payouts:
+    const capexToDa = da > 0 ? capex / da : (capex > 0 ? 1.5 : 0);
+    const capexIntensity = rev > 0 ? capex / rev : 0;
+    const deltaWcr = prev ? (wcr - prev.wcr) : 0;
+    const reinvestmentNet = (capex - da) + deltaWcr;
+    const reinvestmentRate = Math.abs(NOPAT) > 10 ? Math.min(3.0, Math.max(-2.0, reinvestmentNet / NOPAT)) : 0;
+    const shareholderPayouts = divs + buybacks;
+    const fcfPayoutRatio = fcf > 10 ? shareholderPayouts / fcf : (shareholderPayouts > 0 ? 2.0 : 0);
+    const dividendPayoutRatio = ni > 10 ? divs / ni : 0;
+
+    // Solvency, Liquidity & Coverage:
+    const debtToCapital = (FO + cse) > 0 ? Math.min(1.0, Math.max(0, FO / (FO + cse))) : (FO > 0 ? 1.0 : 0);
+    const ocfToDebt = FO > 0 ? ocf / FO : (FO === 0 && ocf > 0 ? 5.0 : 0);
+
+    // Operating Leverage & Specialized Benchmarks:
+    const rdIntensity = rev > 0 ? rd / rev : 0;
+    const sgaIntensity = rev > 0 ? sga / rev : 0;
+    const revGrowth = prev && prev.rev > 0 ? (rev - prev.rev) / prev.rev : 0;
+    const ruleOf40 = revGrowth + fcfMargin;
+    const gmroi = inv > 0 ? gp / inv : (gp > 0 ? 10.0 : 0);
+
     byYear.push({
       year: y.year,
       // Reported IS
@@ -312,10 +342,13 @@ export function compute10KAnalysis(company, opts = {}) {
       dso, dio, dpo, ccc, wcr, wcrToSales, nlc,
       // Ratios
       currentRatio, quickRatio, cashRatio,
-      debtToEquity, netDebtToEbitda, interestCoverage,
-      grossMargin, netMargin, roa, fcfMargin, ocfToNi,
+      debtToEquity, debtToCapital, netDebtToEbitda, interestCoverage, ocfToDebt,
+      grossMargin, netMargin, roa, roe, fcfMargin, ocfToNi,
       sbcPctRev, sbcAdjustedOpMargin,
-      totalAccruals, sloanAccrualRatio, goodwillPctAssets
+      totalAccruals, sloanAccrualRatio, goodwillPctAssets,
+      investedCapital, roic, capitalEmployed, roce, croic, fixedAssetTurnover,
+      capexToDa, capexIntensity, deltaWcr, reinvestmentRate, shareholderPayouts, fcfPayoutRatio, dividendPayoutRatio,
+      rdIntensity, sgaIntensity, revGrowth, ruleOf40, gmroi
     });
   }
 
@@ -516,6 +549,24 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
     if (c === null || c === undefined || Number.isNaN(c)) return `<td class="wb-td-cagr">—</td>`;
     const cls = c >= 0 ? 'pos' : 'neg';
     return `<td class="wb-td-cagr ${cls}">${c >= 0 ? '+' : ''}${(c * 100).toFixed(1)}%</td>`;
+  };
+
+  const fmtDeltaPct = (v1, v2) => {
+    if (v1 === null || v1 === undefined || v2 === null || v2 === undefined || Number.isNaN(v1) || Number.isNaN(v2)) return '—';
+    const diff = (v2 - v1) * 100;
+    return `${diff >= 0 ? '+' : ''}${diff.toFixed(1)}%`;
+  };
+
+  const fmtDeltaMult = (v1, v2) => {
+    if (v1 === null || v1 === undefined || v2 === null || v2 === undefined || Number.isNaN(v1) || Number.isNaN(v2)) return '—';
+    const diff = v2 - v1;
+    return `${diff >= 0 ? '+' : ''}${diff.toFixed(2)}x`;
+  };
+
+  const fmtDeltaDays = (v1, v2) => {
+    if (v1 === null || v1 === undefined || v2 === null || v2 === undefined || Number.isNaN(v1) || Number.isNaN(v2)) return '—';
+    const diff = v2 - v1;
+    return `${diff >= 0 ? '+' : ''}${diff.toFixed(1)}d`;
   };
 
   root.innerHTML = `
@@ -1275,128 +1326,375 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
       <div class="wb-panel">
         <div class="wb-panel__header">
           <div>
-            <h3 class="wb-panel__title">5-Year Executive Financial Ratio Suite &amp; Working Capital Structure</h3>
-            <div class="wb-panel__subtitle">Profitability, Hawawini Working Capital Requirement (WCR), Cash Conversion Cycle, Liquidity &amp; Coverage</div>
+            <h3 class="wb-panel__title">5-Year Executive Financial Ratio Suite (${company.ticker})</h3>
+            <div class="wb-panel__subtitle">Institutional 36-Ratio Diagnostic Matrix across Profitability, ROIC Moats, Hawawini Working Capital, Capital Allocation, Solvency &amp; Accounting Quality</div>
           </div>
           ${conceptPill('working-capital', 'WCR & Ratios')}
         </div>
+
+        <!-- Categorized Filter Pills -->
+        <div class="wb-ratio-filter">
+          <span style="font-size:0.75rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.04em; margin-right:0.25rem;">Filter Category:</span>
+          <button type="button" class="wb-ratio-pill active" data-ratio-cat="all">📋 All Ratios (36)</button>
+          <button type="button" class="wb-ratio-pill" data-ratio-cat="margins">📈 Margins &amp; Profitability (5)</button>
+          <button type="button" class="wb-ratio-pill" data-ratio-cat="returns">💎 Capital Returns &amp; Moat (7)</button>
+          <button type="button" class="wb-ratio-pill" data-ratio-cat="working-capital">⏱️ Working Capital &amp; CCC (6)</button>
+          <button type="button" class="wb-ratio-pill" data-ratio-cat="allocation">🎯 Capital Allocation &amp; Payouts (5)</button>
+          <button type="button" class="wb-ratio-pill" data-ratio-cat="solvency">🛡️ Solvency &amp; Coverage (8)</button>
+          <button type="button" class="wb-ratio-pill" data-ratio-cat="quality">⚡ Operating Leverage &amp; Quality (5)</button>
+        </div>
+
         <div class="wb-table-wrap">
           <table class="wb-table">
             <thead>
               <tr>
-                <th>Financial Metric / Ratio</th>
+                <th style="min-width:320px;">Financial Metric / Ratio &amp; Institutional Interpretation</th>
                 <th>Concept Link</th>
                 ${byYear.map(y => `<th>FY ${y.year}</th>`).join('')}
                 <th>5Y Delta</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="wb-row-section"><td colspan="${byYear.length + 3}">Profitability &amp; SBC-Adjusted Margins</td></tr>
-              <tr>
-                <td>Gross Profit Margin</td>
+              <!-- Category 1: Margins & Profitability -->
+              <tr class="wb-row-section" data-ratio-cat="margins"><td colspan="${byYear.length + 3}">I. Margins &amp; Core Profitability</td></tr>
+              <tr data-ratio-cat="margins">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Gross Profit Margin (Gross Profit / Sales)</div>
+                  <div class="wb-ratio-blurb">Evaluates core unit-level product pricing power and direct COGS efficiency before operating overhead.</div>
+                </td>
                 <td>${conceptPill('reformulated-is', 'Gross Margin')}</td>
                 ${byYear.map(y => `<td>${fmtPct(y.grossMargin)}</td>`).join('')}
-                <td class="wb-td-cagr">${((latest.grossMargin - byYear[0].grossMargin) * 100).toFixed(1)}%</td>
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].grossMargin, latest.grossMargin)}</td>
               </tr>
-              <tr>
-                <td>GAAP Operating Margin (EBIT / Sales)</td>
+              <tr data-ratio-cat="margins">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">GAAP Operating Margin (EBIT / Sales)</div>
+                  <div class="wb-ratio-blurb">Core operating profitability assessing operating leverage before capital structure interest and taxes.</div>
+                </td>
                 <td>${conceptPill('dupont', 'EBIT Margin')}</td>
                 ${byYear.map(y => `<td>${fmtPct(y.ebitMargin)}</td>`).join('')}
-                <td class="wb-td-cagr">${((latest.ebitMargin - byYear[0].ebitMargin) * 100).toFixed(1)}%</td>
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].ebitMargin, latest.ebitMargin)}</td>
               </tr>
-              <tr>
-                <td>SBC-Adjusted Operating Margin ((EBIT − SBC) / Sales)</td>
+              <tr data-ratio-cat="margins">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">SBC-Adjusted Operating Margin ((EBIT − SBC) / Sales)</div>
+                  <div class="wb-ratio-blurb">Forensic operating margin treating non-cash stock compensation as a real economic talent expense.</div>
+                </td>
                 <td>${conceptPill('stock-comp', 'SBC Burden')}</td>
                 ${byYear.map(y => `<td>${fmtPct(y.sbcAdjustedOpMargin)}</td>`).join('')}
-                <td class="wb-td-cagr">${((latest.sbcAdjustedOpMargin - byYear[0].sbcAdjustedOpMargin) * 100).toFixed(1)}%</td>
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].sbcAdjustedOpMargin, latest.sbcAdjustedOpMargin)}</td>
               </tr>
-              <tr>
-                <td>Net Profit Margin (NI / Sales)</td>
+              <tr data-ratio-cat="margins">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">GAAP Net Profit Margin (Net Income / Sales)</div>
+                  <div class="wb-ratio-blurb">Bottom-line accounting margin retained for common stockholders after all operational, financing, and tax expenses.</div>
+                </td>
                 <td>${conceptPill('dupont', 'Net Margin')}</td>
                 ${byYear.map(y => `<td>${fmtPct(y.netMargin)}</td>`).join('')}
-                <td class="wb-td-cagr">${((latest.netMargin - byYear[0].netMargin) * 100).toFixed(1)}%</td>
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].netMargin, latest.netMargin)}</td>
               </tr>
-              <tr>
-                <td>Free Cash Flow Margin (FCF / Sales)</td>
+              <tr data-ratio-cat="margins">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Free Cash Flow Margin (FCF / Sales)</div>
+                  <div class="wb-ratio-blurb">Discretionary cash yield generated per dollar of sales after fully funding capital expenditures.</div>
+                </td>
                 <td>${conceptPill('fcf', 'FCF Margin')}</td>
                 ${byYear.map(y => `<td>${fmtPct(y.fcfMargin)}</td>`).join('')}
-                <td class="wb-td-cagr">${((latest.fcfMargin - byYear[0].fcfMargin) * 100).toFixed(1)}%</td>
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].fcfMargin, latest.fcfMargin)}</td>
               </tr>
 
-              <tr class="wb-row-section"><td colspan="${byYear.length + 3}">Working Capital Requirement (WCR) &amp; Cash Conversion Cycle</td></tr>
-              <tr>
-                <td>Working Capital Requirement (WCR = AR + Inv − AP)</td>
+              <!-- Category 2: Capital Returns & Moat -->
+              <tr class="wb-row-section" data-ratio-cat="returns"><td colspan="${byYear.length + 3}">II. Capital Returns &amp; Economic Moat</td></tr>
+              <tr data-ratio-cat="returns">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Return on Invested Capital (ROIC = NOPAT / Invested Capital)</div>
+                  <div class="wb-ratio-blurb">The definitive measure of corporate economic moat; evaluates after-tax operating profit earned per dollar of net operating capital deployed.</div>
+                </td>
+                <td>${conceptPill('eva-mva', 'ROIC')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.roic)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].roic, latest.roic)}</td>
+              </tr>
+              <tr data-ratio-cat="returns">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Return on Capital Employed (ROCE = EBIT / (Total Assets − Current Liabilities))</div>
+                  <div class="wb-ratio-blurb">Pre-tax operating efficiency metric assessing how effectively management deploys total long-term capital resources.</div>
+                </td>
+                <td>${conceptPill('dupont', 'ROCE')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.roce)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].roce, latest.roce)}</td>
+              </tr>
+              <tr data-ratio-cat="returns">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Return on Common Equity (ROE = Net Income / Stockholders' Equity)</div>
+                  <div class="wb-ratio-blurb">Rate of accounting return earned on common shareholders' book equity investment.</div>
+                </td>
+                <td>${conceptPill('dupont', 'ROE')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.roe)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].roe, latest.roe)}</td>
+              </tr>
+              <tr data-ratio-cat="returns">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Return on Total Assets (ROA = Net Income / Total Assets)</div>
+                  <div class="wb-ratio-blurb">Evaluates how efficiently enterprise management converts total balance sheet assets into net income.</div>
+                </td>
+                <td>${conceptPill('dupont', 'ROA')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.roa)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].roa, latest.roa)}</td>
+              </tr>
+              <tr data-ratio-cat="returns">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Cash Return on Invested Capital (CROIC = FCF / Invested Capital)</div>
+                  <div class="wb-ratio-blurb">Cash-based equivalent of ROIC; assesses true unencumbered cash yield generated per dollar of invested capital.</div>
+                </td>
+                <td>${conceptPill('fcf', 'CROIC')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.croic)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].croic, latest.croic)}</td>
+              </tr>
+              <tr data-ratio-cat="returns">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Total Asset Turnover (Sales / Total Assets)</div>
+                  <div class="wb-ratio-blurb">Measures capital velocity and efficiency in generating top-line sales from total balance sheet assets.</div>
+                </td>
+                <td>${conceptPill('dupont', 'Asset Turnover')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.assetTurnover, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].assetTurnover, latest.assetTurnover)}</td>
+              </tr>
+              <tr data-ratio-cat="returns">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Fixed Asset Turnover (Sales / Net PP&amp;E)</div>
+                  <div class="wb-ratio-blurb">Evaluates production efficiency and revenue productivity generated per dollar of fixed plant, property, and equipment.</div>
+                </td>
+                <td>${conceptPill('capital-budgeting', 'PP&E Turnover')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.fixedAssetTurnover, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].fixedAssetTurnover, latest.fixedAssetTurnover)}</td>
+              </tr>
+
+              <!-- Category 3: Hawawini Working Capital & CCC -->
+              <tr class="wb-row-section" data-ratio-cat="working-capital"><td colspan="${byYear.length + 3}">III. Hawawini Working Capital Requirement (WCR) &amp; Cash Conversion Cycle</td></tr>
+              <tr data-ratio-cat="working-capital">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Working Capital Requirement (WCR = AR + Inventory − AP)</div>
+                  <div class="wb-ratio-blurb">Hawawini operating capital requirement; quantifies capital locked in the core operating cycle before liquidity.</div>
+                </td>
                 <td>${conceptPill('working-capital', 'WCR')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.wcr)}</td>`).join('')}
-                <td class="wb-td-cagr">—</td>
+                <td class="wb-td-cagr">${latest.wcr >= byYear[0].wcr ? '+' : ''}${fmtMoney(latest.wcr - byYear[0].wcr)}</td>
               </tr>
-              <tr>
-                <td>WCR Intensity (WCR / Sales)</td>
+              <tr data-ratio-cat="working-capital">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">WCR Intensity (WCR / Sales)</div>
+                  <div class="wb-ratio-blurb">Operating capital tied up per dollar of sales; lower or negative intensity indicates strong vendor leverage and asset-light operations.</div>
+                </td>
                 <td>${conceptPill('working-capital', 'WCR/Sales')}</td>
                 ${byYear.map(y => `<td>${fmtPct(y.wcrToSales)}</td>`).join('')}
-                <td class="wb-td-cagr">${((latest.wcrToSales - byYear[0].wcrToSales) * 100).toFixed(1)}%</td>
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].wcrToSales, latest.wcrToSales)}</td>
               </tr>
-              <tr>
-                <td>Days Sales Outstanding (DSO)</td>
+              <tr data-ratio-cat="working-capital">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Days Sales Outstanding (DSO = (AR / Sales) × 365)</div>
+                  <div class="wb-ratio-blurb">Average collection period; measures customer credit collection discipline and receivables velocity.</div>
+                </td>
                 <td>${conceptPill('working-capital', 'DSO')}</td>
                 ${byYear.map(y => `<td>${y.dso.toFixed(1)}d</td>`).join('')}
-                <td class="wb-td-cagr">${(latest.dso - byYear[0].dso).toFixed(1)}d</td>
+                <td class="wb-td-cagr">${fmtDeltaDays(byYear[0].dso, latest.dso)}</td>
               </tr>
-              <tr>
-                <td>Days Inventory Outstanding (DIO)</td>
+              <tr data-ratio-cat="working-capital">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Days Inventory Outstanding (DIO = (Inventory / COGS) × 365)</div>
+                  <div class="wb-ratio-blurb">Average duration inventory sits in production or warehouse before converting to customer sales.</div>
+                </td>
                 <td>${conceptPill('working-capital', 'DIO')}</td>
                 ${byYear.map(y => `<td>${y.dio.toFixed(1)}d</td>`).join('')}
-                <td class="wb-td-cagr">${(latest.dio - byYear[0].dio).toFixed(1)}d</td>
+                <td class="wb-td-cagr">${fmtDeltaDays(byYear[0].dio, latest.dio)}</td>
               </tr>
-              <tr>
-                <td>Days Payable Outstanding (DPO)</td>
+              <tr data-ratio-cat="working-capital">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Days Payable Outstanding (DPO = (AP / COGS) × 365)</div>
+                  <div class="wb-ratio-blurb">Average payment terms negotiated with suppliers; evaluates working capital credit financing provided by vendors.</div>
+                </td>
                 <td>${conceptPill('working-capital', 'DPO')}</td>
                 ${byYear.map(y => `<td>${y.dpo.toFixed(1)}d</td>`).join('')}
-                <td class="wb-td-cagr">${(latest.dpo - byYear[0].dpo).toFixed(1)}d</td>
+                <td class="wb-td-cagr">${fmtDeltaDays(byYear[0].dpo, latest.dpo)}</td>
               </tr>
-              <tr class="wb-row-total">
-                <td>Cash Conversion Cycle (CCC = DSO + DIO − DPO)</td>
+              <tr class="wb-row-total" data-ratio-cat="working-capital">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Cash Conversion Cycle (CCC = DSO + DIO − DPO)</div>
+                  <div class="wb-ratio-blurb">Net cycle time from cash outflow for inventory to cash collection; negative cycles signify customer-funded float.</div>
+                </td>
                 <td>${conceptPill('working-capital', 'CCC')}</td>
                 ${byYear.map(y => `<td>${y.ccc.toFixed(1)}d</td>`).join('')}
-                <td class="wb-td-cagr">${(latest.ccc - byYear[0].ccc).toFixed(1)}d</td>
+                <td class="wb-td-cagr">${fmtDeltaDays(byYear[0].ccc, latest.ccc)}</td>
               </tr>
 
-              <tr class="wb-row-section"><td colspan="${byYear.length + 3}">Liquidity, Solvency &amp; Earnings Quality</td></tr>
-              <tr>
-                <td>Current Ratio (CA / CL)</td>
+              <!-- Category 4: Capital Allocation, Reinvestment & Payouts -->
+              <tr class="wb-row-section" data-ratio-cat="allocation"><td colspan="${byYear.length + 3}">IV. Capital Allocation, Reinvestment &amp; Shareholder Payouts</td></tr>
+              <tr data-ratio-cat="allocation">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">CapEx-to-Depreciation Ratio (CapEx / D&amp;A)</div>
+                  <div class="wb-ratio-blurb">Distinguishes growth reinvestment (&gt;1.0x) from maintenance depletion (&lt;1.0x) of productive physical assets.</div>
+                </td>
+                <td>${conceptPill('capital-budgeting', 'CapEx/D&A')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.capexToDa, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].capexToDa, latest.capexToDa)}</td>
+              </tr>
+              <tr data-ratio-cat="allocation">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">CapEx Intensity (CapEx / Sales)</div>
+                  <div class="wb-ratio-blurb">Measures ongoing capital expenditure commitment required to sustain and expand enterprise sales scale.</div>
+                </td>
+                <td>${conceptPill('capital-budgeting', 'CapEx Intensity')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.capexIntensity)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].capexIntensity, latest.capexIntensity)}</td>
+              </tr>
+              <tr data-ratio-cat="allocation">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Economic Reinvestment Rate ((CapEx − D&amp;A + ΔWCR) / NOPAT)</div>
+                  <div class="wb-ratio-blurb">Percentage of after-tax operating earnings plowed back into net working capital and productive physical capacity.</div>
+                </td>
+                <td>${conceptPill('fcf', 'Reinvestment Rate')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.reinvestmentRate)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].reinvestmentRate, latest.reinvestmentRate)}</td>
+              </tr>
+              <tr data-ratio-cat="allocation">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Total Shareholder Payout Coverage ((Dividends + Buybacks) / FCF)</div>
+                  <div class="wb-ratio-blurb">Tests whether shareholder cash returns are fully covered by organic free cash flow rather than incremental borrowing.</div>
+                </td>
+                <td>${conceptPill('dividend-policy', 'Payout Coverage')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.fcfPayoutRatio, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].fcfPayoutRatio, latest.fcfPayoutRatio)}</td>
+              </tr>
+              <tr data-ratio-cat="allocation">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Dividend Payout Ratio (Dividends / Net Income)</div>
+                  <div class="wb-ratio-blurb">Proportion of GAAP accounting net earnings distributed directly to shareholders as regular cash dividends.</div>
+                </td>
+                <td>${conceptPill('dividend-policy', 'Dividend Payout')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.dividendPayoutRatio)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].dividendPayoutRatio, latest.dividendPayoutRatio)}</td>
+              </tr>
+
+              <!-- Category 5: Solvency, Liquidity & Credit Headroom -->
+              <tr class="wb-row-section" data-ratio-cat="solvency"><td colspan="${byYear.length + 3}">V. Solvency, Liquidity &amp; Credit Headroom</td></tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Current Ratio (Current Assets / Current Liabilities)</div>
+                  <div class="wb-ratio-blurb">Baseline short-term liquidity buffer measuring short-term assets available to cover immediate commitments.</div>
+                </td>
                 <td>${conceptPill('working-capital', 'Liquidity')}</td>
-                ${byYear.map(y => `<td>${y.currentRatio.toFixed(2)}x</td>`).join('')}
-                <td class="wb-td-cagr">${(latest.currentRatio - byYear[0].currentRatio).toFixed(2)}x</td>
+                ${byYear.map(y => `<td>${fmtMult(y.currentRatio, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].currentRatio, latest.currentRatio)}</td>
               </tr>
-              <tr>
-                <td>Quick Ratio ((Cash + AR) / CL)</td>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Quick Ratio ((Cash + ST Inv. + AR) / Current Liabilities)</div>
+                  <div class="wb-ratio-blurb">Acid-test liquidity excluding illiquid inventories that cannot be immediately liquidated to settle short-term liabilities.</div>
+                </td>
                 <td>${conceptPill('working-capital', 'Quick Ratio')}</td>
-                ${byYear.map(y => `<td>${y.quickRatio.toFixed(2)}x</td>`).join('')}
-                <td class="wb-td-cagr">${(latest.quickRatio - byYear[0].quickRatio).toFixed(2)}x</td>
+                ${byYear.map(y => `<td>${fmtMult(y.quickRatio, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].quickRatio, latest.quickRatio)}</td>
               </tr>
-              <tr>
-                <td>Net Debt / EBITDA (NFO / EBITDA)</td>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Cash Ratio ((Cash + ST Inv.) / Current Liabilities)</div>
+                  <div class="wb-ratio-blurb">The strictest liquidity test assessing immediate coverage of current liabilities purely using cash and liquid securities.</div>
+                </td>
+                <td>${conceptPill('working-capital', 'Cash Ratio')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.cashRatio, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].cashRatio, latest.cashRatio)}</td>
+              </tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Total Debt-to-Equity (Total Debt / Stockholders' Equity)</div>
+                  <div class="wb-ratio-blurb">Measures balance sheet financial leverage by comparing total funded debt obligations against shareholder equity cushion.</div>
+                </td>
+                <td>${conceptPill('capital-structure', 'Debt/Equity')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.debtToEquity, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].debtToEquity, latest.debtToEquity)}</td>
+              </tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Debt-to-Capital Ratio (Total Debt / (Total Debt + Stockholders' Equity))</div>
+                  <div class="wb-ratio-blurb">Evaluates the proportion of total enterprise capital structure financed by fixed interest-bearing debt obligations.</div>
+                </td>
+                <td>${conceptPill('capital-structure', 'Debt/Capital')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.debtToCapital)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].debtToCapital, latest.debtToCapital)}</td>
+              </tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Net Debt / EBITDA (Net Financial Obligations / EBITDA)</div>
+                  <div class="wb-ratio-blurb">Primary institutional credit covenant leverage metric indicating years required to repay net debt from core cash earnings.</div>
+                </td>
                 <td>${conceptPill('capital-structure', 'Net Debt/EBITDA')}</td>
-                ${byYear.map(y => `<td>${y.netDebtToEbitda.toFixed(2)}x</td>`).join('')}
-                <td class="wb-td-cagr">${(latest.netDebtToEbitda - byYear[0].netDebtToEbitda).toFixed(2)}x</td>
+                ${byYear.map(y => `<td>${fmtMult(y.netDebtToEbitda, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].netDebtToEbitda, latest.netDebtToEbitda)}</td>
               </tr>
-              <tr>
-                <td>Interest Coverage (EBIT / Interest Expense)</td>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Interest Coverage Ratio (EBIT / Interest Expense)</div>
+                  <div class="wb-ratio-blurb">Credit safety headroom testing how comfortably operating earnings service required fixed debt interest charges.</div>
+                </td>
                 <td>${conceptPill('credit-spreads', 'Coverage')}</td>
-                ${byYear.map(y => `<td>${y.interestCoverage.toFixed(1)}x</td>`).join('')}
-                <td class="wb-td-cagr">—</td>
+                ${byYear.map(y => `<td>${fmtMult(y.interestCoverage, 1)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].interestCoverage, latest.interestCoverage)}</td>
               </tr>
-              <tr>
-                <td>Cash Conversion Ratio (OCF / Net Income)</td>
-                <td>${conceptPill('cash-flow-analysis', 'OCF/NI')}</td>
-                ${byYear.map(y => `<td>${y.ocfToNi.toFixed(2)}x</td>`).join('')}
-                <td class="wb-td-cagr">${(latest.ocfToNi - byYear[0].ocfToNi).toFixed(2)}x</td>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Operating Cash Flow Debt Coverage (OCF / Total Debt)</div>
+                  <div class="wb-ratio-blurb">Evaluates enterprise debt service capability directly from actual operational cash flow generation.</div>
+                </td>
+                <td>${conceptPill('cash-flow-analysis', 'Cash Debt Coverage')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.ocfToDebt, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].ocfToDebt, latest.ocfToDebt)}</td>
               </tr>
-              <tr class="wb-row-total">
-                <td>Sloan Accrual Ratio ((NI − OCF) / OA)</td>
+
+              <!-- Category 6: Operating Leverage, Specialized Benchmarks & Quality -->
+              <tr class="wb-row-section" data-ratio-cat="quality"><td colspan="${byYear.length + 3}">VI. Operating Leverage, Specialized Benchmarks &amp; Earnings Quality</td></tr>
+              <tr data-ratio-cat="quality">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">R&amp;D Intensity (R&amp;D Expense / Sales)</div>
+                  <div class="wb-ratio-blurb">Innovation reinvestment benchmark measuring commitment of top-line revenues to proprietary technology and IP creation.</div>
+                </td>
+                <td>${conceptPill('reformulated-is', 'R&D Intensity')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.rdIntensity)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].rdIntensity, latest.rdIntensity)}</td>
+              </tr>
+              <tr data-ratio-cat="quality">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">SG&amp;A Overhead Intensity (SG&amp;A Expense / Sales)</div>
+                  <div class="wb-ratio-blurb">Assesses commercial go-to-market overhead, corporate governance costs, and administrative sales leverage efficiency.</div>
+                </td>
+                <td>${conceptPill('reformulated-is', 'SG&A Intensity')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.sgaIntensity)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].sgaIntensity, latest.sgaIntensity)}</td>
+              </tr>
+              <tr data-ratio-cat="quality">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Rule of 40 (YoY Revenue Growth % + FCF Margin %)</div>
+                  <div class="wb-ratio-blurb">Gold standard growth-vs-profitability benchmark; aggregate scores exceeding 40% signify elite balance between scaling and cash generation.</div>
+                </td>
+                <td>${conceptPill('fcf', 'Rule of 40')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.ruleOf40)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].ruleOf40, latest.ruleOf40)}</td>
+              </tr>
+              <tr data-ratio-cat="quality">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Gross Margin Return on Inventory (GMROI = Gross Profit / Inventory)</div>
+                  <div class="wb-ratio-blurb">Inventory productivity multiplier measuring gross margin dollars earned per dollar of inventory capital invested.</div>
+                </td>
+                <td>${conceptPill('working-capital', 'GMROI')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.gmroi, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].gmroi, latest.gmroi)}</td>
+              </tr>
+              <tr class="wb-row-total" data-ratio-cat="quality">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Sloan Accrual Quality Ratio ((Net Income − Operating Cash Flow) / Operating Assets)</div>
+                  <div class="wb-ratio-blurb">Forensic accounting test detecting aggressive earnings quality when non-cash accruals outpace underlying cash generation.</div>
+                </td>
                 <td>${conceptPill('accrual-quality', 'Sloan Ratio')}</td>
                 ${byYear.map(y => `<td>${fmtPct(y.sloanAccrualRatio)}</td>`).join('')}
-                <td class="wb-td-cagr">${((latest.sloanAccrualRatio - byYear[0].sloanAccrualRatio) * 100).toFixed(1)}%</td>
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].sloanAccrualRatio, latest.sloanAccrualRatio)}</td>
               </tr>
             </tbody>
           </table>
@@ -1469,6 +1767,25 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
       statementRows.forEach(tr => {
         const sec = tr.getAttribute('data-section');
         if (selected === 'all' || sec === selected) {
+          tr.style.display = '';
+        } else {
+          tr.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Wire Ratio Category Filter Pills in Tab 3
+  const ratioPills = root.querySelectorAll('.wb-ratio-pill');
+  const ratioRows = root.querySelectorAll('#tab-ratios .wb-table tbody tr[data-ratio-cat]');
+  ratioPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      ratioPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      const selected = pill.getAttribute('data-ratio-cat');
+      ratioRows.forEach(tr => {
+        const cat = tr.getAttribute('data-ratio-cat');
+        if (selected === 'all' || cat === selected) {
           tr.style.display = '';
         } else {
           tr.style.display = 'none';
