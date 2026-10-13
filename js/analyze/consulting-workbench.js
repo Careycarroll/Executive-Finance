@@ -141,7 +141,27 @@ export const CONSULTING_TEMPLATES = {
 };
 
 /**
- * Format currency dynamically according to project unit ('$' | 'K' | 'M')
+ * Return dollar multiplier for a given project unit ('$' | 'H' | 'K' | 'M')
+ */
+export function getUnitMultiplier(unit = 'K') {
+  if (unit === '$') return 1;
+  if (unit === 'H') return 100;
+  if (unit === 'M') return 1e6;
+  return 1e3; // Default 'K'
+}
+
+/**
+ * Format a scaled value as full exact dollars (e.g. 450 in 'K' -> '$450,000')
+ */
+export function fmtExactDollars(val, unit = 'K') {
+  if (val === null || val === undefined || Number.isNaN(val)) return '—';
+  const exact = val * getUnitMultiplier(unit);
+  const sign = exact < 0 ? '-' : '';
+  return `${sign}$${Math.round(Math.abs(exact)).toLocaleString()}`;
+}
+
+/**
+ * Format currency dynamically according to project unit ('$' | 'H' | 'K' | 'M')
  */
 export function fmtProjectMoney(val, unit = 'K') {
   if (val === null || val === undefined || Number.isNaN(val)) return '—';
@@ -149,6 +169,9 @@ export function fmtProjectMoney(val, unit = 'K') {
   const abs = Math.abs(val);
   if (unit === '$') {
     return `${sign}$${Math.round(abs).toLocaleString()}`;
+  }
+  if (unit === 'H') {
+    return `${sign}$${Math.round(abs * 100).toLocaleString()}`;
   }
   if (unit === 'K') {
     if (abs >= 10000) return `${sign}$${Math.round(abs).toLocaleString()}K`;
@@ -473,7 +496,7 @@ export function computeEbitdaBridge(projectOrCompany = {}, overrides = {}) {
 export function computePricingAndUnitEconomics(projectOrCompany = {}, overrides = {}) {
   const merged = { ...(projectOrCompany || {}), ...(overrides || {}) };
 
-  const unitScale = merged.unit === 'M' ? 1e6 : merged.unit === '$' ? 1 : 1e3; // Default 'K' = 1,000
+  const unitScale = getUnitMultiplier(merged.unit || 'K');
   const unitPrice = Math.max(1, Number(merged.unitPrice ?? 250));
   const unitVarCost = Math.max(0, Number(merged.unitVarCost ?? 100));
   const fixedCosts = Math.max(1, Number(merged.fixedCosts ?? 450));
@@ -1281,10 +1304,44 @@ export function renderConsultingWorkbench(root) {
     state.customYearlyBenefits = null;
   };
 
+  const switchUnitScale = (nextUnit) => {
+    if (!['$', 'H', 'K', 'M'].includes(nextUnit) || nextUnit === state.unit) return;
+    const oldMult = getUnitMultiplier(state.unit);
+    const newMult = getUnitMultiplier(nextUnit);
+    const factor = oldMult / newMult;
+    const roundVal = (v) => {
+      const scaled = v * factor;
+      return nextUnit === 'M' ? Number(scaled.toFixed(3)) : nextUnit === 'K' ? Number(scaled.toFixed(2)) : Math.round(scaled);
+    };
+
+    state.upfrontCapex = roundVal(state.upfrontCapex);
+    state.consultingFee = roundVal(state.consultingFee);
+    state.yr1Benefit = roundVal(state.yr1Benefit);
+    state.ongoingOpex = roundVal(state.ongoingOpex);
+    state.baseRev = roundVal(state.baseRev);
+    state.baseCogs = roundVal(state.baseCogs);
+    state.baseSga = roundVal(state.baseSga);
+    state.fixedCosts = Math.max(1, roundVal(state.fixedCosts));
+    if (Array.isArray(state.customYearlyBenefits)) {
+      state.customYearlyBenefits = state.customYearlyBenefits.map(roundVal);
+    }
+    state.unit = nextUnit;
+  };
+
   const updateView = () => {
     const unit = state.unit || 'K';
-    const unitLabel = unit === '$' ? '$' : unit === 'K' ? '$K (Thousands)' : '$M (Millions)';
+    const unitLabel = unit === '$'
+      ? '$ (Exact Dollars)'
+      : unit === 'H'
+      ? '$100s (Hundreds)'
+      : unit === 'K'
+      ? '$K (Thousands)'
+      : '$M (Millions)';
+    const unitShort = unit === '$' ? '$' : unit === 'H' ? '$100s' : unit === 'K' ? '$K' : '$M';
     const fm = (v) => fmtProjectMoney(v, unit);
+    const exactBadge = (v) => unit === '$'
+      ? ''
+      : `<span style="color:#16a34a; font-weight:700; font-size:0.71rem; margin-left:0.25rem;">(= ${fmtExactDollars(v, unit)})</span>`;
 
     const bc = computeConsultingBusinessCase(state);
     const bridge = computeEbitdaBridge(state);
@@ -1294,6 +1351,8 @@ export function renderConsultingWorkbench(root) {
 
     const maxHorizon = bc.horizonUnit === 'weeks' ? 52 : bc.horizonUnit === 'months' ? 36 : 15;
     const periodicLabel = bc.horizonUnit === 'weeks' ? 'Weekly' : bc.horizonUnit === 'months' ? 'Monthly' : 'Annual';
+    const maxFixedSlider = unit === '$' ? 2000000 : unit === 'H' ? 20000 : unit === 'M' ? 20 : 5000;
+    const stepFixedSlider = unit === '$' ? 10000 : unit === 'H' ? 100 : unit === 'M' ? 0.1 : 10;
 
     root.innerHTML = `
       <!-- STANDALONE WORK PROJECT WORKSPACE BAR (COMPACT) -->
@@ -1307,10 +1366,11 @@ export function renderConsultingWorkbench(root) {
             <input type="text" id="proj-dept-input" class="analyze-input" value="${state.department}"
               placeholder="Department / Client"
               style="font-size:0.84rem; font-weight:600; width:165px;" />
-            <select id="proj-unit-select" class="analyze-input" style="width:160px; font-weight:700; cursor:pointer;">
-              <option value="K" ${unit === 'K' ? 'selected' : ''}>Unit: $K (Thousands)</option>
-              <option value="M" ${unit === 'M' ? 'selected' : ''}>Unit: $M (Millions)</option>
-              <option value="$" ${unit === '$' ? 'selected' : ''}>Unit: $ (Exact Dollars)</option>
+            <select id="proj-unit-select" class="analyze-input" style="width:178px; font-weight:700; cursor:pointer;" title="Switch Monetary Value Marker ($1, $100s, $1,000s, $1,000,000s)">
+              <option value="$" ${unit === '$' ? 'selected' : ''}>Scale: $ (Exact Dollars)</option>
+              <option value="H" ${unit === 'H' ? 'selected' : ''}>Scale: $100s (Hundreds)</option>
+              <option value="K" ${unit === 'K' ? 'selected' : ''}>Scale: $K (Thousands)</option>
+              <option value="M" ${unit === 'M' ? 'selected' : ''}>Scale: $M (Millions)</option>
             </select>
             <select id="top-horizon-unit-select" class="analyze-input" style="width:155px; font-weight:700; cursor:pointer;" title="Switch Project Horizon Time Unit">
               <option value="years" ${bc.horizonUnit === 'years' ? 'selected' : ''}>Horizon: Years (${bc.horizonUnit === 'years' ? bc.horizonYears : 5} yrs)</option>
@@ -1391,7 +1451,7 @@ export function renderConsultingWorkbench(root) {
             <div class="consulting-tool-card__desc">CVP break-even, price elasticity matrix &amp; cohort LTV/CAC.</div>
           </div>
           <div class="consulting-tool-card__metric">
-            <span>CM: <strong>${fmtPct(unitEcon.contributionMarginPct)}</strong></span>
+            <span>BE: <strong>${Math.ceil(unitEcon.breakEvenUnits).toLocaleString()} u</strong></span>
             <span>LTV/CAC: <strong style="color:${unitEcon.ltvToCac >= 3 ? '#16a34a' : '#dc2626'};">${unitEcon.ltvToCac.toFixed(1)}x</strong></span>
           </div>
         </button>
@@ -1456,7 +1516,7 @@ export function renderConsultingWorkbench(root) {
             <div class="wb-panel__header">
               <div>
                 <h3 class="wb-panel__title">Project Investment &amp; Benefit Inputs (${unitLabel})</h3>
-                <div class="wb-panel__subtitle">Model in Weeks, Months, or Years — type exact numbers or adjust the horizon slider</div>
+                <div class="wb-panel__subtitle">Model in Weeks, Months, or Years — switch Value Scale ($1, $100s, $K, $M) anytime</div>
               </div>
               ${conceptPill('npv', 'NPV & IRR')}
             </div>
@@ -1464,19 +1524,19 @@ export function renderConsultingWorkbench(root) {
               <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.85rem;">
                 <div>
                   <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Upfront CapEx / Build Outlay (${unit})
+                    Upfront CapEx / Outlay (${unitShort}) ${exactBadge(bc.upfrontCapex)}
                   </label>
                   <input type="number" id="num-capex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.upfrontCapex}" />
                 </div>
                 <div>
                   <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Consulting / Setup Fee (${unit})
+                    Consulting / Setup Fee (${unitShort}) ${exactBadge(bc.consultingFee)}
                   </label>
                   <input type="number" id="num-fee" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.consultingFee}" />
                 </div>
                 <div>
                   <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    ${bc.periodName} 1 Gross Savings / Benefit (${unit})
+                    ${bc.periodName} 1 Gross Benefit (${unitShort}) ${exactBadge(bc.yr1Benefit)}
                   </label>
                   <input type="number" id="num-benefit" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.yr1Benefit}" />
                 </div>
@@ -1488,7 +1548,7 @@ export function renderConsultingWorkbench(root) {
                 </div>
                 <div>
                   <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Ongoing ${periodicLabel} OpEx / License (${unit})
+                    Ongoing ${periodicLabel} OpEx (${unitShort}) ${exactBadge(bc.ongoingOpex)}
                   </label>
                   <input type="number" id="num-opex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.ongoingOpex}" />
                 </div>
@@ -1649,15 +1709,15 @@ export function renderConsultingWorkbench(root) {
             <div class="wb-panel__body">
               <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:0.65rem; margin-bottom:1rem;">
                 <div>
-                  <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Baseline Revenue (${unit})</label>
+                  <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Baseline Revenue (${unitShort}) ${exactBadge(bridge.baseRev)}</label>
                   <input type="number" id="num-base-rev" class="analyze-input" style="width:100%; font-weight:700;" step="any" value="${bridge.baseRev}" />
                 </div>
                 <div>
-                  <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Baseline COGS (${unit})</label>
+                  <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Baseline COGS (${unitShort}) ${exactBadge(bridge.baseCogs)}</label>
                   <input type="number" id="num-base-cogs" class="analyze-input" style="width:100%; font-weight:700;" step="any" value="${bridge.baseCogs}" />
                 </div>
                 <div>
-                  <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Baseline SG&amp;A (${unit})</label>
+                  <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Baseline SG&amp;A (${unitShort}) ${exactBadge(bridge.baseSga)}</label>
                   <input type="number" id="num-base-sga" class="analyze-input" style="width:100%; font-weight:700;" step="any" value="${bridge.baseSga}" />
                 </div>
               </div>
@@ -1820,7 +1880,7 @@ export function renderConsultingWorkbench(root) {
                 <div class="wb-slider-Row">
                   <label>Variable Cost per Unit ($)</label>
                   <span class="wb-slider-num-wrap">
-                    <span class="wb-slider-val">CM: ${fmtPct(unitEcon.contributionMarginPct)}</span>
+                    <span class="wb-slider-val">CM: $${unitEcon.unitContribution.toFixed(0)}/u (${fmtPct(unitEcon.contributionMarginPct)})</span>
                     <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
                     <input type="number" id="num-unit-vc" class="wb-slider-num" step="any" min="0" value="${unitEcon.unitVarCost}" />
                   </span>
@@ -1830,12 +1890,18 @@ export function renderConsultingWorkbench(root) {
 
               <div class="wb-slider-group">
                 <div class="wb-slider-Row">
-                  <label>Fixed Operating Costs (${unit})</label>
+                  <label>Fixed Operating Costs ${exactBadge(unitEcon.fixedCosts)}</label>
                   <span class="wb-slider-num-wrap">
                     <input type="number" id="num-fixed-costs" class="wb-slider-num" step="any" min="1" value="${unitEcon.fixedCosts}" />
+                    <select id="sel-fixed-unit" class="analyze-input" style="padding:0.2rem 0.35rem; font-size:0.75rem; font-weight:700; width:auto; cursor:pointer;" title="Switch Monetary Scale">
+                      <option value="$" ${unit === '$' ? 'selected' : ''}>$ (Exact)</option>
+                      <option value="H" ${unit === 'H' ? 'selected' : ''}>$100s</option>
+                      <option value="K" ${unit === 'K' ? 'selected' : ''}>$K (1,000s)</option>
+                      <option value="M" ${unit === 'M' ? 'selected' : ''}>$M (Millions)</option>
+                    </select>
                   </span>
                 </div>
-                <input type="range" id="sl-fixed-costs" min="10" max="5000" step="10" value="${unitEcon.fixedCosts}" />
+                <input type="range" id="sl-fixed-costs" min="${stepFixedSlider}" max="${maxFixedSlider}" step="${stepFixedSlider}" value="${unitEcon.fixedCosts}" />
               </div>
 
               <div class="wb-slider-group">
@@ -1850,11 +1916,13 @@ export function renderConsultingWorkbench(root) {
                 <input type="range" id="sl-price-chg" min="0.01" max="0.20" step="0.005" value="${unitEcon.proposedPriceChangePct}" />
               </div>
 
-              <div style="margin-top:0.9rem; padding:0.85rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; font-size:0.84rem; line-height:1.5;">
+              <div style="margin-top:0.9rem; padding:0.85rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; font-size:0.84rem; line-height:1.55;">
                 <div><strong>Contribution Margin:</strong> $${unitEcon.unitContribution.toFixed(2)}/unit (${fmtPct(unitEcon.contributionMarginPct)}) · <strong>Operating Leverage (DOL):</strong> ${unitEcon.operatingLeverageDOL.toFixed(2)}x</div>
-                <div><strong>Break-Even Units:</strong> ${Math.ceil(unitEcon.breakEvenUnits).toLocaleString()} units · <strong>Margin of Safety:</strong> ${fmtPct(unitEcon.safetyMarginPct)}</div>
+                <div style="margin-top:0.2rem; color:#0f172a;">
+                  <strong>Break-Even Formula:</strong> $${Math.round(unitEcon.fixedCostsDollars).toLocaleString()} Fixed Costs &divide; $${unitEcon.unitContribution.toFixed(2)}/unit = <strong>${Math.ceil(unitEcon.breakEvenUnits).toLocaleString()} units</strong> (${fm(unitEcon.breakEvenRevenue)} Revenue)
+                </div>
                 <div style="margin-top:0.35rem; color:#1d4ed8; font-weight:700;">
-                  💡 Indifference Threshold: With a +${fmtPct(unitEcon.proposedPriceChangePct)} price increase, you can lose up to ${fmtPct(Math.abs(unitEcon.maxVolumeLossForPriceHike))} of volume and still remain profit-neutral.
+                  💡 Indifference Threshold: With a +${fmtPct(unitEcon.proposedPriceChangePct)} price increase (new CM $${unitEcon.newUnitContribution.toFixed(2)}/u, new BE ${Math.ceil(unitEcon.newBreakEvenUnits).toLocaleString()} units), you can lose up to ${fmtPct(Math.abs(unitEcon.maxVolumeLossForPriceHike))} of volume and still remain profit-neutral.
                 </div>
               </div>
             </div>
@@ -2161,13 +2229,12 @@ export function renderConsultingWorkbench(root) {
         updateView();
       });
     }
-    const unitSelect = root.querySelector('#proj-unit-select');
-    if (unitSelect) {
-      unitSelect.addEventListener('change', () => {
-        state.unit = unitSelect.value;
+    root.querySelectorAll('#proj-unit-select, #sel-fixed-unit').forEach(sel => {
+      sel.addEventListener('change', () => {
+        switchUnitScale(sel.value);
         updateView();
       });
-    }
+    });
 
     // Wire Horizon Unit Selectors (Top Bar & Tool 1 Control)
     root.querySelectorAll('#top-horizon-unit-select, #sel-horizon-unit').forEach(sel => {
