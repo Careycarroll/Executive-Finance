@@ -50,7 +50,13 @@ export function normalizeCompanyAnnual(company) {
     company.sharesOut = company.sharesOut ?? company.profile.sharesOutstanding;
   }
   if (Array.isArray(company?.financials?.annual) && company.financials.annual.length > 0) {
-    return company.financials.annual.slice(0, 5);
+    return company.financials.annual.slice(0, 5).map(item => ({
+      ...item,
+      investingCashFlow: item.investingCashFlow ?? 0,
+      financingCashFlow: item.financingCashFlow ?? 0,
+      debtIssued: item.debtIssued ?? 0,
+      debtRepaid: item.debtRepaid ?? 0
+    }));
   }
   const incs = company.incomeStatements || [];
   const bss = company.balanceSheets || [];
@@ -93,10 +99,14 @@ export function normalizeCompanyAnnual(company) {
       totalLiabilities: bs.totalLiabilities ?? 0,
       stockholdersEquity: bs.totalEquity ?? bs.stockholdersEquity,
       operatingCashFlow: cf.operatingCashFlow ?? 0,
+      investingCashFlow: cf.investingCashFlow ?? 0,
+      financingCashFlow: cf.financingCashFlow ?? 0,
       capex: cf.capitalExpenditures ?? cf.capex ?? 0,
       freeCashFlow: cf.freeCashFlow,
       dividendsPaid: cf.dividendsPaid ?? 0,
-      shareRepurchases: cf.shareBuybacks ?? cf.shareRepurchases ?? 0
+      shareRepurchases: cf.shareBuybacks ?? cf.shareRepurchases ?? 0,
+      debtIssued: cf.debtIssued ?? 0,
+      debtRepaid: cf.debtRepaid ?? 0
     });
   }
   company.financials = { annual: merged };
@@ -111,7 +121,11 @@ export function compute10KAnalysis(company, opts = {}) {
   const numYears = yearsAsc.length;
   const periods = Math.max(1, numYears - 1);
 
-  const byYear = yearsAsc.map((y, idx) => {
+  const byYear = [];
+  for (let idx = 0; idx < yearsAsc.length; idx++) {
+    const y = yearsAsc[idx];
+    const prev = idx > 0 ? byYear[idx - 1] : null;
+
     const rev = y.revenue || 0;
     const cogs = y.cogs || Math.max(0, rev - (y.grossProfit || 0));
     const gp = y.grossProfit ?? (rev - cogs);
@@ -132,7 +146,9 @@ export function compute10KAnalysis(company, opts = {}) {
       : 0.21;
 
     // Balance sheet items
-    const totalCash = (y.cash || 0) + (y.shortTermInvestments || 0);
+    const cash = y.cash || 0;
+    const shortTermInvestments = y.shortTermInvestments || 0;
+    const totalCash = cash + shortTermInvestments;
     const ar = y.accountsReceivable || 0;
     const inv = y.inventory || 0;
     const ca = y.currentAssets || (totalCash + ar + inv);
@@ -146,12 +162,54 @@ export function compute10KAnalysis(company, opts = {}) {
     const tl = y.totalLiabilities || (cl + ltd);
     const cse = y.stockholdersEquity ?? (ta - tl);
 
-    // Cash flow items
-    const ocf = y.operatingCashFlow || 0;
-    const capex = Math.abs(y.capex || 0);
+    // Working Capital changes & cash flow construction (Indirect Method)
+    const deltaAR = prev ? (ar - prev.ar) : 0;
+    const deltaInv = prev ? (inv - prev.inv) : 0;
+    const deltaAP = prev ? (ap - prev.ap) : 0;
+    // Working capital cash effect: increase in assets drains cash (-), increase in payables provides cash (+)
+    const wcCashFlow = (-deltaAR) + (-deltaInv) + deltaAP;
+
+    // Indirect Constructed Operating Cash Flow: Net Income + Non-Cash D&A + Non-Cash SBC + WC Cash Effect
+    const constructedOcf = ni + da + sbc + wcCashFlow;
+
+    // Operating Cash Flow (Reported vs. Constructed Fallback)
+    const rawOcf = y.operatingCashFlow;
+    const hasReportedOcf = rawOcf !== undefined && rawOcf !== null && rawOcf !== 0;
+    const ocf = hasReportedOcf ? rawOcf : constructedOcf;
+    const isOcfConstructed = !hasReportedOcf;
+    const otherOcfAdjustments = hasReportedOcf ? (rawOcf - constructedOcf) : 0;
+
+    // CapEx & Investing Cash Flow (Reported vs. Constructed Fallback)
+    const rawCapex = Math.abs(y.capex || 0);
+    const constructedCapex = prev ? Math.max(0, (ppe - prev.ppe) + da) : rawCapex;
+    const capex = rawCapex > 0 ? rawCapex : constructedCapex;
+    const isCapexConstructed = rawCapex === 0 && constructedCapex > 0;
     const fcf = y.freeCashFlow ?? (ocf - capex);
+
+    // Investing Cash Flow (CFI)
+    const rawIcf = y.investingCashFlow;
+    const hasReportedIcf = rawIcf !== undefined && rawIcf !== null && rawIcf !== 0;
+    const icf = hasReportedIcf ? rawIcf : -capex;
+    const otherInvestingCashFlow = hasReportedIcf ? (rawIcf - (-capex)) : 0;
+
+    // Financing Cash Flow (CFF)
     const divs = Math.abs(y.dividendsPaid || 0);
     const buybacks = Math.abs(y.shareRepurchases || 0);
+    const deltaDebt = prev ? ((std + ltd) - (prev.std + prev.ltd)) : 0;
+    const debtIssued = y.debtIssued || (deltaDebt > 0 ? deltaDebt : 0);
+    const debtRepaid = y.debtRepaid || (deltaDebt < 0 ? Math.abs(deltaDebt) : 0);
+    const netDebtIssued = debtIssued - debtRepaid;
+
+    const rawFinCf = y.financingCashFlow;
+    const hasReportedFinCf = rawFinCf !== undefined && rawFinCf !== null && rawFinCf !== 0;
+    const finCf = hasReportedFinCf ? rawFinCf : (-divs - buybacks + netDebtIssued);
+    const otherFinancingCashFlow = hasReportedFinCf ? (rawFinCf - (-divs - buybacks + netDebtIssued)) : 0;
+
+    // Cash Reconciliation
+    const deltaCashFromCF = ocf + icf + finCf;
+    const beginningCash = prev ? prev.totalCash : (totalCash - deltaCashFromCF);
+    const endingCash = totalCash;
+    const netCashChange = totalCash - beginningCash;
 
     // Penman Reformulation:
     // Operating cash = min(totalCash, opCashPctSales * revenue)
@@ -182,7 +240,8 @@ export function compute10KAnalysis(company, opts = {}) {
     const levGain = FLEV * SPREAD;
 
     // Penman Free Cash Flow: OI - delta NOA
-    const prevNOA = idx > 0 ? null : null; // filled in second pass
+    const deltaNOA = prev ? (NOA - prev.NOA) : 0;
+    const penmanFCF = prev ? (NOPAT - deltaNOA) : fcf;
 
     // Hawawini & Viallet 5-Factor DuPont:
     const ebitMargin = rev > 0 ? ebit / rev : 0;
@@ -223,7 +282,7 @@ export function compute10KAnalysis(company, opts = {}) {
     const sloanAccrualRatio = OA > 0 ? totalAccruals / OA : 0;
     const goodwillPctAssets = ta > 0 ? gwIntang / ta : 0;
 
-    return {
+    byYear.push({
       year: y.year,
       // Reported IS
       rev, cogs, gp, rd, sga, ebit, da, ebitda, intExp, ebt, taxExp, ni, sbc,
@@ -231,13 +290,22 @@ export function compute10KAnalysis(company, opts = {}) {
       sharesDiluted: y.sharesDiluted || 1,
       effectiveTaxRate,
       // Reported BS
-      totalCash, ar, inv, ca, ppe, gwIntang, ta, ap, std, cl, ltd, tl, cse,
-      // Reported CF
-      ocf, capex, fcf, divs, buybacks,
+      cash, shortTermInvestments, totalCash, ar, inv, ca, ppe, gwIntang, ta, ap, std, cl, ltd, tl, cse,
+      // Cash Flow Statement (Full 3-Section + P&L Bridge)
+      ocf, rawOcf, isOcfConstructed, constructedOcf, otherOcfAdjustments,
+      deltaAR, deltaInv, deltaAP, wcCashFlow,
+      capex, rawCapex, isCapexConstructed, constructedCapex,
+      fcf,
+      icf, rawIcf, otherInvestingCashFlow,
+      divs, buybacks,
+      debtIssued, debtRepaid, netDebtIssued,
+      finCf, rawFinCf, otherFinancingCashFlow,
+      deltaCashFromCF, beginningCash, endingCash, netCashChange,
       // Penman Reformulated
       operatingCash, FA, OA, FO, OL, NOA, NFO,
       taxShield, NOPAT, NFE,
       OPM, NOAT, RNOA, FLEV, NBC, SPREAD, ROE, levGain,
+      deltaNOA, penmanFCF,
       // DuPont 5-Factor
       ebitMargin, assetTurnover, interestBurden, taxBurden, equityMultiplier,
       // Working Capital & CCC
@@ -248,18 +316,7 @@ export function compute10KAnalysis(company, opts = {}) {
       grossMargin, netMargin, roa, fcfMargin, ocfToNi,
       sbcPctRev, sbcAdjustedOpMargin,
       totalAccruals, sloanAccrualRatio, goodwillPctAssets
-    };
-  });
-
-  // Second pass: compute delta NOA and Penman FCF = OI - dNOA
-  for (let i = 0; i < byYear.length; i++) {
-    if (i === 0) {
-      byYear[i].deltaNOA = 0;
-      byYear[i].penmanFCF = byYear[i].fcf;
-    } else {
-      byYear[i].deltaNOA = byYear[i].NOA - byYear[i - 1].NOA;
-      byYear[i].penmanFCF = byYear[i].NOPAT - byYear[i].deltaNOA;
-    }
+    });
   }
 
   const oldest = byYear[0] || {};
@@ -273,6 +330,7 @@ export function compute10KAnalysis(company, opts = {}) {
     ebit: calcCAGR(oldest.ebit, latest.ebit, periods),
     ni: calcCAGR(oldest.ni, latest.ni, periods),
     ocf: calcCAGR(oldest.ocf, latest.ocf, periods),
+    capex: calcCAGR(oldest.capex, latest.capex, periods),
     fcf: calcCAGR(oldest.fcf, latest.fcf, periods),
     ta: calcCAGR(oldest.ta, latest.ta, periods),
     NOA: calcCAGR(oldest.NOA, latest.NOA, periods)
@@ -445,7 +503,7 @@ export function compute10KAnalysis(company, opts = {}) {
 /**
  * Render the 10-K & Penman FSA Analyzer UI
  */
-function render10KAnalyzer(company, opCashPct = 0.015) {
+export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'statements') {
   const root = document.getElementById('wb-10k-root');
   if (!root) return;
 
@@ -474,29 +532,11 @@ function render10KAnalyzer(company, opCashPct = 0.015) {
 
       <div class="wb-kpi-card">
         <div class="wb-kpi-card__label">
-          <span>Penman RNOA (${latest.year})</span>
-          ${conceptPill('roe-decomposition', 'RNOA')}
+          <span>GAAP Revenue &amp; Margin (${latest.year})</span>
+          ${conceptPill('revenue-recognition', 'Revenue')}
         </div>
-        <div class="wb-kpi-card__value">${fmtPct(latest.RNOA)}</div>
-        <div class="wb-kpi-card__sub">OPM ${fmtPct(latest.OPM)} × NOAT ${latest.NOAT.toFixed(2)}x</div>
-      </div>
-
-      <div class="wb-kpi-card">
-        <div class="wb-kpi-card__label">
-          <span>Net Operating Assets (NOA)</span>
-          ${conceptPill('reformulated-bs', 'NOA')}
-        </div>
-        <div class="wb-kpi-card__value">${fmtMoney(latest.NOA)}</div>
-        <div class="wb-kpi-card__sub">OA ${fmtMoney(latest.OA)} − OL ${fmtMoney(latest.OL)}</div>
-      </div>
-
-      <div class="wb-kpi-card">
-        <div class="wb-kpi-card__label">
-          <span>Net Fin. Obligations (NFO)</span>
-          ${conceptPill('reformulated-bs', 'NFO')}
-        </div>
-        <div class="wb-kpi-card__value">${fmtMoney(latest.NFO)}</div>
-        <div class="wb-kpi-card__sub">${latest.NFO <= 0 ? 'Net Cash Position' : `FLEV ${latest.FLEV.toFixed(2)}x · NBC ${fmtPct(latest.NBC)}`}</div>
+        <div class="wb-kpi-card__value">${fmtMoney(latest.rev)}</div>
+        <div class="wb-kpi-card__sub">Net Margin ${fmtPct(latest.netMargin)} · 5Y Rev CAGR ${cagrs.rev ? fmtPct(cagrs.rev) : '—'}</div>
       </div>
 
       <div class="wb-kpi-card">
@@ -510,24 +550,24 @@ function render10KAnalyzer(company, opCashPct = 0.015) {
 
       <div class="wb-kpi-card">
         <div class="wb-kpi-card__label">
-          <span>Sloan Accrual Ratio</span>
+          <span>Sloan Accruals &amp; RNOA</span>
           ${conceptPill('accrual-quality', 'Accruals')}
         </div>
         <div class="wb-kpi-card__value" style="color: ${latest.sloanAccrualRatio > 0.05 ? '#dc2626' : '#16a34a'};">${fmtPct(latest.sloanAccrualRatio)}</div>
-        <div class="wb-kpi-card__sub">Total Accruals ${fmtMoney(latest.totalAccruals)}</div>
+        <div class="wb-kpi-card__sub">Penman RNOA ${fmtPct(latest.RNOA)} · Total Accruals ${fmtMoney(latest.totalAccruals)}</div>
       </div>
     </div>
 
-    <!-- Sub-Navigation Tabs -->
+    <!-- Sub-Navigation Tabs: Default to Traditional 10-K Format, Penman as Optional -->
     <div class="wb-tabs" role="tablist">
-      <button class="wb-tab active" data-tab="penman">1. Penman Reformulation &amp; ROE</button>
-      <button class="wb-tab" data-tab="statements">2. 5-Year 10-K Statements &amp; CAGR</button>
-      <button class="wb-tab" data-tab="ratios">3. Executive Ratio Suite &amp; Working Capital</button>
-      <button class="wb-tab" data-tab="diagnostics">4. Red Flags &amp; Earnings Quality (${flags.length})</button>
+      <button class="wb-tab ${initialTab === 'statements' ? 'active' : ''}" data-tab="statements">1. 5-Year Reported 10-K Statements &amp; CAGR</button>
+      <button class="wb-tab ${initialTab === 'penman' ? 'active' : ''}" data-tab="penman">2. Penman Reformulation &amp; ROE (Optional)</button>
+      <button class="wb-tab ${initialTab === 'ratios' ? 'active' : ''}" data-tab="ratios">3. Executive Ratio Suite &amp; Working Capital</button>
+      <button class="wb-tab ${initialTab === 'diagnostics' ? 'active' : ''}" data-tab="diagnostics">4. Red Flags &amp; Earnings Quality (${flags.length})</button>
     </div>
 
-    <!-- TAB 1: PENMAN REFORMULATION & DUAL ROE DECOMPOSITION -->
-    <div id="tab-penman" class="wb-tab-pane">
+    <!-- TAB 2: PENMAN REFORMULATION & DUAL ROE DECOMPOSITION (OPTIONAL) -->
+    <div id="tab-penman" class="wb-tab-pane" style="${initialTab === 'penman' ? '' : 'display:none;'}">
       <div class="wb-grid-2">
         <!-- Penman ROE Bridge Card -->
         <div class="wb-panel">
@@ -780,16 +820,36 @@ function render10KAnalyzer(company, opCashPct = 0.015) {
       </div>
     </div>
 
-    <!-- TAB 2: 5-YEAR REPORTED 10-K STATEMENTS & CAGR -->
-    <div id="tab-statements" class="wb-tab-pane" style="display:none;">
+    <!-- TAB 1: 5-YEAR REPORTED 10-K STATEMENTS & CASH FLOW ENGINE (DEFAULT ACTIVE) -->
+    <div id="tab-statements" class="wb-tab-pane" style="${initialTab === 'statements' ? '' : 'display:none;'}">
       <div class="wb-panel">
         <div class="wb-panel__header">
           <div>
-            <h3 class="wb-panel__title">5-Year Reported 10-K Financial Statements ($ Millions)</h3>
-            <div class="wb-panel__subtitle">Standardized GAAP Income Statement, Balance Sheet &amp; Cash Flow Statement with 5-Year CAGR</div>
+            <h3 class="wb-panel__title">5-Year Reported 10-K Financial Statements &amp; Cash Flow Engine ($ Millions)</h3>
+            <div class="wb-panel__subtitle">Standardized GAAP Income Statement, Balance Sheet, and Full 3-Section Cash Flow Statement with Indirect P&amp;L Construction Bridge</div>
           </div>
-          ${conceptPill('cash-flow-analysis', '10-K Statements')}
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            ${conceptPill('cash-flow-analysis', '10-K Statements')}
+            ${conceptPill('fcf', 'Cash Flow Engine')}
+          </div>
         </div>
+
+        <!-- Interactive Statement View Filter Pills -->
+        <div class="wb-statement-filter" role="toolbar" aria-label="Statement View Filter">
+          <button class="wb-statement-pill active" data-statement="all">📋 All Statements</button>
+          <button class="wb-statement-pill" data-statement="income">📊 Income Statement</button>
+          <button class="wb-statement-pill" data-statement="balance">🏛️ Balance Sheet</button>
+          <button class="wb-statement-pill" data-statement="cashflow">💵 Cash Flow Statement</button>
+          <button class="wb-statement-pill" data-statement="bridge">🧮 Constructed P&amp;L Cash Flow Bridge</button>
+        </div>
+
+        ${latest.isOcfConstructed ? `
+          <div class="wb-cf-notice">
+            <span>💡</span>
+            <span><strong>Constructed Cash Flow Active:</strong> Operating and investing cash flows were dynamically synthesized from GAAP Net Income, Non-Cash D&amp;A, SBC, and Working Capital balance changes using the indirect method.</span>
+          </div>
+        ` : ''}
+
         <div class="wb-table-wrap">
           <table class="wb-table">
             <thead>
@@ -801,148 +861,408 @@ function render10KAnalyzer(company, opCashPct = 0.015) {
               </tr>
             </thead>
             <tbody>
-              <tr class="wb-row-section"><td colspan="${byYear.length + 3}">Income Statement</td></tr>
-              <tr class="wb-row-total">
+              <!-- I. INCOME STATEMENT -->
+              <tr class="wb-row-section" data-section="income"><td colspan="${byYear.length + 3}">I. GAAP Income Statement (P&amp;L)</td></tr>
+              <tr class="wb-row-total" data-section="income">
                 <td>Revenue / Net Sales</td>
                 <td>${conceptPill('revenue-recognition', 'Revenue')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.rev)}</td>`).join('')}
                 ${fmtCagrCell(cagrs.rev)}
               </tr>
-              <tr>
+              <tr data-section="income">
                 <td>Cost of Goods Sold (COGS)</td>
                 <td>${conceptPill('reformulated-is', 'COGS')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.cogs)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.cogs, latest.cogs, byYear.length - 1))}
               </tr>
-              <tr class="wb-row-total">
+              <tr class="wb-row-total" data-section="income">
                 <td>Gross Profit</td>
                 <td>${conceptPill('reformulated-is', 'Gross Profit')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.gp)}</td>`).join('')}
                 ${fmtCagrCell(cagrs.gp)}
               </tr>
-              <tr>
+              <tr data-section="income">
                 <td>Research &amp; Development (R&amp;D)</td>
                 <td>${conceptPill('reformulated-is', 'R&D')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.rd)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.rd, latest.rd, byYear.length - 1))}
               </tr>
-              <tr>
+              <tr data-section="income">
                 <td>Selling, General &amp; Administrative (SG&amp;A)</td>
                 <td>${conceptPill('reformulated-is', 'SG&A')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.sga)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.sga, latest.sga, byYear.length - 1))}
               </tr>
-              <tr class="wb-row-total">
+              <tr class="wb-row-total" data-section="income">
                 <td>Operating Income (EBIT)</td>
                 <td>${conceptPill('reformulated-is', 'EBIT')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.ebit)}</td>`).join('')}
                 ${fmtCagrCell(cagrs.ebit)}
               </tr>
-              <tr>
+              <tr data-section="income">
+                <td>Depreciation &amp; Amortization (D&amp;A)</td>
+                <td>${conceptPill('capital-budgeting', 'D&A')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.da)}</td>`).join('')}
+                ${fmtCagrCell(calcCAGR(byYear[0]?.da, latest.da, byYear.length - 1))}
+              </tr>
+              <tr class="wb-row-total" data-section="income">
+                <td>EBITDA (EBIT + D&amp;A)</td>
+                <td>${conceptPill('multiples', 'EBITDA')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.ebitda)}</td>`).join('')}
+                ${fmtCagrCell(calcCAGR(byYear[0]?.ebitda, latest.ebitda, byYear.length - 1))}
+              </tr>
+              <tr data-section="income">
                 <td>Interest Expense</td>
                 <td>${conceptPill('cost-of-debt', 'Interest')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.intExp)}</td>`).join('')}
                 <td class="wb-td-cagr">—</td>
               </tr>
-              <tr>
+              <tr data-section="income">
                 <td>Income Tax Expense</td>
                 <td>${conceptPill('deferred-tax-fsa', 'Taxes')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.taxExp)}</td>`).join('')}
                 <td class="wb-td-cagr">—</td>
               </tr>
-              <tr class="wb-row-total">
+              <tr class="wb-row-total" data-section="income">
                 <td>GAAP Net Income</td>
                 <td>${conceptPill('reformulated-is', 'Net Income')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.ni)}</td>`).join('')}
                 ${fmtCagrCell(cagrs.ni)}
               </tr>
-              <tr>
+              <tr data-section="income">
+                <td>Diluted Shares Outstanding (M)</td>
+                <td>${conceptPill('multiples', 'Shares')}</td>
+                ${byYear.map(y => `<td>${y.sharesDiluted ? y.sharesDiluted.toLocaleString() : '—'}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="income">
                 <td>Diluted EPS ($/share)</td>
                 <td>${conceptPill('multiples', 'EPS')}</td>
                 ${byYear.map(y => `<td>${fmtSharePrice(y.epsDiluted)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.epsDiluted, latest.epsDiluted, byYear.length - 1))}
               </tr>
 
-              <tr class="wb-row-section"><td colspan="${byYear.length + 3}">Balance Sheet Summary</td></tr>
-              <tr>
-                <td>Cash &amp; Short-Term Investments</td>
+              <!-- II. BALANCE SHEET -->
+              <tr class="wb-row-section" data-section="balance"><td colspan="${byYear.length + 3}">II. GAAP Balance Sheet</td></tr>
+              <tr data-section="balance">
+                <td>Cash &amp; Cash Equivalents</td>
+                <td>${conceptPill('working-capital', 'Cash')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.cash)}</td>`).join('')}
+                ${fmtCagrCell(calcCAGR(byYear[0]?.cash, latest.cash, byYear.length - 1))}
+              </tr>
+              <tr data-section="balance">
+                <td>Short-Term Marketable Securities</td>
+                <td>${conceptPill('working-capital', 'ST Inv.')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.shortTermInvestments)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr class="wb-row-total" data-section="balance">
+                <td>Total Cash &amp; Liquid Investments</td>
                 <td>${conceptPill('working-capital', 'Liquidity')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.totalCash)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.totalCash, latest.totalCash, byYear.length - 1))}
               </tr>
-              <tr>
-                <td>Accounts Receivable</td>
+              <tr data-section="balance">
+                <td>Accounts Receivable (AR)</td>
                 <td>${conceptPill('working-capital', 'AR')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.ar)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.ar, latest.ar, byYear.length - 1))}
               </tr>
-              <tr>
-                <td>Inventory</td>
+              <tr data-section="balance">
+                <td>Inventories</td>
                 <td>${conceptPill('working-capital', 'Inventory')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.inv)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.inv, latest.inv, byYear.length - 1))}
               </tr>
-              <tr>
+              <tr data-section="balance">
+                <td>Total Current Assets</td>
+                <td>${conceptPill('working-capital', 'CA')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.ca)}</td>`).join('')}
+                ${fmtCagrCell(calcCAGR(byYear[0]?.ca, latest.ca, byYear.length - 1))}
+              </tr>
+              <tr data-section="balance">
                 <td>Net Property, Plant &amp; Equipment (PP&amp;E)</td>
                 <td>${conceptPill('capital-budgeting', 'PP&E')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.ppe)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.ppe, latest.ppe, byYear.length - 1))}
               </tr>
-              <tr>
+              <tr data-section="balance">
                 <td>Goodwill &amp; Intangible Assets</td>
                 <td>${conceptPill('ma-mechanics', 'Goodwill')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.gwIntang)}</td>`).join('')}
                 <td class="wb-td-cagr">—</td>
               </tr>
-              <tr class="wb-row-total">
+              <tr class="wb-row-total" data-section="balance">
                 <td>Total Assets</td>
                 <td>${conceptPill('reformulated-bs', 'Assets')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.ta)}</td>`).join('')}
                 ${fmtCagrCell(cagrs.ta)}
               </tr>
-              <tr>
+              <tr data-section="balance">
+                <td>Accounts Payable (AP)</td>
+                <td>${conceptPill('working-capital', 'AP')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.ap)}</td>`).join('')}
+                ${fmtCagrCell(calcCAGR(byYear[0]?.ap, latest.ap, byYear.length - 1))}
+              </tr>
+              <tr data-section="balance">
+                <td>Short-Term Debt &amp; Current Portion of LT Debt</td>
+                <td>${conceptPill('capital-structure', 'ST Debt')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.std)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="balance">
+                <td>Total Current Liabilities</td>
+                <td>${conceptPill('working-capital', 'CL')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.cl)}</td>`).join('')}
+                ${fmtCagrCell(calcCAGR(byYear[0]?.cl, latest.cl, byYear.length - 1))}
+              </tr>
+              <tr data-section="balance">
+                <td>Long-Term Debt</td>
+                <td>${conceptPill('cost-of-debt', 'LT Debt')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.ltd)}</td>`).join('')}
+                ${fmtCagrCell(calcCAGR(byYear[0]?.ltd, latest.ltd, byYear.length - 1))}
+              </tr>
+              <tr class="wb-row-total" data-section="balance">
                 <td>Total Debt (Short-Term + Long-Term)</td>
                 <td>${conceptPill('capital-structure', 'Debt')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.FO)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.FO, latest.FO, byYear.length - 1))}
               </tr>
-              <tr class="wb-row-total">
+              <tr data-section="balance">
+                <td>Total Liabilities</td>
+                <td>${conceptPill('reformulated-bs', 'Liabilities')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.tl)}</td>`).join('')}
+                ${fmtCagrCell(calcCAGR(byYear[0]?.tl, latest.tl, byYear.length - 1))}
+              </tr>
+              <tr class="wb-row-total" data-section="balance">
                 <td>Stockholders' Equity</td>
                 <td>${conceptPill('reformulated-bs', 'Equity')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.cse)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.cse, latest.cse, byYear.length - 1))}
               </tr>
 
-              <tr class="wb-row-section"><td colspan="${byYear.length + 3}">Cash Flow Statement &amp; Capital Allocation</td></tr>
-              <tr class="wb-row-total">
-                <td>Operating Cash Flow (OCF)</td>
-                <td>${conceptPill('cash-flow-analysis', 'OCF')}</td>
-                ${byYear.map(y => `<td>${fmtMoney(y.ocf)}</td>`).join('')}
-                ${fmtCagrCell(cagrs.ocf)}
+              <!-- III. CASH FLOW STATEMENT (FULL GAAP 3-SECTION FORMAT) -->
+              <tr class="wb-row-section" data-section="cashflow"><td colspan="${byYear.length + 3}">III. GAAP Statement of Cash Flows (3-Section Format)</td></tr>
+              
+              <tr class="wb-row-subhead" data-section="cashflow"><td colspan="${byYear.length + 3}">A. Operating Activities (Indirect Method)</td></tr>
+              <tr data-section="cashflow">
+                <td>Net Income</td>
+                <td>${conceptPill('reformulated-is', 'Net Income')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.ni)}</td>`).join('')}
+                ${fmtCagrCell(cagrs.ni)}
               </tr>
-              <tr>
-                <td>Capital Expenditures (CapEx)</td>
-                <td>${conceptPill('capital-budgeting', 'CapEx')}</td>
-                ${byYear.map(y => `<td>(${fmtMoney(y.capex)})</td>`).join('')}
-                ${fmtCagrCell(calcCAGR(byYear[0]?.capex, latest.capex, byYear.length - 1))}
+              <tr data-section="cashflow">
+                <td>Depreciation &amp; Amortization Add-Back</td>
+                <td>${conceptPill('capital-budgeting', 'D&A')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.da)}</td>`).join('')}
+                ${fmtCagrCell(calcCAGR(byYear[0]?.da, latest.da, byYear.length - 1))}
               </tr>
-              <tr class="wb-row-total">
-                <td>Free Cash Flow (FCF = OCF − CapEx)</td>
-                <td>${conceptPill('fcf', 'FCF')}</td>
-                ${byYear.map(y => `<td>${fmtMoney(y.fcf)}</td>`).join('')}
-                ${fmtCagrCell(cagrs.fcf)}
-              </tr>
-              <tr>
-                <td>Stock-Based Compensation (SBC)</td>
+              <tr data-section="cashflow">
+                <td>Stock-Based Compensation Add-Back</td>
                 <td>${conceptPill('stock-comp', 'SBC')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.sbc)}</td>`).join('')}
                 ${fmtCagrCell(calcCAGR(byYear[0]?.sbc, latest.sbc, byYear.length - 1))}
               </tr>
-              <tr>
-                <td>Dividends + Share Repurchases</td>
+              <tr data-section="cashflow">
+                <td>Change in Accounts Receivable (Increase / Decrease)</td>
+                <td>${conceptPill('working-capital', 'ΔAR')}</td>
+                ${byYear.map(y => `<td>${y.deltaAR > 0 ? `(${fmtMoney(y.deltaAR)})` : fmtMoney(-y.deltaAR)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="cashflow">
+                <td>Change in Inventory (Increase / Decrease)</td>
+                <td>${conceptPill('working-capital', 'ΔInv')}</td>
+                ${byYear.map(y => `<td>${y.deltaInv > 0 ? `(${fmtMoney(y.deltaInv)})` : fmtMoney(-y.deltaInv)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="cashflow">
+                <td>Change in Accounts Payable (Increase / Decrease)</td>
+                <td>${conceptPill('working-capital', 'ΔAP')}</td>
+                ${byYear.map(y => `<td>${y.deltaAP < 0 ? `(${fmtMoney(Math.abs(y.deltaAP))})` : fmtMoney(y.deltaAP)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="cashflow">
+                <td>Other Operating Non-Cash &amp; Working Capital Adjustments</td>
+                <td>${conceptPill('accrual-quality', 'Accruals')}</td>
+                ${byYear.map(y => `<td>${y.otherOcfAdjustments < 0 ? `(${fmtMoney(Math.abs(y.otherOcfAdjustments))})` : fmtMoney(y.otherOcfAdjustments)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr class="wb-row-total" data-section="cashflow">
+                <td>Net Cash Provided by Operating Activities (OCF)</td>
+                <td>${conceptPill('cash-flow-analysis', 'OCF')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.ocf)}</td>`).join('')}
+                ${fmtCagrCell(cagrs.ocf)}
+              </tr>
+
+              <tr class="wb-row-subhead" data-section="cashflow"><td colspan="${byYear.length + 3}">B. Investing Activities</td></tr>
+              <tr data-section="cashflow">
+                <td>Capital Expenditures (Additions to PP&amp;E)</td>
+                <td>${conceptPill('capital-budgeting', 'CapEx')}</td>
+                ${byYear.map(y => `<td>(${fmtMoney(y.capex)})</td>`).join('')}
+                ${fmtCagrCell(cagrs.capex)}
+              </tr>
+              <tr data-section="cashflow">
+                <td>Other Investing Activities (Marketable Securities, M&amp;A)</td>
+                <td>${conceptPill('capital-budgeting', 'Investing')}</td>
+                ${byYear.map(y => `<td>${y.otherInvestingCashFlow < 0 ? `(${fmtMoney(Math.abs(y.otherInvestingCashFlow))})` : fmtMoney(y.otherInvestingCashFlow)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr class="wb-row-total" data-section="cashflow">
+                <td>Net Cash Used in / Provided by Investing Activities (CFI)</td>
+                <td>${conceptPill('cash-flow-analysis', 'CFI')}</td>
+                ${byYear.map(y => `<td>${y.icf < 0 ? `(${fmtMoney(Math.abs(y.icf))})` : fmtMoney(y.icf)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+
+              <tr class="wb-row-subhead" data-section="cashflow"><td colspan="${byYear.length + 3}">C. Financing Activities</td></tr>
+              <tr data-section="cashflow">
+                <td>Common Stock Dividends Paid</td>
+                <td>${conceptPill('dividend-policy', 'Dividends')}</td>
+                ${byYear.map(y => `<td>${y.divs > 0 ? `(${fmtMoney(y.divs)})` : '$0'}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="cashflow">
+                <td>Repurchase of Common Stock (Share Buybacks)</td>
+                <td>${conceptPill('dividend-policy', 'Buybacks')}</td>
+                ${byYear.map(y => `<td>${y.buybacks > 0 ? `(${fmtMoney(y.buybacks)})` : '$0'}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="cashflow">
+                <td>Proceeds from Debt Issuance / Borrowings</td>
+                <td>${conceptPill('capital-structure', 'Borrowings')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.debtIssued)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="cashflow">
+                <td>Principal Repayments of Debt</td>
+                <td>${conceptPill('capital-structure', 'Debt Repaid')}</td>
+                ${byYear.map(y => `<td>${y.debtRepaid > 0 ? `(${fmtMoney(y.debtRepaid)})` : '$0'}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="cashflow">
+                <td>Other Financing Activities</td>
+                <td>${conceptPill('capital-structure', 'Financing')}</td>
+                ${byYear.map(y => `<td>${y.otherFinancingCashFlow < 0 ? `(${fmtMoney(Math.abs(y.otherFinancingCashFlow))})` : fmtMoney(y.otherFinancingCashFlow)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr class="wb-row-total" data-section="cashflow">
+                <td>Net Cash Used in / Provided by Financing Activities (CFF)</td>
+                <td>${conceptPill('cash-flow-analysis', 'CFF')}</td>
+                ${byYear.map(y => `<td>${y.finCf < 0 ? `(${fmtMoney(Math.abs(y.finCf))})` : fmtMoney(y.finCf)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+
+              <tr class="wb-row-subhead" data-section="cashflow"><td colspan="${byYear.length + 3}">D. Cash Reconciliation &amp; Free Cash Flow Summary</td></tr>
+              <tr data-section="cashflow">
+                <td>Net Increase / (Decrease) in Cash (CFO + CFI + CFF)</td>
+                <td>${conceptPill('cash-flow-analysis', 'ΔCash')}</td>
+                ${byYear.map(y => `<td>${y.deltaCashFromCF < 0 ? `(${fmtMoney(Math.abs(y.deltaCashFromCF))})` : fmtMoney(y.deltaCashFromCF)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="cashflow">
+                <td>Cash &amp; Liquid Investments at Beginning of Year</td>
+                <td>${conceptPill('working-capital', 'Beg. Cash')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.beginningCash)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr class="wb-row-total" data-section="cashflow">
+                <td>Cash &amp; Liquid Investments at End of Year (BS Reconciled)</td>
+                <td>${conceptPill('working-capital', 'End. Cash')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.endingCash)}</td>`).join('')}
+                ${fmtCagrCell(calcCAGR(byYear[0]?.endingCash, latest.endingCash, byYear.length - 1))}
+              </tr>
+              <tr class="wb-row-total" data-section="cashflow" style="background:#eff6ff;">
+                <td>Free Cash Flow (FCF = Operating Cash Flow − CapEx)</td>
+                <td>${conceptPill('fcf', 'FCF')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.fcf)}</td>`).join('')}
+                ${fmtCagrCell(cagrs.fcf)}
+              </tr>
+              <tr data-section="cashflow">
+                <td>FCF Conversion Rate (% of Net Income)</td>
+                <td>${conceptPill('fcf', 'FCF/NI')}</td>
+                ${byYear.map(y => `<td>${y.ni > 0 ? fmtPct(y.fcf / y.ni) : '—'}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="cashflow">
+                <td>Capital Returned to Shareholders (Dividends + Buybacks)</td>
                 <td>${conceptPill('dividend-policy', 'Payouts')}</td>
                 ${byYear.map(y => `<td>${fmtMoney(y.divs + y.buybacks)}</td>`).join('')}
                 <td class="wb-td-cagr">—</td>
+              </tr>
+
+              <!-- IV. P&L TO CASH FLOW INDIRECT CONSTRUCTION BRIDGE -->
+              <tr class="wb-row-section" data-section="bridge"><td colspan="${byYear.length + 3}">IV. P&amp;L to Cash Flow Indirect Construction Bridge (Reconciliation)</td></tr>
+              <tr data-section="bridge">
+                <td>GAAP Net Income</td>
+                <td>${conceptPill('reformulated-is', 'Net Income')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.ni)}</td>`).join('')}
+                ${fmtCagrCell(cagrs.ni)}
+              </tr>
+              <tr data-section="bridge">
+                <td>(+) Non-Cash Depreciation &amp; Amortization (D&amp;A)</td>
+                <td>${conceptPill('capital-budgeting', 'D&A')}</td>
+                ${byYear.map(y => `<td>+${fmtMoney(y.da)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="bridge">
+                <td>(+) Non-Cash Stock-Based Compensation (SBC)</td>
+                <td>${conceptPill('stock-comp', 'SBC')}</td>
+                ${byYear.map(y => `<td>+${fmtMoney(y.sbc)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="bridge">
+                <td>(±) Accounts Receivable Cash Effect (−ΔAR)</td>
+                <td>${conceptPill('working-capital', 'ΔAR')}</td>
+                ${byYear.map(y => `<td>${y.deltaAR > 0 ? `(${fmtMoney(y.deltaAR)})` : `+${fmtMoney(-y.deltaAR)}`}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="bridge">
+                <td>(±) Inventory Cash Effect (−ΔInv)</td>
+                <td>${conceptPill('working-capital', 'ΔInv')}</td>
+                ${byYear.map(y => `<td>${y.deltaInv > 0 ? `(${fmtMoney(y.deltaInv)})` : `+${fmtMoney(-y.deltaInv)}`}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="bridge">
+                <td>(±) Accounts Payable Cash Effect (+ΔAP)</td>
+                <td>${conceptPill('working-capital', 'ΔAP')}</td>
+                ${byYear.map(y => `<td>${y.deltaAP < 0 ? `(${fmtMoney(Math.abs(y.deltaAP))})` : `+${fmtMoney(y.deltaAP)}`}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="bridge" style="background:#f8fafc;">
+                <td>(±) Net Trade Working Capital Cash Effect (−ΔAR − ΔInv + ΔAP)</td>
+                <td>${conceptPill('working-capital', 'ΔTrade WC')}</td>
+                ${byYear.map(y => `<td>${y.wcCashFlow < 0 ? `(${fmtMoney(Math.abs(y.wcCashFlow))})` : `+${fmtMoney(y.wcCashFlow)}`}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr class="wb-row-total" data-section="bridge" style="background:#eff6ff;">
+                <td>(=) Constructed Operating Cash Flow (from P&amp;L + Trade WC)</td>
+                <td>${conceptPill('cash-flow-analysis', 'Constructed OCF')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.constructedOcf)}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr data-section="bridge">
+                <td>(±) Other Operating Accruals &amp; Non-Cash Reconciling Items</td>
+                <td>${conceptPill('accrual-quality', 'Accruals')}</td>
+                ${byYear.map(y => `<td>${y.otherOcfAdjustments < 0 ? `(${fmtMoney(Math.abs(y.otherOcfAdjustments))})` : (y.otherOcfAdjustments > 0 ? `+${fmtMoney(y.otherOcfAdjustments)}` : '$0')}</td>`).join('')}
+                <td class="wb-td-cagr">—</td>
+              </tr>
+              <tr class="wb-row-total" data-section="bridge">
+                <td>(=) Reported GAAP Operating Cash Flow</td>
+                <td>${conceptPill('cash-flow-analysis', 'Reported OCF')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.ocf)}</td>`).join('')}
+                ${fmtCagrCell(cagrs.ocf)}
+              </tr>
+              <tr data-section="bridge">
+                <td>(−) Capital Expenditures (CapEx)</td>
+                <td>${conceptPill('capital-budgeting', 'CapEx')}</td>
+                ${byYear.map(y => `<td>(${fmtMoney(y.capex)})</td>`).join('')}
+                ${fmtCagrCell(cagrs.capex)}
+              </tr>
+              <tr class="wb-row-total" data-section="bridge" style="background:#f0fdf4;">
+                <td>(=) Free Cash Flow (FCF = Operating Cash Flow − CapEx)</td>
+                <td>${conceptPill('fcf', 'FCF')}</td>
+                ${byYear.map(y => `<td>${fmtMoney(y.fcf)}</td>`).join('')}
+                ${fmtCagrCell(cagrs.fcf)}
               </tr>
             </tbody>
           </table>
@@ -1122,8 +1442,8 @@ function render10KAnalyzer(company, opCashPct = 0.015) {
   // Wire Tab Switching
   const tabs = root.querySelectorAll('.wb-tab');
   const panes = {
-    penman: root.querySelector('#tab-penman'),
     statements: root.querySelector('#tab-statements'),
+    penman: root.querySelector('#tab-penman'),
     ratios: root.querySelector('#tab-ratios'),
     diagnostics: root.querySelector('#tab-diagnostics')
   };
@@ -1138,11 +1458,30 @@ function render10KAnalyzer(company, opCashPct = 0.015) {
     });
   });
 
-  // Wire Operating Cash % Slider
+  // Wire Statement View Filter Pills in Tab 1
+  const filterPills = root.querySelectorAll('.wb-statement-pill');
+  const statementRows = root.querySelectorAll('#tab-statements .wb-table tbody tr[data-section]');
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      filterPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      const selected = pill.getAttribute('data-statement');
+      statementRows.forEach(tr => {
+        const sec = tr.getAttribute('data-section');
+        if (selected === 'all' || sec === selected) {
+          tr.style.display = '';
+        } else {
+          tr.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Wire Operating Cash % Slider (Preserves Penman Tab View)
   const slider = root.querySelector('#op-cash-slider');
   if (slider) {
     slider.addEventListener('change', (e) => {
-      render10KAnalyzer(company, parseFloat(e.target.value));
+      render10KAnalyzer(company, parseFloat(e.target.value), 'penman');
     });
     slider.addEventListener('input', (e) => {
       const label = root.querySelector('#op-cash-val');
@@ -1159,10 +1498,10 @@ if (typeof document !== 'undefined') {
 
     if (bannerEl) {
       mountTargetBanner(bannerEl, (company) => {
-        render10KAnalyzer(company, 0.015);
+        render10KAnalyzer(company, 0.015, 'statements');
       });
     }
-    render10KAnalyzer(getActiveCompany(), 0.015);
+    render10KAnalyzer(getActiveCompany(), 0.015, 'statements');
   };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init10K);
