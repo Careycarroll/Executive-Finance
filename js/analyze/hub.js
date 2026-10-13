@@ -425,29 +425,29 @@ function renderHubCards(company) {
 
     <a href="consulting-workbench.html" class="analyze-wb-card">
       <div class="analyze-wb-card__header">
-        <span class="analyze-wb-card__badge">Workbench 5 &middot; Strategy &amp; Advisory</span>
+        <span class="analyze-wb-card__badge">Workbench 5 &middot; Standalone Work Projects</span>
         <span>&#128188;</span>
       </div>
-      <div class="analyze-wb-card__title">Management Consulting &amp; Business Case Studio</div>
+      <div class="analyze-wb-card__title">Project ROI &amp; Management Consulting Studio</div>
       <p class="analyze-wb-card__desc">
-        Build board-ready transformation business cases (<code>NPV</code>, <code>IRR</code>, <code>MIRR</code>, <code>ROI</code>, Payback &amp; J-Curve), EBITDA Bridge Waterfalls across Pricing/Volume/COGS/SG&amp;A levers, CVP Pricing Elasticity &amp; <code>LTV/CAC</code> unit economics, and Tornado sensitivity.
+        Standalone work-project calculator (decoupled from 10-K tickers). Model internal initiatives in <code>$</code>, <code>$K</code>, or <code>$M</code> with custom cash flows, <code>NPV</code>, <code>IRR</code>, <code>MIRR</code>, <code>ROI</code>, Payback J-Curve, EBITDA Bridges, and Excel CSV export.
       </p>
       <div class="analyze-wb-card__preview">
         <div>
-          <div class="analyze-wb-card__metric-label">Digital Case Outlay</div>
-          <div class="analyze-wb-card__metric-val">${fmtMoney(Math.round((inc.revenue || 10000) * 0.022))}</div>
+          <div class="analyze-wb-card__metric-label">Project Scale</div>
+          <div class="analyze-wb-card__metric-val">$ / $K / $M</div>
         </div>
         <div>
-          <div class="analyze-wb-card__metric-label">EBITDA Bridge Lift</div>
-          <div class="analyze-wb-card__metric-val">+${fmtMoney(Math.round((inc.ebitda || 2000) * 0.14))}</div>
+          <div class="analyze-wb-card__metric-label">Core Metrics</div>
+          <div class="analyze-wb-card__metric-val">NPV &middot; IRR &middot; ROI</div>
         </div>
         <div>
-          <div class="analyze-wb-card__metric-label">Target ROI Multiple</div>
-          <div class="analyze-wb-card__metric-val">2.4x</div>
+          <div class="analyze-wb-card__metric-label">Deliverables</div>
+          <div class="analyze-wb-card__metric-val">CSV &amp; Save</div>
         </div>
       </div>
       <div class="analyze-wb-card__footer">
-        <span class="analyze-wb-card__cta">Open Consulting &amp; ROI Studio &rarr;</span>
+        <span class="analyze-wb-card__cta">Open Project ROI &amp; Consulting Studio &rarr;</span>
       </div>
     </a>
   `;
