@@ -1633,6 +1633,13 @@ export function renderConsultingWorkbench(root) {
   if (!root) return;
 
   let activeTab = 'business-case';
+  const subTabs = {
+    'business-case': 'jcurve',     // 'jcurve' | 'fte' | 'bvb' | 'schedule'
+    'ebitda-bridge': 'waterfall',  // 'waterfall' | 'drivers'
+    'pricing-unit': 'cvp',         // 'cvp' | 'ltv' | 'matrix'
+    'scenarios-fees': 'tornado'    // 'tornado' | 'montecarlo' | 'fees'
+  };
+
   const defTpl = CONSULTING_TEMPLATES.digital;
 
   const state = {
@@ -1764,6 +1771,14 @@ export function renderConsultingWorkbench(root) {
     state.unit = nextUnit;
   };
 
+  const stepOrder = ['business-case', 'ebitda-bridge', 'pricing-unit', 'scenarios-fees'];
+  const stepMeta = {
+    'business-case': { num: 1, title: 'Step 1: Capital ROI & Cash Flows' },
+    'ebitda-bridge': { num: 2, title: 'Step 2: Profit Bridge (EBITDA)' },
+    'pricing-unit': { num: 3, title: 'Step 3: Pricing & Unit Economics' },
+    'scenarios-fees': { num: 4, title: 'Step 4: Risk & Contract Scenarios' }
+  };
+
   const updateView = () => {
     const unit = state.unit || 'K';
     const unitLabel = unit === '$'
@@ -1793,58 +1808,107 @@ export function renderConsultingWorkbench(root) {
     const maxFixedSlider = unit === '$' ? 2000000 : unit === 'H' ? 20000 : unit === 'M' ? 20 : 5000;
     const stepFixedSlider = unit === '$' ? 10000 : unit === 'H' ? 100 : unit === 'M' ? 0.1 : 10;
 
+    const curStepIdx = stepOrder.indexOf(activeTab);
+    const prevStep = curStepIdx > 0 ? stepOrder[curStepIdx - 1] : null;
+    const nextStep = curStepIdx < stepOrder.length - 1 ? stepOrder[curStepIdx + 1] : null;
+
+    const sub1 = subTabs['business-case'];
+    const sub2 = subTabs['ebitda-bridge'];
+    const sub3 = subTabs['pricing-unit'];
+    const sub4 = subTabs['scenarios-fees'];
+
+    const paybackText = bc.simplePaybackYears !== null
+      ? `${bc.simplePaybackYears.toFixed(1)} ${bc.periodPlural}`
+      : `>${bc.horizonYears} ${bc.periodPlural}`;
+
     root.innerHTML = `
-      <!-- STANDALONE WORK PROJECT WORKSPACE BAR (COMPACT) -->
-      <div class="analyze-target-bar" style="margin-bottom: 1.15rem; padding: 1rem 1.25rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.75rem;">
-          <div style="display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center; flex:1;">
-            <span class="analyze-ticker-badge" style="background:#1d4ed8;">WORK PROJECT</span>
+      <!-- UNIFIED PROJECT HERO & 4-CARD EXECUTIVE SCOREBOARD -->
+      <div class="consulting-hero-card">
+        <div class="consulting-hero-top">
+          <div style="display:flex; gap:0.55rem; flex-wrap:wrap; align-items:center; flex:1;">
+            <span class="analyze-ticker-badge" style="background:#1d4ed8;">PROJECT</span>
             <input type="text" id="proj-name-input" class="analyze-input" value="${state.projectName}"
               placeholder="Project / Initiative Name"
-              style="font-size:0.98rem; font-weight:800; color:#0f172a; min-width:220px; flex:1;" />
+              style="font-size:0.96rem; font-weight:800; color:#0f172a; min-width:210px; flex:1;" />
             <input type="text" id="proj-dept-input" class="analyze-input" value="${state.department}"
               placeholder="Department / Client"
-              style="font-size:0.84rem; font-weight:600; width:165px;" />
-            <select id="proj-unit-select" class="analyze-input" style="width:178px; font-weight:700; cursor:pointer;" title="Switch Monetary Value Marker ($1, $100s, $1,000s, $1,000,000s)">
-              <option value="$" ${unit === '$' ? 'selected' : ''}>Scale: $ (Exact Dollars)</option>
-              <option value="H" ${unit === 'H' ? 'selected' : ''}>Scale: $100s (Hundreds)</option>
-              <option value="K" ${unit === 'K' ? 'selected' : ''}>Scale: $K (Thousands)</option>
+              style="font-size:0.82rem; font-weight:600; width:145px;" />
+            <select id="proj-tpl-select" class="analyze-input" style="width:185px; font-weight:700; cursor:pointer;" title="Load a Pre-Built Work Project Template">
+              ${Object.values(CONSULTING_TEMPLATES).map(t => `
+                <option value="${t.id}" ${state.template === t.id ? 'selected' : ''}>Template: ${t.name}</option>
+              `).join('')}
+            </select>
+            <select id="proj-unit-select" class="analyze-input" style="width:162px; font-weight:700; cursor:pointer;" title="Switch Monetary Scale ($1, $100s, $1,000s, $1,000,000s)">
+              <option value="$" ${unit === '$' ? 'selected' : ''}>Scale: $ (Exact)</option>
+              <option value="H" ${unit === 'H' ? 'selected' : ''}>Scale: $100s</option>
+              <option value="K" ${unit === 'K' ? 'selected' : ''}>Scale: $K (1,000s)</option>
               <option value="M" ${unit === 'M' ? 'selected' : ''}>Scale: $M (Millions)</option>
             </select>
-            <select id="top-horizon-unit-select" class="analyze-input" style="width:155px; font-weight:700; cursor:pointer;" title="Switch Project Horizon Time Unit">
-              <option value="years" ${bc.horizonUnit === 'years' ? 'selected' : ''}>Horizon: Years (${bc.horizonUnit === 'years' ? bc.horizonYears : 5} yrs)</option>
-              <option value="months" ${bc.horizonUnit === 'months' ? 'selected' : ''}>Horizon: Months (${bc.horizonUnit === 'months' ? bc.horizonYears : 12} mos)</option>
-              <option value="weeks" ${bc.horizonUnit === 'weeks' ? 'selected' : ''}>Horizon: Weeks (${bc.horizonUnit === 'weeks' ? bc.horizonYears : 12} wks)</option>
+            <select id="top-horizon-unit-select" class="analyze-input" style="width:148px; font-weight:700; cursor:pointer;" title="Switch Project Horizon Time Unit">
+              <option value="years" ${bc.horizonUnit === 'years' ? 'selected' : ''}>Horizon: ${bc.horizonUnit === 'years' ? bc.horizonYears : 5} Years</option>
+              <option value="months" ${bc.horizonUnit === 'months' ? 'selected' : ''}>Horizon: ${bc.horizonUnit === 'months' ? bc.horizonYears : 12} Months</option>
+              <option value="weeks" ${bc.horizonUnit === 'weeks' ? 'selected' : ''}>Horizon: ${bc.horizonUnit === 'weeks' ? bc.horizonYears : 12} Weeks</option>
             </select>
           </div>
-          <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+          <div style="display:flex; gap:0.45rem; flex-wrap:wrap; align-items:center;">
             ${savedList.length > 0 ? `
-              <select id="load-saved-proj-select" class="analyze-input" style="font-size:0.78rem; padding:0.3rem 0.5rem; width:auto;">
-                <option value="">📂 Load Saved Project (${savedList.length})...</option>
+              <select id="load-saved-proj-select" class="analyze-input" style="font-size:0.76rem; padding:0.3rem 0.5rem; width:auto;">
+                <option value="">📂 Saved (${savedList.length})...</option>
                 ${savedList.map((p, idx) => `<option value="${idx}">${p.projectName} (${p.unit || 'K'})</option>`).join('')}
               </select>
             ` : ''}
             <button type="button" class="btn btn--primary btn--sm" id="toggle-exec-memo-btn" style="background:#1e3a8a; border-color:#1e3a8a;">
-              📄 ${state.showExecMemo ? 'Hide Executive Memo' : 'Executive Memo / Print PDF'}
+              📄 ${state.showExecMemo ? 'Hide Memo' : 'Executive Memo / PDF'}
             </button>
             <button type="button" class="btn btn--secondary btn--sm" id="save-proj-btn">💾 Save</button>
             <button type="button" class="btn btn--secondary btn--sm" id="export-csv-btn">📊 CSV</button>
             <button type="button" class="btn btn--secondary btn--sm" id="export-json-btn">⬇ JSON</button>
           </div>
         </div>
+        <div id="proj-save-status" style="font-size:0.78rem; color:#16a34a; font-weight:600; margin-bottom:0.65rem; display:none;"></div>
 
-        <div class="analyze-switcher" style="padding-top:0.65rem;">
-          <div class="analyze-switcher__pills">
-            <span class="analyze-switcher__label">Project Templates:</span>
-            ${Object.values(CONSULTING_TEMPLATES).map(t => `
-              <button type="button" class="analyze-snap-pill ${state.template === t.id ? 'analyze-snap-pill--active' : ''}"
-                data-tpl-id="${t.id}" title="${t.summary}">
-                ${t.name}
-              </button>
-            `).join('')}
+        <!-- 4-CARD EXECUTIVE SCOREBOARD -->
+        <div class="consulting-scoreboard-grid">
+          <div class="consulting-score-card ${bc.npv >= 0 ? 'consulting-score-card--highlight' : 'consulting-score-card--warn'}">
+            <div>
+              <div class="consulting-score-card__label">1. Net Present Value &amp; Verdict</div>
+              <div class="consulting-score-card__val" style="color:${bc.npv >= 0 ? '#15803d' : '#b91c1c'};">${fm(bc.npv)}</div>
+            </div>
+            <div class="consulting-score-card__sub">
+              <strong>${bc.verdict}</strong> · Profitability Index: <strong>${bc.profitabilityIndex.toFixed(2)}x</strong>
+            </div>
+          </div>
+
+          <div class="consulting-score-card">
+            <div>
+              <div class="consulting-score-card__label">2. Return vs. Hurdle Rate (IRR)</div>
+              <div class="consulting-score-card__val">${fmtPct(bc.irr)} <span style="font-size:0.85rem; font-weight:600; color:#64748b;">/ yr</span></div>
+            </div>
+            <div class="consulting-score-card__sub">
+              Hurdle: <strong>${fmtPct(bc.hurdleRate)}</strong> · MIRR: <strong>${fmtPct(bc.mirr)}</strong> · ROI: <strong>${fmtPct(bc.simpleRoiPct)}</strong>
+            </div>
+          </div>
+
+          <div class="consulting-score-card">
+            <div>
+              <div class="consulting-score-card__label">3. Capital Payback Period</div>
+              <div class="consulting-score-card__val">${paybackText}</div>
+            </div>
+            <div class="consulting-score-card__sub">
+              Outlay: <strong>${fm(bc.grossInitialSpend)}</strong> · Discounted Payback: <strong>${bc.discountedPaybackYears !== null ? `${bc.discountedPaybackYears.toFixed(1)} ${bc.periodPlural}` : `>${bc.horizonYears}`}</strong>
+            </div>
+          </div>
+
+          <div class="consulting-score-card">
+            <div>
+              <div class="consulting-score-card__label">4. Risk Confidence &amp; Profit Lift</div>
+              <div class="consulting-score-card__val" style="color:${mc.probPositiveNpv >= 0.7 ? '#15803d' : '#b91c1c'};">${(mc.probPositiveNpv * 100).toFixed(0)}% <span style="font-size:0.82rem; font-weight:600; color:#475569;">Pr(NPV &gt; 0)</span></div>
+            </div>
+            <div class="consulting-score-card__sub">
+              Run-Rate EBITDA Lift: <strong style="color:#16a34a;">+${fm(bridge.netEbitdaLift)}</strong> (+${bridge.marginExpansionBps.toFixed(0)} bps)
+            </div>
           </div>
         </div>
-        <div id="proj-save-status" style="font-size:0.78rem; color:#16a34a; font-weight:600; margin-top:0.35rem; display:none;"></div>
       </div>
 
       <!-- 1-PAGE PRINTABLE EXECUTIVE BUSINESS CASE MEMO -->
@@ -1877,7 +1941,7 @@ export function renderConsultingWorkbench(root) {
               <div><strong>Net Present Value (NPV):</strong> <span style="font-weight:800; color:${bc.npv >= 0 ? '#16a34a' : '#dc2626'};">${fm(bc.npv)}</span> (${fmtExactDollars(bc.npv, unit)})</div>
               <div><strong>Annualized IRR / MIRR:</strong> <strong>${fmtPct(bc.irr)}</strong> / ${fmtPct(bc.mirr)}</div>
               <div><strong>Profitability Index (PI):</strong> <strong>${bc.profitabilityIndex.toFixed(2)}x</strong> · <strong>Net ROI:</strong> <strong>${fmtPct(bc.simpleRoiPct)}</strong></div>
-              <div><strong>Payback Period:</strong> <strong>${bc.simplePaybackYears !== null ? `${bc.simplePaybackYears.toFixed(1)} ${bc.periodPlural}` : `>${bc.horizonYears} ${bc.periodPlural}`}</strong> (${bc.discountedPaybackYears !== null ? `${bc.discountedPaybackYears.toFixed(1)} ${bc.periodPlural} discounted` : 'unrecovered'})</div>
+              <div><strong>Payback Period:</strong> <strong>${paybackText}</strong> (${bc.discountedPaybackYears !== null ? `${bc.discountedPaybackYears.toFixed(1)} ${bc.periodPlural} discounted` : 'unrecovered'})</div>
             </div>
           </div>
 
@@ -1942,418 +2006,1173 @@ export function renderConsultingWorkbench(root) {
         </div>
       </div>
 
-      <!-- PROMINENT 4-CARD CONSULTING TOOL LAUNCHER (ABOVE KPI TILES) -->
-      <div class="consulting-tool-section-label">
-        <span>🛠️ Select Consulting &amp; ROI Analysis Tool (4 Interactive Modules)</span>
-        <span style="color:#64748b; font-weight:600; text-transform:none;">Click any tool card below to switch view</span>
-      </div>
-      <div class="consulting-tool-grid" role="tablist">
-        <button type="button" class="consulting-tool-card ${activeTab === 'business-case' ? 'active' : ''}" data-tab="business-case">
-          <div>
-            <div class="consulting-tool-card__top">
-              <span class="consulting-tool-card__step">📊 Tool 1 · Capital ROI</span>
-              <span class="consulting-tool-card__status">${activeTab === 'business-case' ? '● ACTIVE' : 'Open →'}</span>
-            </div>
-            <div class="consulting-tool-card__title" style="margin-top:0.35rem;">Project Business Case (NPV, IRR, MIRR &amp; ROI)</div>
-            <div class="consulting-tool-card__desc">Cash flows (${bc.horizonYears} ${bc.periodPlural}), Payback &amp; J-Curve trajectory.</div>
+      <!-- STREAMLINED 4-STEP GUIDED NAVIGATION BAR -->
+      <div class="consulting-step-nav" role="tablist">
+        <button type="button" class="consulting-step-tab consulting-tool-card ${activeTab === 'business-case' ? 'active' : ''}" data-tab="business-case">
+          <div class="consulting-step-tab__top">
+            <span class="consulting-step-tab__badge">Step 1 · Capital ROI</span>
+            <span class="consulting-step-tab__metric">${fm(bc.npv)} NPV</span>
           </div>
-          <div class="consulting-tool-card__metric">
-            <span>NPV: <strong style="color:${bc.npv >= 0 ? '#16a34a' : '#dc2626'};">${fm(bc.npv)}</strong></span>
-            <span>IRR: <strong>${fmtPct(bc.irr)}</strong></span>
-          </div>
+          <div class="consulting-step-tab__title">Business Case &amp; Cash Flows</div>
+          <div class="consulting-step-tab__subtitle">J-Curve, FTE Estimator &amp; Build vs. Buy</div>
         </button>
 
-        <button type="button" class="consulting-tool-card ${activeTab === 'ebitda-bridge' ? 'active' : ''}" data-tab="ebitda-bridge">
-          <div>
-            <div class="consulting-tool-card__top">
-              <span class="consulting-tool-card__step">📈 Tool 2 · Waterfall</span>
-              <span class="consulting-tool-card__status">${activeTab === 'ebitda-bridge' ? '● ACTIVE' : 'Open →'}</span>
-            </div>
-            <div class="consulting-tool-card__title" style="margin-top:0.35rem;">Operational EBITDA Bridge &amp; Value Levers</div>
-            <div class="consulting-tool-card__desc">Decompose profit lift across Price, Volume, COGS &amp; SG&amp;A.</div>
+        <button type="button" class="consulting-step-tab consulting-tool-card ${activeTab === 'ebitda-bridge' ? 'active' : ''}" data-tab="ebitda-bridge">
+          <div class="consulting-step-tab__top">
+            <span class="consulting-step-tab__badge">Step 2 · Profit Bridge</span>
+            <span class="consulting-step-tab__metric">+${fm(bridge.netEbitdaLift)}</span>
           </div>
-          <div class="consulting-tool-card__metric">
-            <span>Lift: <strong style="color:#16a34a;">+${fm(bridge.netEbitdaLift)}</strong></span>
-            <span>+${bridge.marginExpansionBps.toFixed(0)} bps</span>
-          </div>
+          <div class="consulting-step-tab__title">Operational EBITDA Waterfall</div>
+          <div class="consulting-step-tab__subtitle">Price, Volume, COGS &amp; SG&amp;A Levers</div>
         </button>
 
-        <button type="button" class="consulting-tool-card ${activeTab === 'pricing-unit' ? 'active' : ''}" data-tab="pricing-unit">
-          <div>
-            <div class="consulting-tool-card__top">
-              <span class="consulting-tool-card__step">⚖️ Tool 3 · Unit Econ</span>
-              <span class="consulting-tool-card__status">${activeTab === 'pricing-unit' ? '● ACTIVE' : 'Open →'}</span>
-            </div>
-            <div class="consulting-tool-card__title" style="margin-top:0.35rem;">Break-Even, Pricing Power &amp; LTV/CAC</div>
-            <div class="consulting-tool-card__desc">CVP break-even, price elasticity matrix &amp; cohort LTV/CAC.</div>
+        <button type="button" class="consulting-step-tab consulting-tool-card ${activeTab === 'pricing-unit' ? 'active' : ''}" data-tab="pricing-unit">
+          <div class="consulting-step-tab__top">
+            <span class="consulting-step-tab__badge">Step 3 · Unit Economics</span>
+            <span class="consulting-step-tab__metric">${Math.ceil(unitEcon.breakEvenUnits).toLocaleString()} u BE</span>
           </div>
-          <div class="consulting-tool-card__metric">
-            <span>BE: <strong>${Math.ceil(unitEcon.breakEvenUnits).toLocaleString()} u</strong></span>
-            <span>LTV/CAC: <strong style="color:${unitEcon.ltvToCac >= 3 ? '#16a34a' : '#dc2626'};">${unitEcon.ltvToCac.toFixed(1)}x</strong></span>
-          </div>
+          <div class="consulting-step-tab__title">Break-Even, Pricing &amp; LTV/CAC</div>
+          <div class="consulting-step-tab__subtitle">CVP Volume, Cohort Payback &amp; Elasticity</div>
         </button>
 
-        <button type="button" class="consulting-tool-card ${activeTab === 'scenarios-fees' ? 'active' : ''}" data-tab="scenarios-fees">
-          <div>
-            <div class="consulting-tool-card__top">
-              <span class="consulting-tool-card__step">🌪️ Tool 4 · Stress Test</span>
-              <span class="consulting-tool-card__status">${activeTab === 'scenarios-fees' ? '● ACTIVE' : 'Open →'}</span>
-            </div>
-            <div class="consulting-tool-card__title" style="margin-top:0.35rem;">Tornado Sensitivity &amp; Vendor Fee Structurer</div>
-            <div class="consulting-tool-card__desc">Bear/Base/Bull stress test, Tornado chart &amp; Gain-Share fees.</div>
+        <button type="button" class="consulting-step-tab consulting-tool-card ${activeTab === 'scenarios-fees' ? 'active' : ''}" data-tab="scenarios-fees">
+          <div class="consulting-step-tab__top">
+            <span class="consulting-step-tab__badge">Step 4 · Risk &amp; Contracts</span>
+            <span class="consulting-step-tab__metric">${(mc.probPositiveNpv * 100).toFixed(0)}% Conf.</span>
           </div>
-          <div class="consulting-tool-card__metric">
-            <span>Bear: <strong>${fm(scen.bearCase.npv)}</strong></span>
-            <span>Bull: <strong style="color:#16a34a;">${fm(scen.bullCase.npv)}</strong></span>
-          </div>
+          <div class="consulting-step-tab__title">Stress Test, Monte Carlo &amp; Fees</div>
+          <div class="consulting-step-tab__subtitle">Tornado, 1,000-Trial Risk &amp; Gain-Share</div>
         </button>
       </div>
 
-      <!-- EXECUTIVE KPI SUMMARY STRIP -->
-      <div class="wb-kpi-grid" style="margin-bottom: 1.25rem;">
-        <div class="wb-kpi-card">
-          <div class="wb-kpi-card__label">Project Net Present Value (NPV)</div>
-          <div class="wb-kpi-card__val" style="color:${bc.npv >= 0 ? '#16a34a' : '#dc2626'};">${fm(bc.npv)}</div>
-          <div class="wb-kpi-card__sub">${bc.verdict} (PI: ${bc.profitabilityIndex.toFixed(2)}x)</div>
-        </div>
-        <div class="wb-kpi-card">
-          <div class="wb-kpi-card__label">Annualized IRR vs. MIRR</div>
-          <div class="wb-kpi-card__val">${fmtPct(bc.irr)} <span style="font-size:0.85rem; color:#64748b;">/ ${fmtPct(bc.mirr)}</span></div>
-          <div class="wb-kpi-card__sub">
-            ${bc.periodsPerYear > 1
-              ? `Periodic IRR: ${fmtPct(bc.periodicIrr)}/${bc.periodShort} · Hurdle: ${fmtPct(bc.hurdleRate)}/yr`
-              : `Hurdle Rate: ${fmtPct(bc.hurdleRate)} (Spread: ${((bc.irr - bc.hurdleRate) * 100).toFixed(1)}%)`}
-          </div>
-        </div>
-        <div class="wb-kpi-card">
-          <div class="wb-kpi-card__label">Net Project ROI (${bc.horizonYears}-${bc.periodShort})</div>
-          <div class="wb-kpi-card__val" style="color:${bc.simpleRoiPct >= 0 ? '#1d4ed8' : '#dc2626'};">${fmtPct(bc.simpleRoiPct)}</div>
-          <div class="wb-kpi-card__sub">Annualized ROI: ${fmtPct(bc.annualizedRoiPct)} · Value Mult: ${bc.feeValueMultiple.toFixed(1)}x</div>
-        </div>
-        <div class="wb-kpi-card">
-          <div class="wb-kpi-card__label">Payback Period (${bc.periodName}s)</div>
-          <div class="wb-kpi-card__val">
-            ${bc.simplePaybackYears !== null ? `${bc.simplePaybackYears.toFixed(1)} ${bc.periodPlural}` : `>${bc.horizonYears} ${bc.periodPlural}`}
-          </div>
-          <div class="wb-kpi-card__sub">
-            Discounted Payback: ${bc.discountedPaybackYears !== null ? `${bc.discountedPaybackYears.toFixed(1)} ${bc.periodPlural}` : `>${bc.horizonYears} ${bc.periodPlural}`}
-          </div>
-        </div>
-        <div class="wb-kpi-card">
-          <div class="wb-kpi-card__label">Run-Rate EBITDA Uplift</div>
-          <div class="wb-kpi-card__val" style="color:#16a34a;">+${fm(bridge.netEbitdaLift)}</div>
-          <div class="wb-kpi-card__sub">+${bridge.marginExpansionBps.toFixed(0)} bps Margin · +${fm(bridge.impliedEvCreation)} Value</div>
-        </div>
-      </div>
-
-      <!-- TAB 1: BUSINESS CASE BUILDER -->
+      <!-- ======================================================================= -->
+      <!-- STEP 1: BUSINESS CASE BUILDER (FOCUSED SUB-TABS)                        -->
+      <!-- ======================================================================= -->
       <div id="tab-business-case" class="wb-tab-pane" style="display:${activeTab === 'business-case' ? 'block' : 'none'};">
-        <div class="wb-grid-2" style="margin-bottom: 1.25rem;">
-          <div class="wb-panel">
-            <div class="wb-panel__header">
-              <div>
-                <h3 class="wb-panel__title">Project Investment &amp; Benefit Inputs (${unitLabel})</h3>
-                <div class="wb-panel__subtitle">Model in Weeks, Months, or Years — switch Value Scale ($1, $100s, $K, $M) anytime</div>
-              </div>
-              ${conceptPill('npv', 'NPV & IRR')}
+        <div class="consulting-subtab-bar">
+          <div class="consulting-subtab-group">
+            <button type="button" class="consulting-subtab-btn ${sub1 === 'jcurve' ? 'active' : ''}" data-parent="business-case" data-subtab="jcurve">
+              📈 1A. J-Curve &amp; Core ROI
+            </button>
+            <button type="button" class="consulting-subtab-btn ${sub1 === 'fte' ? 'active' : ''}" data-parent="business-case" data-subtab="fte">
+              👥 1B. Bottom-Up FTE &amp; Time Savings
+            </button>
+            <button type="button" class="consulting-subtab-btn ${sub1 === 'bvb' ? 'active' : ''}" data-parent="business-case" data-subtab="bvb">
+              ⚖️ 1C. Build vs. Buy Comparator
+            </button>
+            <button type="button" class="consulting-subtab-btn ${sub1 === 'schedule' ? 'active' : ''}" data-parent="business-case" data-subtab="schedule">
+              📋 1D. Cash Flow Table (${bc.horizonYears} ${bc.periodName}s)
+            </button>
+          </div>
+          <span style="font-size:0.75rem; color:#64748b; font-weight:600; padding-right:0.35rem;">
+            Focused View · Switch sub-tabs above to explore FTE Sizing, Build vs. Buy, or the Full Schedule
+          </span>
+        </div>
+
+        <!-- SUB-TAB 1A: J-CURVE & CORE ROI -->
+        <div style="display:${sub1 === 'jcurve' ? 'block' : 'none'};">
+          <div class="consulting-takeaway-card">
+            <div class="consulting-takeaway-card__eyebrow">💡 Plain-English Executive Takeaway · Step 1A</div>
+            <div class="consulting-takeaway-card__headline">
+              ${bc.npv >= 0
+                ? `This project creates ${fm(bc.npv)} in Net Present Value above your ${fmtPct(bc.hurdleRate)} hurdle rate and recovers its initial outlay in ${paybackText}.`
+                : `At the current ${fmtPct(bc.hurdleRate)} hurdle rate, this project falls short by ${fm(Math.abs(bc.npv))}. Consider phasing CapEx or increasing ${bc.periodName} 1 benefits.`}
             </div>
-            <div class="wb-panel__body">
-              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.85rem;">
+            <div class="consulting-takeaway-card__body">
+              An upfront investment of <strong>${fm(bc.grossInitialSpend)}</strong> (${fm(bc.upfrontCapex)} CapEx + ${fm(bc.consultingFee)} setup fee) generates <strong>${fm(bc.totalGrossBenefits)}</strong> in cumulative gross benefits over <strong>${bc.horizonYears} ${bc.periodPlural}</strong>, yielding an annualized IRR of <strong>${fmtPct(bc.irr)}</strong> (${bc.profitabilityIndex.toFixed(2)}x Profitability Index).
+            </div>
+          </div>
+
+          <div class="wb-grid-2">
+            <div class="wb-panel">
+              <div class="wb-panel__header">
                 <div>
-                  <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Upfront CapEx / Outlay (${unitShort}) ${exactBadge(bc.upfrontCapex)}
-                  </label>
-                  <input type="number" id="num-capex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.upfrontCapex}" />
+                  <h3 class="wb-panel__title">Project Investment &amp; Benefit Assumptions (${unitShort})</h3>
+                  <div class="wb-panel__subtitle">Adjust core assumptions below — chart &amp; scoreboard update live</div>
                 </div>
-                <div>
-                  <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Consulting / Setup Fee (${unitShort}) ${exactBadge(bc.consultingFee)}
-                  </label>
-                  <input type="number" id="num-fee" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.consultingFee}" />
-                </div>
-                <div>
-                  <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    ${bc.periodName} 1 Gross Benefit (${unitShort}) ${exactBadge(bc.yr1Benefit)}
-                  </label>
-                  <input type="number" id="num-benefit" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.yr1Benefit}" />
-                </div>
-                <div>
-                  <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Benefit Growth / Ramp (% per ${bc.periodShort})
-                  </label>
-                  <input type="number" id="num-growth" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" value="${(bc.benefitGrowth * 100).toFixed(1)}" />
-                </div>
-                <div>
-                  <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Ongoing ${periodicLabel} OpEx (${unitShort}) ${exactBadge(bc.ongoingOpex)}
-                  </label>
-                  <input type="number" id="num-opex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.ongoingOpex}" />
-                </div>
-                <div>
-                  <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Project Horizon (1–${maxHorizon} ${bc.periodName}s)
-                  </label>
-                  <div style="display:flex; gap:0.35rem; align-items:center;">
-                    <input type="number" id="num-horizon" class="analyze-input" style="width:74px; font-weight:700;" step="1" min="1" max="${maxHorizon}" value="${bc.horizonYears}" />
-                    <select id="sel-horizon-unit" class="analyze-input" style="flex:1; font-weight:700; cursor:pointer;">
-                      <option value="years" ${bc.horizonUnit === 'years' ? 'selected' : ''}>Years</option>
-                      <option value="months" ${bc.horizonUnit === 'months' ? 'selected' : ''}>Months</option>
-                      <option value="weeks" ${bc.horizonUnit === 'weeks' ? 'selected' : ''}>Weeks</option>
-                    </select>
+                ${conceptPill('npv', 'NPV & IRR')}
+              </div>
+              <div class="wb-panel__body">
+                <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem;">
+                  <div>
+                    <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
+                      Upfront CapEx (${unitShort}) ${exactBadge(bc.upfrontCapex)}
+                    </label>
+                    <input type="number" id="num-capex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.upfrontCapex}" />
                   </div>
-                  <input type="range" id="sl-horizon" min="1" max="${maxHorizon}" step="1" value="${bc.horizonYears}" style="width:100%; margin-top:0.35rem;" />
-                </div>
-                <div>
-                  <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Annual Hurdle / Discount Rate (%)
-                  </label>
-                  <input type="number" id="num-hurdle" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" min="1" max="35" value="${(bc.hurdleRate * 100).toFixed(1)}" />
-                </div>
-                <div>
-                  <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Tax Rate (% · Use 0% for Pre-Tax)
-                  </label>
-                  <input type="number" id="num-tax" class="analyze-input" style="width:100%; font-weight:700;" step="1" min="0" max="40" value="${(bc.taxRate * 100).toFixed(0)}" />
-                </div>
-              </div>
-
-              <!-- Optional Custom Period-by-Period Benefits Override -->
-              <div style="margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid #e2e8f0;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.45rem;">
-                  <span style="font-size:0.76rem; font-weight:800; text-transform:uppercase; color:#475569;">
-                    Custom ${bc.periodName}-by-${bc.periodName} Gross Benefit Override (${unit})
-                  </span>
-                  ${state.customYearlyBenefits ? `
-                    <button type="button" id="reset-custom-yrs-btn" class="btn btn--secondary btn--sm" style="font-size:0.7rem; padding:0.15rem 0.5rem;">
-                      Reset to ${fmtPct(bc.benefitGrowth)}/${bc.periodShort} Growth Formula
-                    </button>
-                  ` : `<span style="font-size:0.72rem; color:#64748b;">Edit any ${bc.periodName.toLowerCase()} below to override the ${fmtPct(bc.benefitGrowth)}/${bc.periodShort} ramp</span>`}
-                </div>
-                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 0.45rem; max-height: 155px; overflow-y: auto;">
-                  ${bc.schedule.filter(s => s.year > 0).map(s => `
-                    <div>
-                      <label style="font-size:0.68rem; font-weight:700; color:#64748b; display:block;">${bc.periodShort} ${s.year}</label>
-                      <input type="number" class="analyze-input custom-yr-ben-input" data-yr="${s.year}"
-                        style="width:100%; padding:0.3rem 0.4rem; font-size:0.8rem;"
-                        step="any" value="${Number(s.grossBenefit.toFixed(2))}" />
+                  <div>
+                    <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
+                      Setup / Consulting Fee (${unitShort}) ${exactBadge(bc.consultingFee)}
+                    </label>
+                    <input type="number" id="num-fee" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.consultingFee}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
+                      ${bc.periodName} 1 Gross Benefit (${unitShort}) ${exactBadge(bc.yr1Benefit)}
+                    </label>
+                    <input type="number" id="num-benefit" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.yr1Benefit}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
+                      Benefit Growth (% per ${bc.periodShort})
+                    </label>
+                    <input type="number" id="num-growth" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" value="${(bc.benefitGrowth * 100).toFixed(1)}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
+                      Ongoing ${periodicLabel} OpEx (${unitShort}) ${exactBadge(bc.ongoingOpex)}
+                    </label>
+                    <input type="number" id="num-opex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.ongoingOpex}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
+                      Horizon (1–${maxHorizon} ${bc.periodName}s)
+                    </label>
+                    <div style="display:flex; gap:0.35rem; align-items:center;">
+                      <input type="number" id="num-horizon" class="analyze-input" style="width:70px; font-weight:700;" step="1" min="1" max="${maxHorizon}" value="${bc.horizonYears}" />
+                      <select id="sel-horizon-unit" class="analyze-input" style="flex:1; font-weight:700; cursor:pointer;">
+                        <option value="years" ${bc.horizonUnit === 'years' ? 'selected' : ''}>Years</option>
+                        <option value="months" ${bc.horizonUnit === 'months' ? 'selected' : ''}>Months</option>
+                        <option value="weeks" ${bc.horizonUnit === 'weeks' ? 'selected' : ''}>Weeks</option>
+                      </select>
                     </div>
+                    <input type="range" id="sl-horizon" min="1" max="${maxHorizon}" step="1" value="${bc.horizonYears}" style="width:100%; margin-top:0.3rem;" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
+                      Annual Hurdle Rate (%)
+                    </label>
+                    <input type="number" id="num-hurdle" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" min="1" max="35" value="${(bc.hurdleRate * 100).toFixed(1)}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
+                      Tax Rate (% · 0% = Pre-Tax)
+                    </label>
+                    <input type="number" id="num-tax" class="analyze-input" style="width:100%; font-weight:700;" step="1" min="0" max="40" value="${(bc.taxRate * 100).toFixed(0)}" />
+                  </div>
+                </div>
+
+                <!-- Collapsible Custom Period-by-Period Override so it doesn't clutter default view -->
+                <details style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #e2e8f0;" ${state.customYearlyBenefits ? 'open' : ''}>
+                  <summary style="font-size:0.76rem; font-weight:700; color:#1d4ed8; cursor:pointer;">
+                    ⚙️ Advanced: Custom ${bc.periodName}-by-${bc.periodName} Benefit Ramp Override (${unitShort})
+                  </summary>
+                  <div style="margin-top:0.65rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.45rem;">
+                      <span style="font-size:0.72rem; color:#64748b;">Type custom benefits for any ${bc.periodName.toLowerCase()} below</span>
+                      ${state.customYearlyBenefits ? `
+                        <button type="button" id="reset-custom-yrs-btn" class="btn btn--secondary btn--sm" style="font-size:0.7rem; padding:0.15rem 0.5rem;">
+                          Reset to ${fmtPct(bc.benefitGrowth)}/${bc.periodShort} Ramp
+                        </button>
+                      ` : ''}
+                    </div>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 0.45rem; max-height: 150px; overflow-y: auto;">
+                      ${bc.schedule.filter(s => s.year > 0).map(s => `
+                        <div>
+                          <label style="font-size:0.68rem; font-weight:700; color:#64748b; display:block;">${bc.periodShort} ${s.year}</label>
+                          <input type="number" class="analyze-input custom-yr-ben-input" data-yr="${s.year}"
+                            style="width:100%; padding:0.3rem 0.4rem; font-size:0.8rem;"
+                            step="any" value="${Number(s.grossBenefit.toFixed(2))}" />
+                        </div>
+                      `).join('')}
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">Cumulative Cash Flow &amp; NPV "J-Curve" (${unitLabel})</h3>
+                  <div class="wb-panel__subtitle">Green Curve = Discounted Cumulative NPV · Bars = ${periodicLabel} Net Cash Flow</div>
+                </div>
+                ${conceptPill('capital-budgeting', 'J-Curve & Payback')}
+              </div>
+              <div class="wb-panel__body">
+                <canvas id="consulting-jcurve-canvas" style="width:100%; height:295px; display:block;"></canvas>
+                <div class="consulting-callout-grid">
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Net Initial Outlay</div>
+                    <div class="consulting-callout-card__val">${fm(bc.totalInitialOutlay)}</div>
+                    <div class="consulting-callout-card__note">Gross spend: ${fm(bc.grossInitialSpend)}</div>
+                  </div>
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Cumulative Net Cash Inflow</div>
+                    <div class="consulting-callout-card__val" style="color:#16a34a;">+${fm(bc.totalNetCashInflows)}</div>
+                    <div class="consulting-callout-card__note">Over ${bc.horizonYears} ${bc.periodPlural}</div>
+                  </div>
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Break-Even Payback</div>
+                    <div class="consulting-callout-card__val">${paybackText}</div>
+                    <div class="consulting-callout-card__note">Value Mult: ${bc.feeValueMultiple.toFixed(1)}x</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 1B: BOTTOM-UP FTE & TIME-SAVINGS ESTIMATOR -->
+        <div style="display:${sub1 === 'fte' ? 'block' : 'none'};">
+          <div class="consulting-takeaway-card">
+            <div class="consulting-takeaway-card__eyebrow">👥 Plain-English Executive Takeaway · Bottom-Up FTE Sizing</div>
+            <div class="consulting-takeaway-card__headline">
+              Saving ${fte.hoursSavedPerWeek} hrs/week across ${fte.impactedEmployees} employees unlocks ${fte.fteEquivalentSaved.toFixed(1)} FTEs of operational capacity ($${Math.round(fte.annualLaborSavingsDollars).toLocaleString()}/year).
+            </div>
+            <div class="consulting-takeaway-card__body">
+              Building this initiative with <strong>${fte.buildFtes} FTEs</strong> for <strong>${fte.buildWeeks} weeks</strong> (${fte.totalBuildHours.toLocaleString()} hours @ $${fte.buildHourlyRate}/hr) plus ${fm(fte.hardwareSoftwareCapex)} in tech CapEx implies an upfront outlay of <strong>${fm(fte.impliedUpfrontCapex)}</strong> and a ${bc.periodName} 1 Gross Benefit of <strong>${fm(fte.impliedPeriod1Benefit)}</strong>.
+            </div>
+          </div>
+
+          <div class="wb-grid-2">
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">Bottom-Up Team &amp; Time-Savings Inputs</h3>
+                  <div class="wb-panel__subtitle">Size your build cost and ongoing productivity gains from headcount &amp; hours</div>
+                </div>
+              </div>
+              <div class="wb-panel__body">
+                <div style="font-size:0.74rem; font-weight:800; text-transform:uppercase; color:#1e3a8a; margin-bottom:0.5rem;">
+                  A. Project Build Team &amp; Upfront Tech CapEx
+                </div>
+                <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:0.75rem; margin-bottom:1rem;">
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Build Team Headcount (FTEs)</label>
+                    <input type="number" id="num-fte-build" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" min="0.5" value="${fte.buildFtes}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Blended Build Rate ($/hr)</label>
+                    <input type="number" id="num-fte-build-rate" class="analyze-input" style="width:100%; font-weight:700;" step="5" min="15" value="${fte.buildHourlyRate}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Build Duration (Weeks @ ${fte.buildHoursPerWeek}h/wk)</label>
+                    <input type="number" id="num-fte-build-wks" class="analyze-input" style="width:100%; font-weight:700;" step="1" min="1" value="${fte.buildWeeks}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Hardware / Software CapEx (${unitShort})</label>
+                    <input type="number" id="num-fte-hw-capex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${fte.hardwareSoftwareCapex}" />
+                  </div>
+                </div>
+
+                <div style="font-size:0.74rem; font-weight:800; text-transform:uppercase; color:#15803d; margin-bottom:0.5rem;">
+                  B. Operational Time-Savings &amp; Legacy Cost Retirement
+                </div>
+                <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:0.75rem;">
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Impacted Employees (Headcount)</label>
+                    <input type="number" id="num-fte-impacted" class="analyze-input" style="width:100%; font-weight:700;" step="1" min="1" value="${fte.impactedEmployees}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Hours Saved / Employee / Week</label>
+                    <input type="number" id="num-fte-hrs-saved" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" min="0.25" value="${fte.hoursSavedPerWeek}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Employee Hourly Cost ($/hr)</label>
+                    <input type="number" id="num-fte-emp-rate" class="analyze-input" style="width:100%; font-weight:700;" step="5" min="15" value="${fte.employeeHourlyRate}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Legacy Spend Retired / ${bc.periodShort} (${unitShort})</label>
+                    <input type="number" id="num-fte-retired" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${fte.retiredSpendPerPeriod}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">Implied Business Case Sizing Summary</h3>
+                  <div class="wb-panel__subtitle">One-click push into your main Business Case model</div>
+                </div>
+                <button type="button" class="btn btn--primary btn--sm" id="apply-fte-btn">
+                  ⚡ Push to Business Case
+                </button>
+              </div>
+              <div class="wb-panel__body">
+                <div class="consulting-callout-grid" style="margin-top:0;">
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Implied Upfront CapEx</div>
+                    <div class="consulting-callout-card__val" style="color:#1e3a8a;">${fm(fte.impliedUpfrontCapex)}</div>
+                    <div class="consulting-callout-card__note">${fte.totalBuildHours.toLocaleString()} build hrs + tech CapEx</div>
+                  </div>
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">FTE Capacity Unlocked</div>
+                    <div class="consulting-callout-card__val" style="color:#15803d;">${fte.fteEquivalentSaved.toFixed(1)} FTEs</div>
+                    <div class="consulting-callout-card__note">${Math.round(fte.annualHoursSaved).toLocaleString()} hrs saved / yr</div>
+                  </div>
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Implied ${bc.periodName} 1 Benefit</div>
+                    <div class="consulting-callout-card__val" style="color:#16a34a;">${fm(fte.impliedPeriod1Benefit)}</div>
+                    <div class="consulting-callout-card__note">$${Math.round(fte.totalPeriod1BenefitDollars).toLocaleString()} / ${bc.periodShort}</div>
+                  </div>
+                </div>
+                <div style="margin-top:1rem; padding:1rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:0.75rem; font-size:0.84rem; line-height:1.6; color:#334155;">
+                  <div><strong>1. Engineering / Build Labor:</strong> ${fte.buildFtes} FTEs &times; ${fte.buildWeeks} wks &times; ${fte.buildHoursPerWeek} hrs/wk &times; $${fte.buildHourlyRate}/hr = <strong>$${Math.round(fte.buildLaborDollars).toLocaleString()}</strong></div>
+                  <div><strong>2. Non-Labor Hardware/Software:</strong> <strong>$${Math.round(fte.hardwareSoftwareDollars).toLocaleString()}</strong> (${fm(fte.hardwareSoftwareCapex)})</div>
+                  <div><strong>3. Annual Productivity Value:</strong> ${fte.impactedEmployees} employees &times; ${fte.hoursSavedPerWeek} hrs/wk &times; 52 wks &times; $${fte.employeeHourlyRate}/hr = <strong>$${Math.round(fte.annualLaborSavingsDollars).toLocaleString()}/yr</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 1C: BUILD VS. BUY / OPTION A VS. OPTION B COMPARATOR -->
+        <div style="display:${sub1 === 'bvb' ? 'block' : 'none'};">
+          <div class="consulting-takeaway-card">
+            <div class="consulting-takeaway-card__eyebrow">⚖️ Plain-English Executive Takeaway · Strategic Option Selection</div>
+            <div class="consulting-takeaway-card__headline">
+              🏆 Recommended Path: ${bvb.recommended.label} delivers the highest Net Present Value (${fm(bvb.recommended.bc.npv)}) with a ${bvb.recommended.bc.simplePaybackYears !== null ? `${bvb.recommended.bc.simplePaybackYears.toFixed(1)} ${bc.periodPlural}` : `>${bc.horizonYears}`} payback.
+            </div>
+            <div class="consulting-takeaway-card__body">
+              <strong>Option A (In-House Build)</strong> requires ${fm(bvb.optionA.bc.grossInitialSpend)} upfront (${bc.horizonYears}-${bc.periodShort} TCO: ${fm(bvb.optionA.tcoUndiscounted)}), whereas <strong>Option B (Vendor/SaaS Buy)</strong> requires ${fm(bvb.optionB.bc.grossInitialSpend)} upfront (${bc.horizonYears}-${bc.periodShort} TCO: ${fm(bvb.optionB.tcoUndiscounted)}).
+            </div>
+          </div>
+
+          <div class="wb-grid-2">
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">Configure Option B (Vendor / SaaS Buy in ${unitShort})</h3>
+                  <div class="wb-panel__subtitle">Compare against Option A (Current Plan) and Option C (Lean MVP)</div>
+                </div>
+                <button type="button" class="btn btn--secondary btn--sm" id="adopt-opt-b-btn">
+                  ⚡ Adopt Option B
+                </button>
+              </div>
+              <div class="wb-panel__body">
+                <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:0.75rem; margin-bottom:1rem;">
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Option B Upfront (${unitShort})</label>
+                    <input type="number" id="num-buy-capex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bvb.buyUpfrontCapex}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Option B Setup Fee (${unitShort})</label>
+                    <input type="number" id="num-buy-fee" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bvb.buyConsultingFee}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Option B ${bc.periodShort} 1 Benefit (${unitShort})</label>
+                    <input type="number" id="num-buy-benefit" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bvb.buyYr1Benefit}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Option B SaaS OpEx / ${bc.periodShort} (${unitShort})</label>
+                    <input type="number" id="num-buy-opex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bvb.buyOngoingOpex}" />
+                  </div>
+                </div>
+
+                <div class="wb-table-wrap">
+                  <table class="wb-table">
+                    <thead>
+                      <tr>
+                        <th>Strategic Option</th>
+                        <th>Upfront</th>
+                        <th>${bc.horizonYears}-${bc.periodShort} TCO</th>
+                        <th>NPV (${unitShort})</th>
+                        <th>IRR</th>
+                        <th>Payback</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${bvb.options.map(opt => `
+                        <tr class="${opt.id === bvb.recommended.id ? 'wb-row-total' : ''}">
+                          <td><strong>${opt.label}</strong> ${opt.id === bvb.recommended.id ? '🏆' : ''}</td>
+                          <td>${fm(opt.bc.grossInitialSpend)}</td>
+                          <td>${fm(opt.tcoUndiscounted)}</td>
+                          <td>${fm(opt.bc.npv)}</td>
+                          <td>${fmtPct(opt.bc.irr)}</td>
+                          <td>${opt.bc.simplePaybackYears !== null ? `${opt.bc.simplePaybackYears.toFixed(1)} ${bc.periodPlural}` : `>${bc.horizonYears}`}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">Build vs. Buy vs. Lean MVP Visual Comparison (${unitLabel})</h3>
+                  <div class="wb-panel__subtitle">Green = Net Present Value (NPV) · Slate = Present Value of Total Cost (PV TCO)</div>
+                </div>
+              </div>
+              <div class="wb-panel__body">
+                <canvas id="consulting-bvb-canvas" style="width:100%; height:250px; display:block;"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 1D: FULL CASH FLOW SCHEDULE -->
+        <div style="display:${sub1 === 'schedule' ? 'block' : 'none'};">
+          <div class="wb-panel">
+            <div class="wb-panel__header">
+              <div>
+                <h3 class="wb-panel__title">Multi-${bc.periodName} Project Cash Flow &amp; ROI Schedule (${state.projectName})</h3>
+                <div class="wb-panel__subtitle">All figures in ${unitLabel} · Horizon: ${bc.horizonYears} ${bc.periodName}s · Annual Hurdle: ${fmtPct(bc.hurdleRate)} (${fmtPct(bc.periodicHurdleRate)}/${bc.periodShort}) · Tax: ${fmtPct(bc.taxRate)}</div>
+              </div>
+              ${conceptPill('irr', 'IRR vs. MIRR')}
+            </div>
+            <div class="wb-table-wrap">
+              <table class="wb-table">
+                <thead>
+                  <tr>
+                    <th>Business Case Line Item</th>
+                    <th>Concept</th>
+                    ${bc.schedule.map(s => `<th>${bc.periodName} ${s.year}</th>`).join('')}
+                    <th>Total / KPI</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Upfront Project Outlay + Setup Fee</td>
+                    <td>${conceptPill('capital-budgeting', 'Outlay')}</td>
+                    ${bc.schedule.map(s => `<td>${s.capexAndFee < 0 ? `(${fm(Math.abs(s.capexAndFee))})` : '—'}</td>`).join('')}
+                    <td>(${fm(bc.grossInitialSpend)})</td>
+                  </tr>
+                  <tr>
+                    <td>Gross Project Benefits (Savings + Revenue Uplift)</td>
+                    <td>${conceptPill('fcf', 'Inflows')}</td>
+                    ${bc.schedule.map(s => `<td>${s.year === 0 ? '—' : fm(s.grossBenefit)}</td>`).join('')}
+                    <td>${fm(bc.totalGrossBenefits)}</td>
+                  </tr>
+                  <tr>
+                    <td>Ongoing ${periodicLabel} OpEx &amp; Licensing</td>
+                    <td>${conceptPill('reformulated-is', 'OpEx')}</td>
+                    ${bc.schedule.map(s => `<td>${s.year === 0 ? '—' : `(${fm(s.ongoingOpex)})`}</td>`).join('')}
+                    <td>(${fm(bc.totalOngoingOpex)})</td>
+                  </tr>
+                  ${bc.taxRate > 0 ? `
+                  <tr>
+                    <td>Depreciation &amp; Fee Tax Shield (${fmtPct(bc.taxRate)})</td>
+                    <td>${conceptPill('deferred-tax', 'Tax Shield')}</td>
+                    ${bc.schedule.map(s => `<td>${fm(s.taxShield)}</td>`).join('')}
+                    <td>${fm(bc.schedule.reduce((a, b) => a + b.taxShield, 0))}</td>
+                  </tr>
+                  ` : ''}
+                  <tr class="wb-row-total">
+                    <td>Net Incremental Cash Flow (FCF)</td>
+                    <td>${conceptPill('fcf', 'Project FCF')}</td>
+                    ${bc.schedule.map(s => `<td>${fm(s.fcf)}</td>`).join('')}
+                    <td>${fm(bc.totalNetCashInflows - bc.totalInitialOutlay)}</td>
+                  </tr>
+                  <tr>
+                    <td>Present Value of FCF (Discounted @ ${fmtPct(bc.periodicHurdleRate)}/${bc.periodShort})</td>
+                    <td>${conceptPill('npv', 'PV(FCF)')}</td>
+                    ${bc.schedule.map(s => `<td>${fm(s.pvFcf)}</td>`).join('')}
+                    <td>${fm(bc.npv)}</td>
+                  </tr>
+                  <tr>
+                    <td>Cumulative Undiscounted Cash Flow</td>
+                    <td>${conceptPill('capital-budgeting', 'Payback')}</td>
+                    ${bc.schedule.map(s => `<td>${fm(s.cumUndiscounted)}</td>`).join('')}
+                    <td>${paybackText}</td>
+                  </tr>
+                  <tr class="wb-row-total">
+                    <td>Cumulative Discounted NPV (J-Curve)</td>
+                    <td>${conceptPill('npv', 'Cum. NPV')}</td>
+                    ${bc.schedule.map(s => `<td>${fm(s.cumDiscounted)}</td>`).join('')}
+                    <td>${fm(bc.npv)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================= -->
+      <!-- STEP 2: EBITDA BRIDGE WATERFALL & VALUE LEVERS                          -->
+      <!-- ======================================================================= -->
+      <div id="tab-ebitda-bridge" class="wb-tab-pane" style="display:${activeTab === 'ebitda-bridge' ? 'block' : 'none'};">
+        <div class="consulting-subtab-bar">
+          <div class="consulting-subtab-group">
+            <button type="button" class="consulting-subtab-btn ${sub2 === 'waterfall' ? 'active' : ''}" data-parent="ebitda-bridge" data-subtab="waterfall">
+              📊 2A. Visual EBITDA Waterfall &amp; Levers
+            </button>
+            <button type="button" class="consulting-subtab-btn ${sub2 === 'drivers' ? 'active' : ''}" data-parent="ebitda-bridge" data-subtab="drivers">
+              📋 2B. Value Driver Breakdown Table
+            </button>
+          </div>
+          <span style="font-size:0.75rem; color:#64748b; font-weight:600; padding-right:0.35rem;">
+            Decompose how Pricing, Volume, COGS &amp; SG&amp;A expand operating profit
+          </span>
+        </div>
+
+        <!-- SUB-TAB 2A: VISUAL EBITDA WATERFALL -->
+        <div style="display:${sub2 === 'waterfall' ? 'block' : 'none'};">
+          <div class="consulting-takeaway-card">
+            <div class="consulting-takeaway-card__eyebrow">📈 Plain-English Executive Takeaway · Operational Profit Bridge</div>
+            <div class="consulting-takeaway-card__headline">
+              Operational levers lift annual run-rate EBITDA from ${fm(bridge.baseEbitda)} to ${fm(bridge.targetEbitda)} (+${fm(bridge.netEbitdaLift)}, or +${bridge.marginExpansionBps.toFixed(0)} bps margin expansion).
+            </div>
+            <div class="consulting-takeaway-card__body">
+              At a <strong>${fmtMult(bridge.evMultiple)}</strong> valuation multiple, this recurring profit expansion creates <strong>+${fm(bridge.impliedEvCreation)}</strong> in implied enterprise value after accounting for ${fm(bridge.runRateProgramOpex)} in ongoing program OpEx.
+            </div>
+          </div>
+
+          <div class="wb-grid-2">
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">Department Baseline &amp; Value Levers (${unitShort})</h3>
+                  <div class="wb-panel__subtitle">Move sliders or type exact percentages to test profit drivers</div>
+                </div>
+                ${conceptPill('dupont', 'Value Drivers')}
+              </div>
+              <div class="wb-panel__body">
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:0.65rem; margin-bottom:1rem;">
+                  <div>
+                    <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Base Revenue (${unitShort})</label>
+                    <input type="number" id="num-base-rev" class="analyze-input" style="width:100%; font-weight:700;" step="any" value="${bridge.baseRev}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Base COGS (${unitShort})</label>
+                    <input type="number" id="num-base-cogs" class="analyze-input" style="width:100%; font-weight:700;" step="any" value="${bridge.baseCogs}" />
+                  </div>
+                  <div>
+                    <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Base SG&amp;A (${unitShort})</label>
+                    <input type="number" id="num-base-sga" class="analyze-input" style="width:100%; font-weight:700;" step="any" value="${bridge.baseSga}" />
+                  </div>
+                </div>
+
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>1. Commercial Pricing Realization (%)</label>
+                    <span class="wb-slider-num-wrap">
+                      <span class="wb-slider-val">+${fm(bridge.pricingEbitdaLift)}</span>
+                      <input type="number" id="num-price-lift" class="wb-slider-num" step="0.25" min="0" max="50" value="${(bridge.priceUpliftPct * 100).toFixed(2)}" />
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                    </span>
+                  </div>
+                  <input type="range" id="sl-price-lift" min="0" max="0.10" step="0.0025" value="${bridge.priceUpliftPct}" />
+                </div>
+
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>2. Volume / Throughput Expansion (%)</label>
+                    <span class="wb-slider-num-wrap">
+                      <span class="wb-slider-val">+${fm(bridge.volumeEbitdaLift)}</span>
+                      <input type="number" id="num-vol-lift" class="wb-slider-num" step="0.5" min="0" max="100" value="${(bridge.volumeGrowthPct * 100).toFixed(1)}" />
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                    </span>
+                  </div>
+                  <input type="range" id="sl-vol-lift" min="0" max="0.15" step="0.005" value="${bridge.volumeGrowthPct}" />
+                </div>
+
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>3. Procurement &amp; Direct COGS Savings (%)</label>
+                    <span class="wb-slider-num-wrap">
+                      <span class="wb-slider-val">+${fm(bridge.cogsEbitdaLift)}</span>
+                      <input type="number" id="num-cogs-save" class="wb-slider-num" step="0.5" min="0" max="50" value="${(bridge.cogsSavingsPct * 100).toFixed(1)}" />
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                    </span>
+                  </div>
+                  <input type="range" id="sl-cogs-save" min="0" max="0.15" step="0.005" value="${bridge.cogsSavingsPct}" />
+                </div>
+
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>4. SG&amp;A &amp; Labor Productivity (%)</label>
+                    <span class="wb-slider-num-wrap">
+                      <span class="wb-slider-val">+${fm(bridge.sgaEbitdaLift)}</span>
+                      <input type="number" id="num-sga-save" class="wb-slider-num" step="0.5" min="0" max="60" value="${(bridge.sgaSavingsPct * 100).toFixed(1)}" />
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                    </span>
+                  </div>
+                  <input type="range" id="sl-sga-save" min="0" max="0.25" step="0.005" value="${bridge.sgaSavingsPct}" />
+                </div>
+              </div>
+            </div>
+
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">Executive EBITDA Waterfall Bridge (${unitLabel})</h3>
+                  <div class="wb-panel__subtitle">Baseline ${fm(bridge.baseEbitda)} &rarr; Target Run-Rate ${fm(bridge.targetEbitda)}</div>
+                </div>
+                ${conceptPill('multiples', 'Value Creation')}
+              </div>
+              <div class="wb-panel__body">
+                <canvas id="consulting-waterfall-canvas" style="width:100%; height:295px; display:block;"></canvas>
+                <div class="consulting-callout-grid">
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Baseline EBITDA</div>
+                    <div class="consulting-callout-card__val">${fm(bridge.baseEbitda)}</div>
+                    <div class="consulting-callout-card__note">${fmtPct(bridge.baseMargin)} Margin</div>
+                  </div>
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Net Run-Rate Uplift</div>
+                    <div class="consulting-callout-card__val" style="color:#16a34a;">+${fm(bridge.netEbitdaLift)}</div>
+                    <div class="consulting-callout-card__note">+${bridge.marginExpansionBps.toFixed(0)} bps Expansion</div>
+                  </div>
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Implied Value Created</div>
+                    <div class="consulting-callout-card__val" style="color:#1d4ed8;">+${fm(bridge.impliedEvCreation)}</div>
+                    <div class="consulting-callout-card__note">@ ${fmtMult(bridge.evMultiple)} EV/EBITDA</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 2B: VALUE DRIVER BREAKDOWN TABLE -->
+        <div style="display:${sub2 === 'drivers' ? 'block' : 'none'};">
+          <div class="wb-panel">
+            <div class="wb-panel__header">
+              <div>
+                <h3 class="wb-panel__title">Value Driver Tree &amp; Capitalized Value Summary (${unitLabel})</h3>
+                <div class="wb-panel__subtitle">Shows how each operational lever contributes to run-rate EBITDA and enterprise value</div>
+              </div>
+            </div>
+            <div class="wb-table-wrap">
+              <table class="wb-table">
+                <thead>
+                  <tr>
+                    <th>Value Creation Lever</th>
+                    <th>Baseline Metric</th>
+                    <th>Target Lever</th>
+                    <th>Run-Rate EBITDA Impact</th>
+                    <th>Capitalized Value (${fmtMult(bridge.evMultiple)})</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Commercial Pricing Realization (100% Flow-Through)</td>
+                    <td>${fm(bridge.baseRev)} Revenue</td>
+                    <td>+${fmtPct(bridge.priceUpliftPct)} Price Realization</td>
+                    <td>+${fm(bridge.pricingEbitdaLift)}</td>
+                    <td>+${fm(bridge.pricingEbitdaLift * bridge.evMultiple)}</td>
+                  </tr>
+                  <tr>
+                    <td>Volume &amp; Service Throughput Growth</td>
+                    <td>${fm(bridge.baseRev)} Revenue</td>
+                    <td>+${fmtPct(bridge.volumeGrowthPct)} Volume Growth</td>
+                    <td>+${fm(bridge.volumeEbitdaLift)}</td>
+                    <td>+${fm(bridge.volumeEbitdaLift * bridge.evMultiple)}</td>
+                  </tr>
+                  <tr>
+                    <td>Vendor Procurement &amp; Direct Cost Savings</td>
+                    <td>${fm(bridge.baseCogs)} Direct COGS</td>
+                    <td>−${fmtPct(bridge.cogsSavingsPct)} Unit Cost Reduction</td>
+                    <td>+${fm(bridge.cogsEbitdaLift)}</td>
+                    <td>+${fm(bridge.cogsEbitdaLift * bridge.evMultiple)}</td>
+                  </tr>
+                  <tr>
+                    <td>SG&amp;A Automation &amp; Labor Productivity</td>
+                    <td>${fm(bridge.baseSga)} SG&amp;A / Labor</td>
+                    <td>−${fmtPct(bridge.sgaSavingsPct)} Overhead Reduction</td>
+                    <td>+${fm(bridge.sgaEbitdaLift)}</td>
+                    <td>+${fm(bridge.sgaEbitdaLift * bridge.evMultiple)}</td>
+                  </tr>
+                  <tr>
+                    <td>Ongoing Program &amp; Software Run-Rate OpEx</td>
+                    <td>—</td>
+                    <td>Recurring Support Cost</td>
+                    <td>(${fm(bridge.runRateProgramOpex)})</td>
+                    <td>(${fm(bridge.runRateProgramOpex * bridge.evMultiple)})</td>
+                  </tr>
+                  <tr class="wb-row-total">
+                    <td>Net Pro-Forma Run-Rate Uplift</td>
+                    <td>${fm(bridge.baseEbitda)} (${fmtPct(bridge.baseMargin)})</td>
+                    <td>+${bridge.marginExpansionBps.toFixed(0)} bps Margin Lift</td>
+                    <td>+${fm(bridge.netEbitdaLift)}</td>
+                    <td>+${fm(bridge.impliedEvCreation)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================= -->
+      <!-- STEP 3: BREAK-EVEN, PRICING POWER & UNIT ECONOMICS (FOCUSED SUB-TABS)   -->
+      <!-- ======================================================================= -->
+      <div id="tab-pricing-unit" class="wb-tab-pane" style="display:${activeTab === 'pricing-unit' ? 'block' : 'none'};">
+        <div class="consulting-subtab-bar">
+          <div class="consulting-subtab-group">
+            <button type="button" class="consulting-subtab-btn ${sub3 === 'cvp' ? 'active' : ''}" data-parent="pricing-unit" data-subtab="cvp">
+              🎯 3A. Volume Break-Even (CVP)
+            </button>
+            <button type="button" class="consulting-subtab-btn ${sub3 === 'ltv' ? 'active' : ''}" data-parent="pricing-unit" data-subtab="ltv">
+              🔁 3B. Customer LTV / CAC &amp; Payback
+            </button>
+            <button type="button" class="consulting-subtab-btn ${sub3 === 'matrix' ? 'active' : ''}" data-parent="pricing-unit" data-subtab="matrix">
+              🧮 3C. Price vs. Volume Trade-Off Matrix
+            </button>
+          </div>
+          <span style="font-size:0.75rem; color:#64748b; font-weight:600; padding-right:0.35rem;">
+            One focused unit-economics lens at a time
+          </span>
+        </div>
+
+        <!-- SUB-TAB 3A: VOLUME BREAK-EVEN (CVP) -->
+        <div style="display:${sub3 === 'cvp' ? 'block' : 'none'};">
+          <div class="consulting-takeaway-card">
+            <div class="consulting-takeaway-card__eyebrow">🎯 Plain-English Executive Takeaway · Volume Break-Even</div>
+            <div class="consulting-takeaway-card__headline">
+              Each unit sold generates $${unitEcon.unitContribution.toFixed(2)} in contribution margin (${fmtPct(unitEcon.contributionMarginPct)}). To cover $${Math.round(unitEcon.fixedCostsDollars).toLocaleString()} in fixed overhead, you must sell ${Math.ceil(unitEcon.breakEvenUnits).toLocaleString()} units (${fm(unitEcon.breakEvenRevenue)} revenue).
+            </div>
+            <div class="consulting-takeaway-card__body">
+              If you raise price by <strong>+${fmtPct(unitEcon.proposedPriceChangePct)}</strong> (to $${unitEcon.newUnitPrice.toFixed(2)}/unit), your break-even volume drops to <strong>${Math.ceil(unitEcon.newBreakEvenUnits).toLocaleString()} units</strong>—meaning you can lose up to <strong>${fmtPct(Math.abs(unitEcon.maxVolumeLossForPriceHike))}</strong> of unit volume and still make the exact same profit.
+            </div>
+          </div>
+
+          <div class="wb-grid-2">
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">Cost-Volume-Profit (CVP) Controls</h3>
+                  <div class="wb-panel__subtitle">Adjust unit price, variable cost, and fixed overhead</div>
+                </div>
+                ${conceptPill('operating-leverage', 'CVP & DOL')}
+              </div>
+              <div class="wb-panel__body">
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>Average Unit / Contract Price ($)</label>
+                    <span class="wb-slider-num-wrap">
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
+                      <input type="number" id="num-unit-price" class="wb-slider-num" step="any" min="1" value="${unitEcon.unitPrice}" />
+                    </span>
+                  </div>
+                  <input type="range" id="sl-unit-price" min="20" max="2000" step="10" value="${unitEcon.unitPrice}" />
+                </div>
+
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>Variable Cost per Unit ($)</label>
+                    <span class="wb-slider-num-wrap">
+                      <span class="wb-slider-val">CM: $${unitEcon.unitContribution.toFixed(0)}/u (${fmtPct(unitEcon.contributionMarginPct)})</span>
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
+                      <input type="number" id="num-unit-vc" class="wb-slider-num" step="any" min="0" value="${unitEcon.unitVarCost}" />
+                    </span>
+                  </div>
+                  <input type="range" id="sl-unit-vc" min="5" max="${Math.max(15, unitEcon.unitPrice - 5)}" step="5" value="${unitEcon.unitVarCost}" />
+                </div>
+
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>Fixed Operating Costs ${exactBadge(unitEcon.fixedCosts)}</label>
+                    <span class="wb-slider-num-wrap">
+                      <input type="number" id="num-fixed-costs" class="wb-slider-num" step="any" min="1" value="${unitEcon.fixedCosts}" />
+                      <select id="sel-fixed-unit" class="analyze-input" style="padding:0.2rem 0.35rem; font-size:0.75rem; font-weight:700; width:auto; cursor:pointer;">
+                        <option value="$" ${unit === '$' ? 'selected' : ''}>$ (Exact)</option>
+                        <option value="H" ${unit === 'H' ? 'selected' : ''}>$100s</option>
+                        <option value="K" ${unit === 'K' ? 'selected' : ''}>$K (1,000s)</option>
+                        <option value="M" ${unit === 'M' ? 'selected' : ''}>$M (Millions)</option>
+                      </select>
+                    </span>
+                  </div>
+                  <input type="range" id="sl-fixed-costs" min="${stepFixedSlider}" max="${maxFixedSlider}" step="${stepFixedSlider}" value="${unitEcon.fixedCosts}" />
+                </div>
+
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>Proposed Price Increase (%)</label>
+                    <span class="wb-slider-num-wrap">
+                      <span class="wb-slider-val">&rarr; $${unitEcon.newUnitPrice.toFixed(2)}</span>
+                      <input type="number" id="num-price-chg" class="wb-slider-num" step="0.5" min="-50" max="100" value="${(unitEcon.proposedPriceChangePct * 100).toFixed(1)}" />
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                    </span>
+                  </div>
+                  <input type="range" id="sl-price-chg" min="0.01" max="0.20" step="0.005" value="${unitEcon.proposedPriceChangePct}" />
+                </div>
+              </div>
+            </div>
+
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">CVP Break-Even &amp; Price Elasticity Chart (${unitLabel})</h3>
+                  <div class="wb-panel__subtitle">Total Cost (Red) vs. Current Revenue (Blue) &amp; Proposed Price Revenue (Green)</div>
+                </div>
+              </div>
+              <div class="wb-panel__body">
+                <canvas id="consulting-cvp-canvas" style="width:100%; height:270px; display:block;"></canvas>
+                <div class="consulting-callout-grid">
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Contribution Margin</div>
+                    <div class="consulting-callout-card__val">$${unitEcon.unitContribution.toFixed(2)}/u</div>
+                    <div class="consulting-callout-card__note">${fmtPct(unitEcon.contributionMarginPct)} of price</div>
+                  </div>
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Break-Even Volume</div>
+                    <div class="consulting-callout-card__val" style="color:#1d4ed8;">${Math.ceil(unitEcon.breakEvenUnits).toLocaleString()} u</div>
+                    <div class="consulting-callout-card__note">${fm(unitEcon.breakEvenRevenue)} Revenue</div>
+                  </div>
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Max Volume Loss Tolerated</div>
+                    <div class="consulting-callout-card__val" style="color:#16a34a;">${fmtPct(Math.abs(unitEcon.maxVolumeLossForPriceHike))}</div>
+                    <div class="consulting-callout-card__note">For +${fmtPct(unitEcon.proposedPriceChangePct)} price hike</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 3B: CUSTOMER LTV / CAC & PAYBACK -->
+        <div style="display:${sub3 === 'ltv' ? 'block' : 'none'};">
+          <div class="consulting-takeaway-card">
+            <div class="consulting-takeaway-card__eyebrow">🔁 Plain-English Executive Takeaway · Cohort Unit Economics</div>
+            <div class="consulting-takeaway-card__headline">
+              Each customer generates $${Math.round(unitEcon.ltv).toLocaleString()} in discounted Lifetime Value against a $${unitEcon.cac.toLocaleString()} acquisition cost — an LTV/CAC ratio of ${unitEcon.ltvToCac.toFixed(2)}x (${unitEcon.ltvToCac >= 3 ? 'Healthy ≥ 3.0x benchmark' : 'Below 3.0x target benchmark'}).
+            </div>
+            <div class="consulting-takeaway-card__body">
+              At <strong>${fmtPct(unitEcon.annualChurnRate)}</strong> annual churn (average lifetime of <strong>${unitEcon.avgCustomerLifetimeYears.toFixed(1)} years</strong>) and <strong>${fmtPct(unitEcon.contributionMarginPct)}</strong> gross margin, you recover your initial CAC in <strong>${unitEcon.cacPaybackMonths.toFixed(1)} months</strong>.
+            </div>
+          </div>
+
+          <div class="wb-grid-2">
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">Customer Cohort Assumptions</h3>
+                  <div class="wb-panel__subtitle">Adjust ARPU, Acquisition Cost (CAC), and Annual Churn Rate</div>
+                </div>
+                ${conceptPill('capital-budgeting', 'Unit Economics')}
+              </div>
+              <div class="wb-panel__body">
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>Annual Revenue per Customer (ARPU / ACV)</label>
+                    <span class="wb-slider-num-wrap">
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
+                      <input type="number" id="num-arpu" class="wb-slider-num" style="width:96px !important;" step="500" min="100" value="${unitEcon.arpuAnnual}" />
+                    </span>
+                  </div>
+                  <input type="range" id="sl-arpu" min="1000" max="100000" step="1000" value="${unitEcon.arpuAnnual}" />
+                </div>
+
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>Customer Acquisition Cost (CAC)</label>
+                    <span class="wb-slider-num-wrap">
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
+                      <input type="number" id="num-cac" class="wb-slider-num" style="width:96px !important;" step="500" min="100" value="${unitEcon.cac}" />
+                    </span>
+                  </div>
+                  <input type="range" id="sl-cac" min="1000" max="100000" step="1000" value="${unitEcon.cac}" />
+                </div>
+
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>Annual Customer Churn Rate (%)</label>
+                    <span class="wb-slider-num-wrap">
+                      <span class="wb-slider-val">Life: ${unitEcon.avgCustomerLifetimeYears.toFixed(1)} yrs</span>
+                      <input type="number" id="num-churn" class="wb-slider-num" step="0.5" min="1" max="80" value="${(unitEcon.annualChurnRate * 100).toFixed(1)}" />
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                    </span>
+                  </div>
+                  <input type="range" id="sl-churn" min="0.02" max="0.35" step="0.01" value="${unitEcon.annualChurnRate}" />
+                </div>
+              </div>
+            </div>
+
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">Customer Cohort Cumulative Cash Flow &amp; CAC Payback</h3>
+                  <div class="wb-panel__subtitle">60-month cumulative gross margin trajectory starting from −$${unitEcon.cac.toLocaleString()} CAC</div>
+                </div>
+              </div>
+              <div class="wb-panel__body">
+                <canvas id="consulting-ltv-canvas" style="width:100%; height:265px; display:block;"></canvas>
+                <div class="consulting-callout-grid">
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">LTV : CAC Ratio</div>
+                    <div class="consulting-callout-card__val" style="color:${unitEcon.ltvToCac >= 3 ? '#16a34a' : '#dc2626'};">${unitEcon.ltvToCac.toFixed(2)}x</div>
+                    <div class="consulting-callout-card__note">Target benchmark: &ge;3.0x</div>
+                  </div>
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">Discounted Customer LTV</div>
+                    <div class="consulting-callout-card__val">$${Math.round(unitEcon.ltv).toLocaleString()}</div>
+                    <div class="consulting-callout-card__note">Undiscounted: $${Math.round(unitEcon.undiscountedLtv).toLocaleString()}</div>
+                  </div>
+                  <div class="consulting-callout-card">
+                    <div class="consulting-callout-card__label">CAC Payback Period</div>
+                    <div class="consulting-callout-card__val" style="color:#1d4ed8;">${unitEcon.cacPaybackMonths.toFixed(1)} mos</div>
+                    <div class="consulting-callout-card__note">Avg Life: ${unitEcon.avgCustomerLifetimeYears.toFixed(1)} yrs</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 3C: PRICE VS. VOLUME TRADE-OFF MATRIX -->
+        <div style="display:${sub3 === 'matrix' ? 'block' : 'none'};">
+          <div class="consulting-takeaway-card">
+            <div class="consulting-takeaway-card__eyebrow">🧮 Plain-English Executive Takeaway · Price vs. Volume Matrix</div>
+            <div class="consulting-takeaway-card__headline">
+              How to read this table: Positive numbers show where a price increase more than offsets volume churn; red parenthesized numbers show where volume loss outweighs price gains.
+            </div>
+            <div class="consulting-takeaway-card__body">
+              Because price increases flow 100% to operating profit while volume increases carry variable costs (${fmtPct(1 - unitEcon.contributionMarginPct)} of price), a <strong>+5% price increase</strong> typically generates far more profit than a <strong>+5% volume increase</strong>.
+            </div>
+          </div>
+
+          <div class="wb-panel">
+            <div class="wb-panel__header">
+              <div>
+                <h3 class="wb-panel__title">Price vs. Volume Trade-Off Matrix (Incremental Profit Impact in ${unitLabel})</h3>
+                <div class="wb-panel__subtitle">Net operating profit change across combinations of Price Change (columns) and Volume Change (rows)</div>
+              </div>
+            </div>
+            <div class="wb-table-wrap">
+              <table class="wb-table">
+                <thead>
+                  <tr>
+                    <th>Volume Δ \\ Price Δ</th>
+                    ${unitEcon.priceSteps.map(p => `<th>${p >= 0 ? '+' : ''}${(p * 100).toFixed(1)}% Price</th>`).join('')}
+                  </tr>
+                </thead>
+                <tbody>
+                  ${unitEcon.priceVolumeMatrix.map(row => `
+                    <tr>
+                      <td style="font-weight:700;">${row.volumeChg >= 0 ? '+' : ''}${(row.volumeChg * 100).toFixed(0)}% Volume</td>
+                      ${row.cells.map(c => `<td>${fm(c.ebitdaDelta)}</td>`).join('')}
+                    </tr>
                   `).join('')}
-                </div>
-              </div>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================= -->
+      <!-- STEP 4: RISK, MONTE CARLO & VENDOR FEE STRUCTURING (FOCUSED SUB-TABS)   -->
+      <!-- ======================================================================= -->
+      <div id="tab-scenarios-fees" class="wb-tab-pane" style="display:${activeTab === 'scenarios-fees' ? 'block' : 'none'};">
+        <div class="consulting-subtab-bar">
+          <div class="consulting-subtab-group">
+            <button type="button" class="consulting-subtab-btn ${sub4 === 'tornado' ? 'active' : ''}" data-parent="scenarios-fees" data-subtab="tornado">
+              🌪️ 4A. Tornado Sensitivity &amp; Stress Test
+            </button>
+            <button type="button" class="consulting-subtab-btn ${sub4 === 'montecarlo' ? 'active' : ''}" data-parent="scenarios-fees" data-subtab="montecarlo">
+              🎲 4B. Monte Carlo Risk Simulation (1,000 Trials)
+            </button>
+            <button type="button" class="consulting-subtab-btn ${sub4 === 'fees' ? 'active' : ''}" data-parent="scenarios-fees" data-subtab="fees">
+              🤝 4C. Vendor Fee &amp; Gain-Share Structurer
+            </button>
+          </div>
+          <span style="font-size:0.75rem; color:#64748b; font-weight:600; padding-right:0.35rem;">
+            Stress-test downside risk and structure vendor contracts
+          </span>
+        </div>
+
+        <!-- SUB-TAB 4A: TORNADO SENSITIVITY & BEAR/BASE/BULL -->
+        <div style="display:${sub4 === 'tornado' ? 'block' : 'none'};">
+          <div class="consulting-takeaway-card">
+            <div class="consulting-takeaway-card__eyebrow">🌪️ Plain-English Executive Takeaway · Tornado Stress Test</div>
+            <div class="consulting-takeaway-card__headline">
+              The #1 risk driver is ${scen.drivers[0]?.name || 'Benefit Capture'} (swinging NPV by ${fm(scen.drivers[0]?.spread || 0)}). Under a Simultaneous Bear Case (+${Math.round(scen.capexShockPct * 100)}% cost overrun &amp; −${Math.round(scen.benefitShockPct * 100)}% benefit miss), NPV is ${fm(scen.bearCase.npv)}.
+            </div>
+            <div class="consulting-takeaway-card__body">
+              ${scen.bearCase.npv >= 0
+                ? `Even in the simultaneous Bear Case, this project remains value-accretive (${fm(scen.bearCase.npv)} NPV, ${fmtPct(scen.bearCase.irr)} IRR), demonstrating strong downside resilience.`
+                : `In a simultaneous Bear Case, NPV turns negative (${fm(scen.bearCase.npv)}). Consider gating capital release across milestones or shifting vendor fees to a Gain-Share model (Sub-Tab 4C).`}
             </div>
           </div>
 
-          <div class="wb-panel">
-            <div class="wb-panel__header">
-              <div>
-                <h3 class="wb-panel__title">Cumulative Cash Flow &amp; NPV "J-Curve" (${unitLabel})</h3>
-                <div class="wb-panel__subtitle">Green = Discounted Cumulative NPV · Gray = Undiscounted · Bars = ${periodicLabel} FCF</div>
+          <div class="wb-grid-2">
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">Stress-Test Shock Controls &amp; Scenarios</h3>
+                  <div class="wb-panel__subtitle">Adjust downside/upside shock bounds</div>
+                </div>
               </div>
-              ${conceptPill('capital-budgeting', 'J-Curve & Payback')}
+              <div class="wb-panel__body">
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>${bc.periodName} 1 Benefit Swing (±%)</label>
+                    <span class="wb-slider-num-wrap">
+                      <input type="number" id="num-ben-shock" class="wb-slider-num" step="1" min="5" max="80" value="${Math.round(scen.benefitShockPct * 100)}" />
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                    </span>
+                  </div>
+                  <input type="range" id="sl-ben-shock" min="0.05" max="0.60" step="0.05" value="${scen.benefitShockPct}" />
+                </div>
+
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>Upfront Cost Overrun Shock (±%)</label>
+                    <span class="wb-slider-num-wrap">
+                      <input type="number" id="num-capex-shock" class="wb-slider-num" step="1" min="5" max="80" value="${Math.round(scen.capexShockPct * 100)}" />
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                    </span>
+                  </div>
+                  <input type="range" id="sl-capex-shock" min="0.05" max="0.60" step="0.05" value="${scen.capexShockPct}" />
+                </div>
+
+                <div class="wb-slider-group">
+                  <div class="wb-slider-Row">
+                    <label>Hurdle Rate Shock (±bps)</label>
+                    <span class="wb-slider-num-wrap">
+                      <input type="number" id="num-hurdle-shock" class="wb-slider-num" step="25" min="25" max="600" value="${Math.round(scen.hurdleShockBps)}" />
+                      <span style="font-size:0.75rem; font-weight:700; color:#64748b;">bps</span>
+                    </span>
+                  </div>
+                  <input type="range" id="sl-hurdle-shock" min="50" max="500" step="25" value="${scen.hurdleShockBps}" />
+                </div>
+
+                <div class="wb-table-wrap" style="margin-top:0.85rem;">
+                  <table class="wb-table">
+                    <thead>
+                      <tr>
+                        <th>Scenario</th>
+                        <th>Outlay</th>
+                        <th>NPV (${unitShort})</th>
+                        <th>IRR</th>
+                        <th>Net ROI</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Bear Case</strong></td>
+                        <td>${fm(scen.bearCase.totalInitialOutlay)}</td>
+                        <td>${fm(scen.bearCase.npv)}</td>
+                        <td>${fmtPct(scen.bearCase.irr)}</td>
+                        <td>${fmtPct(scen.bearCase.simpleRoiPct)}</td>
+                      </tr>
+                      <tr class="wb-row-total">
+                        <td><strong>Base Case (Plan)</strong></td>
+                        <td>${fm(scen.baseCase.totalInitialOutlay)}</td>
+                        <td>${fm(scen.baseCase.npv)}</td>
+                        <td>${fmtPct(scen.baseCase.irr)}</td>
+                        <td>${fmtPct(scen.baseCase.simpleRoiPct)}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Bull Case</strong></td>
+                        <td>${fm(scen.bullCase.totalInitialOutlay)}</td>
+                        <td>${fm(scen.bullCase.npv)}</td>
+                        <td>${fmtPct(scen.bullCase.irr)}</td>
+                        <td>${fmtPct(scen.bullCase.simpleRoiPct)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-            <div class="wb-panel__body">
-              <canvas id="consulting-jcurve-canvas" style="width:100%; height:290px; display:block;"></canvas>
+
+            <div class="wb-panel">
+              <div class="wb-panel__header">
+                <div>
+                  <h3 class="wb-panel__title">NPV Tornado Sensitivity Chart (${unitLabel})</h3>
+                  <div class="wb-panel__subtitle">Ranked impact of parameter swings around Base NPV (${fm(scen.baseCase.npv)})</div>
+                </div>
+                ${conceptPill('monte-carlo', 'Sensitivity')}
+              </div>
+              <div class="wb-panel__body">
+                <canvas id="consulting-tornado-canvas" style="width:100%; height:290px; display:block;"></canvas>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="wb-panel">
-          <div class="wb-panel__header">
-            <div>
-              <h3 class="wb-panel__title">Multi-${bc.periodName} Project Cash Flow &amp; ROI Schedule (${state.projectName})</h3>
-              <div class="wb-panel__subtitle">All figures in ${unitLabel} · Horizon: ${bc.horizonYears} ${bc.periodName}s · Annual Hurdle: ${fmtPct(bc.hurdleRate)} (${fmtPct(bc.periodicHurdleRate)}/${bc.periodShort}) · Tax: ${fmtPct(bc.taxRate)}</div>
+        <!-- SUB-TAB 4B: 1,000-TRIAL MONTE CARLO SIMULATION -->
+        <div style="display:${sub4 === 'montecarlo' ? 'block' : 'none'};">
+          <div class="consulting-takeaway-card">
+            <div class="consulting-takeaway-card__eyebrow">🎲 Plain-English Executive Takeaway · 1,000-Trial Monte Carlo Simulation</div>
+            <div class="consulting-takeaway-card__headline">
+              Across 1,000 randomized project paths, this initiative has a ${(mc.probPositiveNpv * 100).toFixed(1)}% probability of generating a positive NPV.
             </div>
-            ${conceptPill('irr', 'IRR vs. MIRR')}
+            <div class="consulting-takeaway-card__body">
+              The 80% confidence interval spans from <strong>${fm(mc.p10Npv)}</strong> (P10 downside) to <strong>${fm(mc.p90Npv)}</strong> (P90 upside), with a median outcome (P50) of <strong>${fm(mc.p50Npv)}</strong>. Green histogram bars represent value-creating outcomes (NPV &ge; 0); red bars represent value-destroying outcomes.
+            </div>
           </div>
-          <div class="wb-table-wrap">
-            <table class="wb-table">
-              <thead>
-                <tr>
-                  <th>Business Case Line Item</th>
-                  <th>Concept</th>
-                  ${bc.schedule.map(s => `<th>${bc.periodName} ${s.year}</th>`).join('')}
-                  <th>Total / KPI</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Upfront Project Outlay + Setup Fee</td>
-                  <td>${conceptPill('capital-budgeting', 'Outlay')}</td>
-                  ${bc.schedule.map(s => `<td>${s.capexAndFee < 0 ? `(${fm(Math.abs(s.capexAndFee))})` : '—'}</td>`).join('')}
-                  <td>(${fm(bc.grossInitialSpend)})</td>
-                </tr>
-                <tr>
-                  <td>Gross Project Benefits (Savings + Revenue Uplift)</td>
-                  <td>${conceptPill('fcf', 'Inflows')}</td>
-                  ${bc.schedule.map(s => `<td>${s.year === 0 ? '—' : fm(s.grossBenefit)}</td>`).join('')}
-                  <td>${fm(bc.totalGrossBenefits)}</td>
-                </tr>
-                <tr>
-                  <td>Ongoing ${periodicLabel} OpEx &amp; Licensing</td>
-                  <td>${conceptPill('reformulated-is', 'OpEx')}</td>
-                  ${bc.schedule.map(s => `<td>${s.year === 0 ? '—' : `(${fm(s.ongoingOpex)})`}</td>`).join('')}
-                  <td>(${fm(bc.totalOngoingOpex)})</td>
-                </tr>
-                ${bc.taxRate > 0 ? `
-                <tr>
-                  <td>Depreciation &amp; Fee Tax Shield (${fmtPct(bc.taxRate)})</td>
-                  <td>${conceptPill('deferred-tax', 'Tax Shield')}</td>
-                  ${bc.schedule.map(s => `<td>${fm(s.taxShield)}</td>`).join('')}
-                  <td>${fm(bc.schedule.reduce((a, b) => a + b.taxShield, 0))}</td>
-                </tr>
-                ` : ''}
-                <tr class="wb-row-total">
-                  <td>Net Incremental Cash Flow (FCF)</td>
-                  <td>${conceptPill('fcf', 'Project FCF')}</td>
-                  ${bc.schedule.map(s => `<td>${fm(s.fcf)}</td>`).join('')}
-                  <td>${fm(bc.totalNetCashInflows - bc.totalInitialOutlay)}</td>
-                </tr>
-                <tr>
-                  <td>Present Value of FCF (Discounted @ ${fmtPct(bc.periodicHurdleRate)}/${bc.periodShort})</td>
-                  <td>${conceptPill('npv', 'PV(FCF)')}</td>
-                  ${bc.schedule.map(s => `<td>${fm(s.pvFcf)}</td>`).join('')}
-                  <td>${fm(bc.npv)}</td>
-                </tr>
-                <tr>
-                  <td>Cumulative Undiscounted Cash Flow</td>
-                  <td>${conceptPill('capital-budgeting', 'Payback')}</td>
-                  ${bc.schedule.map(s => `<td>${fm(s.cumUndiscounted)}</td>`).join('')}
-                  <td>${bc.simplePaybackYears !== null ? `${bc.simplePaybackYears.toFixed(1)} ${bc.periodPlural}` : '—'}</td>
-                </tr>
-                <tr class="wb-row-total">
-                  <td>Cumulative Discounted NPV (J-Curve)</td>
-                  <td>${conceptPill('npv', 'Cum. NPV')}</td>
-                  ${bc.schedule.map(s => `<td>${fm(s.cumDiscounted)}</td>`).join('')}
-                  <td>${fm(bc.npv)}</td>
-                </tr>
-              </tbody>
-            </table>
+
+          <div class="wb-panel">
+            <div class="wb-panel__header">
+              <div>
+                <h3 class="wb-panel__title">🎲 1,000-Trial Monte Carlo Project Risk Distribution (${unitLabel})</h3>
+                <div class="wb-panel__subtitle">Simulates 1,000 random project paths varying CapEx (±${Math.round(scen.capexShockPct * 100)}%), Benefits (±${Math.round(scen.benefitShockPct * 100)}%), and Hurdle Rate (±${scen.hurdleShockBps} bps)</div>
+              </div>
+            </div>
+            <div class="wb-panel__body">
+              <canvas id="consulting-mc-canvas" style="width:100%; height:290px; display:block;"></canvas>
+              <div class="consulting-callout-grid">
+                <div class="consulting-callout-card">
+                  <div class="consulting-callout-card__label">Probability of Positive NPV</div>
+                  <div class="consulting-callout-card__val" style="color:${mc.probPositiveNpv >= 0.75 ? '#16a34a' : '#dc2626'};">${(mc.probPositiveNpv * 100).toFixed(1)}%</div>
+                  <div class="consulting-callout-card__note">Across 1,000 simulated paths</div>
+                </div>
+                <div class="consulting-callout-card">
+                  <div class="consulting-callout-card__label">P10 Downside / P50 Median</div>
+                  <div class="consulting-callout-card__val">${fm(mc.p10Npv)} <span style="font-size:0.85rem; color:#64748b;">/ ${fm(mc.p50Npv)}</span></div>
+                  <div class="consulting-callout-card__note">10th &amp; 50th percentile NPV</div>
+                </div>
+                <div class="consulting-callout-card">
+                  <div class="consulting-callout-card__label">P90 Upside Outcome</div>
+                  <div class="consulting-callout-card__val" style="color:#16a34a;">${fm(mc.p90Npv)}</div>
+                  <div class="consulting-callout-card__note">90th percentile NPV</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- NEW IN TOOL 1: BOTTOM-UP FTE LABOR ESTIMATOR & BUILD VS. BUY COMPARATOR -->
-        <div class="wb-grid-2" style="margin-top: 1.25rem;">
-          <!-- Bottom-Up FTE & Time-Savings Estimator -->
-          <div class="wb-panel">
-            <div class="wb-panel__header">
-              <div>
-                <h3 class="wb-panel__title">Bottom-Up FTE Labor Cost &amp; Time-Savings Estimator</h3>
-                <div class="wb-panel__subtitle">Estimate build outlay from team headcount &amp; hours, and benefits from employee hours saved</div>
-              </div>
-              <button type="button" class="btn btn--primary btn--sm" id="apply-fte-btn" title="Push calculated Upfront Outlay & Period 1 Benefit into Tool 1">
-                ⚡ Push to Business Case
-              </button>
+        <!-- SUB-TAB 4C: VENDOR FEE & GAIN-SHARE STRUCTURER -->
+        <div style="display:${sub4 === 'fees' ? 'block' : 'none'};">
+          <div class="consulting-takeaway-card">
+            <div class="consulting-takeaway-card__eyebrow">🤝 Plain-English Executive Takeaway · Commercial Contract Structure</div>
+            <div class="consulting-takeaway-card__headline">
+              Shifting from Fixed-Fee (${fm(bc.consultingFee)}) to a Value-Based Gain-Share contract cuts upfront fixed fee exposure by 60% and ties vendor compensation directly to realized savings.
             </div>
-            <div class="wb-panel__body">
-              <div style="font-size:0.74rem; font-weight:800; text-transform:uppercase; color:#1e3a8a; margin-bottom:0.45rem;">
-                A. Project Build Team &amp; CapEx Outlay
-              </div>
-              <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:0.65rem; margin-bottom:0.85rem;">
-                <div>
-                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Build Team Headcount (FTEs)</label>
-                  <input type="number" id="num-fte-build" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" min="0.5" value="${fte.buildFtes}" />
-                </div>
-                <div>
-                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Blended Build Rate ($/hr)</label>
-                  <input type="number" id="num-fte-build-rate" class="analyze-input" style="width:100%; font-weight:700;" step="5" min="15" value="${fte.buildHourlyRate}" />
-                </div>
-                <div>
-                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Build Duration (Weeks @ ${fte.buildHoursPerWeek}h/wk)</label>
-                  <input type="number" id="num-fte-build-wks" class="analyze-input" style="width:100%; font-weight:700;" step="1" min="1" value="${fte.buildWeeks}" />
-                </div>
-                <div>
-                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Hardware / Software CapEx (${unitShort})</label>
-                  <input type="number" id="num-fte-hw-capex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${fte.hardwareSoftwareCapex}" />
-                </div>
-              </div>
-
-              <div style="font-size:0.74rem; font-weight:800; text-transform:uppercase; color:#15803d; margin-bottom:0.45rem;">
-                B. Operational Time-Savings &amp; Legacy Cost Retirement
-              </div>
-              <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:0.65rem; margin-bottom:0.85rem;">
-                <div>
-                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Impacted Employees (Headcount)</label>
-                  <input type="number" id="num-fte-impacted" class="analyze-input" style="width:100%; font-weight:700;" step="1" min="1" value="${fte.impactedEmployees}" />
-                </div>
-                <div>
-                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Hours Saved / Employee / Week</label>
-                  <input type="number" id="num-fte-hrs-saved" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" min="0.25" value="${fte.hoursSavedPerWeek}" />
-                </div>
-                <div>
-                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Employee Hourly Cost ($/hr)</label>
-                  <input type="number" id="num-fte-emp-rate" class="analyze-input" style="width:100%; font-weight:700;" step="5" min="15" value="${fte.employeeHourlyRate}" />
-                </div>
-                <div>
-                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Legacy Spend Retired / ${bc.periodShort} (${unitShort})</label>
-                  <input type="number" id="num-fte-retired" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${fte.retiredSpendPerPeriod}" />
-                </div>
-              </div>
-
-              <div style="padding:0.8rem; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; font-size:0.82rem; line-height:1.55;">
-                <div><strong>Implied Build Outlay:</strong> $${Math.round(fte.buildLaborDollars).toLocaleString()} labor (${fte.totalBuildHours.toLocaleString()} hrs) + $${Math.round(fte.hardwareSoftwareDollars).toLocaleString()} tech = <strong style="color:#1e3a8a;">${fm(fte.impliedUpfrontCapex)}</strong></div>
-                <div><strong>Capacity Unlocked:</strong> <strong>${fte.fteEquivalentSaved.toFixed(1)} FTEs</strong> (${Math.round(fte.annualHoursSaved).toLocaleString()} hrs/yr saved @ $${fte.employeeHourlyRate}/hr = $${Math.round(fte.annualLaborSavingsDollars).toLocaleString()}/yr)</div>
-                <div><strong>Implied ${bc.periodName} 1 Gross Benefit:</strong> <strong style="color:#16a34a;">${fm(fte.impliedPeriod1Benefit)} / ${bc.periodShort}</strong> ($${Math.round(fte.totalPeriod1BenefitDollars).toLocaleString()})</div>
-              </div>
+            <div class="consulting-takeaway-card__body">
+              Use the slider below to test different <strong>Gain-Share %</strong> splits of ${bc.periodName} 1 realized benefits and compare Net Client NPV and Value-to-Fee multiples across all 3 contract types.
             </div>
           </div>
 
-          <!-- Build vs. Buy / Option A vs. Option B Comparator -->
           <div class="wb-panel">
             <div class="wb-panel__header">
               <div>
-                <h3 class="wb-panel__title">Build vs. Buy / Option A vs. Option B Comparator</h3>
-                <div class="wb-panel__subtitle">Compare In-House Build (Option A) against SaaS Vendor Buy (Option B) &amp; Lean MVP (Option C)</div>
+                <h3 class="wb-panel__title">Vendor / Consulting Fee &amp; Value-Share Structurer (${unitLabel})</h3>
+                <div class="wb-panel__subtitle">Compare Fixed-Fee, Time &amp; Materials, and Value-Based Gain-Share contract models</div>
               </div>
-              <button type="button" class="btn btn--secondary btn--sm" id="adopt-opt-b-btn" title="Copy Option B (Vendor Buy) numbers into Active Business Case">
-                ⚡ Adopt Option B
-              </button>
             </div>
             <div class="wb-panel__body">
-              <div style="font-size:0.73rem; font-weight:800; text-transform:uppercase; color:#475569; margin-bottom:0.4rem;">
-                Configure Option B (Vendor / SaaS Buy Alternative in ${unitShort})
+              <div class="wb-slider-group" style="max-width:460px; margin-bottom:1.15rem;">
+                <div class="wb-slider-Row">
+                  <label>Value-Share / Gain-Share (% of ${bc.periodShort} 1 Realized Savings)</label>
+                  <span class="wb-slider-num-wrap">
+                    <input type="number" id="num-gain-share" class="wb-slider-num" step="1" min="2" max="50" value="${Math.round(scen.gainSharePct * 100)}" />
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                  </span>
+                </div>
+                <input type="range" id="sl-gain-share" min="0.05" max="0.40" step="0.01" value="${scen.gainSharePct}" />
               </div>
-              <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:0.5rem; margin-bottom:0.75rem;">
-                <div>
-                  <label style="font-size:0.69rem; font-weight:700; color:#334155; display:block;">Upfront (${unitShort})</label>
-                  <input type="number" id="num-buy-capex" class="analyze-input" style="width:100%; padding:0.3rem 0.4rem; font-weight:700;" step="any" min="0" value="${bvb.buyUpfrontCapex}" />
-                </div>
-                <div>
-                  <label style="font-size:0.69rem; font-weight:700; color:#334155; display:block;">Setup Fee (${unitShort})</label>
-                  <input type="number" id="num-buy-fee" class="analyze-input" style="width:100%; padding:0.3rem 0.4rem; font-weight:700;" step="any" min="0" value="${bvb.buyConsultingFee}" />
-                </div>
-                <div>
-                  <label style="font-size:0.69rem; font-weight:700; color:#334155; display:block;">${bc.periodShort} 1 Benefit (${unitShort})</label>
-                  <input type="number" id="num-buy-benefit" class="analyze-input" style="width:100%; padding:0.3rem 0.4rem; font-weight:700;" step="any" min="0" value="${bvb.buyYr1Benefit}" />
-                </div>
-                <div>
-                  <label style="font-size:0.69rem; font-weight:700; color:#334155; display:block;">SaaS OpEx/${bc.periodShort}</label>
-                  <input type="number" id="num-buy-opex" class="analyze-input" style="width:100%; padding:0.3rem 0.4rem; font-weight:700;" step="any" min="0" value="${bvb.buyOngoingOpex}" />
-                </div>
-              </div>
-
-              <canvas id="consulting-bvb-canvas" style="width:100%; height:195px; display:block; margin-bottom:0.65rem;"></canvas>
 
               <div class="wb-table-wrap">
-                <table class="wb-table" style="font-size:0.76rem;">
+                <table class="wb-table">
                   <thead>
                     <tr>
-                      <th>Strategic Option</th>
-                      <th>Upfront</th>
-                      <th>${bc.horizonYears}-${bc.periodShort} TCO</th>
-                      <th>NPV (${unitShort})</th>
-                      <th>IRR</th>
-                      <th>Payback</th>
+                      <th>Contract Fee Model</th>
+                      <th>Commercial Structure</th>
+                      <th>Total Fee (${unitShort})</th>
+                      <th>Net Project NPV</th>
+                      <th>Net Project ROI</th>
+                      <th>Value / Fee Multiple</th>
+                      <th>Risk Alignment</th>
                     </tr>
                   </thead>
                   <tbody>
-                    ${bvb.options.map(opt => `
-                      <tr class="${opt.id === bvb.recommended.id ? 'wb-row-total' : ''}">
-                        <td><strong>${opt.label}</strong> ${opt.id === bvb.recommended.id ? '🏆' : ''}</td>
-                        <td>${fm(opt.bc.grossInitialSpend)}</td>
-                        <td>${fm(opt.tcoUndiscounted)}</td>
-                        <td>${fm(opt.bc.npv)}</td>
-                        <td>${fmtPct(opt.bc.irr)}</td>
-                        <td>${opt.bc.simplePaybackYears !== null ? `${opt.bc.simplePaybackYears.toFixed(1)} ${bc.periodPlural}` : `>${bc.horizonYears}`}</td>
+                    ${scen.feeModels.map(m => `
+                      <tr>
+                        <td><strong>${m.model}</strong></td>
+                        <td>${m.structure}</td>
+                        <td>${fm(m.totalFee)}</td>
+                        <td>${fm(m.clientNetNpv)}</td>
+                        <td>${fmtPct(m.clientRoiPct)}</td>
+                        <td>${m.feeMultiple.toFixed(1)}x</td>
+                        <td>${m.riskSharing}</td>
                       </tr>
                     `).join('')}
                   </tbody>
@@ -2364,524 +3183,28 @@ export function renderConsultingWorkbench(root) {
         </div>
       </div>
 
-      <!-- TAB 2: EBITDA BRIDGE WATERFALL & VALUE DRIVER TREE -->
-      <div id="tab-ebitda-bridge" class="wb-tab-pane" style="display:${activeTab === 'ebitda-bridge' ? 'block' : 'none'};">
-        <div class="wb-grid-2" style="margin-bottom: 1.25rem;">
-          <div class="wb-panel">
-            <div class="wb-panel__header">
-              <div>
-                <h3 class="wb-panel__title">Department / Business Unit Baseline &amp; Levers (${unitLabel})</h3>
-                <div class="wb-panel__subtitle">Enter your business unit's baseline P&amp;L and target improvement levers</div>
-              </div>
-              ${conceptPill('dupont', 'Value Drivers')}
-            </div>
-            <div class="wb-panel__body">
-              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:0.65rem; margin-bottom:1rem;">
-                <div>
-                  <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Baseline Revenue (${unitShort}) ${exactBadge(bridge.baseRev)}</label>
-                  <input type="number" id="num-base-rev" class="analyze-input" style="width:100%; font-weight:700;" step="any" value="${bridge.baseRev}" />
-                </div>
-                <div>
-                  <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Baseline COGS (${unitShort}) ${exactBadge(bridge.baseCogs)}</label>
-                  <input type="number" id="num-base-cogs" class="analyze-input" style="width:100%; font-weight:700;" step="any" value="${bridge.baseCogs}" />
-                </div>
-                <div>
-                  <label style="font-size:0.74rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Baseline SG&amp;A (${unitShort}) ${exactBadge(bridge.baseSga)}</label>
-                  <input type="number" id="num-base-sga" class="analyze-input" style="width:100%; font-weight:700;" step="any" value="${bridge.baseSga}" />
-                </div>
-              </div>
-
-              <div class="wb-slider-group">
-                <div class="wb-slider-Row">
-                  <label>1. Price Realization Uplift (% of Revenue)</label>
-                  <span class="wb-slider-num-wrap">
-                    <span class="wb-slider-val">+${fm(bridge.pricingEbitdaLift)}</span>
-                    <input type="number" id="num-price-lift" class="wb-slider-num" step="0.25" min="0" max="50" value="${(bridge.priceUpliftPct * 100).toFixed(2)}" title="Enter Price Uplift %" />
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
-                  </span>
-                </div>
-                <input type="range" id="sl-price-lift" min="0" max="0.10" step="0.0025" value="${bridge.priceUpliftPct}" />
-              </div>
-
-              <div class="wb-slider-group">
-                <div class="wb-slider-Row">
-                  <label>2. Volume / Throughput Expansion (% of Revenue)</label>
-                  <span class="wb-slider-num-wrap">
-                    <span class="wb-slider-val">+${fm(bridge.volumeEbitdaLift)}</span>
-                    <input type="number" id="num-vol-lift" class="wb-slider-num" step="0.5" min="0" max="100" value="${(bridge.volumeGrowthPct * 100).toFixed(1)}" title="Enter Volume Expansion %" />
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
-                  </span>
-                </div>
-                <input type="range" id="sl-vol-lift" min="0" max="0.15" step="0.005" value="${bridge.volumeGrowthPct}" />
-              </div>
-
-              <div class="wb-slider-group">
-                <div class="wb-slider-Row">
-                  <label>3. Procurement &amp; Direct COGS Savings (% of COGS)</label>
-                  <span class="wb-slider-num-wrap">
-                    <span class="wb-slider-val">+${fm(bridge.cogsEbitdaLift)}</span>
-                    <input type="number" id="num-cogs-save" class="wb-slider-num" step="0.5" min="0" max="50" value="${(bridge.cogsSavingsPct * 100).toFixed(1)}" title="Enter COGS Savings %" />
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
-                  </span>
-                </div>
-                <input type="range" id="sl-cogs-save" min="0" max="0.15" step="0.005" value="${bridge.cogsSavingsPct}" />
-              </div>
-
-              <div class="wb-slider-group">
-                <div class="wb-slider-Row">
-                  <label>4. SG&amp;A &amp; Labor Productivity (% of SG&amp;A)</label>
-                  <span class="wb-slider-num-wrap">
-                    <span class="wb-slider-val">+${fm(bridge.sgaEbitdaLift)}</span>
-                    <input type="number" id="num-sga-save" class="wb-slider-num" step="0.5" min="0" max="60" value="${(bridge.sgaSavingsPct * 100).toFixed(1)}" title="Enter SG&A Savings %" />
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
-                  </span>
-                </div>
-                <input type="range" id="sl-sga-save" min="0" max="0.25" step="0.005" value="${bridge.sgaSavingsPct}" />
-              </div>
-            </div>
-          </div>
-
-          <div class="wb-panel">
-            <div class="wb-panel__header">
-              <div>
-                <h3 class="wb-panel__title">Executive EBITDA Waterfall Bridge (${unitLabel})</h3>
-                <div class="wb-panel__subtitle">Baseline ${fm(bridge.baseEbitda)} &rarr; Target Run-Rate ${fm(bridge.targetEbitda)} (+${bridge.marginExpansionBps.toFixed(0)} bps)</div>
-              </div>
-              ${conceptPill('multiples', 'Value Creation')}
-            </div>
-            <div class="wb-panel__body">
-              <canvas id="consulting-waterfall-canvas" style="width:100%; height:290px; display:block;"></canvas>
-            </div>
-          </div>
+      <!-- GUIDED STEP-BY-STEP FOOTER NAVIGATION -->
+      <div class="consulting-step-footer">
+        <div>
+          ${prevStep ? `
+            <button type="button" class="btn btn--secondary btn--sm" data-step-goto="${prevStep}">
+              ← Back to ${stepMeta[prevStep].title}
+            </button>
+          ` : `<span style="font-size:0.78rem; color:#64748b; font-weight:600;">📍 ${stepMeta[activeTab].title} (Step 1 of 4)</span>`}
         </div>
-
-        <div class="wb-panel">
-          <div class="wb-panel__header">
-            <div>
-              <h3 class="wb-panel__title">Value Driver Tree &amp; Capitalized Value Summary (${unitLabel})</h3>
-              <div class="wb-panel__subtitle">Shows how each operational lever contributes to run-rate EBITDA and enterprise value</div>
-            </div>
-          </div>
-          <div class="wb-table-wrap">
-            <table class="wb-table">
-              <thead>
-                <tr>
-                  <th>Value Creation Lever</th>
-                  <th>Baseline Metric</th>
-                  <th>Target Lever</th>
-                  <th>Run-Rate EBITDA Impact</th>
-                  <th>Capitalized Value (${fmtMult(bridge.evMultiple)})</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Commercial Pricing Realization (100% Flow-Through)</td>
-                  <td>${fm(bridge.baseRev)} Revenue</td>
-                  <td>+${fmtPct(bridge.priceUpliftPct)} Price Realization</td>
-                  <td>+${fm(bridge.pricingEbitdaLift)}</td>
-                  <td>+${fm(bridge.pricingEbitdaLift * bridge.evMultiple)}</td>
-                </tr>
-                <tr>
-                  <td>Volume &amp; Service Throughput Growth</td>
-                  <td>${fm(bridge.baseRev)} Revenue</td>
-                  <td>+${fmtPct(bridge.volumeGrowthPct)} Volume Growth</td>
-                  <td>+${fm(bridge.volumeEbitdaLift)}</td>
-                  <td>+${fm(bridge.volumeEbitdaLift * bridge.evMultiple)}</td>
-                </tr>
-                <tr>
-                  <td>Vendor Procurement &amp; Direct Cost Savings</td>
-                  <td>${fm(bridge.baseCogs)} Direct COGS</td>
-                  <td>−${fmtPct(bridge.cogsSavingsPct)} Unit Cost Reduction</td>
-                  <td>+${fm(bridge.cogsEbitdaLift)}</td>
-                  <td>+${fm(bridge.cogsEbitdaLift * bridge.evMultiple)}</td>
-                </tr>
-                <tr>
-                  <td>SG&amp;A Automation &amp; Labor Productivity</td>
-                  <td>${fm(bridge.baseSga)} SG&amp;A / Labor</td>
-                  <td>−${fmtPct(bridge.sgaSavingsPct)} Overhead Reduction</td>
-                  <td>+${fm(bridge.sgaEbitdaLift)}</td>
-                  <td>+${fm(bridge.sgaEbitdaLift * bridge.evMultiple)}</td>
-                </tr>
-                <tr>
-                  <td>Ongoing Program &amp; Software Run-Rate OpEx</td>
-                  <td>—</td>
-                  <td>Recurring Support Cost</td>
-                  <td>(${fm(bridge.runRateProgramOpex)})</td>
-                  <td>(${fm(bridge.runRateProgramOpex * bridge.evMultiple)})</td>
-                </tr>
-                <tr class="wb-row-total">
-                  <td>Net Pro-Forma Run-Rate Uplift</td>
-                  <td>${fm(bridge.baseEbitda)} (${fmtPct(bridge.baseMargin)})</td>
-                  <td>+${bridge.marginExpansionBps.toFixed(0)} bps Margin Lift</td>
-                  <td>+${fm(bridge.netEbitdaLift)}</td>
-                  <td>+${fm(bridge.impliedEvCreation)}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div style="font-size:0.78rem; color:#475569; font-weight:700;">
+          Guided Business Case Walkthrough · Step ${stepMeta[activeTab].num} of 4
         </div>
-      </div>
-
-      <!-- TAB 3: BREAK-EVEN, PRICING POWER & UNIT ECONOMICS -->
-      <div id="tab-pricing-unit" class="wb-tab-pane" style="display:${activeTab === 'pricing-unit' ? 'block' : 'none'};">
-        <div class="wb-grid-2" style="margin-bottom: 1.25rem;">
-          <div class="wb-panel">
-            <div class="wb-panel__header">
-              <div>
-                <h3 class="wb-panel__title">Cost-Volume-Profit (CVP) &amp; Pricing Elasticity Break-Even</h3>
-                <div class="wb-panel__subtitle">Use sliders or type exact figures in the boxes on the right</div>
-              </div>
-              ${conceptPill('operating-leverage', 'CVP & DOL')}
-            </div>
-            <div class="wb-panel__body">
-              <div class="wb-slider-group">
-                <div class="wb-slider-Row">
-                  <label>Average Unit / Contract Price ($)</label>
-                  <span class="wb-slider-num-wrap">
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
-                    <input type="number" id="num-unit-price" class="wb-slider-num" step="any" min="1" value="${unitEcon.unitPrice}" />
-                  </span>
-                </div>
-                <input type="range" id="sl-unit-price" min="20" max="2000" step="10" value="${unitEcon.unitPrice}" />
-              </div>
-
-              <div class="wb-slider-group">
-                <div class="wb-slider-Row">
-                  <label>Variable Cost per Unit ($)</label>
-                  <span class="wb-slider-num-wrap">
-                    <span class="wb-slider-val">CM: $${unitEcon.unitContribution.toFixed(0)}/u (${fmtPct(unitEcon.contributionMarginPct)})</span>
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
-                    <input type="number" id="num-unit-vc" class="wb-slider-num" step="any" min="0" value="${unitEcon.unitVarCost}" />
-                  </span>
-                </div>
-                <input type="range" id="sl-unit-vc" min="5" max="${Math.max(15, unitEcon.unitPrice - 5)}" step="5" value="${unitEcon.unitVarCost}" />
-              </div>
-
-              <div class="wb-slider-group">
-                <div class="wb-slider-Row">
-                  <label>Fixed Operating Costs ${exactBadge(unitEcon.fixedCosts)}</label>
-                  <span class="wb-slider-num-wrap">
-                    <input type="number" id="num-fixed-costs" class="wb-slider-num" step="any" min="1" value="${unitEcon.fixedCosts}" />
-                    <select id="sel-fixed-unit" class="analyze-input" style="padding:0.2rem 0.35rem; font-size:0.75rem; font-weight:700; width:auto; cursor:pointer;" title="Switch Monetary Scale">
-                      <option value="$" ${unit === '$' ? 'selected' : ''}>$ (Exact)</option>
-                      <option value="H" ${unit === 'H' ? 'selected' : ''}>$100s</option>
-                      <option value="K" ${unit === 'K' ? 'selected' : ''}>$K (1,000s)</option>
-                      <option value="M" ${unit === 'M' ? 'selected' : ''}>$M (Millions)</option>
-                    </select>
-                  </span>
-                </div>
-                <input type="range" id="sl-fixed-costs" min="${stepFixedSlider}" max="${maxFixedSlider}" step="${stepFixedSlider}" value="${unitEcon.fixedCosts}" />
-              </div>
-
-              <div class="wb-slider-group">
-                <div class="wb-slider-Row">
-                  <label>Proposed Price Increase (%)</label>
-                  <span class="wb-slider-num-wrap">
-                    <span class="wb-slider-val">&rarr; $${unitEcon.newUnitPrice.toFixed(2)}</span>
-                    <input type="number" id="num-price-chg" class="wb-slider-num" step="0.5" min="-50" max="100" value="${(unitEcon.proposedPriceChangePct * 100).toFixed(1)}" />
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
-                  </span>
-                </div>
-                <input type="range" id="sl-price-chg" min="0.01" max="0.20" step="0.005" value="${unitEcon.proposedPriceChangePct}" />
-              </div>
-
-              <div style="margin-top:0.9rem; padding:0.85rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; font-size:0.84rem; line-height:1.55;">
-                <div><strong>Contribution Margin:</strong> $${unitEcon.unitContribution.toFixed(2)}/unit (${fmtPct(unitEcon.contributionMarginPct)}) · <strong>Operating Leverage (DOL):</strong> ${unitEcon.operatingLeverageDOL.toFixed(2)}x</div>
-                <div style="margin-top:0.2rem; color:#0f172a;">
-                  <strong>Break-Even Formula:</strong> $${Math.round(unitEcon.fixedCostsDollars).toLocaleString()} Fixed Costs &divide; $${unitEcon.unitContribution.toFixed(2)}/unit = <strong>${Math.ceil(unitEcon.breakEvenUnits).toLocaleString()} units</strong> (${fm(unitEcon.breakEvenRevenue)} Revenue)
-                </div>
-                <div style="margin-top:0.35rem; color:#1d4ed8; font-weight:700;">
-                  💡 Indifference Threshold: With a +${fmtPct(unitEcon.proposedPriceChangePct)} price increase (new CM $${unitEcon.newUnitContribution.toFixed(2)}/u, new BE ${Math.ceil(unitEcon.newBreakEvenUnits).toLocaleString()} units), you can lose up to ${fmtPct(Math.abs(unitEcon.maxVolumeLossForPriceHike))} of volume and still remain profit-neutral.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="wb-panel">
-            <div class="wb-panel__header">
-              <div>
-                <h3 class="wb-panel__title">Customer Unit Economics (LTV / CAC &amp; Payback)</h3>
-                <div class="wb-panel__subtitle">Use sliders or type exact cohort figures in the boxes on the right</div>
-              </div>
-              ${conceptPill('capital-budgeting', 'Unit Economics')}
-            </div>
-            <div class="wb-panel__body">
-              <div class="wb-slider-group">
-                <div class="wb-slider-Row">
-                  <label>Annual Revenue per Customer (ARPU / ACV)</label>
-                  <span class="wb-slider-num-wrap">
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
-                    <input type="number" id="num-arpu" class="wb-slider-num" style="width:96px !important;" step="500" min="100" value="${unitEcon.arpuAnnual}" />
-                  </span>
-                </div>
-                <input type="range" id="sl-arpu" min="1000" max="100000" step="1000" value="${unitEcon.arpuAnnual}" />
-              </div>
-
-              <div class="wb-slider-group">
-                <div class="wb-slider-Row">
-                  <label>Customer Acquisition Cost (CAC)</label>
-                  <span class="wb-slider-num-wrap">
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
-                    <input type="number" id="num-cac" class="wb-slider-num" style="width:96px !important;" step="500" min="100" value="${unitEcon.cac}" />
-                  </span>
-                </div>
-                <input type="range" id="sl-cac" min="1000" max="100000" step="1000" value="${unitEcon.cac}" />
-              </div>
-
-              <div class="wb-slider-group">
-                <div class="wb-slider-Row">
-                  <label>Annual Customer Churn Rate (%)</label>
-                  <span class="wb-slider-num-wrap">
-                    <span class="wb-slider-val">Life: ${unitEcon.avgCustomerLifetimeYears.toFixed(1)} yrs</span>
-                    <input type="number" id="num-churn" class="wb-slider-num" step="0.5" min="1" max="80" value="${(unitEcon.annualChurnRate * 100).toFixed(1)}" />
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
-                  </span>
-                </div>
-                <input type="range" id="sl-churn" min="0.02" max="0.35" step="0.01" value="${unitEcon.annualChurnRate}" />
-              </div>
-
-              <div style="margin-top:0.9rem; padding:0.85rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; font-size:0.84rem; line-height:1.5;">
-                <div><strong>Discounted Customer LTV:</strong> $${Math.round(unitEcon.ltv).toLocaleString()} · <strong>Undiscounted LTV:</strong> $${Math.round(unitEcon.undiscountedLtv).toLocaleString()}</div>
-                <div><strong>LTV / CAC Ratio:</strong> <span style="font-weight:800; color:${unitEcon.ltvToCac >= 3 ? '#16a34a' : '#dc2626'};">${unitEcon.ltvToCac.toFixed(2)}x</span> (Target Benchmark: &ge;3.0x)</div>
-                <div><strong>CAC Payback Period:</strong> <span style="font-weight:700;">${unitEcon.cacPaybackMonths.toFixed(1)} months</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- NEW: Tool 3 Interactive Charts Row -->
-        <div class="wb-grid-2" style="margin-bottom: 1.25rem;">
-          <div class="wb-panel">
-            <div class="wb-panel__header">
-              <div>
-                <h3 class="wb-panel__title">CVP Break-Even &amp; Price Elasticity Chart (${unitLabel})</h3>
-                <div class="wb-panel__subtitle">Total Cost (Red) vs. Current Revenue (Blue) &amp; Proposed Price Revenue (Dashed Green)</div>
-              </div>
-            </div>
-            <div class="wb-panel__body">
-              <canvas id="consulting-cvp-canvas" style="width:100%; height:245px; display:block;"></canvas>
-            </div>
-          </div>
-
-          <div class="wb-panel">
-            <div class="wb-panel__header">
-              <div>
-                <h3 class="wb-panel__title">Customer Cohort Cumulative Cash Flow &amp; CAC Payback</h3>
-                <div class="wb-panel__subtitle">60-month cumulative gross margin trajectory starting from −$${unitEcon.cac.toLocaleString()} CAC</div>
-              </div>
-            </div>
-            <div class="wb-panel__body">
-              <canvas id="consulting-ltv-canvas" style="width:100%; height:245px; display:block;"></canvas>
-            </div>
-          </div>
-        </div>
-
-        <div class="wb-panel">
-          <div class="wb-panel__header">
-            <div>
-              <h3 class="wb-panel__title">Price vs. Volume Trade-Off Matrix (Incremental Profit Impact)</h3>
-              <div class="wb-panel__subtitle">Net operating profit change across combinations of Price Change (columns) and Volume Change (rows)</div>
-            </div>
-          </div>
-          <div class="wb-table-wrap">
-            <table class="wb-table">
-              <thead>
-                <tr>
-                  <th>Volume Δ \\ Price Δ</th>
-                  ${unitEcon.priceSteps.map(p => `<th>${p >= 0 ? '+' : ''}${(p * 100).toFixed(1)}% Price</th>`).join('')}
-                </tr>
-              </thead>
-              <tbody>
-                ${unitEcon.priceVolumeMatrix.map(row => `
-                  <tr>
-                    <td style="font-weight:700;">${row.volumeChg >= 0 ? '+' : ''}${(row.volumeChg * 100).toFixed(0)}% Volume</td>
-                    ${row.cells.map(c => `<td>${fm(c.ebitdaDelta)}</td>`).join('')}
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 4: TORNADO SENSITIVITY & CONSULTING FEE STRUCTURER -->
-      <div id="tab-scenarios-fees" class="wb-tab-pane" style="display:${activeTab === 'scenarios-fees' ? 'block' : 'none'};">
-        <!-- Interactive Stress-Test & Fee Structuring Controls -->
-        <div class="wb-panel" style="margin-bottom: 1.25rem;">
-          <div class="wb-panel__header">
-            <div>
-              <h3 class="wb-panel__title">Interactive Stress-Test &amp; Vendor Fee Controls</h3>
-              <div class="wb-panel__subtitle">Adjust downside/upside shock severity and vendor gain-share % to test your Tool 1 project assumptions</div>
-            </div>
-          </div>
-          <div class="wb-panel__body">
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
-              <div class="wb-slider-group" style="margin-bottom:0;">
-                <div class="wb-slider-Row">
-                  <label>${bc.periodName} 1 Benefit Swing (±%)</label>
-                  <span class="wb-slider-num-wrap">
-                    <input type="number" id="num-ben-shock" class="wb-slider-num" step="1" min="5" max="80" value="${Math.round(scen.benefitShockPct * 100)}" />
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
-                  </span>
-                </div>
-                <input type="range" id="sl-ben-shock" min="0.05" max="0.60" step="0.05" value="${scen.benefitShockPct}" />
-              </div>
-
-              <div class="wb-slider-group" style="margin-bottom:0;">
-                <div class="wb-slider-Row">
-                  <label>Upfront Cost Overrun Shock (±%)</label>
-                  <span class="wb-slider-num-wrap">
-                    <input type="number" id="num-capex-shock" class="wb-slider-num" step="1" min="5" max="80" value="${Math.round(scen.capexShockPct * 100)}" />
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
-                  </span>
-                </div>
-                <input type="range" id="sl-capex-shock" min="0.05" max="0.60" step="0.05" value="${scen.capexShockPct}" />
-              </div>
-
-              <div class="wb-slider-group" style="margin-bottom:0;">
-                <div class="wb-slider-Row">
-                  <label>Hurdle Rate Shock (±bps)</label>
-                  <span class="wb-slider-num-wrap">
-                    <input type="number" id="num-hurdle-shock" class="wb-slider-num" step="25" min="25" max="600" value="${Math.round(scen.hurdleShockBps)}" />
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">bps</span>
-                  </span>
-                </div>
-                <input type="range" id="sl-hurdle-shock" min="50" max="500" step="25" value="${scen.hurdleShockBps}" />
-              </div>
-
-              <div class="wb-slider-group" style="margin-bottom:0;">
-                <div class="wb-slider-Row">
-                  <label>Gain-Share (% of ${bc.periodShort} 1 Savings)</label>
-                  <span class="wb-slider-num-wrap">
-                    <input type="number" id="num-gain-share" class="wb-slider-num" step="1" min="2" max="50" value="${Math.round(scen.gainSharePct * 100)}" />
-                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
-                  </span>
-                </div>
-                <input type="range" id="sl-gain-share" min="0.05" max="0.40" step="0.01" value="${scen.gainSharePct}" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="wb-grid-2" style="margin-bottom: 1.25rem;">
-          <div class="wb-panel">
-            <div class="wb-panel__header">
-              <div>
-                <h3 class="wb-panel__title">NPV Tornado Sensitivity Chart (${unitLabel})</h3>
-                <div class="wb-panel__subtitle">Ranked impact of parameter swings around Base NPV (${fm(scen.baseCase.npv)})</div>
-              </div>
-              ${conceptPill('monte-carlo', 'Sensitivity')}
-            </div>
-            <div class="wb-panel__body">
-              <canvas id="consulting-tornado-canvas" style="width:100%; height:260px; display:block;"></canvas>
-            </div>
-          </div>
-
-          <div class="wb-panel">
-            <div class="wb-panel__header">
-              <div>
-                <h3 class="wb-panel__title">Bear / Base / Bull Project Scenario Matrix</h3>
-                <div class="wb-panel__subtitle">Stress-testing implementation delays, cost overruns (+${Math.round(scen.capexShockPct * 100)}%), and benefit adoption (±${Math.round(scen.benefitShockPct * 100)}%)</div>
-              </div>
-            </div>
-            <div class="wb-table-wrap">
-              <table class="wb-table">
-                <thead>
-                  <tr>
-                    <th>Scenario</th>
-                    <th>Initial Outlay</th>
-                    <th>NPV (${unit})</th>
-                    <th>IRR</th>
-                    <th>MIRR</th>
-                    <th>Net ROI %</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Bear Case (+${Math.round(scen.capexShockPct * 100)}% Cost / −${Math.round(scen.benefitShockPct * 100)}% Benefit)</strong></td>
-                    <td>${fm(scen.bearCase.totalInitialOutlay)}</td>
-                    <td>${fm(scen.bearCase.npv)}</td>
-                    <td>${fmtPct(scen.bearCase.irr)}</td>
-                    <td>${fmtPct(scen.bearCase.mirr)}</td>
-                    <td>${fmtPct(scen.bearCase.simpleRoiPct)}</td>
-                  </tr>
-                  <tr class="wb-row-total">
-                    <td><strong>Base Case (Project Plan)</strong></td>
-                    <td>${fm(scen.baseCase.totalInitialOutlay)}</td>
-                    <td>${fm(scen.baseCase.npv)}</td>
-                    <td>${fmtPct(scen.baseCase.irr)}</td>
-                    <td>${fmtPct(scen.baseCase.mirr)}</td>
-                    <td>${fmtPct(scen.baseCase.simpleRoiPct)}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Bull Case (+${Math.round(scen.benefitShockPct * 100)}% Benefit Capture)</strong></td>
-                    <td>${fm(scen.bullCase.totalInitialOutlay)}</td>
-                    <td>${fm(scen.bullCase.npv)}</td>
-                    <td>${fmtPct(scen.bullCase.irr)}</td>
-                    <td>${fmtPct(scen.bullCase.mirr)}</td>
-                    <td>${fmtPct(scen.bullCase.simpleRoiPct)}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="wb-panel" style="margin-bottom:20px;">
-          <div class="wb-panel__header">
-            <div>
-              <h3 class="wb-panel__title">🎲 1,000-Trial Monte Carlo Project Risk Simulation (${unitLabel})</h3>
-              <div class="wb-panel__subtitle">Simulates 1,000 random project paths varying CapEx (±${Math.round(scen.capexShockPct * 100)}%), Benefits (±${Math.round(scen.benefitShockPct * 100)}%), and Hurdle Rate (±${scen.hurdleShockBps} bps)</div>
-            </div>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-              <span class="wb-badge" style="background:${mc.probPositiveNpv >= 0.75 ? 'rgba(52,211,153,0.16)' : 'rgba(248,113,113,0.16)'};color:${mc.probPositiveNpv >= 0.75 ? '#34d399' : '#f87171'};padding:6px 12px;border-radius:6px;font-weight:700;">
-                Pr(NPV &gt; 0): ${(mc.probPositiveNpv * 100).toFixed(1)}%
-              </span>
-              <span style="font-size:0.78rem;color:var(--text-secondary);">P10 (Downside): <strong class="${mc.p10Npv < 0 ? 'num-neg' : 'num-pos'}">${fm(mc.p10Npv)}</strong></span>
-              <span style="font-size:0.78rem;color:var(--text-secondary);">P50 (Median): <strong class="${mc.p50Npv < 0 ? 'num-neg' : 'num-pos'}">${fm(mc.p50Npv)}</strong></span>
-              <span style="font-size:0.78rem;color:var(--text-secondary);">P90 (Upside): <strong class="${mc.p90Npv < 0 ? 'num-neg' : 'num-pos'}">${fm(mc.p90Npv)}</strong></span>
-            </div>
-          </div>
-          <div class="wb-canvas-wrap">
-            <canvas id="consulting-mc-canvas" class="wb-canvas" style="height:260px;"></canvas>
-          </div>
-        </div>
-
-        <div class="wb-panel">
-          <div class="wb-panel__header">
-            <div>
-              <h3 class="wb-panel__title">Vendor / Consulting Fee &amp; Value-Share Structurer (${unitLabel})</h3>
-              <div class="wb-panel__subtitle">Compare Fixed-Fee, Time &amp; Materials, and Value-Based Gain-Share contract models</div>
-            </div>
-          </div>
-          <div class="wb-table-wrap">
-            <table class="wb-table">
-              <thead>
-                <tr>
-                  <th>Contract Fee Model</th>
-                  <th>Commercial Structure</th>
-                  <th>Total Fee (${unit})</th>
-                  <th>Net Project NPV</th>
-                  <th>Net Project ROI</th>
-                  <th>Value / Fee Multiple</th>
-                  <th>Risk Alignment</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${scen.feeModels.map(m => `
-                  <tr>
-                    <td><strong>${m.model}</strong></td>
-                    <td>${m.structure}</td>
-                    <td>${fm(m.totalFee)}</td>
-                    <td>${fm(m.clientNetNpv)}</td>
-                    <td>${fmtPct(m.clientRoiPct)}</td>
-                    <td>${m.feeMultiple.toFixed(1)}x</td>
-                    <td>${m.riskSharing}</td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
+        <div>
+          ${nextStep ? `
+            <button type="button" class="btn btn--primary btn--sm" data-step-goto="${nextStep}">
+              Next: ${stepMeta[nextStep].title} →
+            </button>
+          ` : `
+            <button type="button" class="btn btn--primary btn--sm" id="footer-exec-memo-btn" style="background:#1e3a8a; border-color:#1e3a8a;">
+              📄 Open 1-Page Executive Memo / Print PDF
+            </button>
+          `}
         </div>
       </div>
     `;
@@ -2889,30 +3212,40 @@ export function renderConsultingWorkbench(root) {
     // Highlight negative numbers & parenthesized outflows in red
     highlightNegativeTableCells(root);
 
-    // Draw Canvas charts for visible tab
+    // Draw Canvas charts for visible step & active sub-tab
     requestAnimationFrame(() => {
       if (activeTab === 'business-case') {
-        drawJCurveChart(root.querySelector('#consulting-jcurve-canvas'), bc, unit);
-        drawBuildVsBuyChart(root.querySelector('#consulting-bvb-canvas'), bvb, unit);
+        if (sub1 === 'jcurve') {
+          drawJCurveChart(root.querySelector('#consulting-jcurve-canvas'), bc, unit);
+        } else if (sub1 === 'bvb') {
+          drawBuildVsBuyChart(root.querySelector('#consulting-bvb-canvas'), bvb, unit);
+        }
       } else if (activeTab === 'ebitda-bridge') {
-        drawWaterfallChart(root.querySelector('#consulting-waterfall-canvas'), bridge, unit);
+        if (sub2 === 'waterfall') {
+          drawWaterfallChart(root.querySelector('#consulting-waterfall-canvas'), bridge, unit);
+        }
       } else if (activeTab === 'pricing-unit') {
-        drawCvpBreakEvenChart(root.querySelector('#consulting-cvp-canvas'), unitEcon, unit);
-        drawLtvCacCurveChart(root.querySelector('#consulting-ltv-canvas'), unitEcon);
+        if (sub3 === 'cvp') {
+          drawCvpBreakEvenChart(root.querySelector('#consulting-cvp-canvas'), unitEcon, unit);
+        } else if (sub3 === 'ltv') {
+          drawLtvCacCurveChart(root.querySelector('#consulting-ltv-canvas'), unitEcon);
+        }
       } else if (activeTab === 'scenarios-fees') {
-        drawTornadoChart(root.querySelector('#consulting-tornado-canvas'), scen, unit);
-        drawMonteCarloChart(root.querySelector('#consulting-mc-canvas'), mc, unit);
+        if (sub4 === 'tornado') {
+          drawTornadoChart(root.querySelector('#consulting-tornado-canvas'), scen, unit);
+        } else if (sub4 === 'montecarlo') {
+          drawMonteCarloChart(root.querySelector('#consulting-mc-canvas'), mc, unit);
+        }
       }
     });
 
     // Wire Executive Business Case Memo Toggle & Print
-    const toggleMemoBtn = root.querySelector('#toggle-exec-memo-btn');
-    if (toggleMemoBtn) {
-      toggleMemoBtn.addEventListener('click', () => {
+    root.querySelectorAll('#toggle-exec-memo-btn, #footer-exec-memo-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
         state.showExecMemo = !state.showExecMemo;
         updateView();
       });
-    }
+    });
     const closeMemoBtn = root.querySelector('#close-exec-memo-btn');
     if (closeMemoBtn) {
       closeMemoBtn.addEventListener('click', () => {
@@ -2936,6 +3269,7 @@ export function renderConsultingWorkbench(root) {
         state.upfrontCapex = Math.round(fte.impliedUpfrontCapex * 100) / 100;
         state.yr1Benefit = Math.round(fte.impliedPeriod1Benefit * 100) / 100;
         state.customYearlyBenefits = null;
+        subTabs['business-case'] = 'jcurve';
         updateView();
       });
     }
@@ -2949,11 +3283,12 @@ export function renderConsultingWorkbench(root) {
         state.yr1Benefit = state.buyYr1Benefit;
         state.ongoingOpex = state.buyOngoingOpex;
         state.customYearlyBenefits = null;
+        subTabs['business-case'] = 'jcurve';
         updateView();
       });
     }
 
-    // Wire Project Identity & Unit Controls
+    // Wire Project Identity, Template & Unit Controls
     const nameInput = root.querySelector('#proj-name-input');
     if (nameInput) {
       nameInput.addEventListener('change', () => {
@@ -2968,6 +3303,13 @@ export function renderConsultingWorkbench(root) {
         updateView();
       });
     }
+    const tplSelect = root.querySelector('#proj-tpl-select');
+    if (tplSelect) {
+      tplSelect.addEventListener('change', () => {
+        applyTemplate(tplSelect.value);
+        updateView();
+      });
+    }
     root.querySelectorAll('#proj-unit-select, #sel-fixed-unit').forEach(sel => {
       sel.addEventListener('change', () => {
         switchUnitScale(sel.value);
@@ -2975,7 +3317,7 @@ export function renderConsultingWorkbench(root) {
       });
     });
 
-    // Wire Horizon Unit Selectors (Top Bar & Tool 1 Control)
+    // Wire Horizon Unit Selectors
     root.querySelectorAll('#top-horizon-unit-select, #sel-horizon-unit').forEach(sel => {
       sel.addEventListener('change', () => {
         switchHorizonUnit(sel.value);
@@ -2985,7 +3327,6 @@ export function renderConsultingWorkbench(root) {
 
     // Wire Save / Load / Export CSV / Export JSON
     const saveBtn = root.querySelector('#save-proj-btn');
-    const statusEl = root.querySelector('#proj-save-status');
     if (saveBtn) {
       saveBtn.addEventListener('click', () => {
         saveProjectToStorage(state);
@@ -3049,19 +3390,23 @@ export function renderConsultingWorkbench(root) {
       });
     }
 
-    // Wire Preset Template Buttons
-    root.querySelectorAll('[data-tpl-id]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        applyTemplate(btn.dataset.tplId);
+    // Wire Step Navigation Tabs & Footer Step Buttons
+    root.querySelectorAll('.consulting-step-tab, [data-step-goto]').forEach(tabBtn => {
+      tabBtn.addEventListener('click', () => {
+        activeTab = tabBtn.dataset.tab || tabBtn.dataset.stepGoto;
         updateView();
       });
     });
 
-    // Wire Tool Card & Tab Switching
-    root.querySelectorAll('.consulting-tool-card, .wb-tab').forEach(tabBtn => {
-      tabBtn.addEventListener('click', () => {
-        activeTab = tabBtn.dataset.tab;
-        updateView();
+    // Wire Sub-Tab Buttons inside each Step
+    root.querySelectorAll('.consulting-subtab-btn').forEach(subBtn => {
+      subBtn.addEventListener('click', () => {
+        const parent = subBtn.dataset.parent;
+        const sub = subBtn.dataset.subtab;
+        if (parent && sub) {
+          subTabs[parent] = sub;
+          updateView();
+        }
       });
     });
 
