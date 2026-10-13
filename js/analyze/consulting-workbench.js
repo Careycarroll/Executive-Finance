@@ -217,18 +217,31 @@ export function computeConsultingBusinessCase(projectOrCompany = {}, overrides =
   const templateKey = merged.template || 'digital';
   const tpl = CONSULTING_TEMPLATES[templateKey] || CONSULTING_TEMPLATES.digital;
 
+  const horizonUnit = ['weeks', 'months', 'years'].includes(merged.horizonUnit)
+    ? merged.horizonUnit
+    : (tpl.horizonUnit || 'years');
+  const periodsPerYear = horizonUnit === 'weeks' ? 52 : horizonUnit === 'months' ? 12 : 1;
+  const periodName = horizonUnit === 'weeks' ? 'Week' : horizonUnit === 'months' ? 'Month' : 'Year';
+  const periodShort = horizonUnit === 'weeks' ? 'Wk' : horizonUnit === 'months' ? 'Mo' : 'Yr';
+  const periodPlural = horizonUnit === 'weeks' ? 'wks' : horizonUnit === 'months' ? 'mos' : 'yrs';
+  const maxPeriods = horizonUnit === 'weeks' ? 52 : horizonUnit === 'months' ? 36 : 15;
+
   const upfrontCapex = Math.max(0, Number(merged.upfrontCapex ?? tpl.upfrontCapex));
   const consultingFee = Math.max(0, Number(merged.consultingFee ?? tpl.consultingFee));
   const yr1Benefit = Math.max(0, Number(merged.yr1Benefit ?? tpl.yr1Benefit));
   const benefitGrowth = Number(merged.benefitGrowth ?? tpl.benefitGrowth);
   const ongoingOpex = Math.max(0, Number(merged.ongoingOpex ?? tpl.ongoingOpex));
-  const horizonYears = Math.max(3, Math.min(10, Math.round(Number(merged.horizonYears ?? tpl.horizonYears))));
+  const horizonYears = Math.max(1, Math.min(maxPeriods, Math.round(Number(merged.horizonYears ?? tpl.horizonYears ?? 5))));
   const hurdleRate = Math.max(0.01, Math.min(0.40, Number(merged.hurdleRate ?? tpl.hurdleRate)));
   const taxRate = Math.max(0, Math.min(0.45, Number(merged.taxRate ?? tpl.taxRate)));
   const customYearlyBenefits = Array.isArray(merged.customYearlyBenefits) ? merged.customYearlyBenefits : null;
   const customYearlyOpex = Array.isArray(merged.customYearlyOpex) ? merged.customYearlyOpex : null;
 
-  // Year 0 initial outlay: CapEx + after-tax consulting/setup fee
+  // Effective periodic discount rate & OpEx escalation rate per period (week, month, or year)
+  const periodicHurdleRate = Math.pow(1 + hurdleRate, 1 / periodsPerYear) - 1;
+  const periodicOpexEscalation = Math.pow(1 + 0.03, 1 / periodsPerYear) - 1;
+
+  // Period 0 initial outlay: CapEx + after-tax consulting/setup fee
   const afterTaxFeeOutlay = consultingFee * (1 - taxRate);
   const totalInitialOutlay = Math.max(0.001, upfrontCapex + afterTaxFeeOutlay);
   const grossInitialSpend = upfrontCapex + consultingFee;
@@ -265,7 +278,7 @@ export function computeConsultingBusinessCase(projectOrCompany = {}, overrides =
 
   for (let t = 1; t <= horizonYears; t++) {
     const defaultBen = yr1Benefit * Math.pow(1 + benefitGrowth, t - 1);
-    const defaultOp = ongoingOpex * Math.pow(1 + 0.03, t - 1);
+    const defaultOp = ongoingOpex * Math.pow(1 + periodicOpexEscalation, t - 1);
     const grossBenefit = customYearlyBenefits && customYearlyBenefits[t - 1] !== undefined && customYearlyBenefits[t - 1] !== null
       ? Number(customYearlyBenefits[t - 1])
       : defaultBen;
@@ -279,7 +292,7 @@ export function computeConsultingBusinessCase(projectOrCompany = {}, overrides =
     const nopat = ebitImpact - taxExpense;
     const fcf = nopat + annualDepreciation;
     const taxShield = annualDepreciation * taxRate;
-    const pvFcf = fcf / Math.pow(1 + hurdleRate, t);
+    const pvFcf = fcf / Math.pow(1 + periodicHurdleRate, t);
 
     const prevUndisc = cumUndiscounted;
     const prevDisc = cumDiscounted;
@@ -298,7 +311,7 @@ export function computeConsultingBusinessCase(projectOrCompany = {}, overrides =
     totalNetCashInflows += fcf;
     pvInflows += pvFcf;
     if (fcf > 0) {
-      fvPositiveFlows += fcf * Math.pow(1 + hurdleRate, horizonYears - t);
+      fvPositiveFlows += fcf * Math.pow(1 + periodicHurdleRate, horizonYears - t);
     }
     cashFlows.push(fcf);
 
@@ -319,16 +332,23 @@ export function computeConsultingBusinessCase(projectOrCompany = {}, overrides =
   }
 
   const npv = pvInflows - totalInitialOutlay;
-  const irr = solveIRR(cashFlows);
-  const mirr = totalInitialOutlay > 0 && fvPositiveFlows > 0
+  const periodicIrr = solveIRR(cashFlows);
+  const periodicMirr = totalInitialOutlay > 0 && fvPositiveFlows > 0
     ? Math.pow(fvPositiveFlows / totalInitialOutlay, 1 / horizonYears) - 1
     : 0;
+  const irr = periodsPerYear === 1
+    ? periodicIrr
+    : Math.min(9.99, Math.pow(1 + Math.max(-0.99, periodicIrr), periodsPerYear) - 1);
+  const mirr = periodsPerYear === 1
+    ? periodicMirr
+    : Math.min(9.99, Math.pow(1 + Math.max(-0.99, periodicMirr), periodsPerYear) - 1);
   const profitabilityIndex = totalInitialOutlay > 0 ? pvInflows / totalInitialOutlay : 0;
 
   const netProfit = totalNetCashInflows - totalInitialOutlay;
   const simpleRoiPct = totalInitialOutlay > 0 ? netProfit / totalInitialOutlay : 0;
+  const totalHorizonInYears = Math.max(0.05, horizonYears / periodsPerYear);
   const annualizedRoiPct = totalInitialOutlay > 0 && totalNetCashInflows > 0
-    ? Math.pow(totalNetCashInflows / totalInitialOutlay, 1 / horizonYears) - 1
+    ? Math.min(9.99, Math.pow(totalNetCashInflows / totalInitialOutlay, 1 / totalHorizonInYears) - 1)
     : 0;
 
   const feeValueMultiple = consultingFee > 0 ? pvInflows / consultingFee : (pvInflows / totalInitialOutlay);
@@ -336,6 +356,14 @@ export function computeConsultingBusinessCase(projectOrCompany = {}, overrides =
   return {
     templateKey,
     template: tpl,
+    horizonUnit,
+    periodsPerYear,
+    periodName,
+    periodShort,
+    periodPlural,
+    periodicHurdleRate,
+    periodicIrr,
+    periodicMirr,
     upfrontCapex,
     consultingFee,
     grossInitialSpend,
@@ -361,7 +389,7 @@ export function computeConsultingBusinessCase(projectOrCompany = {}, overrides =
     feeValueMultiple,
     schedule,
     cashFlows,
-    verdict: npv > 0 && irr > hurdleRate ? 'APPROVE — VALUE CREATING' : 'REWORK / REJECT — BELOW HURDLE'
+    verdict: npv > 0 ? 'APPROVE — VALUE CREATING' : 'REWORK / REJECT — BELOW HURDLE'
   };
 }
 
@@ -681,7 +709,9 @@ function drawJCurveChart(canvas, bc, unit) {
   ctx.stroke();
   ctx.setLineDash([]);
 
-  const barW = Math.min(34, (cw / pts.length) * 0.42);
+  const barW = Math.max(4, Math.min(34, (cw / pts.length) * 0.42));
+  const pShort = bc.periodShort || 'Yr';
+  const tickStride = pts.length > 26 ? 4 : pts.length > 13 ? 2 : 1;
   pts.forEach((p, idx) => {
     const x = xAt(idx) - barW / 2;
     const y0 = zeroY;
@@ -689,10 +719,12 @@ function drawJCurveChart(canvas, bc, unit) {
     ctx.fillStyle = p.fcf >= 0 ? 'rgba(59, 130, 246, 0.22)' : 'rgba(220, 38, 38, 0.25)';
     ctx.fillRect(x, Math.min(y0, y1), barW, Math.abs(y1 - y0));
 
-    ctx.fillStyle = '#334155';
-    ctx.font = '600 11px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(`Yr ${p.year}`, xAt(idx), H - 12);
+    if (idx % tickStride === 0 || idx === pts.length - 1) {
+      ctx.fillStyle = '#334155';
+      ctx.font = '600 10px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${pShort} ${p.year}`, xAt(idx), H - 12);
+    }
   });
 
   ctx.strokeStyle = '#94a3b8';
@@ -902,6 +934,7 @@ export function renderConsultingWorkbench(root) {
     projectName: defTpl.name,
     department: defTpl.department,
     unit: defTpl.unit, // '$' | 'K' | 'M'
+    horizonUnit: 'years', // 'weeks' | 'months' | 'years'
     upfrontCapex: defTpl.upfrontCapex,
     consultingFee: defTpl.consultingFee,
     yr1Benefit: defTpl.yr1Benefit,
@@ -934,6 +967,7 @@ export function renderConsultingWorkbench(root) {
     state.projectName = t.name;
     state.department = t.department;
     state.unit = t.unit;
+    state.horizonUnit = t.horizonUnit || 'years';
     state.upfrontCapex = t.upfrontCapex;
     state.consultingFee = t.consultingFee;
     state.yr1Benefit = t.yr1Benefit;
@@ -953,6 +987,20 @@ export function renderConsultingWorkbench(root) {
     state.evMultiple = t.evMultiple;
   };
 
+  const switchHorizonUnit = (nextUnit) => {
+    if (!['weeks', 'months', 'years'].includes(nextUnit) || nextUnit === state.horizonUnit) return;
+    const oldPpy = state.horizonUnit === 'weeks' ? 52 : state.horizonUnit === 'months' ? 12 : 1;
+    const newPpy = nextUnit === 'weeks' ? 52 : nextUnit === 'months' ? 12 : 1;
+    const scale = oldPpy / newPpy;
+
+    state.yr1Benefit = Number((state.yr1Benefit * scale).toFixed(2));
+    state.ongoingOpex = Number((state.ongoingOpex * scale).toFixed(2));
+    state.benefitGrowth = Number((Math.pow(1 + state.benefitGrowth, scale) - 1).toFixed(4));
+    state.horizonYears = nextUnit === 'weeks' ? 12 : nextUnit === 'months' ? 12 : 5;
+    state.horizonUnit = nextUnit;
+    state.customYearlyBenefits = null;
+  };
+
   const updateView = () => {
     const unit = state.unit || 'K';
     const unitLabel = unit === '$' ? '$' : unit === 'K' ? '$K (Thousands)' : '$M (Millions)';
@@ -964,6 +1012,9 @@ export function renderConsultingWorkbench(root) {
     const scen = computeConsultingScenarios(state);
     const savedList = getSavedProjects();
 
+    const maxHorizon = bc.horizonUnit === 'weeks' ? 52 : bc.horizonUnit === 'months' ? 36 : 15;
+    const periodicLabel = bc.horizonUnit === 'weeks' ? 'Weekly' : bc.horizonUnit === 'months' ? 'Monthly' : 'Annual';
+
     root.innerHTML = `
       <!-- STANDALONE WORK PROJECT WORKSPACE BAR (COMPACT) -->
       <div class="analyze-target-bar" style="margin-bottom: 1.15rem; padding: 1rem 1.25rem;">
@@ -972,14 +1023,19 @@ export function renderConsultingWorkbench(root) {
             <span class="analyze-ticker-badge" style="background:#1d4ed8;">WORK PROJECT</span>
             <input type="text" id="proj-name-input" class="analyze-input" value="${state.projectName}"
               placeholder="Project / Initiative Name"
-              style="font-size:0.98rem; font-weight:800; color:#0f172a; min-width:240px; flex:1;" />
+              style="font-size:0.98rem; font-weight:800; color:#0f172a; min-width:220px; flex:1;" />
             <input type="text" id="proj-dept-input" class="analyze-input" value="${state.department}"
               placeholder="Department / Client"
-              style="font-size:0.84rem; font-weight:600; width:175px;" />
-            <select id="proj-unit-select" class="analyze-input" style="width:165px; font-weight:700; cursor:pointer;">
+              style="font-size:0.84rem; font-weight:600; width:165px;" />
+            <select id="proj-unit-select" class="analyze-input" style="width:160px; font-weight:700; cursor:pointer;">
               <option value="K" ${unit === 'K' ? 'selected' : ''}>Unit: $K (Thousands)</option>
               <option value="M" ${unit === 'M' ? 'selected' : ''}>Unit: $M (Millions)</option>
               <option value="$" ${unit === '$' ? 'selected' : ''}>Unit: $ (Exact Dollars)</option>
+            </select>
+            <select id="top-horizon-unit-select" class="analyze-input" style="width:155px; font-weight:700; cursor:pointer;" title="Switch Project Horizon Time Unit">
+              <option value="years" ${bc.horizonUnit === 'years' ? 'selected' : ''}>Horizon: Years (${bc.horizonUnit === 'years' ? bc.horizonYears : 5} yrs)</option>
+              <option value="months" ${bc.horizonUnit === 'months' ? 'selected' : ''}>Horizon: Months (${bc.horizonUnit === 'months' ? bc.horizonYears : 12} mos)</option>
+              <option value="weeks" ${bc.horizonUnit === 'weeks' ? 'selected' : ''}>Horizon: Weeks (${bc.horizonUnit === 'weeks' ? bc.horizonYears : 12} wks)</option>
             </select>
           </div>
           <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
@@ -1022,7 +1078,7 @@ export function renderConsultingWorkbench(root) {
               <span class="consulting-tool-card__status">${activeTab === 'business-case' ? '● ACTIVE' : 'Open →'}</span>
             </div>
             <div class="consulting-tool-card__title" style="margin-top:0.35rem;">Project Business Case (NPV, IRR, MIRR &amp; ROI)</div>
-            <div class="consulting-tool-card__desc">Multi-year cash flows, Payback Period &amp; J-Curve trajectory.</div>
+            <div class="consulting-tool-card__desc">Cash flows (${bc.horizonYears} ${bc.periodPlural}), Payback &amp; J-Curve trajectory.</div>
           </div>
           <div class="consulting-tool-card__metric">
             <span>NPV: <strong style="color:${bc.npv >= 0 ? '#16a34a' : '#dc2626'};">${fm(bc.npv)}</strong></span>
@@ -1084,22 +1140,26 @@ export function renderConsultingWorkbench(root) {
           <div class="wb-kpi-card__sub">${bc.verdict} (PI: ${bc.profitabilityIndex.toFixed(2)}x)</div>
         </div>
         <div class="wb-kpi-card">
-          <div class="wb-kpi-card__label">IRR vs. Modified IRR (MIRR)</div>
+          <div class="wb-kpi-card__label">Annualized IRR vs. MIRR</div>
           <div class="wb-kpi-card__val">${fmtPct(bc.irr)} <span style="font-size:0.85rem; color:#64748b;">/ ${fmtPct(bc.mirr)}</span></div>
-          <div class="wb-kpi-card__sub">Hurdle Rate: ${fmtPct(bc.hurdleRate)} (Spread: ${((bc.irr - bc.hurdleRate) * 100).toFixed(1)}%)</div>
+          <div class="wb-kpi-card__sub">
+            ${bc.periodsPerYear > 1
+              ? `Periodic IRR: ${fmtPct(bc.periodicIrr)}/${bc.periodShort} · Hurdle: ${fmtPct(bc.hurdleRate)}/yr`
+              : `Hurdle Rate: ${fmtPct(bc.hurdleRate)} (Spread: ${((bc.irr - bc.hurdleRate) * 100).toFixed(1)}%)`}
+          </div>
         </div>
         <div class="wb-kpi-card">
-          <div class="wb-kpi-card__label">Net Project ROI (${bc.horizonYears}-Yr)</div>
+          <div class="wb-kpi-card__label">Net Project ROI (${bc.horizonYears}-${bc.periodShort})</div>
           <div class="wb-kpi-card__val" style="color:${bc.simpleRoiPct >= 0 ? '#1d4ed8' : '#dc2626'};">${fmtPct(bc.simpleRoiPct)}</div>
           <div class="wb-kpi-card__sub">Annualized ROI: ${fmtPct(bc.annualizedRoiPct)} · Value Mult: ${bc.feeValueMultiple.toFixed(1)}x</div>
         </div>
         <div class="wb-kpi-card">
-          <div class="wb-kpi-card__label">Payback Period (Simple / Disc.)</div>
+          <div class="wb-kpi-card__label">Payback Period (${bc.periodName}s)</div>
           <div class="wb-kpi-card__val">
-            ${bc.simplePaybackYears !== null ? `${bc.simplePaybackYears.toFixed(1)} yrs` : `>${bc.horizonYears} yrs`}
+            ${bc.simplePaybackYears !== null ? `${bc.simplePaybackYears.toFixed(1)} ${bc.periodPlural}` : `>${bc.horizonYears} ${bc.periodPlural}`}
           </div>
           <div class="wb-kpi-card__sub">
-            Discounted Payback: ${bc.discountedPaybackYears !== null ? `${bc.discountedPaybackYears.toFixed(1)} yrs` : `>${bc.horizonYears} yrs`}
+            Discounted Payback: ${bc.discountedPaybackYears !== null ? `${bc.discountedPaybackYears.toFixed(1)} ${bc.periodPlural}` : `>${bc.horizonYears} ${bc.periodPlural}`}
           </div>
         </div>
         <div class="wb-kpi-card">
@@ -1116,7 +1176,7 @@ export function renderConsultingWorkbench(root) {
             <div class="wb-panel__header">
               <div>
                 <h3 class="wb-panel__title">Project Investment &amp; Benefit Inputs (${unitLabel})</h3>
-                <div class="wb-panel__subtitle">Type exact project figures in the input boxes or drag the sliders</div>
+                <div class="wb-panel__subtitle">Model in Weeks, Months, or Years — type exact numbers or adjust the horizon slider</div>
               </div>
               ${conceptPill('npv', 'NPV & IRR')}
             </div>
@@ -1136,31 +1196,39 @@ export function renderConsultingWorkbench(root) {
                 </div>
                 <div>
                   <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Year 1 Gross Savings / Benefit (${unit})
+                    ${bc.periodName} 1 Gross Savings / Benefit (${unit})
                   </label>
                   <input type="number" id="num-benefit" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.yr1Benefit}" />
                 </div>
                 <div>
                   <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Annual Benefit Growth / Ramp (%)
+                    Benefit Growth / Ramp (% per ${bc.periodShort})
                   </label>
-                  <input type="number" id="num-growth" class="analyze-input" style="width:100%; font-weight:700;" step="1" value="${(bc.benefitGrowth * 100).toFixed(1)}" />
+                  <input type="number" id="num-growth" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" value="${(bc.benefitGrowth * 100).toFixed(1)}" />
                 </div>
                 <div>
                   <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Ongoing Annual OpEx / License (${unit})
+                    Ongoing ${periodicLabel} OpEx / License (${unit})
                   </label>
                   <input type="number" id="num-opex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${bc.ongoingOpex}" />
                 </div>
                 <div>
                   <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Project Horizon (3–10 Years)
+                    Project Horizon (1–${maxHorizon} ${bc.periodName}s)
                   </label>
-                  <input type="number" id="num-horizon" class="analyze-input" style="width:100%; font-weight:700;" step="1" min="3" max="10" value="${bc.horizonYears}" />
+                  <div style="display:flex; gap:0.35rem; align-items:center;">
+                    <input type="number" id="num-horizon" class="analyze-input" style="width:74px; font-weight:700;" step="1" min="1" max="${maxHorizon}" value="${bc.horizonYears}" />
+                    <select id="sel-horizon-unit" class="analyze-input" style="flex:1; font-weight:700; cursor:pointer;">
+                      <option value="years" ${bc.horizonUnit === 'years' ? 'selected' : ''}>Years</option>
+                      <option value="months" ${bc.horizonUnit === 'months' ? 'selected' : ''}>Months</option>
+                      <option value="weeks" ${bc.horizonUnit === 'weeks' ? 'selected' : ''}>Weeks</option>
+                    </select>
+                  </div>
+                  <input type="range" id="sl-horizon" min="1" max="${maxHorizon}" step="1" value="${bc.horizonYears}" style="width:100%; margin-top:0.35rem;" />
                 </div>
                 <div>
                   <label style="font-size:0.76rem; font-weight:700; color:#334155; display:block; margin-bottom:0.25rem;">
-                    Hurdle / Discount Rate (%)
+                    Annual Hurdle / Discount Rate (%)
                   </label>
                   <input type="number" id="num-hurdle" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" min="1" max="35" value="${(bc.hurdleRate * 100).toFixed(1)}" />
                 </div>
@@ -1172,22 +1240,22 @@ export function renderConsultingWorkbench(root) {
                 </div>
               </div>
 
-              <!-- Optional Custom Year-by-Year Benefits Override -->
+              <!-- Optional Custom Period-by-Period Benefits Override -->
               <div style="margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid #e2e8f0;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.45rem;">
                   <span style="font-size:0.76rem; font-weight:800; text-transform:uppercase; color:#475569;">
-                    Custom Year-by-Year Gross Benefit Override (${unit})
+                    Custom ${bc.periodName}-by-${bc.periodName} Gross Benefit Override (${unit})
                   </span>
                   ${state.customYearlyBenefits ? `
                     <button type="button" id="reset-custom-yrs-btn" class="btn btn--secondary btn--sm" style="font-size:0.7rem; padding:0.15rem 0.5rem;">
-                      Reset to ${fmtPct(bc.benefitGrowth)} Growth Formula
+                      Reset to ${fmtPct(bc.benefitGrowth)}/${bc.periodShort} Growth Formula
                     </button>
-                  ` : `<span style="font-size:0.72rem; color:#64748b;">Edit any year below to override the ${fmtPct(bc.benefitGrowth)}/yr ramp</span>`}
+                  ` : `<span style="font-size:0.72rem; color:#64748b;">Edit any ${bc.periodName.toLowerCase()} below to override the ${fmtPct(bc.benefitGrowth)}/${bc.periodShort} ramp</span>`}
                 </div>
-                <div style="display:grid; grid-template-columns: repeat(${bc.horizonYears}, minmax(60px, 1fr)); gap: 0.45rem;">
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 0.45rem; max-height: 155px; overflow-y: auto;">
                   ${bc.schedule.filter(s => s.year > 0).map(s => `
                     <div>
-                      <label style="font-size:0.68rem; font-weight:700; color:#64748b; display:block;">Yr ${s.year}</label>
+                      <label style="font-size:0.68rem; font-weight:700; color:#64748b; display:block;">${bc.periodShort} ${s.year}</label>
                       <input type="number" class="analyze-input custom-yr-ben-input" data-yr="${s.year}"
                         style="width:100%; padding:0.3rem 0.4rem; font-size:0.8rem;"
                         step="any" value="${Number(s.grossBenefit.toFixed(2))}" />
@@ -1202,7 +1270,7 @@ export function renderConsultingWorkbench(root) {
             <div class="wb-panel__header">
               <div>
                 <h3 class="wb-panel__title">Cumulative Cash Flow &amp; NPV "J-Curve" (${unitLabel})</h3>
-                <div class="wb-panel__subtitle">Green = Discounted Cumulative NPV · Gray = Undiscounted · Bars = Annual FCF</div>
+                <div class="wb-panel__subtitle">Green = Discounted Cumulative NPV · Gray = Undiscounted · Bars = ${periodicLabel} FCF</div>
               </div>
               ${conceptPill('capital-budgeting', 'J-Curve & Payback')}
             </div>
@@ -1215,8 +1283,8 @@ export function renderConsultingWorkbench(root) {
         <div class="wb-panel">
           <div class="wb-panel__header">
             <div>
-              <h3 class="wb-panel__title">Multi-Year Project Cash Flow &amp; ROI Schedule (${state.projectName})</h3>
-              <div class="wb-panel__subtitle">All figures in ${unitLabel} · Discount Rate: ${fmtPct(bc.hurdleRate)} · Tax Rate: ${fmtPct(bc.taxRate)}</div>
+              <h3 class="wb-panel__title">Multi-${bc.periodName} Project Cash Flow &amp; ROI Schedule (${state.projectName})</h3>
+              <div class="wb-panel__subtitle">All figures in ${unitLabel} · Horizon: ${bc.horizonYears} ${bc.periodName}s · Annual Hurdle: ${fmtPct(bc.hurdleRate)} (${fmtPct(bc.periodicHurdleRate)}/${bc.periodShort}) · Tax: ${fmtPct(bc.taxRate)}</div>
             </div>
             ${conceptPill('irr', 'IRR vs. MIRR')}
           </div>
@@ -1226,7 +1294,7 @@ export function renderConsultingWorkbench(root) {
                 <tr>
                   <th>Business Case Line Item</th>
                   <th>Concept</th>
-                  ${bc.schedule.map(s => `<th>Year ${s.year}</th>`).join('')}
+                  ${bc.schedule.map(s => `<th>${bc.periodName} ${s.year}</th>`).join('')}
                   <th>Total / KPI</th>
                 </tr>
               </thead>
@@ -1244,7 +1312,7 @@ export function renderConsultingWorkbench(root) {
                   <td>${fm(bc.totalGrossBenefits)}</td>
                 </tr>
                 <tr>
-                  <td>Ongoing Run-Rate OpEx &amp; Licensing</td>
+                  <td>Ongoing ${periodicLabel} OpEx &amp; Licensing</td>
                   <td>${conceptPill('reformulated-is', 'OpEx')}</td>
                   ${bc.schedule.map(s => `<td>${s.year === 0 ? '—' : `(${fm(s.ongoingOpex)})`}</td>`).join('')}
                   <td>(${fm(bc.totalOngoingOpex)})</td>
@@ -1264,7 +1332,7 @@ export function renderConsultingWorkbench(root) {
                   <td>${fm(bc.totalNetCashInflows - bc.totalInitialOutlay)}</td>
                 </tr>
                 <tr>
-                  <td>Present Value of FCF (Discounted @ ${fmtPct(bc.hurdleRate)})</td>
+                  <td>Present Value of FCF (Discounted @ ${fmtPct(bc.periodicHurdleRate)}/${bc.periodShort})</td>
                   <td>${conceptPill('npv', 'PV(FCF)')}</td>
                   ${bc.schedule.map(s => `<td>${fm(s.pvFcf)}</td>`).join('')}
                   <td>${fm(bc.npv)}</td>
@@ -1273,7 +1341,7 @@ export function renderConsultingWorkbench(root) {
                   <td>Cumulative Undiscounted Cash Flow</td>
                   <td>${conceptPill('capital-budgeting', 'Payback')}</td>
                   ${bc.schedule.map(s => `<td>${fm(s.cumUndiscounted)}</td>`).join('')}
-                  <td>${bc.simplePaybackYears !== null ? `${bc.simplePaybackYears.toFixed(1)} yrs` : '—'}</td>
+                  <td>${bc.simplePaybackYears !== null ? `${bc.simplePaybackYears.toFixed(1)} ${bc.periodPlural}` : '—'}</td>
                 </tr>
                 <tr class="wb-row-total">
                   <td>Cumulative Discounted NPV (J-Curve)</td>
@@ -1734,6 +1802,14 @@ export function renderConsultingWorkbench(root) {
       });
     }
 
+    // Wire Horizon Unit Selectors (Top Bar & Tool 1 Control)
+    root.querySelectorAll('#top-horizon-unit-select, #sel-horizon-unit').forEach(sel => {
+      sel.addEventListener('change', () => {
+        switchHorizonUnit(sel.value);
+        updateView();
+      });
+    });
+
     // Wire Save / Load / Export CSV / Export JSON
     const saveBtn = root.querySelector('#save-proj-btn');
     const statusEl = root.querySelector('#proj-save-status');
@@ -1764,12 +1840,12 @@ export function renderConsultingWorkbench(root) {
     const exportCsvBtn = root.querySelector('#export-csv-btn');
     if (exportCsvBtn) {
       exportCsvBtn.addEventListener('click', () => {
-        const headers = ['Line Item', ...bc.schedule.map(s => `Year ${s.year}`), 'Total / KPI'];
+        const headers = ['Line Item', ...bc.schedule.map(s => `${bc.periodName} ${s.year}`), 'Total / KPI'];
         const rows = [
           ['Project Name', state.projectName],
           ['Department', state.department],
-          ['Unit Scale', unitLabel],
-          ['NPV', bc.npv.toFixed(2), 'IRR', (bc.irr * 100).toFixed(2) + '%', 'MIRR', (bc.mirr * 100).toFixed(2) + '%', 'ROI', (bc.simpleRoiPct * 100).toFixed(2) + '%'],
+          ['Unit Scale', unitLabel, 'Horizon Unit', bc.horizonUnit],
+          ['NPV', bc.npv.toFixed(2), 'Annualized IRR', (bc.irr * 100).toFixed(2) + '%', 'Annualized MIRR', (bc.mirr * 100).toFixed(2) + '%', 'ROI', (bc.simpleRoiPct * 100).toFixed(2) + '%'],
           [],
           headers,
           ['Upfront Outlay & Fee', ...bc.schedule.map(s => s.capexAndFee.toFixed(2)), (-bc.grossInitialSpend).toFixed(2)],
@@ -1777,7 +1853,7 @@ export function renderConsultingWorkbench(root) {
           ['Ongoing OpEx', ...bc.schedule.map(s => (-s.ongoingOpex).toFixed(2)), (-bc.totalOngoingOpex).toFixed(2)],
           ['Net Cash Flow (FCF)', ...bc.schedule.map(s => s.fcf.toFixed(2)), (bc.totalNetCashInflows - bc.totalInitialOutlay).toFixed(2)],
           ['Present Value of FCF', ...bc.schedule.map(s => s.pvFcf.toFixed(2)), bc.npv.toFixed(2)],
-          ['Cumulative Undiscounted CF', ...bc.schedule.map(s => s.cumUndiscounted.toFixed(2)), bc.simplePaybackYears !== null ? `${bc.simplePaybackYears.toFixed(2)} yrs` : ''],
+          ['Cumulative Undiscounted CF', ...bc.schedule.map(s => s.cumUndiscounted.toFixed(2)), bc.simplePaybackYears !== null ? `${bc.simplePaybackYears.toFixed(2)} ${bc.periodPlural}` : ''],
           ['Cumulative Discounted NPV', ...bc.schedule.map(s => s.cumDiscounted.toFixed(2)), bc.npv.toFixed(2)]
         ];
         const csv = rows.map(r => r.map(c => `"${String(c ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
@@ -1877,16 +1953,20 @@ export function renderConsultingWorkbench(root) {
       });
     }
 
-    // Wire Sliders for Tabs 2 & 3
+    // Wire Sliders for Tabs 1, 2 & 3
     const bindSlider = (id, key) => {
       const el = root.querySelector(id);
       if (!el) return;
       el.addEventListener('change', () => {
         state[key] = parseFloat(el.value);
+        if (key === 'horizonYears') {
+          state.customYearlyBenefits = null;
+        }
         updateView();
       });
     };
 
+    bindSlider('#sl-horizon', 'horizonYears');
     bindSlider('#sl-price-lift', 'priceUpliftPct');
     bindSlider('#sl-vol-lift', 'volumeGrowthPct');
     bindSlider('#sl-cogs-save', 'cogsSavingsPct');
