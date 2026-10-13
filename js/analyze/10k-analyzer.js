@@ -259,19 +259,15 @@ export function compute10KAnalysis(company, opts = {}) {
     const wcrToSales = rev > 0 ? wcr / rev : 0;
     const nlc = totalCash - std; // Net Liquid Balance (NLB = Cash - Short-term debt, verify WCR + NLB = NWC)
 
-    // Liquidity & Solvency Ratios:
-    const currentRatio = cl > 0 ? ca / cl : 0;
-    const quickRatio = cl > 0 ? (totalCash + ar) / cl : 0;
-    const cashRatio = cl > 0 ? totalCash / cl : 0;
-    const debtToEquity = cse > 0 ? FO / cse : (FO > 0 ? 9.99 : 0);
-    const netDebtToEbitda = ebitda > 0 ? NFO / ebitda : 0;
-    const interestCoverage = intExp > 0 ? ebit / intExp : (ebit > 0 ? 50 : 0);
 
     // Profitability & Quality Ratios:
     const grossMargin = rev > 0 ? gp / rev : 0;
+    const ebitdaMargin = rev > 0 ? ebitda / rev : 0;
+    const ebtMargin = rev > 0 ? ebt / rev : 0;
     const netMargin = rev > 0 ? ni / rev : 0;
-    const roa = ta > 0 ? ni / ta : 0;
+    const ocfMargin = rev > 0 ? ocf / rev : 0;
     const fcfMargin = rev > 0 ? fcf / rev : 0;
+    const nopatMargin = rev > 0 ? NOPAT / rev : 0;
     const ocfToNi = ni > 0 ? ocf / ni : (ocf > 0 ? 1.5 : 0);
     const sbcPctRev = rev > 0 ? sbc / rev : 0;
     const sbcAdjustedOpMargin = rev > 0 ? (ebit - sbc) / rev : 0;
@@ -288,8 +284,43 @@ export function compute10KAnalysis(company, opts = {}) {
     const capitalEmployed = (ta - cl) > 10 ? (ta - cl) : Math.max(100, cse + ltd);
     const roce = capitalEmployed > 10 ? ebit / capitalEmployed : 0;
     const roe = cse > 10 ? ni / cse : ROE;
+    const roa = ta > 0 ? ni / ta : 0;
+    const neutralRoa = ta > 0 ? NOPAT / ta : 0; // Neutral / Unlevered ROA
+    const cashRoa = ta > 0 ? ocf / ta : 0; // Cash ROA
     const croic = investedCapital > 10 ? fcf / investedCapital : 0;
     const fixedAssetTurnover = ppe > 0 ? rev / ppe : (rev > 0 ? 5.0 : 0);
+
+    // Turnover & Operating Cycle Frequencies:
+    const arTurnover = ar > 0 ? rev / ar : (dso > 0 ? 365 / dso : 0);
+    const invTurnover = inv > 0 ? cogs / inv : (dio > 0 ? 365 / dio : 0);
+    const apTurnover = ap > 0 ? cogs / ap : (dpo > 0 ? 365 / dpo : 0);
+    const workingCapitalTurnover = Math.abs(wcr) > 10 ? rev / wcr : (rev > 0 ? 10 : 0);
+    const operatingCycle = dso + dio; // Gross Operating Cycle (days)
+
+    // Liquidity & Short-Term Solvency:
+    const currentRatio = cl > 0 ? ca / cl : 0;
+    const quickRatio = cl > 0 ? (totalCash + ar) / cl : 0;
+    const cashRatio = cl > 0 ? totalCash / cl : 0;
+    const ocfToCurrentLiabilities = cl > 0 ? ocf / cl : 0;
+    const nwc = ca - cl;
+    const nwcToTotalAssets = ta > 0 ? nwc / ta : 0;
+    const cashOpEx = Math.max(1, (cogs + sga + rd) - da);
+    const dailyCashOpEx = cashOpEx / 365;
+    const defensiveInterval = dailyCashOpEx > 0 ? Math.min(999, (totalCash + ar) / dailyCashOpEx) : 365;
+
+    // Fulghieri Strategic Liquidity Framework (Managerial Balance Sheet):
+    const ltFinancing = cse + ltd;
+    const netFixedAssets = ppe + gwIntang;
+    const nlf = ltFinancing - netFixedAssets; // Net Long-Term Financing
+    const nsf = std - totalCash; // Net Short-Term Financing (ST Debt - Cash)
+    const liquidityRatio = Math.abs(wcr) > 10 ? nlf / wcr : (nlf >= 0 ? 1.5 : -1.0); // LR = NLF / WCR
+    const fulghieriStrategy = wcr <= 0
+      ? 'Supplier-Funded Float (Negative WCR)'
+      : liquidityRatio > 1.05
+        ? 'Conservative Strategy (Excess LT Cushion)'
+        : liquidityRatio >= 0.95
+          ? 'Matching Strategy (Maturity Alignment)'
+          : 'Aggressive Strategy (ST Debt Funding WC)';
 
     // Capital Allocation, Reinvestment & Payouts:
     const capexToDa = da > 0 ? capex / da : (capex > 0 ? 1.5 : 0);
@@ -301,8 +332,15 @@ export function compute10KAnalysis(company, opts = {}) {
     const fcfPayoutRatio = fcf > 10 ? shareholderPayouts / fcf : (shareholderPayouts > 0 ? 2.0 : 0);
     const dividendPayoutRatio = ni > 10 ? divs / ni : 0;
 
-    // Solvency, Liquidity & Coverage:
+    // Solvency, Leverage & Coverage:
+    const debtToEquity = cse > 0 ? FO / cse : (FO > 0 ? 9.99 : 0);
     const debtToCapital = (FO + cse) > 0 ? Math.min(1.0, Math.max(0, FO / (FO + cse))) : (FO > 0 ? 1.0 : 0);
+    const debtToAssets = ta > 0 ? FO / ta : 0;
+    const financialLeverage = cse > 0 ? tl / cse : (tl > 0 ? 9.99 : 0);
+    const netDebtToEbitda = ebitda > 0 ? NFO / ebitda : 0;
+    const interestCoverage = intExp > 0 ? ebit / intExp : (ebit > 0 ? 50 : 0);
+    const ebitdaInterestCoverage = intExp > 0 ? ebitda / intExp : (ebitda > 0 ? 50 : 0);
+    const cashInterestCoverage = intExp > 0 ? (ocf + intExp) / intExp : (ocf > 0 ? 50 : 0);
     const ocfToDebt = FO > 0 ? ocf / FO : (FO === 0 && ocf > 0 ? 5.0 : 0);
 
     // Operating Leverage & Specialized Benchmarks:
@@ -341,12 +379,15 @@ export function compute10KAnalysis(company, opts = {}) {
       // Working Capital & CCC
       dso, dio, dpo, ccc, wcr, wcrToSales, nlc,
       // Ratios
-      currentRatio, quickRatio, cashRatio,
-      debtToEquity, debtToCapital, netDebtToEbitda, interestCoverage, ocfToDebt,
-      grossMargin, netMargin, roa, roe, fcfMargin, ocfToNi,
+      currentRatio, quickRatio, cashRatio, ocfToCurrentLiabilities, nwc, nwcToTotalAssets, defensiveInterval,
+      ltFinancing, netFixedAssets, nlf, nsf, liquidityRatio, fulghieriStrategy,
+      debtToEquity, debtToCapital, debtToAssets, financialLeverage, netDebtToEbitda, interestCoverage, ebitdaInterestCoverage, cashInterestCoverage, ocfToDebt,
+      grossMargin, ebitdaMargin, ebtMargin, netMargin, ocfMargin, fcfMargin, nopatMargin, ocfToNi,
+      roa, neutralRoa, cashRoa, roe,
       sbcPctRev, sbcAdjustedOpMargin,
       totalAccruals, sloanAccrualRatio, goodwillPctAssets,
       investedCapital, roic, capitalEmployed, roce, croic, fixedAssetTurnover,
+      arTurnover, invTurnover, apTurnover, workingCapitalTurnover, operatingCycle,
       capexToDa, capexIntensity, deltaWcr, reinvestmentRate, shareholderPayouts, fcfPayoutRatio, dividendPayoutRatio,
       rdIntensity, sgaIntensity, revGrowth, ruleOf40, gmroi
     });
@@ -1327,20 +1368,60 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
         <div class="wb-panel__header">
           <div>
             <h3 class="wb-panel__title">5-Year Executive Financial Ratio Suite (${company.ticker})</h3>
-            <div class="wb-panel__subtitle">Institutional 36-Ratio Diagnostic Matrix across Profitability, ROIC Moats, Hawawini Working Capital, Capital Allocation, Solvency &amp; Accounting Quality</div>
+            <div class="wb-panel__subtitle">Institutional 54-Ratio Diagnostic Matrix across Profitability, ROIC Moats, Fulghieri Strategic Liquidity, Capital Allocation, Solvency &amp; Accounting Quality</div>
           </div>
           ${conceptPill('working-capital', 'WCR & Ratios')}
+        </div>
+
+        <!-- Fulghieri Managerial Balance Sheet & Strategic Liquidity Diagnostic Card -->
+        <div class="wb-panel__body" style="background:#f8fafc; border-bottom:1px solid #e2e8f0; padding:1rem 1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
+            <div>
+              <div style="font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#2563eb;">Fulghieri Strategic Liquidity Framework (Managerial Balance Sheet)</div>
+              <div style="font-size:0.82rem; font-weight:600; color:#0f172a;">Capital Structure Maturity Alignment: NLF − NSF ≡ WCR</div>
+            </div>
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+              <span class="wb-pill" style="background:${latest.wcr <= 0 ? '#eff6ff' : latest.liquidityRatio >= 1.05 ? '#f0fdf4' : latest.liquidityRatio >= 0.95 ? '#fefce8' : '#fef2f2'}; color:${latest.wcr <= 0 ? '#1e40af' : latest.liquidityRatio >= 1.05 ? '#15803d' : latest.liquidityRatio >= 0.95 ? '#a16207' : '#b91c1c'}; font-weight:700; border:1px solid currentColor;">
+                ${latest.fulghieriStrategy}
+              </span>
+              ${conceptPill('working-capital', 'Managerial BS')}
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.75rem;">
+            <div style="background:#ffffff; padding:0.75rem; border-radius:6px; border:1px solid #e2e8f0;">
+              <div style="font-size:0.7rem; color:#64748b; font-weight:700;">Net Long-Term Financing (NLF)</div>
+              <div style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:0.2rem 0;">${fmtMoney(latest.nlf)}</div>
+              <div style="font-size:0.68rem; color:#64748b;">(LT Debt + Equity) − Net Fixed Assets</div>
+            </div>
+            <div style="background:#ffffff; padding:0.75rem; border-radius:6px; border:1px solid #e2e8f0;">
+              <div style="font-size:0.7rem; color:#64748b; font-weight:700;">Net Short-Term Financing (NSF)</div>
+              <div style="font-size:1.05rem; font-weight:800; color:${latest.nsf > 0 ? '#b91c1c' : '#15803d'}; margin:0.2rem 0;">${latest.nsf > 0 ? '+' : ''}${fmtMoney(latest.nsf)}</div>
+              <div style="font-size:0.68rem; color:#64748b;">Short-Term Debt − Total Liquid Cash</div>
+            </div>
+            <div style="background:#ffffff; padding:0.75rem; border-radius:6px; border:1px solid #e2e8f0;">
+              <div style="font-size:0.7rem; color:#64748b; font-weight:700;">Working Capital Requirement (WCR)</div>
+              <div style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:0.2rem 0;">${fmtMoney(latest.wcr)}</div>
+              <div style="font-size:0.68rem; color:#64748b;">AR + Inventory − Accounts Payable</div>
+            </div>
+            <div style="background:#ffffff; padding:0.75rem; border-radius:6px; border:1px solid #e2e8f0;">
+              <div style="font-size:0.7rem; color:#64748b; font-weight:700;">Liquidity Ratio (LR = NLF / WCR)</div>
+              <div style="font-size:1.05rem; font-weight:800; color:${latest.wcr <= 0 ? '#2563eb' : latest.liquidityRatio >= 1.0 ? '#15803d' : '#b91c1c'}; margin:0.2rem 0;">
+                ${latest.wcr <= 0 ? 'Float (WCR ≤ 0)' : `${latest.liquidityRatio.toFixed(2)}x`}
+              </div>
+              <div style="font-size:0.68rem; color:#64748b;">Target &gt; 1.0x (Long-term funded WC)</div>
+            </div>
+          </div>
         </div>
 
         <!-- Categorized Filter Pills -->
         <div class="wb-ratio-filter">
           <span style="font-size:0.75rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.04em; margin-right:0.25rem;">Filter Category:</span>
-          <button type="button" class="wb-ratio-pill active" data-ratio-cat="all">📋 All Ratios (36)</button>
-          <button type="button" class="wb-ratio-pill" data-ratio-cat="margins">📈 Margins &amp; Profitability (5)</button>
-          <button type="button" class="wb-ratio-pill" data-ratio-cat="returns">💎 Capital Returns &amp; Moat (7)</button>
-          <button type="button" class="wb-ratio-pill" data-ratio-cat="working-capital">⏱️ Working Capital &amp; CCC (6)</button>
+          <button type="button" class="wb-ratio-pill active" data-ratio-cat="all">📋 All Ratios (54)</button>
+          <button type="button" class="wb-ratio-pill" data-ratio-cat="margins">📈 Margins &amp; Profitability (8)</button>
+          <button type="button" class="wb-ratio-pill" data-ratio-cat="returns">💎 Capital Returns &amp; Moat (9)</button>
+          <button type="button" class="wb-ratio-pill" data-ratio-cat="working-capital">⏱️ Working Capital &amp; CCC (11)</button>
           <button type="button" class="wb-ratio-pill" data-ratio-cat="allocation">🎯 Capital Allocation &amp; Payouts (5)</button>
-          <button type="button" class="wb-ratio-pill" data-ratio-cat="solvency">🛡️ Solvency &amp; Coverage (8)</button>
+          <button type="button" class="wb-ratio-pill" data-ratio-cat="solvency">🛡️ Solvency &amp; Coverage (16)</button>
           <button type="button" class="wb-ratio-pill" data-ratio-cat="quality">⚡ Operating Leverage &amp; Quality (5)</button>
         </div>
 
@@ -1368,6 +1449,15 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
               </tr>
               <tr data-ratio-cat="margins">
                 <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">EBITDA Margin (EBITDA / Sales)</div>
+                  <div class="wb-ratio-blurb">Cash operational profitability proxy assessing core earning power before non-cash depreciation and capital structure.</div>
+                </td>
+                <td>${conceptPill('dupont', 'EBITDA Margin')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.ebitdaMargin)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].ebitdaMargin, latest.ebitdaMargin)}</td>
+              </tr>
+              <tr data-ratio-cat="margins">
+                <td class="wb-ratio-cell">
                   <div class="wb-ratio-title">GAAP Operating Margin (EBIT / Sales)</div>
                   <div class="wb-ratio-blurb">Core operating profitability assessing operating leverage before capital structure interest and taxes.</div>
                 </td>
@@ -1386,12 +1476,30 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
               </tr>
               <tr data-ratio-cat="margins">
                 <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Pre-Tax Margin (EBT / Sales)</div>
+                  <div class="wb-ratio-blurb">Evaluates operational performance plus net debt interest financing impact prior to jurisdictional tax effects.</div>
+                </td>
+                <td>${conceptPill('dupont', 'EBT Margin')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.ebtMargin)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].ebtMargin, latest.ebtMargin)}</td>
+              </tr>
+              <tr data-ratio-cat="margins">
+                <td class="wb-ratio-cell">
                   <div class="wb-ratio-title">GAAP Net Profit Margin (Net Income / Sales)</div>
                   <div class="wb-ratio-blurb">Bottom-line accounting margin retained for common stockholders after all operational, financing, and tax expenses.</div>
                 </td>
                 <td>${conceptPill('dupont', 'Net Margin')}</td>
                 ${byYear.map(y => `<td>${fmtPct(y.netMargin)}</td>`).join('')}
                 <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].netMargin, latest.netMargin)}</td>
+              </tr>
+              <tr data-ratio-cat="margins">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Operating Cash Flow Margin (OCF / Sales)</div>
+                  <div class="wb-ratio-blurb">Direct operational cash generated per dollar of revenue before capital expenditures or asset disposals.</div>
+                </td>
+                <td>${conceptPill('cash-flow-analysis', 'OCF Margin')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.ocfMargin)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].ocfMargin, latest.ocfMargin)}</td>
               </tr>
               <tr data-ratio-cat="margins">
                 <td class="wb-ratio-cell">
@@ -1443,6 +1551,24 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
               </tr>
               <tr data-ratio-cat="returns">
                 <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Neutral / Unlevered ROA (NOPAT / Total Assets)</div>
+                  <div class="wb-ratio-blurb">Removes financial leverage penalty to evaluate pure operating return generated on all enterprise assets regardless of debt mix.</div>
+                </td>
+                <td>${conceptPill('dupont', 'Neutral ROA')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.neutralRoa)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].neutralRoa, latest.neutralRoa)}</td>
+              </tr>
+              <tr data-ratio-cat="returns">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Cash Return on Assets (Cash ROA = OCF / Total Assets)</div>
+                  <div class="wb-ratio-blurb">Cash-based return assessing real operating cash flow generated per dollar of enterprise balance sheet assets.</div>
+                </td>
+                <td>${conceptPill('cash-flow-analysis', 'Cash ROA')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.cashRoa)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].cashRoa, latest.cashRoa)}</td>
+              </tr>
+              <tr data-ratio-cat="returns">
+                <td class="wb-ratio-cell">
                   <div class="wb-ratio-title">Cash Return on Invested Capital (CROIC = FCF / Invested Capital)</div>
                   <div class="wb-ratio-blurb">Cash-based equivalent of ROIC; assesses true unencumbered cash yield generated per dollar of invested capital.</div>
                 </td>
@@ -1491,12 +1617,39 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
               </tr>
               <tr data-ratio-cat="working-capital">
                 <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Working Capital Turnover (Sales / WCR)</div>
+                  <div class="wb-ratio-blurb">Top-line revenue generated per dollar of operating working capital deployed; negative values signify supplier float.</div>
+                </td>
+                <td>${conceptPill('working-capital', 'WC Turnover')}</td>
+                ${byYear.map(y => `<td>${y.wcr > 0 ? fmtMult(y.workingCapitalTurnover, 1) : 'Float'}</td>`).join('')}
+                <td class="wb-td-cagr">${latest.wcr > 0 && byYear[0].wcr > 0 ? fmtDeltaMult(byYear[0].workingCapitalTurnover, latest.workingCapitalTurnover) : '—'}</td>
+              </tr>
+              <tr data-ratio-cat="working-capital">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Gross Operating Cycle (DIO + DSO)</div>
+                  <div class="wb-ratio-blurb">Total turnaround duration in days from purchasing raw inventory until final customer cash collection.</div>
+                </td>
+                <td>${conceptPill('working-capital', 'Operating Cycle')}</td>
+                ${byYear.map(y => `<td>${y.operatingCycle.toFixed(1)}d</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaDays(byYear[0].operatingCycle, latest.operatingCycle)}</td>
+              </tr>
+              <tr data-ratio-cat="working-capital">
+                <td class="wb-ratio-cell">
                   <div class="wb-ratio-title">Days Sales Outstanding (DSO = (AR / Sales) × 365)</div>
                   <div class="wb-ratio-blurb">Average collection period; measures customer credit collection discipline and receivables velocity.</div>
                 </td>
                 <td>${conceptPill('working-capital', 'DSO')}</td>
                 ${byYear.map(y => `<td>${y.dso.toFixed(1)}d</td>`).join('')}
                 <td class="wb-td-cagr">${fmtDeltaDays(byYear[0].dso, latest.dso)}</td>
+              </tr>
+              <tr data-ratio-cat="working-capital">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Accounts Receivable Turnover (Sales / AR)</div>
+                  <div class="wb-ratio-blurb">Annual collection velocity measuring how many times trade receivables are collected into cash per year.</div>
+                </td>
+                <td>${conceptPill('working-capital', 'AR Turnover')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.arTurnover, 1)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].arTurnover, latest.arTurnover)}</td>
               </tr>
               <tr data-ratio-cat="working-capital">
                 <td class="wb-ratio-cell">
@@ -1509,12 +1662,30 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
               </tr>
               <tr data-ratio-cat="working-capital">
                 <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Inventory Turnover (COGS / Inventory)</div>
+                  <div class="wb-ratio-blurb">Annual stock turnaround velocity measuring how many times physical inventory is sold and replaced per year.</div>
+                </td>
+                <td>${conceptPill('working-capital', 'Inv Turnover')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.invTurnover, 1)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].invTurnover, latest.invTurnover)}</td>
+              </tr>
+              <tr data-ratio-cat="working-capital">
+                <td class="wb-ratio-cell">
                   <div class="wb-ratio-title">Days Payable Outstanding (DPO = (AP / COGS) × 365)</div>
                   <div class="wb-ratio-blurb">Average payment terms negotiated with suppliers; evaluates working capital credit financing provided by vendors.</div>
                 </td>
                 <td>${conceptPill('working-capital', 'DPO')}</td>
                 ${byYear.map(y => `<td>${y.dpo.toFixed(1)}d</td>`).join('')}
                 <td class="wb-td-cagr">${fmtDeltaDays(byYear[0].dpo, latest.dpo)}</td>
+              </tr>
+              <tr data-ratio-cat="working-capital">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Accounts Payable Turnover (COGS / AP)</div>
+                  <div class="wb-ratio-blurb">Annual vendor payment frequency measuring trade debt turnaround to suppliers per year.</div>
+                </td>
+                <td>${conceptPill('working-capital', 'AP Turnover')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.apTurnover, 1)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].apTurnover, latest.apTurnover)}</td>
               </tr>
               <tr class="wb-row-total" data-ratio-cat="working-capital">
                 <td class="wb-ratio-cell">
@@ -1605,6 +1776,33 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
               </tr>
               <tr data-ratio-cat="solvency">
                 <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Defensive Interval Ratio (DIR in days)</div>
+                  <div class="wb-ratio-blurb">Survival horizon measuring how many days liquid assets can support daily cash operating expenses with zero revenue inflows.</div>
+                </td>
+                <td>${conceptPill('working-capital', 'DIR')}</td>
+                ${byYear.map(y => `<td>${y.defensiveInterval.toFixed(0)}d</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaDays(byYear[0].defensiveInterval, latest.defensiveInterval)}</td>
+              </tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Operating Cash Flow Ratio (OCF / Current Liabilities)</div>
+                  <div class="wb-ratio-blurb">Assesses whether annual cash flow from operations is sufficient to settle all current debt obligations coming due.</div>
+                </td>
+                <td>${conceptPill('cash-flow-analysis', 'OCF Ratio')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.ocfToCurrentLiabilities, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].ocfToCurrentLiabilities, latest.ocfToCurrentLiabilities)}</td>
+              </tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Net Working Capital to Assets ((CA − CL) / Total Assets)</div>
+                  <div class="wb-ratio-blurb">Measures net liquid buffer scaled against overall enterprise asset base (core liquidity factor in Altman Z-Score).</div>
+                </td>
+                <td>${conceptPill('working-capital', 'NWC/Assets')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.nwcToTotalAssets)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].nwcToTotalAssets, latest.nwcToTotalAssets)}</td>
+              </tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
                   <div class="wb-ratio-title">Total Debt-to-Equity (Total Debt / Stockholders' Equity)</div>
                   <div class="wb-ratio-blurb">Measures balance sheet financial leverage by comparing total funded debt obligations against shareholder equity cushion.</div>
                 </td>
@@ -1620,6 +1818,24 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
                 <td>${conceptPill('capital-structure', 'Debt/Capital')}</td>
                 ${byYear.map(y => `<td>${fmtPct(y.debtToCapital)}</td>`).join('')}
                 <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].debtToCapital, latest.debtToCapital)}</td>
+              </tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Debt-to-Assets Ratio (Total Debt / Total Assets)</div>
+                  <div class="wb-ratio-blurb">Direct solvency proportion measuring percentage of enterprise balance sheet assets funded by interest-bearing debt.</div>
+                </td>
+                <td>${conceptPill('capital-structure', 'Debt/Assets')}</td>
+                ${byYear.map(y => `<td>${fmtPct(y.debtToAssets)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaPct(byYear[0].debtToAssets, latest.debtToAssets)}</td>
+              </tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Financial Leverage Ratio (Total Liabilities / Stockholders' Equity)</div>
+                  <div class="wb-ratio-blurb">Broad leverage metric evaluating total funded debt plus operational obligations relative to net equity cushion.</div>
+                </td>
+                <td>${conceptPill('capital-structure', 'Liab/Equity')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.financialLeverage, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].financialLeverage, latest.financialLeverage)}</td>
               </tr>
               <tr data-ratio-cat="solvency">
                 <td class="wb-ratio-cell">
@@ -1641,12 +1857,39 @@ export function render10KAnalyzer(company, opCashPct = 0.015, initialTab = 'stat
               </tr>
               <tr data-ratio-cat="solvency">
                 <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">EBITDA Interest Coverage (EBITDA / Interest Expense)</div>
+                  <div class="wb-ratio-blurb">Cash debt coverage neutralizing non-cash depreciation and amortization before mandatory interest payments.</div>
+                </td>
+                <td>${conceptPill('credit-spreads', 'EBITDA Coverage')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.ebitdaInterestCoverage, 1)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].ebitdaInterestCoverage, latest.ebitdaInterestCoverage)}</td>
+              </tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Cash Interest Coverage ((OCF + Interest) / Interest Expense)</div>
+                  <div class="wb-ratio-blurb">Stringent cash-basis coverage evaluating cash operating generation available to meet annual interest charges.</div>
+                </td>
+                <td>${conceptPill('cash-flow-analysis', 'Cash Coverage')}</td>
+                ${byYear.map(y => `<td>${fmtMult(y.cashInterestCoverage, 1)}</td>`).join('')}
+                <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].cashInterestCoverage, latest.cashInterestCoverage)}</td>
+              </tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
                   <div class="wb-ratio-title">Operating Cash Flow Debt Coverage (OCF / Total Debt)</div>
                   <div class="wb-ratio-blurb">Evaluates enterprise debt service capability directly from actual operational cash flow generation.</div>
                 </td>
                 <td>${conceptPill('cash-flow-analysis', 'Cash Debt Coverage')}</td>
                 ${byYear.map(y => `<td>${fmtMult(y.ocfToDebt, 2)}</td>`).join('')}
                 <td class="wb-td-cagr">${fmtDeltaMult(byYear[0].ocfToDebt, latest.ocfToDebt)}</td>
+              </tr>
+              <tr data-ratio-cat="solvency">
+                <td class="wb-ratio-cell">
+                  <div class="wb-ratio-title">Fulghieri Liquidity Ratio (LR = NLF / WCR)</div>
+                  <div class="wb-ratio-blurb">Strategic financing ratio: LR &gt; 1.0 indicates conservative long-term funding; LR &lt; 1.0 indicates aggressive short-term debt reliance.</div>
+                </td>
+                <td>${conceptPill('working-capital', 'Liquidity Ratio')}</td>
+                ${byYear.map(y => `<td>${y.wcr <= 0 ? 'Float' : fmtMult(y.liquidityRatio, 2)}</td>`).join('')}
+                <td class="wb-td-cagr">${latest.wcr > 0 && byYear[0].wcr > 0 ? fmtDeltaMult(byYear[0].liquidityRatio, latest.liquidityRatio) : '—'}</td>
               </tr>
 
               <!-- Category 6: Operating Leverage, Specialized Benchmarks & Quality -->

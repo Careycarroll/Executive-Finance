@@ -226,6 +226,11 @@ export function computeStockValuation(company, overrides = {}) {
   const currentEvSales = latest.rev > 0 ? enterpriseValueMarket / latest.rev : 4;
   const currentPriceFCF = baseFCF > 0 ? marketCap / baseFCF : 20;
 
+  // Additional Valuation Multiples: PEG Ratio and Earnings Yield (from user notes)
+  const epsGrowthRatePct = Math.max(1, (g1 * 100)); // Near-term EPS / revenue growth %
+  const currentPEG = currentPE > 0 ? currentPE / epsGrowthRatePct : 1.0;
+  const currentEarningsYield = currentPrice > 0 ? eps / currentPrice : (currentPE > 0 ? 1 / currentPE : 0.05);
+
   // Sector benchmark median multiples (blended from sector norms + company quality premium)
   const qualityMult = latest.RNOA > 0.20 ? 1.15 : latest.RNOA > 0.12 ? 1.0 : 0.85;
   const sectorMedianEvEbitda = 15.5 * qualityMult;
@@ -353,6 +358,9 @@ export function computeStockValuation(company, overrides = {}) {
       currentEvEbitda,
       currentEvSales,
       currentPriceFCF,
+      currentPEG,
+      currentEarningsYield,
+      epsGrowthRatePct,
       priceFromEvEbitda,
       priceFromPE,
       priceFromPFCF,
@@ -904,6 +912,16 @@ function renderStockValuator(company) {
                       <td>Price / Free Cash Flow (P/FCF) ${conceptPill('fcf', 'P/FCF')}</td>
                       <td>${multiples.currentPriceFCF.toFixed(1)}x</td>
                       <td>${fmtSharePrice(multiples.priceFromPFCF)}</td>
+                    </tr>
+                    <tr>
+                      <td>PEG Ratio (P/E to Growth) ${conceptPill('multiples', 'PEG')}</td>
+                      <td>${multiples.currentPEG.toFixed(2)}x</td>
+                      <td><span style="font-size:0.75rem; color:${multiples.currentPEG <= 1.0 ? '#15803d' : multiples.currentPEG <= 1.5 ? '#d97706' : '#b91c1c'}; font-weight:700;">${multiples.currentPEG <= 1.0 ? 'Attractive (≤1.0x)' : multiples.currentPEG <= 1.5 ? 'Fair (1.0–1.5x)' : 'Premium (>1.5x)'}</span></td>
+                    </tr>
+                    <tr>
+                      <td>Earnings Yield (1 / P/E) ${conceptPill('multiples', 'Yield')}</td>
+                      <td>${(multiples.currentEarningsYield * 100).toFixed(2)}%</td>
+                      <td><span style="font-size:0.75rem; color:${multiples.currentEarningsYield >= 0.045 ? '#15803d' : '#64748b'}; font-weight:700;">Benchmark: 10Y UST ~4.2%</span></td>
                     </tr>
                     <tr class="wb-row-total">
                       <td>Blended Comps Implied Share Price</td>

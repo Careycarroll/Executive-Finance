@@ -216,22 +216,28 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
       }
     });
 
-    it('computes all 36 executive ratios across margins, ROIC moat, WCR, capital allocation, solvency, and quality', () => {
+    it('computes all 54 executive ratios and Fulghieri managerial balance sheet metrics across margins, ROIC moat, WCR, capital allocation, solvency, and quality', () => {
       for (const company of SNAPSHOT_LIST) {
         const res = compute10KAnalysis(company);
         for (const yr of res.byYear) {
-          // Category 1: Margins
+          // Category 1: Margins & Profitability
           expect(yr.grossMargin).toBeGreaterThanOrEqual(0);
+          expect(Number.isFinite(yr.ebitdaMargin)).toBe(true);
           expect(Number.isFinite(yr.ebitMargin)).toBe(true);
+          expect(Number.isFinite(yr.ebtMargin)).toBe(true);
           expect(Number.isFinite(yr.sbcAdjustedOpMargin)).toBe(true);
           expect(Number.isFinite(yr.netMargin)).toBe(true);
+          expect(Number.isFinite(yr.ocfMargin)).toBe(true);
           expect(Number.isFinite(yr.fcfMargin)).toBe(true);
+          expect(Number.isFinite(yr.nopatMargin)).toBe(true);
 
-          // Category 2: Returns & Moat
+          // Category 2: Capital Returns & Moat
           expect(Number.isFinite(yr.roic)).toBe(true);
           expect(Number.isFinite(yr.roce)).toBe(true);
           expect(Number.isFinite(yr.roe)).toBe(true);
           expect(Number.isFinite(yr.roa)).toBe(true);
+          expect(Number.isFinite(yr.neutralRoa)).toBe(true);
+          expect(Number.isFinite(yr.cashRoa)).toBe(true);
           expect(Number.isFinite(yr.croic)).toBe(true);
           expect(yr.assetTurnover).toBeGreaterThanOrEqual(0);
           expect(yr.fixedAssetTurnover).toBeGreaterThanOrEqual(0);
@@ -243,6 +249,18 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
           expect(yr.dio).toBeGreaterThanOrEqual(0);
           expect(yr.dpo).toBeGreaterThanOrEqual(0);
           expect(yr.ccc).toBeCloseTo(yr.dso + yr.dio - yr.dpo, 2);
+          expect(yr.arTurnover).toBeGreaterThanOrEqual(0);
+          expect(yr.invTurnover).toBeGreaterThanOrEqual(0);
+          expect(yr.apTurnover).toBeGreaterThanOrEqual(0);
+          expect(Number.isFinite(yr.workingCapitalTurnover)).toBe(true);
+          expect(yr.operatingCycle).toBeGreaterThanOrEqual(0);
+          expect(yr.currentRatio).toBeGreaterThan(0);
+          expect(yr.quickRatio).toBeGreaterThan(0);
+          expect(yr.cashRatio).toBeGreaterThanOrEqual(0);
+          expect(Number.isFinite(yr.ocfToCurrentLiabilities)).toBe(true);
+          expect(Number.isFinite(yr.nwc)).toBe(true);
+          expect(Number.isFinite(yr.nwcToTotalAssets)).toBe(true);
+          expect(yr.defensiveInterval).toBeGreaterThanOrEqual(0);
 
           // Category 4: Capital Allocation & Reinvestment
           expect(yr.capexToDa).toBeGreaterThanOrEqual(0);
@@ -251,16 +269,24 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
           expect(yr.fcfPayoutRatio).toBeGreaterThanOrEqual(0);
           expect(yr.dividendPayoutRatio).toBeGreaterThanOrEqual(0);
 
-          // Category 5: Solvency & Coverage
-          expect(yr.currentRatio).toBeGreaterThan(0);
-          expect(yr.quickRatio).toBeGreaterThan(0);
-          expect(yr.cashRatio).toBeGreaterThanOrEqual(0);
+          // Category 5: Solvency, Leverage, Coverage & Fulghieri Framework
           expect(yr.debtToEquity).toBeGreaterThanOrEqual(0);
           expect(yr.debtToCapital).toBeGreaterThanOrEqual(0);
           expect(yr.debtToCapital).toBeLessThanOrEqual(1.0);
+          expect(yr.debtToAssets).toBeGreaterThanOrEqual(0);
+          expect(yr.debtToAssets).toBeLessThanOrEqual(1.0);
+          expect(yr.financialLeverage).toBeGreaterThanOrEqual(0);
           expect(Number.isFinite(yr.netDebtToEbitda)).toBe(true);
           expect(Number.isFinite(yr.interestCoverage)).toBe(true);
+          expect(Number.isFinite(yr.ebitdaInterestCoverage)).toBe(true);
+          expect(Number.isFinite(yr.cashInterestCoverage)).toBe(true);
           expect(Number.isFinite(yr.ocfToDebt)).toBe(true);
+          expect(Number.isFinite(yr.ltFinancing)).toBe(true);
+          expect(Number.isFinite(yr.netFixedAssets)).toBe(true);
+          expect(Number.isFinite(yr.nlf)).toBe(true);
+          expect(Number.isFinite(yr.nsf)).toBe(true);
+          expect(Number.isFinite(yr.liquidityRatio)).toBe(true);
+          expect(typeof yr.fulghieriStrategy).toBe('string');
 
           // Category 6: Operating Leverage & Quality
           expect(yr.rdIntensity).toBeGreaterThanOrEqual(0);
@@ -274,7 +300,7 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
   });
 
   describe('3. Workbench 2: Multi-Method Stock & Valuation Triangulator', () => {
-    it('computes WACC, 2-Stage DCF, 5x5 sensitivity matrix, Reverse DCF, and reconciles DCF EV with Penman ReOI EV', () => {
+    it('computes WACC, 2-Stage DCF, 5x5 sensitivity matrix, Reverse DCF, multiples (PEG, Earnings Yield), and reconciles DCF EV with Penman ReOI EV', () => {
       for (const company of SNAPSHOT_LIST) {
         const val = computeStockValuation(company);
         expect(val.waccInputs.wacc).toBeGreaterThan(0.04);
@@ -283,6 +309,11 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
         expect(val.compositeTargetPrice).toBeGreaterThan(0);
         expect(val.sensitivityMatrix.length).toBe(5);
         expect(val.sensitivityMatrix[0].cells.length).toBe(5);
+
+        // Valuation Multiples: PEG Ratio and Earnings Yield
+        expect(val.multiples.currentPEG).toBeGreaterThan(0);
+        expect(val.multiples.currentEarningsYield).toBeGreaterThan(0);
+        expect(val.multiples.epsGrowthRatePct).toBeGreaterThan(0);
 
         // Clean-Surplus Equivalence: 2-Stage FCFF DCF Enterprise Value === Penman ReOI Enterprise Value
         expect(val.reoi.dcfReOIReconciliationDiff).toBeLessThan(0.01);
