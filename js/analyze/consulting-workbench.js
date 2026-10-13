@@ -965,66 +965,24 @@ export function renderConsultingWorkbench(root) {
     const savedList = getSavedProjects();
 
     root.innerHTML = `
-      <!-- STANDALONE WORK PROJECT WORKSPACE BAR (NO 10-K COMPANY DEPENDENCY) -->
-      <div class="analyze-target-bar" style="margin-bottom: 1.25rem;">
-        <div class="analyze-target-bar__top" style="gap: 1rem;">
-          <div class="analyze-target-bar__identity" style="flex: 1; min-width: 280px;">
-            <div class="analyze-target-bar__badges" style="margin-bottom: 0.45rem;">
-              <span class="analyze-ticker-badge" style="background:#1d4ed8;">WORK PROJECT</span>
-              <span class="analyze-sector-badge">${state.department || 'Internal Initiative'}</span>
-              <span class="analyze-source-badge">Scale: ${unitLabel}</span>
-              <span class="analyze-source-badge">${bc.taxRate === 0 ? 'Pre-Tax (0% Tax)' : `After-Tax (${fmtPct(bc.taxRate)})`}</span>
-            </div>
-            <div style="display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center; margin-top:0.35rem;">
-              <input type="text" id="proj-name-input" class="analyze-input" value="${state.projectName}"
-                placeholder="Project / Initiative Name"
-                style="font-size:1.05rem; font-weight:800; color:#0f172a; min-width:260px; flex:1;" />
-              <input type="text" id="proj-dept-input" class="analyze-input" value="${state.department}"
-                placeholder="Department / Client"
-                style="font-size:0.85rem; font-weight:600; width:180px;" />
-              <select id="proj-unit-select" class="analyze-input" style="width:165px; font-weight:700; cursor:pointer;">
-                <option value="K" ${unit === 'K' ? 'selected' : ''}>Unit: $K (Thousands)</option>
-                <option value="M" ${unit === 'M' ? 'selected' : ''}>Unit: $M (Millions)</option>
-                <option value="$" ${unit === '$' ? 'selected' : ''}>Unit: $ (Exact Dollars)</option>
-              </select>
-            </div>
+      <!-- STANDALONE WORK PROJECT WORKSPACE BAR (COMPACT) -->
+      <div class="analyze-target-bar" style="margin-bottom: 1.15rem; padding: 1rem 1.25rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.75rem;">
+          <div style="display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center; flex:1;">
+            <span class="analyze-ticker-badge" style="background:#1d4ed8;">WORK PROJECT</span>
+            <input type="text" id="proj-name-input" class="analyze-input" value="${state.projectName}"
+              placeholder="Project / Initiative Name"
+              style="font-size:0.98rem; font-weight:800; color:#0f172a; min-width:240px; flex:1;" />
+            <input type="text" id="proj-dept-input" class="analyze-input" value="${state.department}"
+              placeholder="Department / Client"
+              style="font-size:0.84rem; font-weight:600; width:175px;" />
+            <select id="proj-unit-select" class="analyze-input" style="width:165px; font-weight:700; cursor:pointer;">
+              <option value="K" ${unit === 'K' ? 'selected' : ''}>Unit: $K (Thousands)</option>
+              <option value="M" ${unit === 'M' ? 'selected' : ''}>Unit: $M (Millions)</option>
+              <option value="$" ${unit === '$' ? 'selected' : ''}>Unit: $ (Exact Dollars)</option>
+            </select>
           </div>
-
-          <div class="analyze-target-bar__kpis">
-            <div class="analyze-mini-kpi">
-              <div class="analyze-mini-kpi__label">Initial Outlay</div>
-              <div class="analyze-mini-kpi__val">${fm(bc.grossInitialSpend)}</div>
-            </div>
-            <div class="analyze-mini-kpi">
-              <div class="analyze-mini-kpi__label">Year 1 Savings</div>
-              <div class="analyze-mini-kpi__val">${fm(bc.yr1Benefit)}</div>
-            </div>
-            <div class="analyze-mini-kpi">
-              <div class="analyze-mini-kpi__label">Project NPV</div>
-              <div class="analyze-mini-kpi__val" style="color:${bc.npv >= 0 ? '#16a34a' : '#dc2626'};">${fm(bc.npv)}</div>
-            </div>
-            <div class="analyze-mini-kpi">
-              <div class="analyze-mini-kpi__label">Project IRR</div>
-              <div class="analyze-mini-kpi__val">${fmtPct(bc.irr)}</div>
-            </div>
-            <div class="analyze-mini-kpi">
-              <div class="analyze-mini-kpi__label">Net ROI</div>
-              <div class="analyze-mini-kpi__val">${fmtPct(bc.simpleRoiPct)}</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="analyze-switcher">
-          <div class="analyze-switcher__pills">
-            <span class="analyze-switcher__label">Project Templates:</span>
-            ${Object.values(CONSULTING_TEMPLATES).map(t => `
-              <button type="button" class="analyze-snap-pill ${state.template === t.id ? 'analyze-snap-pill--active' : ''}"
-                data-tpl-id="${t.id}" title="${t.summary}">
-                ${t.name}
-              </button>
-            `).join('')}
-          </div>
-          <div class="analyze-switcher__actions" style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+          <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
             ${savedList.length > 0 ? `
               <select id="load-saved-proj-select" class="analyze-input" style="font-size:0.78rem; padding:0.3rem 0.5rem; width:auto;">
                 <option value="">📂 Load Saved Project (${savedList.length})...</option>
@@ -1036,7 +994,86 @@ export function renderConsultingWorkbench(root) {
             <button type="button" class="btn btn--secondary btn--sm" id="export-json-btn">⬇ Export JSON</button>
           </div>
         </div>
+
+        <div class="analyze-switcher" style="padding-top:0.65rem;">
+          <div class="analyze-switcher__pills">
+            <span class="analyze-switcher__label">Project Templates:</span>
+            ${Object.values(CONSULTING_TEMPLATES).map(t => `
+              <button type="button" class="analyze-snap-pill ${state.template === t.id ? 'analyze-snap-pill--active' : ''}"
+                data-tpl-id="${t.id}" title="${t.summary}">
+                ${t.name}
+              </button>
+            `).join('')}
+          </div>
+        </div>
         <div id="proj-save-status" style="font-size:0.78rem; color:#16a34a; font-weight:600; margin-top:0.35rem; display:none;"></div>
+      </div>
+
+      <!-- PROMINENT 4-CARD CONSULTING TOOL LAUNCHER (ABOVE KPI TILES) -->
+      <div class="consulting-tool-section-label">
+        <span>🛠️ Select Consulting &amp; ROI Analysis Tool (4 Interactive Modules)</span>
+        <span style="color:#64748b; font-weight:600; text-transform:none;">Click any tool card below to switch view</span>
+      </div>
+      <div class="consulting-tool-grid" role="tablist">
+        <button type="button" class="consulting-tool-card ${activeTab === 'business-case' ? 'active' : ''}" data-tab="business-case">
+          <div>
+            <div class="consulting-tool-card__top">
+              <span class="consulting-tool-card__step">📊 Tool 1 · Capital ROI</span>
+              <span class="consulting-tool-card__status">${activeTab === 'business-case' ? '● ACTIVE' : 'Open →'}</span>
+            </div>
+            <div class="consulting-tool-card__title" style="margin-top:0.35rem;">Project Business Case (NPV, IRR, MIRR &amp; ROI)</div>
+            <div class="consulting-tool-card__desc">Multi-year cash flows, Payback Period &amp; J-Curve trajectory.</div>
+          </div>
+          <div class="consulting-tool-card__metric">
+            <span>NPV: <strong style="color:${bc.npv >= 0 ? '#16a34a' : '#dc2626'};">${fm(bc.npv)}</strong></span>
+            <span>IRR: <strong>${fmtPct(bc.irr)}</strong></span>
+          </div>
+        </button>
+
+        <button type="button" class="consulting-tool-card ${activeTab === 'ebitda-bridge' ? 'active' : ''}" data-tab="ebitda-bridge">
+          <div>
+            <div class="consulting-tool-card__top">
+              <span class="consulting-tool-card__step">📈 Tool 2 · Waterfall</span>
+              <span class="consulting-tool-card__status">${activeTab === 'ebitda-bridge' ? '● ACTIVE' : 'Open →'}</span>
+            </div>
+            <div class="consulting-tool-card__title" style="margin-top:0.35rem;">Operational EBITDA Bridge &amp; Value Levers</div>
+            <div class="consulting-tool-card__desc">Decompose profit lift across Price, Volume, COGS &amp; SG&amp;A.</div>
+          </div>
+          <div class="consulting-tool-card__metric">
+            <span>Lift: <strong style="color:#16a34a;">+${fm(bridge.netEbitdaLift)}</strong></span>
+            <span>+${bridge.marginExpansionBps.toFixed(0)} bps</span>
+          </div>
+        </button>
+
+        <button type="button" class="consulting-tool-card ${activeTab === 'pricing-unit' ? 'active' : ''}" data-tab="pricing-unit">
+          <div>
+            <div class="consulting-tool-card__top">
+              <span class="consulting-tool-card__step">⚖️ Tool 3 · Unit Econ</span>
+              <span class="consulting-tool-card__status">${activeTab === 'pricing-unit' ? '● ACTIVE' : 'Open →'}</span>
+            </div>
+            <div class="consulting-tool-card__title" style="margin-top:0.35rem;">Break-Even, Pricing Power &amp; LTV/CAC</div>
+            <div class="consulting-tool-card__desc">CVP break-even, price elasticity matrix &amp; cohort LTV/CAC.</div>
+          </div>
+          <div class="consulting-tool-card__metric">
+            <span>CM: <strong>${fmtPct(unitEcon.contributionMarginPct)}</strong></span>
+            <span>LTV/CAC: <strong style="color:${unitEcon.ltvToCac >= 3 ? '#16a34a' : '#dc2626'};">${unitEcon.ltvToCac.toFixed(1)}x</strong></span>
+          </div>
+        </button>
+
+        <button type="button" class="consulting-tool-card ${activeTab === 'scenarios-fees' ? 'active' : ''}" data-tab="scenarios-fees">
+          <div>
+            <div class="consulting-tool-card__top">
+              <span class="consulting-tool-card__step">🌪️ Tool 4 · Stress Test</span>
+              <span class="consulting-tool-card__status">${activeTab === 'scenarios-fees' ? '● ACTIVE' : 'Open →'}</span>
+            </div>
+            <div class="consulting-tool-card__title" style="margin-top:0.35rem;">Tornado Sensitivity &amp; Vendor Fee Structurer</div>
+            <div class="consulting-tool-card__desc">Bear/Base/Bull stress test, Tornado chart &amp; Gain-Share fees.</div>
+          </div>
+          <div class="consulting-tool-card__metric">
+            <span>Bear: <strong>${fm(scen.bearCase.npv)}</strong></span>
+            <span>Bull: <strong style="color:#16a34a;">${fm(scen.bullCase.npv)}</strong></span>
+          </div>
+        </button>
       </div>
 
       <!-- EXECUTIVE KPI SUMMARY STRIP -->
@@ -1070,22 +1107,6 @@ export function renderConsultingWorkbench(root) {
           <div class="wb-kpi-card__val" style="color:#16a34a;">+${fm(bridge.netEbitdaLift)}</div>
           <div class="wb-kpi-card__sub">+${bridge.marginExpansionBps.toFixed(0)} bps Margin · +${fm(bridge.impliedEvCreation)} Value</div>
         </div>
-      </div>
-
-      <!-- WORKBENCH TABS -->
-      <div class="wb-tabs" role="tablist">
-        <button class="wb-tab ${activeTab === 'business-case' ? 'active' : ''}" data-tab="business-case">
-          1. Project Business Case (NPV, IRR, MIRR &amp; ROI)
-        </button>
-        <button class="wb-tab ${activeTab === 'ebitda-bridge' ? 'active' : ''}" data-tab="ebitda-bridge">
-          2. Operational EBITDA Bridge &amp; Value Levers
-        </button>
-        <button class="wb-tab ${activeTab === 'pricing-unit' ? 'active' : ''}" data-tab="pricing-unit">
-          3. Break-Even, Pricing Power &amp; Unit Economics (LTV/CAC)
-        </button>
-        <button class="wb-tab ${activeTab === 'scenarios-fees' ? 'active' : ''}" data-tab="scenarios-fees">
-          4. Tornado Sensitivity &amp; Vendor Fee Structurer
-        </button>
       </div>
 
       <!-- TAB 1: BUSINESS CASE BUILDER -->
@@ -1740,8 +1761,8 @@ export function renderConsultingWorkbench(root) {
       });
     });
 
-    // Wire Tab Switching
-    root.querySelectorAll('.wb-tab').forEach(tabBtn => {
+    // Wire Tool Card & Tab Switching
+    root.querySelectorAll('.consulting-tool-card, .wb-tab').forEach(tabBtn => {
       tabBtn.addEventListener('click', () => {
         activeTab = tabBtn.dataset.tab;
         updateView();
