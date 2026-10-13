@@ -172,6 +172,49 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
       const hasSbcDanger = res.flags.some(f => f.concept === 'stock-comp' && f.severity === 'danger');
       expect(hasSbcDanger).toBe(true);
     });
+
+    it('computes 3-section cash flow statement and reconciles indirect P&L-to-OCF bridge across all benchmark snapshots', () => {
+      for (const company of SNAPSHOT_LIST) {
+        const res = compute10KAnalysis(company);
+        for (const yr of res.byYear) {
+          // Free cash flow identity: FCF = OCF - CapEx
+          expect(yr.fcf).toBeCloseTo(yr.ocf - yr.capex, 2);
+          // Reconciliation identity: Constructed OCF + Other Non-Cash Adjustments === Reported OCF
+          expect(yr.constructedOcf + yr.otherOcfAdjustments).toBeCloseTo(yr.ocf, 2);
+          // Working capital cash effect identity: wcCashFlow = -ΔAR - ΔInv + ΔAP
+          expect(yr.wcCashFlow).toBeCloseTo(-yr.deltaAR - yr.deltaInv + yr.deltaAP, 2);
+          // 3-section cash change identity
+          expect(yr.deltaCashFromCF).toBeCloseTo(yr.ocf + yr.icf + yr.finCf, 2);
+        }
+      }
+    });
+
+    it('dynamically constructs operating, investing, and free cash flows from P&L and Balance Sheet when raw cash flows are absent', () => {
+      const msft = getSnapshot('MSFT');
+      // Create clone without cash flow statement
+      const msftNoCf = {
+        ...msft,
+        incomeStatements: msft.incomeStatements,
+        balanceSheets: msft.balanceSheets,
+        cashFlows: []
+      };
+      delete msftNoCf.financials;
+
+      const res = compute10KAnalysis(msftNoCf);
+      expect(res.byYear.length).toBe(5);
+
+      for (let i = 0; i < res.byYear.length; i++) {
+        const yr = res.byYear[i];
+        expect(yr.isOcfConstructed).toBe(true);
+        expect(yr.ocf).toBeGreaterThan(0);
+        expect(yr.ocf).toBeCloseTo(yr.constructedOcf, 2);
+        expect(yr.fcf).toBeCloseTo(yr.ocf - yr.capex, 2);
+        if (i > 0) {
+          expect(yr.isCapexConstructed).toBe(true);
+          expect(yr.capex).toBeGreaterThan(0);
+        }
+      }
+    });
   });
 
   describe('3. Workbench 2: Multi-Method Stock & Valuation Triangulator', () => {
