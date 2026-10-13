@@ -1313,6 +1313,10 @@
   .site-header,
   .analyze-hero,
   .analyze-target-bar,
+  .consulting-hero-card,
+  .consulting-step-nav,
+  .consulting-subtab-bar,
+  .consulting-step-footer,
   .consulting-tool-section-label,
   .consulting-tool-grid,
   .wb-kpi-grid,
@@ -1328,3 +1332,309 @@
     margin: 0 !important;
   }
 }
+
+/* ── Consulting Studio Makeover: Unified Hero Scoreboard & Guided Step Layout ── */
+.consulting-hero-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.06);
+}
+
+.consulting-hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.consulting-scoreboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 980px) {
+  .consulting-scoreboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .consulting-scoreboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.consulting-score-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.consulting-score-card--highlight {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #86efac;
+}
+
+.consulting-score-card--warn {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-color: #fca5a5;
+}
+
+.consulting-score-card__label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475569;
+  margin-bottom: 0.25rem;
+}
+
+.consulting-score-card__val {
+  font-family: var(--font-mono);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.consulting-score-card__sub {
+  font-size: 0.76rem;
+  color: #475569;
+  margin-top: 0.3rem;
+  font-weight: 500;
+}
+
+/* Streamlined 4-Step Navigation Bar */
+.consulting-step-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 920px) {
+  .consulting-step-nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .consulting-step-nav {
+    grid-template-columns: 1fr;
+  }
+}
+
+.consulting-step-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 0.9rem 1.1rem;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.85rem;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.consulting-step-tab:hover {
+  border-color: #93c5fd;
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.consulting-step-tab.active {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-color: #2563eb;
+  box-shadow: 0 6px 16px -4px rgba(37, 99, 235, 0.18);
+}
+
+.consulting-step-tab__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.3rem;
+}
+
+.consulting-step-tab__badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.consulting-step-tab.active .consulting-step-tab__badge {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.consulting-step-tab__metric {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1e40af;
+}
+
+.consulting-step-tab__title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+}
+
+.consulting-step-tab__subtitle {
+  font-size: 0.74rem;
+  color: #64748b;
+  margin-top: 0.15rem;
+}
+
+/* Focused Sub-Tab Bar inside each Step */
+.consulting-subtab-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  background: #f1f5f9;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #e2e8f0;
+}
+
+.consulting-subtab-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.consulting-subtab-btn {
+  padding: 0.48rem 0.95rem;
+  border-radius: 0.55rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #475569;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.consulting-subtab-btn:hover {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.consulting-subtab-btn.active {
+  background: #ffffff;
+  color: #1d4ed8;
+  border-color: #cbd5e1;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+}
+
+/* Plain-English "So What?" Executive Takeaway Card */
+.consulting-takeaway-card {
+  background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+  border: 1px solid #bfdbfe;
+  border-left: 4px solid #2563eb;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.15rem;
+}
+
+.consulting-takeaway-card__eyebrow {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #1d4ed8;
+  margin-bottom: 0.25rem;
+}
+
+.consulting-takeaway-card__headline {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.consulting-takeaway-card__body {
+  font-size: 0.84rem;
+  color: #334155;
+  line-height: 1.55;
+}
+
+/* Spacious 3-Card Visual Callout Grid */
+.consulting-callout-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .consulting-callout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.consulting-callout-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.7rem;
+  padding: 0.85rem 1rem;
+}
+
+.consulting-callout-card__label {
+  font-size: 0.71rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  margin-bottom: 0.25rem;
+}
+
+.consulting-callout-card__val {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.consulting-callout-card__note {
+  font-size: 0.75rem;
+  color: #475569;
+  margin-top: 0.2rem;
+}
+
+/* Guided Step Footer */
+.consulting-step-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.35rem;
+  padding: 0.95rem 1.25rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.85rem;
+}
+
