@@ -266,6 +266,41 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
       expect(bc.simpleRoiPct).toBeGreaterThan(0);
       expect(bc.simplePaybackYears).toBeGreaterThan(0);
       expect(bc.simplePaybackYears).toBeLessThan(5);
+      expect(bc.horizonUnit).toBe('years');
+      expect(bc.periodsPerYear).toBe(1);
+
+      // Monthly project horizon (12 months)
+      const bcMonthly = computeConsultingBusinessCase(null, {
+        upfrontCapex: 120,
+        consultingFee: 30,
+        yr1Benefit: 25,
+        ongoingOpex: 3,
+        horizonYears: 12,
+        horizonUnit: 'months',
+        hurdleRate: 0.12
+      });
+      expect(bcMonthly.horizonUnit).toBe('months');
+      expect(bcMonthly.periodsPerYear).toBe(12);
+      expect(bcMonthly.schedule.length).toBe(13); // Months 0..12
+      expect(bcMonthly.npv).toBeGreaterThan(0);
+      expect(bcMonthly.periodicIrr).toBeGreaterThan(bcMonthly.periodicHurdleRate);
+      expect(bcMonthly.irr).toBeGreaterThan(bcMonthly.periodicIrr);
+
+      // Weekly project horizon (16 weeks)
+      const bcWeekly = computeConsultingBusinessCase(null, {
+        upfrontCapex: 50,
+        consultingFee: 10,
+        yr1Benefit: 6,
+        ongoingOpex: 0.5,
+        horizonYears: 16,
+        horizonUnit: 'weeks',
+        hurdleRate: 0.10
+      });
+      expect(bcWeekly.horizonUnit).toBe('weeks');
+      expect(bcWeekly.periodsPerYear).toBe(52);
+      expect(bcWeekly.schedule.length).toBe(17); // Weeks 0..16
+      expect(bcWeekly.npv).toBeGreaterThan(0);
+      expect(bcWeekly.simplePaybackYears).toBeLessThan(16);
     });
 
     it('decomposes EBITDA Bridge waterfall steps and computes CVP price elasticity & LTV/CAC unit economics', () => {
