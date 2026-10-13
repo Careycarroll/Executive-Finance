@@ -473,19 +473,22 @@ export function computeEbitdaBridge(projectOrCompany = {}, overrides = {}) {
 export function computePricingAndUnitEconomics(projectOrCompany = {}, overrides = {}) {
   const merged = { ...(projectOrCompany || {}), ...(overrides || {}) };
 
+  const unitScale = merged.unit === 'M' ? 1e6 : merged.unit === '$' ? 1 : 1e3; // Default 'K' = 1,000
   const unitPrice = Math.max(1, Number(merged.unitPrice ?? 250));
   const unitVarCost = Math.max(0, Number(merged.unitVarCost ?? 100));
   const fixedCosts = Math.max(1, Number(merged.fixedCosts ?? 450));
-  const currentUnits = Math.max(1, Number(merged.currentUnits ?? Math.round((fixedCosts * 1.5) / Math.max(1, unitPrice - unitVarCost))));
-  const proposedPriceChangePct = Number(merged.proposedPriceChangePct ?? 0.05);
+  const fixedCostsDollars = fixedCosts * unitScale;
 
   const unitContribution = Math.max(0.01, unitPrice - unitVarCost);
   const contributionMarginPct = unitPrice > 0 ? unitContribution / unitPrice : 0;
-  const breakEvenUnits = unitContribution > 0 ? fixedCosts / unitContribution : 0;
+  const breakEvenUnits = unitContribution > 0 ? fixedCostsDollars / unitContribution : 0;
   const breakEvenRevenue = contributionMarginPct > 0 ? fixedCosts / contributionMarginPct : 0;
 
-  const currentRevenue = currentUnits * unitPrice;
-  const currentTotalContribution = currentUnits * unitContribution;
+  const currentUnits = Math.max(1, Number(merged.currentUnits ?? Math.round(breakEvenUnits * 1.5)));
+  const proposedPriceChangePct = Number(merged.proposedPriceChangePct ?? 0.05);
+
+  const currentRevenue = (currentUnits * unitPrice) / unitScale;
+  const currentTotalContribution = (currentUnits * unitContribution) / unitScale;
   const currentEbitda = currentTotalContribution - fixedCosts;
   const safetyMarginPct = currentRevenue > 0 ? (currentRevenue - breakEvenRevenue) / currentRevenue : 0;
   const operatingLeverageDOL = currentEbitda > 0 ? currentTotalContribution / currentEbitda : 1;
@@ -493,7 +496,8 @@ export function computePricingAndUnitEconomics(projectOrCompany = {}, overrides 
   const denom = contributionMarginPct + proposedPriceChangePct;
   const maxVolumeLossForPriceHike = denom > 0 ? -proposedPriceChangePct / denom : 0;
   const newUnitPrice = unitPrice * (1 + proposedPriceChangePct);
-  const newUnitContribution = newUnitPrice - unitVarCost;
+  const newUnitContribution = Math.max(0.01, newUnitPrice - unitVarCost);
+  const newBreakEvenUnits = fixedCostsDollars / newUnitContribution;
 
   const priceSteps = [-0.05, -0.025, 0, 0.025, 0.05, 0.075, 0.10];
   const volumeSteps = [-0.15, -0.10, -0.05, 0, 0.05, 0.10];
@@ -502,7 +506,7 @@ export function computePricingAndUnitEconomics(projectOrCompany = {}, overrides 
     cells: priceSteps.map(pChg => {
       const pNew = unitPrice * (1 + pChg);
       const qNew = currentUnits * (1 + vChg);
-      const ebitdaNew = qNew * (pNew - unitVarCost) - fixedCosts;
+      const ebitdaNew = (qNew * (pNew - unitVarCost)) / unitScale - fixedCosts;
       const ebitdaDelta = ebitdaNew - currentEbitda;
       return { pChg, vChg, ebitdaNew, ebitdaDelta };
     })
@@ -523,14 +527,17 @@ export function computePricingAndUnitEconomics(projectOrCompany = {}, overrides 
   const avgCustomerLifetimeYears = 1 / Math.max(0.01, annualChurnRate);
 
   return {
+    unitScale,
     unitPrice,
     unitVarCost,
     fixedCosts,
+    fixedCostsDollars,
     currentUnits,
     proposedPriceChangePct,
     unitContribution,
     contributionMarginPct,
     breakEvenUnits,
+    newBreakEvenUnits,
     breakEvenRevenue,
     currentRevenue,
     currentEbitda,
@@ -560,46 +567,53 @@ export function computePricingAndUnitEconomics(projectOrCompany = {}, overrides 
  * 4. Tornado Sensitivity & Consulting Fee / Value-Share Structurer
  */
 export function computeConsultingScenarios(projectOrCompany = {}, overrides = {}) {
+  const merged = { ...(projectOrCompany || {}), ...(overrides || {}) };
   const baseCase = computeConsultingBusinessCase(projectOrCompany, overrides);
+
+  const benefitShockPct = Math.max(0.05, Math.min(0.80, Number(merged.benefitShockPct ?? 0.25)));
+  const capexShockPct = Math.max(0.05, Math.min(0.80, Number(merged.capexShockPct ?? 0.25)));
+  const hurdleShockBps = Math.max(25, Math.min(600, Number(merged.hurdleShockBps ?? 250)));
+  const gainSharePct = Math.max(0.02, Math.min(0.50, Number(merged.gainSharePct ?? 0.15)));
+  const hurdleDelta = hurdleShockBps / 10000;
 
   const bearCase = computeConsultingBusinessCase(projectOrCompany, {
     ...overrides,
-    upfrontCapex: baseCase.upfrontCapex * 1.25,
-    yr1Benefit: baseCase.yr1Benefit * 0.70,
+    upfrontCapex: baseCase.upfrontCapex * (1 + capexShockPct),
+    yr1Benefit: baseCase.yr1Benefit * (1 - benefitShockPct),
     benefitGrowth: Math.max(0, baseCase.benefitGrowth - 0.06),
     ongoingOpex: baseCase.ongoingOpex * 1.20,
-    hurdleRate: baseCase.hurdleRate + 0.015
+    hurdleRate: baseCase.hurdleRate + hurdleDelta
   });
 
   const bullCase = computeConsultingBusinessCase(projectOrCompany, {
     ...overrides,
-    upfrontCapex: baseCase.upfrontCapex * 0.90,
-    yr1Benefit: baseCase.yr1Benefit * 1.25,
+    upfrontCapex: baseCase.upfrontCapex * Math.max(0.3, 1 - capexShockPct * 0.5),
+    yr1Benefit: baseCase.yr1Benefit * (1 + benefitShockPct),
     benefitGrowth: baseCase.benefitGrowth + 0.05,
     ongoingOpex: baseCase.ongoingOpex * 0.90,
-    hurdleRate: Math.max(0.04, baseCase.hurdleRate - 0.01)
+    hurdleRate: Math.max(0.02, baseCase.hurdleRate - hurdleDelta * 0.5)
   });
 
   const drivers = [
     {
-      name: 'Annual Benefit Capture (±25%)',
-      lowCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, yr1Benefit: baseCase.yr1Benefit * 0.75 }).npv,
-      highCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, yr1Benefit: baseCase.yr1Benefit * 1.25 }).npv
+      name: `${baseCase.periodName} 1 Benefit (±${Math.round(benefitShockPct * 100)}%)`,
+      lowCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, yr1Benefit: baseCase.yr1Benefit * (1 - benefitShockPct) }).npv,
+      highCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, yr1Benefit: baseCase.yr1Benefit * (1 + benefitShockPct) }).npv
     },
     {
-      name: 'Upfront Project Outlay (±25%)',
-      lowCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, upfrontCapex: baseCase.upfrontCapex * 1.25 }).npv,
-      highCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, upfrontCapex: baseCase.upfrontCapex * 0.75 }).npv
+      name: `Upfront Project Outlay (±${Math.round(capexShockPct * 100)}%)`,
+      lowCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, upfrontCapex: baseCase.upfrontCapex * (1 + capexShockPct) }).npv,
+      highCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, upfrontCapex: baseCase.upfrontCapex * (1 - capexShockPct) }).npv
     },
     {
-      name: 'Benefit Ramp Rate (±6% / yr)',
+      name: 'Benefit Ramp Rate (±6%)',
       lowCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, benefitGrowth: Math.max(0, baseCase.benefitGrowth - 0.06) }).npv,
       highCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, benefitGrowth: baseCase.benefitGrowth + 0.06 }).npv
     },
     {
-      name: 'Hurdle / Discount Rate (±250 bps)',
-      lowCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, hurdleRate: baseCase.hurdleRate + 0.025 }).npv,
-      highCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, hurdleRate: Math.max(0.03, baseCase.hurdleRate - 0.025) }).npv
+      name: `Hurdle Rate (±${Math.round(hurdleShockBps)} bps)`,
+      lowCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, hurdleRate: baseCase.hurdleRate + hurdleDelta }).npv,
+      highCase: computeConsultingBusinessCase(projectOrCompany, { ...overrides, hurdleRate: Math.max(0.02, baseCase.hurdleRate - hurdleDelta) }).npv
     },
     {
       name: 'Ongoing Run-Rate OpEx (±30%)',
@@ -622,31 +636,35 @@ export function computeConsultingScenarios(projectOrCompany = {}, overrides = {}
       clientNetNpv: baseCase.npv,
       clientRoiPct: baseCase.simpleRoiPct,
       feeMultiple: baseCase.pvInflows / baseFee,
-      riskSharing: 'Low (Client bears adoption risk)'
+      riskSharing: 'Low (Organization bears adoption risk)'
     },
     {
       model: 'Time & Materials (FTE Burn)',
-      structure: 'Weekly Contractor/Consultant Rate Card (+15% scope buffer)',
-      totalFee: baseFee * 1.15,
-      clientNetNpv: baseCase.npv - (baseFee * 0.15 * (1 - baseCase.taxRate)),
-      clientRoiPct: (baseCase.totalNetCashInflows - (baseCase.totalInitialOutlay + baseFee * 0.15 * (1 - baseCase.taxRate))) /
-        (baseCase.totalInitialOutlay + baseFee * 0.15 * (1 - baseCase.taxRate)),
-      feeMultiple: baseCase.pvInflows / (baseFee * 1.15),
-      riskSharing: 'Low (Client bears schedule & overrun risk)'
+      structure: `Contractor Rate Card (+${Math.round(capexShockPct * 60)}% scope buffer)`,
+      totalFee: baseFee * (1 + capexShockPct * 0.6),
+      clientNetNpv: baseCase.npv - (baseFee * (capexShockPct * 0.6) * (1 - baseCase.taxRate)),
+      clientRoiPct: (baseCase.totalNetCashInflows - (baseCase.totalInitialOutlay + baseFee * (capexShockPct * 0.6) * (1 - baseCase.taxRate))) /
+        (baseCase.totalInitialOutlay + baseFee * (capexShockPct * 0.6) * (1 - baseCase.taxRate)),
+      feeMultiple: baseCase.pvInflows / (baseFee * (1 + capexShockPct * 0.6)),
+      riskSharing: 'Low (Organization bears schedule overrun risk)'
     },
     {
       model: 'Value-Share / Gain-Share Hybrid',
-      structure: '50% Base Retainer + 15% of Verified Year-1 Savings',
-      totalFee: baseFee * 0.50 + yr1NetBenefit * 0.15,
-      clientNetNpv: baseCase.npv - ((baseFee * 0.50 + yr1NetBenefit * 0.15 - baseFee) * (1 - baseCase.taxRate)),
-      clientRoiPct: (baseCase.totalNetCashInflows - (baseCase.upfrontCapex + (baseFee * 0.50 + yr1NetBenefit * 0.15) * (1 - baseCase.taxRate))) /
-        Math.max(1, baseCase.upfrontCapex + (baseFee * 0.50 + yr1NetBenefit * 0.15) * (1 - baseCase.taxRate)),
-      feeMultiple: baseCase.pvInflows / Math.max(0.1, baseFee * 0.50 + yr1NetBenefit * 0.15),
+      structure: `50% Base Retainer + ${Math.round(gainSharePct * 100)}% of Verified ${baseCase.periodName}-1 Savings`,
+      totalFee: baseFee * 0.50 + yr1NetBenefit * gainSharePct,
+      clientNetNpv: baseCase.npv - ((baseFee * 0.50 + yr1NetBenefit * gainSharePct - baseFee) * (1 - baseCase.taxRate)),
+      clientRoiPct: (baseCase.totalNetCashInflows - (baseCase.upfrontCapex + (baseFee * 0.50 + yr1NetBenefit * gainSharePct) * (1 - baseCase.taxRate))) /
+        Math.max(1, baseCase.upfrontCapex + (baseFee * 0.50 + yr1NetBenefit * gainSharePct) * (1 - baseCase.taxRate)),
+      feeMultiple: baseCase.pvInflows / Math.max(0.1, baseFee * 0.50 + yr1NetBenefit * gainSharePct),
       riskSharing: 'High (Vendor fee tied to realized savings)'
     }
   ];
 
   return {
+    benefitShockPct,
+    capexShockPct,
+    hurdleShockBps,
+    gainSharePct,
     baseCase,
     bearCase,
     bullCase,
@@ -902,6 +920,264 @@ function drawTornadoChart(canvas, scen, unit) {
   ctx.fillText(`Base NPV: ${fmtProjectMoney(baseNpv, unit)}`, baseX, 14);
 }
 
+/**
+ * Draw Cost-Volume-Profit (CVP) Break-Even & Price Change Chart (Canvas 2D)
+ */
+function drawCvpBreakEvenChart(canvas, unitEcon, unit) {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  const W = rect.width || 560;
+  const H = rect.height || 245;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  const pad = { top: 28, right: 24, bottom: 38, left: 68 };
+  const cw = W - pad.left - pad.right;
+  const ch = H - pad.top - pad.bottom;
+
+  const beQ = Math.max(1, unitEcon.breakEvenUnits);
+  const newBeQ = Math.max(1, unitEcon.newBreakEvenUnits || beQ);
+  const maxQ = Math.max(beQ, newBeQ) * 1.9;
+  const unitScale = unitEcon.unitScale || 1000;
+
+  const revAt = (q, p) => (q * p) / unitScale;
+  const costAt = (q) => unitEcon.fixedCosts + (q * unitEcon.unitVarCost) / unitScale;
+
+  const maxY = Math.max(
+    revAt(maxQ, unitEcon.unitPrice),
+    revAt(maxQ, unitEcon.newUnitPrice),
+    costAt(maxQ)
+  ) * 1.08;
+
+  const xAt = (q) => pad.left + (q / Math.max(1, maxQ)) * cw;
+  const yAt = (v) => pad.top + ((maxY - v) / Math.max(1, maxY)) * ch;
+
+  // Grid lines & Y-axis labels
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const val = (maxY * i) / 4;
+    const y = yAt(val);
+    ctx.beginPath();
+    ctx.moveTo(pad.left, y);
+    ctx.lineTo(W - pad.right, y);
+    ctx.stroke();
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '600 10px JetBrains Mono, monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText(fmtProjectMoney(val, unit), pad.left - 8, y + 3);
+  }
+
+  // X-axis volume ticks
+  for (let i = 0; i <= 4; i++) {
+    const qVal = Math.round((maxQ * i) / 4);
+    const x = xAt(qVal);
+    ctx.fillStyle = '#475569';
+    ctx.font = '600 10px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`${qVal.toLocaleString()} u`, x, H - 12);
+  }
+
+  const beX = xAt(beQ);
+  const beY = yAt(revAt(beQ, unitEcon.unitPrice));
+
+  // Loss Zone shading (0 to Break-Even)
+  ctx.fillStyle = 'rgba(220, 38, 38, 0.08)';
+  ctx.beginPath();
+  ctx.moveTo(xAt(0), yAt(0));
+  ctx.lineTo(xAt(0), yAt(costAt(0)));
+  ctx.lineTo(beX, beY);
+  ctx.closePath();
+  ctx.fill();
+
+  // Profit Zone shading (Break-Even to maxQ)
+  ctx.fillStyle = 'rgba(22, 163, 74, 0.09)';
+  ctx.beginPath();
+  ctx.moveTo(beX, beY);
+  ctx.lineTo(xAt(maxQ), yAt(revAt(maxQ, unitEcon.unitPrice)));
+  ctx.lineTo(xAt(maxQ), yAt(costAt(maxQ)));
+  ctx.closePath();
+  ctx.fill();
+
+  // Fixed Cost dashed horizontal line
+  ctx.strokeStyle = '#94a3b8';
+  ctx.setLineDash([4, 4]);
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(pad.left, yAt(unitEcon.fixedCosts));
+  ctx.lineTo(W - pad.right, yAt(unitEcon.fixedCosts));
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Total Cost Line (Fixed + Variable)
+  ctx.strokeStyle = '#dc2626';
+  ctx.lineWidth = 2.25;
+  ctx.beginPath();
+  ctx.moveTo(xAt(0), yAt(costAt(0)));
+  ctx.lineTo(xAt(maxQ), yAt(costAt(maxQ)));
+  ctx.stroke();
+
+  // Baseline Revenue Line
+  ctx.strokeStyle = '#2563eb';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(xAt(0), yAt(0));
+  ctx.lineTo(xAt(maxQ), yAt(revAt(maxQ, unitEcon.unitPrice)));
+  ctx.stroke();
+
+  // Proposed Price Revenue Line (dashed green)
+  if (Math.abs(unitEcon.proposedPriceChangePct) > 0.0001) {
+    ctx.strokeStyle = '#16a34a';
+    ctx.setLineDash([5, 4]);
+    ctx.lineWidth = 2.25;
+    ctx.beginPath();
+    ctx.moveTo(xAt(0), yAt(0));
+    ctx.lineTo(xAt(maxQ), yAt(revAt(maxQ, unitEcon.newUnitPrice)));
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    const newBeX = xAt(newBeQ);
+    const newBeY = yAt(revAt(newBeQ, unitEcon.newUnitPrice));
+    ctx.fillStyle = '#16a34a';
+    ctx.beginPath();
+    ctx.arc(newBeX, newBeY, 4.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Break-Even Point Marker & Label
+  ctx.fillStyle = '#1d4ed8';
+  ctx.beginPath();
+  ctx.arc(beX, beY, 5, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = '#0f172a';
+  ctx.font = '700 10px JetBrains Mono, monospace';
+  ctx.textAlign = 'left';
+  ctx.fillText(`BE: ${Math.ceil(beQ).toLocaleString()} units (${fmtProjectMoney(unitEcon.breakEvenRevenue, unit)})`, Math.min(W - 195, beX + 8), Math.max(pad.top + 12, beY - 8));
+}
+
+/**
+ * Draw Customer Cohort Cumulative Cash Flow & CAC Payback Curve (Canvas 2D)
+ */
+function drawLtvCacCurveChart(canvas, unitEcon) {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  const W = rect.width || 560;
+  const H = rect.height || 245;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  const pad = { top: 28, right: 24, bottom: 38, left: 68 };
+  const cw = W - pad.left - pad.right;
+  const ch = H - pad.top - pad.bottom;
+
+  const months = 60; // 5-year customer cohort view
+  const monthlyGp = unitEcon.annualGrossProfitPerCust / 12;
+  const monthlySurvival = Math.pow(1 - unitEcon.annualChurnRate, 1 / 12);
+  const monthlyDiscount = Math.pow(1 + unitEcon.discountRate, 1 / 12) - 1;
+
+  const pts = [];
+  let cumUndisc = -unitEcon.cac;
+  let cumDisc = -unitEcon.cac;
+  pts.push({ m: 0, cumUndisc, cumDisc });
+
+  for (let m = 1; m <= months; m++) {
+    const retention = Math.pow(monthlySurvival, m - 1);
+    const cf = monthlyGp * retention;
+    cumUndisc += cf;
+    cumDisc += cf / Math.pow(1 + monthlyDiscount, m);
+    pts.push({ m, cumUndisc, cumDisc });
+  }
+
+  const allVals = pts.flatMap(p => [p.cumUndisc, p.cumDisc, 0]);
+  const minVal = Math.min(...allVals) * 1.12;
+  const maxVal = Math.max(...allVals, unitEcon.cac * 0.5) * 1.12;
+  const span = Math.max(1, maxVal - minVal);
+
+  const xAt = (m) => pad.left + (m / months) * cw;
+  const yAt = (v) => pad.top + ((maxVal - v) / span) * ch;
+  const zeroY = yAt(0);
+
+  // Grid & Y labels
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const val = minVal + (span * i) / 4;
+    const y = yAt(val);
+    ctx.beginPath();
+    ctx.moveTo(pad.left, y);
+    ctx.lineTo(W - pad.right, y);
+    ctx.stroke();
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '600 10px JetBrains Mono, monospace';
+    ctx.textAlign = 'right';
+    const absV = Math.abs(val);
+    const lbl = absV >= 1000 ? `${val < 0 ? '-' : ''}$${(absV / 1000).toFixed(0)}K` : `$${val.toFixed(0)}`;
+    ctx.fillText(lbl, pad.left - 8, y + 3);
+  }
+
+  // Zero Break-Even Line
+  ctx.strokeStyle = '#64748b';
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.moveTo(pad.left, zeroY);
+  ctx.lineTo(W - pad.right, zeroY);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // X-axis month labels
+  [0, 12, 24, 36, 48, 60].forEach(m => {
+    ctx.fillStyle = '#475569';
+    ctx.font = '600 10px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`Mo ${m}`, xAt(m), H - 12);
+  });
+
+  // Undiscounted Cumulative CF (Slate)
+  ctx.strokeStyle = '#94a3b8';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  pts.forEach((p, i) => {
+    if (i === 0) ctx.moveTo(xAt(p.m), yAt(p.cumUndisc));
+    else ctx.lineTo(xAt(p.m), yAt(p.cumUndisc));
+  });
+  ctx.stroke();
+
+  // Discounted Cumulative LTV Curve (Green/Red)
+  ctx.strokeStyle = '#16a34a';
+  ctx.lineWidth = 2.75;
+  ctx.beginPath();
+  pts.forEach((p, i) => {
+    if (i === 0) ctx.moveTo(xAt(p.m), yAt(p.cumDisc));
+    else ctx.lineTo(xAt(p.m), yAt(p.cumDisc));
+  });
+  ctx.stroke();
+
+  // Mark CAC Payback Crossover if within 60 months
+  if (unitEcon.cacPaybackMonths > 0 && unitEcon.cacPaybackMonths <= months) {
+    const pbX = xAt(unitEcon.cacPaybackMonths);
+    ctx.fillStyle = '#1d4ed8';
+    ctx.beginPath();
+    ctx.arc(pbX, zeroY, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#0f172a';
+    ctx.font = '700 10px JetBrains Mono, monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(`Payback: ${unitEcon.cacPaybackMonths.toFixed(1)} mos`, Math.min(W - 140, pbX + 7), zeroY - 8);
+  }
+}
+
 function getSavedProjects() {
   try {
     return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
@@ -958,7 +1234,11 @@ export function renderConsultingWorkbench(root) {
     proposedPriceChangePct: 0.05,
     arpuAnnual: 24000,
     annualChurnRate: 0.10,
-    cac: 32000
+    cac: 32000,
+    benefitShockPct: 0.25,
+    capexShockPct: 0.25,
+    hurdleShockBps: 250,
+    gainSharePct: 0.15
   };
 
   const applyTemplate = (tplId) => {
@@ -1632,6 +1912,33 @@ export function renderConsultingWorkbench(root) {
           </div>
         </div>
 
+        <!-- NEW: Tool 3 Interactive Charts Row -->
+        <div class="wb-grid-2" style="margin-bottom: 1.25rem;">
+          <div class="wb-panel">
+            <div class="wb-panel__header">
+              <div>
+                <h3 class="wb-panel__title">CVP Break-Even &amp; Price Elasticity Chart (${unitLabel})</h3>
+                <div class="wb-panel__subtitle">Total Cost (Red) vs. Current Revenue (Blue) &amp; Proposed Price Revenue (Dashed Green)</div>
+              </div>
+            </div>
+            <div class="wb-panel__body">
+              <canvas id="consulting-cvp-canvas" style="width:100%; height:245px; display:block;"></canvas>
+            </div>
+          </div>
+
+          <div class="wb-panel">
+            <div class="wb-panel__header">
+              <div>
+                <h3 class="wb-panel__title">Customer Cohort Cumulative Cash Flow &amp; CAC Payback</h3>
+                <div class="wb-panel__subtitle">60-month cumulative gross margin trajectory starting from −$${unitEcon.cac.toLocaleString()} CAC</div>
+              </div>
+            </div>
+            <div class="wb-panel__body">
+              <canvas id="consulting-ltv-canvas" style="width:100%; height:245px; display:block;"></canvas>
+            </div>
+          </div>
+        </div>
+
         <div class="wb-panel">
           <div class="wb-panel__header">
             <div>
@@ -1662,12 +1969,69 @@ export function renderConsultingWorkbench(root) {
 
       <!-- TAB 4: TORNADO SENSITIVITY & CONSULTING FEE STRUCTURER -->
       <div id="tab-scenarios-fees" class="wb-tab-pane" style="display:${activeTab === 'scenarios-fees' ? 'block' : 'none'};">
+        <!-- Interactive Stress-Test & Fee Structuring Controls -->
+        <div class="wb-panel" style="margin-bottom: 1.25rem;">
+          <div class="wb-panel__header">
+            <div>
+              <h3 class="wb-panel__title">Interactive Stress-Test &amp; Vendor Fee Controls</h3>
+              <div class="wb-panel__subtitle">Adjust downside/upside shock severity and vendor gain-share % to test your Tool 1 project assumptions</div>
+            </div>
+          </div>
+          <div class="wb-panel__body">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+              <div class="wb-slider-group" style="margin-bottom:0;">
+                <div class="wb-slider-Row">
+                  <label>${bc.periodName} 1 Benefit Swing (±%)</label>
+                  <span class="wb-slider-num-wrap">
+                    <input type="number" id="num-ben-shock" class="wb-slider-num" step="1" min="5" max="80" value="${Math.round(scen.benefitShockPct * 100)}" />
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                  </span>
+                </div>
+                <input type="range" id="sl-ben-shock" min="0.05" max="0.60" step="0.05" value="${scen.benefitShockPct}" />
+              </div>
+
+              <div class="wb-slider-group" style="margin-bottom:0;">
+                <div class="wb-slider-Row">
+                  <label>Upfront Cost Overrun Shock (±%)</label>
+                  <span class="wb-slider-num-wrap">
+                    <input type="number" id="num-capex-shock" class="wb-slider-num" step="1" min="5" max="80" value="${Math.round(scen.capexShockPct * 100)}" />
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                  </span>
+                </div>
+                <input type="range" id="sl-capex-shock" min="0.05" max="0.60" step="0.05" value="${scen.capexShockPct}" />
+              </div>
+
+              <div class="wb-slider-group" style="margin-bottom:0;">
+                <div class="wb-slider-Row">
+                  <label>Hurdle Rate Shock (±bps)</label>
+                  <span class="wb-slider-num-wrap">
+                    <input type="number" id="num-hurdle-shock" class="wb-slider-num" step="25" min="25" max="600" value="${Math.round(scen.hurdleShockBps)}" />
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">bps</span>
+                  </span>
+                </div>
+                <input type="range" id="sl-hurdle-shock" min="50" max="500" step="25" value="${scen.hurdleShockBps}" />
+              </div>
+
+              <div class="wb-slider-group" style="margin-bottom:0;">
+                <div class="wb-slider-Row">
+                  <label>Gain-Share (% of ${bc.periodShort} 1 Savings)</label>
+                  <span class="wb-slider-num-wrap">
+                    <input type="number" id="num-gain-share" class="wb-slider-num" step="1" min="2" max="50" value="${Math.round(scen.gainSharePct * 100)}" />
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                  </span>
+                </div>
+                <input type="range" id="sl-gain-share" min="0.05" max="0.40" step="0.01" value="${scen.gainSharePct}" />
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="wb-grid-2" style="margin-bottom: 1.25rem;">
           <div class="wb-panel">
             <div class="wb-panel__header">
               <div>
                 <h3 class="wb-panel__title">NPV Tornado Sensitivity Chart (${unitLabel})</h3>
-                <div class="wb-panel__subtitle">Ranked impact of ±25% swings in key project assumptions around Base NPV (${fm(scen.baseCase.npv)})</div>
+                <div class="wb-panel__subtitle">Ranked impact of parameter swings around Base NPV (${fm(scen.baseCase.npv)})</div>
               </div>
               ${conceptPill('monte-carlo', 'Sensitivity')}
             </div>
@@ -1680,7 +2044,7 @@ export function renderConsultingWorkbench(root) {
             <div class="wb-panel__header">
               <div>
                 <h3 class="wb-panel__title">Bear / Base / Bull Project Scenario Matrix</h3>
-                <div class="wb-panel__subtitle">Stress-testing implementation delays, cost overruns, and benefit adoption</div>
+                <div class="wb-panel__subtitle">Stress-testing implementation delays, cost overruns (+${Math.round(scen.capexShockPct * 100)}%), and benefit adoption (±${Math.round(scen.benefitShockPct * 100)}%)</div>
               </div>
             </div>
             <div class="wb-table-wrap">
@@ -1697,7 +2061,7 @@ export function renderConsultingWorkbench(root) {
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>Bear Case (Delay + 25% Overrun)</strong></td>
+                    <td><strong>Bear Case (+${Math.round(scen.capexShockPct * 100)}% Cost / −${Math.round(scen.benefitShockPct * 100)}% Benefit)</strong></td>
                     <td>${fm(scen.bearCase.totalInitialOutlay)}</td>
                     <td>${fm(scen.bearCase.npv)}</td>
                     <td>${fmtPct(scen.bearCase.irr)}</td>
@@ -1713,7 +2077,7 @@ export function renderConsultingWorkbench(root) {
                     <td>${fmtPct(scen.baseCase.simpleRoiPct)}</td>
                   </tr>
                   <tr>
-                    <td><strong>Bull Case (Accelerated Capture)</strong></td>
+                    <td><strong>Bull Case (+${Math.round(scen.benefitShockPct * 100)}% Benefit Capture)</strong></td>
                     <td>${fm(scen.bullCase.totalInitialOutlay)}</td>
                     <td>${fm(scen.bullCase.npv)}</td>
                     <td>${fmtPct(scen.bullCase.irr)}</td>
@@ -1774,6 +2138,9 @@ export function renderConsultingWorkbench(root) {
         drawJCurveChart(root.querySelector('#consulting-jcurve-canvas'), bc, unit);
       } else if (activeTab === 'ebitda-bridge') {
         drawWaterfallChart(root.querySelector('#consulting-waterfall-canvas'), bridge, unit);
+      } else if (activeTab === 'pricing-unit') {
+        drawCvpBreakEvenChart(root.querySelector('#consulting-cvp-canvas'), unitEcon, unit);
+        drawLtvCacCurveChart(root.querySelector('#consulting-ltv-canvas'), unitEcon);
       } else if (activeTab === 'scenarios-fees') {
         drawTornadoChart(root.querySelector('#consulting-tornado-canvas'), scen, unit);
       }
@@ -1930,6 +2297,10 @@ export function renderConsultingWorkbench(root) {
     bindNum('#num-arpu', 'arpuAnnual');
     bindNum('#num-cac', 'cac');
     bindNum('#num-churn', 'annualChurnRate', true);
+    bindNum('#num-ben-shock', 'benefitShockPct', true);
+    bindNum('#num-capex-shock', 'capexShockPct', true);
+    bindNum('#num-hurdle-shock', 'hurdleShockBps');
+    bindNum('#num-gain-share', 'gainSharePct', true);
 
     // Wire Custom Year-by-Year Benefit Inputs
     root.querySelectorAll('.custom-yr-ben-input').forEach(inp => {
@@ -1953,7 +2324,7 @@ export function renderConsultingWorkbench(root) {
       });
     }
 
-    // Wire Sliders for Tabs 1, 2 & 3
+    // Wire Sliders for Tabs 1, 2, 3 & 4
     const bindSlider = (id, key) => {
       const el = root.querySelector(id);
       if (!el) return;
@@ -1978,6 +2349,10 @@ export function renderConsultingWorkbench(root) {
     bindSlider('#sl-arpu', 'arpuAnnual');
     bindSlider('#sl-cac', 'cac');
     bindSlider('#sl-churn', 'annualChurnRate');
+    bindSlider('#sl-ben-shock', 'benefitShockPct');
+    bindSlider('#sl-capex-shock', 'capexShockPct');
+    bindSlider('#sl-hurdle-shock', 'hurdleShockBps');
+    bindSlider('#sl-gain-share', 'gainSharePct');
   };
 
   updateView();
