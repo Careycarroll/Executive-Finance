@@ -9,7 +9,10 @@ import {
   computeConsultingBusinessCase,
   computeEbitdaBridge,
   computePricingAndUnitEconomics,
-  computeConsultingScenarios
+  computeConsultingScenarios,
+  computeFteLaborEstimator,
+  computeBuildVsBuyComparison,
+  computeProjectMonteCarlo
 } from '../js/analyze/consulting-workbench.js';
 
 describe('M7 Executive Analyze Suite & Workbenches', () => {
@@ -337,6 +340,70 @@ describe('M7 Executive Analyze Suite & Workbenches', () => {
       expect(scen.baseCase.npv).toBeGreaterThan(scen.bearCase.npv);
       expect(scen.drivers.length).toBe(5);
       expect(scen.feeModels.length).toBe(3);
+    });
+
+    it('computes Bottom-Up FTE Labor Estimator, Build vs. Buy Comparator, and 1,000-Trial Monte Carlo Risk Histogram', () => {
+      // 1. Bottom-Up FTE Estimator in $K scale
+      const fte = computeFteLaborEstimator({
+        unit: 'K',
+        horizonUnit: 'years',
+        buildFtes: 3,
+        buildHourlyRate: 95,
+        buildWeeks: 16,
+        hardwareSoftwareCapex: 50,
+        impactedEmployees: 45,
+        hoursSavedPerWeek: 3.5,
+        employeeHourlyRate: 55,
+        retiredSpendPerPeriod: 35
+      });
+      // Build labor: 3 * 40 * 16 * 95 = $182,400 ($182.4K) + $50K = $232.4K
+      expect(fte.buildLaborDollars).toBeCloseTo(182400, 2);
+      expect(fte.impliedUpfrontCapex).toBeCloseTo(232.4, 2);
+      expect(fte.fteEquivalentSaved).toBeCloseTo((45 * 3.5) / 40, 4);
+      expect(fte.impliedPeriod1Benefit).toBeGreaterThan(400);
+
+      // 2. Build vs. Buy / Option A vs. Option B vs. Lean MVP Comparator
+      const bvb = computeBuildVsBuyComparison({
+        unit: 'K',
+        horizonUnit: 'years',
+        horizonYears: 5,
+        upfrontCapex: 350,
+        consultingFee: 75,
+        yr1Benefit: 280,
+        benefitGrowth: 0.10,
+        ongoingOpex: 45,
+        buyUpfrontCapex: 80,
+        buyConsultingFee: 40,
+        buyYr1Benefit: 250,
+        buyOngoingOpex: 95,
+        hurdleRate: 0.10,
+        taxRate: 0.21
+      });
+      expect(bvb.options.length).toBe(3);
+      expect(bvb.recommended).toBeDefined();
+      expect(bvb.recommended.bc.npv).toBeGreaterThanOrEqual(bvb.optionA.bc.npv);
+      expect(bvb.recommended.bc.npv).toBeGreaterThanOrEqual(bvb.optionB.bc.npv);
+
+      // 3. 1,000-Trial Monte Carlo Simulation (deterministic seed)
+      const mc = computeProjectMonteCarlo({
+        upfrontCapex: 350,
+        consultingFee: 75,
+        yr1Benefit: 280,
+        benefitGrowth: 0.10,
+        ongoingOpex: 45,
+        horizonYears: 5,
+        horizonUnit: 'years',
+        hurdleRate: 0.10,
+        taxRate: 0.21,
+        benefitShockPct: 0.25,
+        capexShockPct: 0.25,
+        hurdleShockBps: 200
+      });
+      expect(mc.trials).toBe(1000);
+      expect(mc.bins.length).toBe(18);
+      expect(mc.p90Npv).toBeGreaterThan(mc.p50Npv);
+      expect(mc.p50Npv).toBeGreaterThan(mc.p10Npv);
+      expect(mc.probPositiveNpv).toBeGreaterThan(0.5);
     });
   });
 });

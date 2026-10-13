@@ -697,6 +697,238 @@ export function computeConsultingScenarios(projectOrCompany = {}, overrides = {}
 }
 
 /**
+ * 5. Bottom-Up FTE Labor Cost & Operational Time-Savings Estimator
+ * Converts headcount, hourly rates, build weeks, and weekly hours saved into Tool 1 Upfront CapEx & Period 1 Benefits.
+ */
+export function computeFteLaborEstimator(params = {}) {
+  const unit = params.unit || 'K';
+  const unitMult = getUnitMultiplier(unit);
+  const horizonUnit = ['weeks', 'months', 'years'].includes(params.horizonUnit) ? params.horizonUnit : 'years';
+  const periodsPerYear = horizonUnit === 'weeks' ? 52 : horizonUnit === 'months' ? 12 : 1;
+
+  const buildFtes = Math.max(0.5, Number(params.buildFtes ?? 4));
+  const buildHourlyRate = Math.max(15, Number(params.buildHourlyRate ?? 95));
+  const buildWeeks = Math.max(1, Number(params.buildWeeks ?? 16));
+  const buildHoursPerWeek = Math.max(5, Math.min(80, Number(params.buildHoursPerWeek ?? 40)));
+  const hardwareSoftwareCapex = Math.max(0, Number(params.hardwareSoftwareCapex ?? 60));
+
+  const impactedEmployees = Math.max(1, Number(params.impactedEmployees ?? 45));
+  const hoursSavedPerWeek = Math.max(0.25, Number(params.hoursSavedPerWeek ?? 3.5));
+  const employeeHourlyRate = Math.max(15, Number(params.employeeHourlyRate ?? 60));
+  const retiredSpendPerPeriod = Math.max(0, Number(params.retiredSpendPerPeriod ?? 40));
+
+  const totalBuildHours = buildFtes * buildWeeks * buildHoursPerWeek;
+  const buildLaborDollars = totalBuildHours * buildHourlyRate;
+  const hardwareSoftwareDollars = hardwareSoftwareCapex * unitMult;
+  const totalUpfrontDollars = buildLaborDollars + hardwareSoftwareDollars;
+  const impliedUpfrontCapex = Number((totalUpfrontDollars / unitMult).toFixed(2));
+
+  const weeklyHoursSavedTotal = impactedEmployees * hoursSavedPerWeek;
+  const fteEquivalentSaved = weeklyHoursSavedTotal / 40;
+  const annualHoursSaved = weeklyHoursSavedTotal * 52;
+  const annualLaborSavingsDollars = annualHoursSaved * employeeHourlyRate;
+  const periodLaborSavingsDollars = annualLaborSavingsDollars / periodsPerYear;
+  const retiredSpendDollars = retiredSpendPerPeriod * unitMult;
+  const totalPeriod1BenefitDollars = periodLaborSavingsDollars + retiredSpendDollars;
+  const impliedPeriod1Benefit = Number((totalPeriod1BenefitDollars / unitMult).toFixed(2));
+
+  return {
+    unit,
+    horizonUnit,
+    periodsPerYear,
+    buildFtes,
+    buildHourlyRate,
+    buildWeeks,
+    buildHoursPerWeek,
+    hardwareSoftwareCapex,
+    impactedEmployees,
+    hoursSavedPerWeek,
+    employeeHourlyRate,
+    retiredSpendPerPeriod,
+    totalBuildHours,
+    buildLaborDollars,
+    hardwareSoftwareDollars,
+    totalUpfrontDollars,
+    impliedUpfrontCapex,
+    weeklyHoursSavedTotal,
+    fteEquivalentSaved,
+    annualHoursSaved,
+    annualLaborSavingsDollars,
+    periodLaborSavingsDollars,
+    totalPeriod1BenefitDollars,
+    impliedPeriod1Benefit
+  };
+}
+
+/**
+ * 6. Build vs. Buy / Option A vs. Option B vs. Lean MVP TCO & ROI Comparator
+ */
+export function computeBuildVsBuyComparison(projectOrCompany = {}, overrides = {}) {
+  const merged = { ...(projectOrCompany || {}), ...(overrides || {}) };
+  const optionA = computeConsultingBusinessCase(merged);
+
+  const buyUpfrontCapex = Math.max(0, Number(merged.buyUpfrontCapex ?? Number((optionA.upfrontCapex * 0.30).toFixed(2))));
+  const buyConsultingFee = Math.max(0, Number(merged.buyConsultingFee ?? Number((optionA.consultingFee * 0.50).toFixed(2))));
+  const buyYr1Benefit = Math.max(0, Number(merged.buyYr1Benefit ?? Number((optionA.yr1Benefit * 0.95).toFixed(2))));
+  const buyOngoingOpex = Math.max(0, Number(merged.buyOngoingOpex ?? Number((optionA.ongoingOpex * 2.20).toFixed(2))));
+
+  const optionB = computeConsultingBusinessCase(merged, {
+    upfrontCapex: buyUpfrontCapex,
+    consultingFee: buyConsultingFee,
+    yr1Benefit: buyYr1Benefit,
+    ongoingOpex: buyOngoingOpex,
+    customYearlyBenefits: null
+  });
+
+  const optionC = computeConsultingBusinessCase(merged, {
+    upfrontCapex: Number((optionA.upfrontCapex * 0.50).toFixed(2)),
+    consultingFee: Number((optionA.consultingFee * 0.40).toFixed(2)),
+    yr1Benefit: Number((optionA.yr1Benefit * 0.65).toFixed(2)),
+    ongoingOpex: Number((optionA.ongoingOpex * 0.60).toFixed(2)),
+    customYearlyBenefits: null
+  });
+
+  const enrichOption = (id, label, subtitle, bc) => {
+    const tcoUndiscounted = bc.grossInitialSpend + bc.totalOngoingOpex;
+    const pvOpex = bc.schedule.filter(s => s.year > 0).reduce(
+      (acc, s) => acc + s.ongoingOpex / Math.pow(1 + bc.periodicHurdleRate, s.year),
+      0
+    );
+    const pvTco = bc.totalInitialOutlay + pvOpex * (1 - bc.taxRate);
+    return {
+      id,
+      label,
+      subtitle,
+      bc,
+      tcoUndiscounted,
+      pvTco
+    };
+  };
+
+  const options = [
+    enrichOption('A', 'Option A: Current Plan (In-House Build)', 'Higher upfront CapEx, lower recurring OpEx, full ownership', optionA),
+    enrichOption('B', 'Option B: Vendor / SaaS Buy Alternative', 'Lower upfront CapEx, higher subscription OpEx, faster deployment', optionB),
+    enrichOption('C', 'Option C: Lean MVP / Phase-1 Scope', '50% upfront budget, 65% core benefit capture, lowest capital at risk', optionC)
+  ];
+
+  const recommended = [...options].sort((x, y) => y.bc.npv - x.bc.npv)[0];
+
+  return {
+    buyUpfrontCapex,
+    buyConsultingFee,
+    buyYr1Benefit,
+    buyOngoingOpex,
+    options,
+    optionA: options[0],
+    optionB: options[1],
+    optionC: options[2],
+    recommended
+  };
+}
+
+/**
+ * 7. 1,000-Trial Monte Carlo Project Risk Simulator (Probability of NPV > 0, P10 / P50 / P90)
+ */
+export function computeProjectMonteCarlo(projectOrCompany = {}, overrides = {}) {
+  const merged = { ...(projectOrCompany || {}), ...(overrides || {}) };
+  const baseCase = computeConsultingBusinessCase(merged);
+  const benefitShock = Math.max(0.05, Math.min(0.80, Number(merged.benefitShockPct ?? 0.25)));
+  const capexShock = Math.max(0.05, Math.min(0.80, Number(merged.capexShockPct ?? 0.25)));
+  const hurdleShockBps = Math.max(25, Math.min(600, Number(merged.hurdleShockBps ?? 250)));
+  const hurdleSigma = (hurdleShockBps / 10000) * 0.65;
+
+  const trials = 1000;
+  let seed = 421337;
+  const rand = () => {
+    seed = (seed * 1664525 + 1013904223) % 4294967296;
+    return (seed + 0.5) / 4294967296;
+  };
+  const randNormal = () => {
+    const u1 = Math.max(1e-7, rand());
+    const u2 = rand();
+    return Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+  };
+
+  const npvs = [];
+  let positiveCount = 0;
+
+  for (let i = 0; i < trials; i++) {
+    const zCapex = randNormal();
+    const zBen = randNormal();
+    const zGrowth = randNormal();
+    const zOpex = randNormal();
+    const zHurdle = randNormal();
+
+    // Cost overruns are slightly right-skewed in real projects
+    const simCapex = Math.max(0, baseCase.upfrontCapex * (1 + zCapex * (capexShock * 0.6) + capexShock * 0.08));
+    const simBen = Math.max(0, baseCase.yr1Benefit * (1 + zBen * (benefitShock * 0.6)));
+    const simGrowth = baseCase.benefitGrowth + zGrowth * (0.03 / Math.sqrt(baseCase.periodsPerYear));
+    const simOpex = Math.max(0, baseCase.ongoingOpex * (1 + zOpex * 0.15));
+    const simHurdle = Math.max(0.01, Math.min(0.40, baseCase.hurdleRate + zHurdle * hurdleSigma));
+
+    const periodicR = Math.pow(1 + simHurdle, 1 / baseCase.periodsPerYear) - 1;
+    const periodicOpexEsc = Math.pow(1 + 0.03, 1 / baseCase.periodsPerYear) - 1;
+    const initialOutlay = simCapex + baseCase.consultingFee * (1 - baseCase.taxRate);
+    const dep = simCapex / baseCase.horizonYears;
+
+    let pvIn = 0;
+    for (let t = 1; t <= baseCase.horizonYears; t++) {
+      const ben = simBen * Math.pow(1 + simGrowth, t - 1);
+      const opex = simOpex * Math.pow(1 + periodicOpexEsc, t - 1);
+      const ebit = ben - opex - dep;
+      const fcf = ebit * (1 - baseCase.taxRate) + dep;
+      pvIn += fcf / Math.pow(1 + periodicR, t);
+    }
+    const trialNpv = pvIn - initialOutlay;
+    npvs.push(trialNpv);
+    if (trialNpv > 0) positiveCount++;
+  }
+
+  npvs.sort((a, b) => a - b);
+  const meanNpv = npvs.reduce((a, b) => a + b, 0) / trials;
+  const variance = npvs.reduce((a, v) => a + Math.pow(v - meanNpv, 2), 0) / trials;
+  const stdDevNpv = Math.sqrt(variance);
+
+  const p05Npv = npvs[Math.floor(trials * 0.05)];
+  const p10Npv = npvs[Math.floor(trials * 0.10)];
+  const p50Npv = npvs[Math.floor(trials * 0.50)];
+  const p90Npv = npvs[Math.floor(trials * 0.90)];
+  const probPositiveNpv = positiveCount / trials;
+
+  const numBins = 18;
+  const minNpv = npvs[0];
+  const maxNpv = npvs[trials - 1];
+  const span = Math.max(1, maxNpv - minNpv);
+  const binWidth = span / numBins;
+
+  const bins = Array.from({ length: numBins }, (_, idx) => {
+    const lo = minNpv + idx * binWidth;
+    const hi = lo + binWidth;
+    const mid = (lo + hi) / 2;
+    return { lo, hi, mid, count: 0, isPositive: mid >= 0 };
+  });
+
+  npvs.forEach(v => {
+    const idx = Math.min(numBins - 1, Math.max(0, Math.floor((v - minNpv) / binWidth)));
+    bins[idx].count++;
+  });
+
+  return {
+    trials,
+    probPositiveNpv,
+    meanNpv,
+    stdDevNpv,
+    p05Npv,
+    p10Npv,
+    p50Npv,
+    p90Npv,
+    minNpv,
+    maxNpv,
+    bins
+  };
+}
+
+/**
  * Draw J-Curve Cumulative Cash Flow Chart (Canvas 2D)
  */
 function drawJCurveChart(canvas, bc, unit) {
@@ -1201,6 +1433,181 @@ function drawLtvCacCurveChart(canvas, unitEcon) {
   }
 }
 
+/**
+ * Draw Build vs. Buy / Option A vs. B vs. C Cumulative NPV Trajectories (Canvas 2D)
+ */
+function drawBuildVsBuyChart(canvas, bvb, unit) {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  const W = rect.width || 560;
+  const H = rect.height || 245;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  const pad = { top: 28, right: 24, bottom: 38, left: 68 };
+  const cw = W - pad.left - pad.right;
+  const ch = H - pad.top - pad.bottom;
+
+  const schedA = bvb.optionA.bc.schedule;
+  const schedB = bvb.optionB.bc.schedule;
+  const schedC = bvb.optionC.bc.schedule;
+  const n = schedA.length;
+
+  const allVals = [
+    ...schedA.map(s => s.cumDiscounted),
+    ...schedB.map(s => s.cumDiscounted),
+    ...schedC.map(s => s.cumDiscounted),
+    0
+  ];
+  const minVal = Math.min(...allVals) * 1.15;
+  const maxVal = Math.max(...allVals, 10) * 1.15;
+  const span = Math.max(1, maxVal - minVal);
+
+  const xAt = (idx) => pad.left + (idx / Math.max(1, n - 1)) * cw;
+  const yAt = (v) => pad.top + ((maxVal - v) / span) * ch;
+  const zeroY = yAt(0);
+
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const val = minVal + (span * i) / 4;
+    const y = yAt(val);
+    ctx.beginPath();
+    ctx.moveTo(pad.left, y);
+    ctx.lineTo(W - pad.right, y);
+    ctx.stroke();
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '600 10px JetBrains Mono, monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText(fmtProjectMoney(val, unit), pad.left - 8, y + 3);
+  }
+
+  ctx.strokeStyle = '#64748b';
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.moveTo(pad.left, zeroY);
+  ctx.lineTo(W - pad.right, zeroY);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  const pShort = bvb.optionA.bc.periodShort || 'Yr';
+  const tickStride = n > 13 ? Math.ceil((n - 1) / 8) : 1;
+  schedA.forEach((p, idx) => {
+    if (idx === 0 || idx === n - 1 || idx % tickStride === 0) {
+      ctx.fillStyle = '#475569';
+      ctx.font = '600 10px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${pShort} ${p.year}`, xAt(idx), H - 12);
+    }
+  });
+
+  const drawCurve = (sched, color, width, dashed = false) => {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    if (dashed) ctx.setLineDash([5, 4]);
+    ctx.beginPath();
+    sched.forEach((p, idx) => {
+      if (idx === 0) ctx.moveTo(xAt(idx), yAt(p.cumDiscounted));
+      else ctx.lineTo(xAt(idx), yAt(p.cumDiscounted));
+    });
+    ctx.stroke();
+    ctx.setLineDash([]);
+  };
+
+  drawCurve(schedC, '#d97706', 2, true); // Option C (Amber dashed)
+  drawCurve(schedB, '#16a34a', 2.5, false); // Option B Buy (Green)
+  drawCurve(schedA, '#2563eb', 2.75, false); // Option A Build (Blue)
+
+  // Legend at top
+  ctx.font = '700 10px Inter, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#2563eb';
+  ctx.fillText(`● Opt A Build (${fmtProjectMoney(bvb.optionA.bc.npv, unit)})`, pad.left + 4, 15);
+  ctx.fillStyle = '#16a34a';
+  ctx.fillText(`● Opt B Buy SaaS (${fmtProjectMoney(bvb.optionB.bc.npv, unit)})`, pad.left + 175, 15);
+  ctx.fillStyle = '#d97706';
+  ctx.fillText(`● Opt C Lean MVP (${fmtProjectMoney(bvb.optionC.bc.npv, unit)})`, pad.left + 355, 15);
+}
+
+/**
+ * Draw 1,000-Trial Monte Carlo NPV Probability Histogram (Canvas 2D)
+ */
+function drawMonteCarloChart(canvas, mc, unit) {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  const W = rect.width || 620;
+  const H = rect.height || 245;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  const pad = { top: 28, right: 24, bottom: 38, left: 52 };
+  const cw = W - pad.left - pad.right;
+  const ch = H - pad.top - pad.bottom;
+
+  const maxCount = Math.max(1, ...mc.bins.map(b => b.count)) * 1.15;
+  const slotW = cw / mc.bins.length;
+  const barW = Math.max(4, slotW * 0.82);
+
+  // Horizontal grid
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const cnt = Math.round((maxCount * i) / 4);
+    const y = pad.top + ((maxCount - cnt) / maxCount) * ch;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, y);
+    ctx.lineTo(W - pad.right, y);
+    ctx.stroke();
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '600 10px JetBrains Mono, monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText(`${cnt}`, pad.left - 6, y + 3);
+  }
+
+  mc.bins.forEach((b, idx) => {
+    const cx = pad.left + slotW * idx + slotW / 2;
+    const h = (b.count / maxCount) * ch;
+    const y = pad.top + ch - h;
+    ctx.fillStyle = b.isPositive ? 'rgba(22, 163, 74, 0.78)' : 'rgba(220, 38, 38, 0.78)';
+    ctx.fillRect(cx - barW / 2, y, barW, Math.max(1, h));
+
+    if (idx === 0 || idx === Math.floor(mc.bins.length / 2) || idx === mc.bins.length - 1) {
+      ctx.fillStyle = '#475569';
+      ctx.font = '600 10px JetBrains Mono, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(fmtProjectMoney(b.mid, unit), cx, H - 12);
+    }
+  });
+
+  // Zero NPV marker line if 0 is within range
+  if (mc.minNpv < 0 && mc.maxNpv > 0) {
+    const zeroX = pad.left + ((0 - mc.minNpv) / Math.max(1, mc.maxNpv - mc.minNpv)) * cw;
+    ctx.strokeStyle = '#0f172a';
+    ctx.setLineDash([4, 4]);
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(zeroX, pad.top);
+    ctx.lineTo(zeroX, H - pad.bottom);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = '#0f172a';
+    ctx.font = '700 10px JetBrains Mono, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('NPV = 0', zeroX, 15);
+  }
+}
+
 function getSavedProjects() {
   try {
     return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
@@ -1232,8 +1639,9 @@ export function renderConsultingWorkbench(root) {
     template: 'digital',
     projectName: defTpl.name,
     department: defTpl.department,
-    unit: defTpl.unit, // '$' | 'K' | 'M'
+    unit: defTpl.unit, // '$' | 'H' | 'K' | 'M'
     horizonUnit: 'years', // 'weeks' | 'months' | 'years'
+    showExecMemo: false,
     upfrontCapex: defTpl.upfrontCapex,
     consultingFee: defTpl.consultingFee,
     yr1Benefit: defTpl.yr1Benefit,
@@ -1243,6 +1651,22 @@ export function renderConsultingWorkbench(root) {
     hurdleRate: defTpl.hurdleRate,
     taxRate: defTpl.taxRate,
     customYearlyBenefits: null,
+    // Bottom-Up FTE & Labor Estimator state
+    buildFtes: 4,
+    buildHourlyRate: 95,
+    buildWeeks: 16,
+    buildHoursPerWeek: 40,
+    hardwareSoftwareCapex: 60,
+    impactedEmployees: 45,
+    hoursSavedPerWeek: 3.5,
+    employeeHourlyRate: 60,
+    retiredSpendPerPeriod: 40,
+    // Build vs. Buy (Option B) overrides
+    buyUpfrontCapex: 105,
+    buyConsultingFee: 45,
+    buyYr1Benefit: 230,
+    buyOngoingOpex: 95,
+    // Tool 2: EBITDA Bridge
     baseRev: defTpl.baseRev,
     baseCogs: defTpl.baseCogs,
     baseSga: defTpl.baseSga,
@@ -1251,6 +1675,7 @@ export function renderConsultingWorkbench(root) {
     cogsSavingsPct: defTpl.cogsSavingsPct,
     sgaSavingsPct: defTpl.sgaSavingsPct,
     evMultiple: defTpl.evMultiple,
+    // Tool 3: Pricing & Unit Economics
     unitPrice: 250,
     unitVarCost: 100,
     fixedCosts: 450,
@@ -1258,6 +1683,7 @@ export function renderConsultingWorkbench(root) {
     arpuAnnual: 24000,
     annualChurnRate: 0.10,
     cac: 32000,
+    // Tool 4: Stress-Test & Fee Structurer
     benefitShockPct: 0.25,
     capexShockPct: 0.25,
     hurdleShockBps: 250,
@@ -1276,6 +1702,10 @@ export function renderConsultingWorkbench(root) {
     state.yr1Benefit = t.yr1Benefit;
     state.benefitGrowth = t.benefitGrowth;
     state.ongoingOpex = t.ongoingOpex;
+    state.buyUpfrontCapex = Number((t.upfrontCapex * 0.30).toFixed(2));
+    state.buyConsultingFee = Number((t.consultingFee * 0.50).toFixed(2));
+    state.buyYr1Benefit = Number((t.yr1Benefit * 0.95).toFixed(2));
+    state.buyOngoingOpex = Number((t.ongoingOpex * 2.20).toFixed(2));
     state.horizonYears = t.horizonYears;
     state.hurdleRate = t.hurdleRate;
     state.taxRate = t.taxRate;
@@ -1318,6 +1748,12 @@ export function renderConsultingWorkbench(root) {
     state.consultingFee = roundVal(state.consultingFee);
     state.yr1Benefit = roundVal(state.yr1Benefit);
     state.ongoingOpex = roundVal(state.ongoingOpex);
+    state.hardwareSoftwareCapex = roundVal(state.hardwareSoftwareCapex);
+    state.retiredSpendPerPeriod = roundVal(state.retiredSpendPerPeriod);
+    state.buyUpfrontCapex = roundVal(state.buyUpfrontCapex);
+    state.buyConsultingFee = roundVal(state.buyConsultingFee);
+    state.buyYr1Benefit = roundVal(state.buyYr1Benefit);
+    state.buyOngoingOpex = roundVal(state.buyOngoingOpex);
     state.baseRev = roundVal(state.baseRev);
     state.baseCogs = roundVal(state.baseCogs);
     state.baseSga = roundVal(state.baseSga);
@@ -1347,6 +1783,9 @@ export function renderConsultingWorkbench(root) {
     const bridge = computeEbitdaBridge(state);
     const unitEcon = computePricingAndUnitEconomics(state);
     const scen = computeConsultingScenarios(state);
+    const fte = computeFteLaborEstimator(state);
+    const bvb = computeBuildVsBuyComparison(state);
+    const mc = computeProjectMonteCarlo(state);
     const savedList = getSavedProjects();
 
     const maxHorizon = bc.horizonUnit === 'weeks' ? 52 : bc.horizonUnit === 'months' ? 36 : 15;
@@ -1385,9 +1824,12 @@ export function renderConsultingWorkbench(root) {
                 ${savedList.map((p, idx) => `<option value="${idx}">${p.projectName} (${p.unit || 'K'})</option>`).join('')}
               </select>
             ` : ''}
-            <button type="button" class="btn btn--secondary btn--sm" id="save-proj-btn">💾 Save Project</button>
-            <button type="button" class="btn btn--secondary btn--sm" id="export-csv-btn">📊 Export Excel (CSV)</button>
-            <button type="button" class="btn btn--secondary btn--sm" id="export-json-btn">⬇ Export JSON</button>
+            <button type="button" class="btn btn--primary btn--sm" id="toggle-exec-memo-btn" style="background:#1e3a8a; border-color:#1e3a8a;">
+              📄 ${state.showExecMemo ? 'Hide Executive Memo' : 'Executive Memo / Print PDF'}
+            </button>
+            <button type="button" class="btn btn--secondary btn--sm" id="save-proj-btn">💾 Save</button>
+            <button type="button" class="btn btn--secondary btn--sm" id="export-csv-btn">📊 CSV</button>
+            <button type="button" class="btn btn--secondary btn--sm" id="export-json-btn">⬇ JSON</button>
           </div>
         </div>
 
@@ -1403,6 +1845,101 @@ export function renderConsultingWorkbench(root) {
           </div>
         </div>
         <div id="proj-save-status" style="font-size:0.78rem; color:#16a34a; font-weight:600; margin-top:0.35rem; display:none;"></div>
+      </div>
+
+      <!-- 1-PAGE PRINTABLE EXECUTIVE BUSINESS CASE MEMO -->
+      <div class="exec-memo-card" style="display:${state.showExecMemo ? 'block' : 'none'};">
+        <div class="exec-memo-header">
+          <div>
+            <div style="font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#1d4ed8;">
+              Executive Investment Committee Memorandum · Capital &amp; ROI Decision Brief
+            </div>
+            <h2 style="font-size:1.35rem; font-weight:800; color:#0f172a; margin:0.2rem 0;">
+              ${state.projectName} <span style="font-weight:500; color:#64748b; font-size:0.95rem;">(${state.department})</span>
+            </h2>
+            <div style="font-size:0.8rem; color:#475569;">
+              Horizon: <strong>${bc.horizonYears} ${bc.periodName}s</strong> · Scale: <strong>${unitLabel}</strong> · Hurdle Rate: <strong>${fmtPct(bc.hurdleRate)}/yr</strong> (${fmtPct(bc.periodicHurdleRate)}/${bc.periodShort}) · Tax Rate: <strong>${fmtPct(bc.taxRate)}</strong>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.5rem; align-items:center;" class="no-print">
+            <span style="padding:0.35rem 0.75rem; border-radius:999px; font-size:0.78rem; font-weight:800; background:${bc.npv >= 0 ? '#dcfce7' : '#fee2e2'}; color:${bc.npv >= 0 ? '#15803d' : '#b91c1c'};">
+              ${bc.verdict}
+            </span>
+            <button type="button" class="btn btn--primary btn--sm" id="print-exec-memo-btn">🖨️ Print / Save as PDF</button>
+            <button type="button" class="btn btn--secondary btn--sm" id="close-exec-memo-btn">✕ Close</button>
+          </div>
+        </div>
+
+        <div class="exec-memo-grid">
+          <div class="exec-memo-box">
+            <h4>1. Core Capital ROI Metrics</h4>
+            <div style="font-size:0.82rem; line-height:1.6;">
+              <div><strong>Net Present Value (NPV):</strong> <span style="font-weight:800; color:${bc.npv >= 0 ? '#16a34a' : '#dc2626'};">${fm(bc.npv)}</span> (${fmtExactDollars(bc.npv, unit)})</div>
+              <div><strong>Annualized IRR / MIRR:</strong> <strong>${fmtPct(bc.irr)}</strong> / ${fmtPct(bc.mirr)}</div>
+              <div><strong>Profitability Index (PI):</strong> <strong>${bc.profitabilityIndex.toFixed(2)}x</strong> · <strong>Net ROI:</strong> <strong>${fmtPct(bc.simpleRoiPct)}</strong></div>
+              <div><strong>Payback Period:</strong> <strong>${bc.simplePaybackYears !== null ? `${bc.simplePaybackYears.toFixed(1)} ${bc.periodPlural}` : `>${bc.horizonYears} ${bc.periodPlural}`}</strong> (${bc.discountedPaybackYears !== null ? `${bc.discountedPaybackYears.toFixed(1)} ${bc.periodPlural} discounted` : 'unrecovered'})</div>
+            </div>
+          </div>
+
+          <div class="exec-memo-box">
+            <h4>2. Monte Carlo &amp; Stress-Test Confidence</h4>
+            <div style="font-size:0.82rem; line-height:1.6;">
+              <div><strong>Probability of Positive NPV:</strong> <span style="font-weight:800; color:${mc.probPositiveNpv >= 0.7 ? '#16a34a' : '#dc2626'};">${fmtPct(mc.probPositiveNpv)}</span> (${mc.trials.toLocaleString()} trials)</div>
+              <div><strong>P10 / P50 / P90 NPV:</strong> ${fm(mc.p10Npv)} / <strong>${fm(mc.p50Npv)}</strong> / ${fm(mc.p90Npv)}</div>
+              <div><strong>Bear / Bull Scenario NPV:</strong> ${fm(scen.bearCase.npv)} / ${fm(scen.bullCase.npv)}</div>
+              <div><strong>Top Sensitivity Driver:</strong> ${scen.drivers[0]?.name || 'Benefit Capture'} (Δ ${fm(scen.drivers[0]?.spread || 0)})</div>
+            </div>
+          </div>
+
+          <div class="exec-memo-box">
+            <h4>3. Build vs. Buy &amp; FTE Capacity</h4>
+            <div style="font-size:0.82rem; line-height:1.6;">
+              <div><strong>Recommended Path:</strong> <strong>${bvb.recommended.label}</strong> (NPV: ${fm(bvb.recommended.bc.npv)})</div>
+              <div><strong>Option A (Build) vs. B (Buy) TCO:</strong> ${fm(bvb.optionA.tcoUndiscounted)} vs. ${fm(bvb.optionB.tcoUndiscounted)}</div>
+              <div><strong>FTE Capacity Unlocked:</strong> <strong>${fte.fteEquivalentSaved.toFixed(1)} FTEs</strong> (${Math.round(fte.annualHoursSaved).toLocaleString()} hrs/yr saved)</div>
+              <div><strong>Run-Rate EBITDA Uplift:</strong> +${fm(bridge.netEbitdaLift)} (+${bridge.marginExpansionBps.toFixed(0)} bps)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wb-table-wrap">
+          <table class="wb-table">
+            <thead>
+              <tr>
+                <th>Executive Cash Flow Summary (${unitShort})</th>
+                ${bc.schedule.map(s => `<th>${bc.periodShort} ${s.year}</th>`).join('')}
+                <th>Total / KPI</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Upfront Outlay &amp; Setup</td>
+                ${bc.schedule.map(s => `<td>${s.capexAndFee < 0 ? `(${fm(Math.abs(s.capexAndFee))})` : '—'}</td>`).join('')}
+                <td>(${fm(bc.grossInitialSpend)})</td>
+              </tr>
+              <tr>
+                <td>Gross Benefits</td>
+                ${bc.schedule.map(s => `<td>${s.year === 0 ? '—' : fm(s.grossBenefit)}</td>`).join('')}
+                <td>${fm(bc.totalGrossBenefits)}</td>
+              </tr>
+              <tr>
+                <td>Ongoing OpEx</td>
+                ${bc.schedule.map(s => `<td>${s.year === 0 ? '—' : `(${fm(s.ongoingOpex)})`}</td>`).join('')}
+                <td>(${fm(bc.totalOngoingOpex)})</td>
+              </tr>
+              <tr class="wb-row-total">
+                <td>Net Free Cash Flow (FCF)</td>
+                ${bc.schedule.map(s => `<td>${fm(s.fcf)}</td>`).join('')}
+                <td>${fm(bc.totalNetCashInflows - bc.totalInitialOutlay)}</td>
+              </tr>
+              <tr class="wb-row-total">
+                <td>Cumulative Discounted NPV</td>
+                ${bc.schedule.map(s => `<td>${fm(s.cumDiscounted)}</td>`).join('')}
+                <td>${fm(bc.npv)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- PROMINENT 4-CARD CONSULTING TOOL LAUNCHER (ABOVE KPI TILES) -->
@@ -1691,6 +2228,138 @@ export function renderConsultingWorkbench(root) {
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <!-- NEW IN TOOL 1: BOTTOM-UP FTE LABOR ESTIMATOR & BUILD VS. BUY COMPARATOR -->
+        <div class="wb-grid-2" style="margin-top: 1.25rem;">
+          <!-- Bottom-Up FTE & Time-Savings Estimator -->
+          <div class="wb-panel">
+            <div class="wb-panel__header">
+              <div>
+                <h3 class="wb-panel__title">Bottom-Up FTE Labor Cost &amp; Time-Savings Estimator</h3>
+                <div class="wb-panel__subtitle">Estimate build outlay from team headcount &amp; hours, and benefits from employee hours saved</div>
+              </div>
+              <button type="button" class="btn btn--primary btn--sm" id="apply-fte-btn" title="Push calculated Upfront Outlay & Period 1 Benefit into Tool 1">
+                ⚡ Push to Business Case
+              </button>
+            </div>
+            <div class="wb-panel__body">
+              <div style="font-size:0.74rem; font-weight:800; text-transform:uppercase; color:#1e3a8a; margin-bottom:0.45rem;">
+                A. Project Build Team &amp; CapEx Outlay
+              </div>
+              <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:0.65rem; margin-bottom:0.85rem;">
+                <div>
+                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Build Team Headcount (FTEs)</label>
+                  <input type="number" id="num-fte-build" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" min="0.5" value="${fte.buildFtes}" />
+                </div>
+                <div>
+                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Blended Build Rate ($/hr)</label>
+                  <input type="number" id="num-fte-build-rate" class="analyze-input" style="width:100%; font-weight:700;" step="5" min="15" value="${fte.buildHourlyRate}" />
+                </div>
+                <div>
+                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Build Duration (Weeks @ ${fte.buildHoursPerWeek}h/wk)</label>
+                  <input type="number" id="num-fte-build-wks" class="analyze-input" style="width:100%; font-weight:700;" step="1" min="1" value="${fte.buildWeeks}" />
+                </div>
+                <div>
+                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Hardware / Software CapEx (${unitShort})</label>
+                  <input type="number" id="num-fte-hw-capex" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${fte.hardwareSoftwareCapex}" />
+                </div>
+              </div>
+
+              <div style="font-size:0.74rem; font-weight:800; text-transform:uppercase; color:#15803d; margin-bottom:0.45rem;">
+                B. Operational Time-Savings &amp; Legacy Cost Retirement
+              </div>
+              <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:0.65rem; margin-bottom:0.85rem;">
+                <div>
+                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Impacted Employees (Headcount)</label>
+                  <input type="number" id="num-fte-impacted" class="analyze-input" style="width:100%; font-weight:700;" step="1" min="1" value="${fte.impactedEmployees}" />
+                </div>
+                <div>
+                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Hours Saved / Employee / Week</label>
+                  <input type="number" id="num-fte-hrs-saved" class="analyze-input" style="width:100%; font-weight:700;" step="0.5" min="0.25" value="${fte.hoursSavedPerWeek}" />
+                </div>
+                <div>
+                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Employee Hourly Cost ($/hr)</label>
+                  <input type="number" id="num-fte-emp-rate" class="analyze-input" style="width:100%; font-weight:700;" step="5" min="15" value="${fte.employeeHourlyRate}" />
+                </div>
+                <div>
+                  <label style="font-size:0.73rem; font-weight:700; color:#334155; display:block; margin-bottom:0.2rem;">Legacy Spend Retired / ${bc.periodShort} (${unitShort})</label>
+                  <input type="number" id="num-fte-retired" class="analyze-input" style="width:100%; font-weight:700;" step="any" min="0" value="${fte.retiredSpendPerPeriod}" />
+                </div>
+              </div>
+
+              <div style="padding:0.8rem; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; font-size:0.82rem; line-height:1.55;">
+                <div><strong>Implied Build Outlay:</strong> $${Math.round(fte.buildLaborDollars).toLocaleString()} labor (${fte.totalBuildHours.toLocaleString()} hrs) + $${Math.round(fte.hardwareSoftwareDollars).toLocaleString()} tech = <strong style="color:#1e3a8a;">${fm(fte.impliedUpfrontCapex)}</strong></div>
+                <div><strong>Capacity Unlocked:</strong> <strong>${fte.fteEquivalentSaved.toFixed(1)} FTEs</strong> (${Math.round(fte.annualHoursSaved).toLocaleString()} hrs/yr saved @ $${fte.employeeHourlyRate}/hr = $${Math.round(fte.annualLaborSavingsDollars).toLocaleString()}/yr)</div>
+                <div><strong>Implied ${bc.periodName} 1 Gross Benefit:</strong> <strong style="color:#16a34a;">${fm(fte.impliedPeriod1Benefit)} / ${bc.periodShort}</strong> ($${Math.round(fte.totalPeriod1BenefitDollars).toLocaleString()})</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Build vs. Buy / Option A vs. Option B Comparator -->
+          <div class="wb-panel">
+            <div class="wb-panel__header">
+              <div>
+                <h3 class="wb-panel__title">Build vs. Buy / Option A vs. Option B Comparator</h3>
+                <div class="wb-panel__subtitle">Compare In-House Build (Option A) against SaaS Vendor Buy (Option B) &amp; Lean MVP (Option C)</div>
+              </div>
+              <button type="button" class="btn btn--secondary btn--sm" id="adopt-opt-b-btn" title="Copy Option B (Vendor Buy) numbers into Active Business Case">
+                ⚡ Adopt Option B
+              </button>
+            </div>
+            <div class="wb-panel__body">
+              <div style="font-size:0.73rem; font-weight:800; text-transform:uppercase; color:#475569; margin-bottom:0.4rem;">
+                Configure Option B (Vendor / SaaS Buy Alternative in ${unitShort})
+              </div>
+              <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:0.5rem; margin-bottom:0.75rem;">
+                <div>
+                  <label style="font-size:0.69rem; font-weight:700; color:#334155; display:block;">Upfront (${unitShort})</label>
+                  <input type="number" id="num-buy-capex" class="analyze-input" style="width:100%; padding:0.3rem 0.4rem; font-weight:700;" step="any" min="0" value="${bvb.buyUpfrontCapex}" />
+                </div>
+                <div>
+                  <label style="font-size:0.69rem; font-weight:700; color:#334155; display:block;">Setup Fee (${unitShort})</label>
+                  <input type="number" id="num-buy-fee" class="analyze-input" style="width:100%; padding:0.3rem 0.4rem; font-weight:700;" step="any" min="0" value="${bvb.buyConsultingFee}" />
+                </div>
+                <div>
+                  <label style="font-size:0.69rem; font-weight:700; color:#334155; display:block;">${bc.periodShort} 1 Benefit (${unitShort})</label>
+                  <input type="number" id="num-buy-benefit" class="analyze-input" style="width:100%; padding:0.3rem 0.4rem; font-weight:700;" step="any" min="0" value="${bvb.buyYr1Benefit}" />
+                </div>
+                <div>
+                  <label style="font-size:0.69rem; font-weight:700; color:#334155; display:block;">SaaS OpEx/${bc.periodShort}</label>
+                  <input type="number" id="num-buy-opex" class="analyze-input" style="width:100%; padding:0.3rem 0.4rem; font-weight:700;" step="any" min="0" value="${bvb.buyOngoingOpex}" />
+                </div>
+              </div>
+
+              <canvas id="consulting-bvb-canvas" style="width:100%; height:195px; display:block; margin-bottom:0.65rem;"></canvas>
+
+              <div class="wb-table-wrap">
+                <table class="wb-table" style="font-size:0.76rem;">
+                  <thead>
+                    <tr>
+                      <th>Strategic Option</th>
+                      <th>Upfront</th>
+                      <th>${bc.horizonYears}-${bc.periodShort} TCO</th>
+                      <th>NPV (${unitShort})</th>
+                      <th>IRR</th>
+                      <th>Payback</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${bvb.options.map(opt => `
+                      <tr class="${opt.id === bvb.recommended.id ? 'wb-row-total' : ''}">
+                        <td><strong>${opt.label}</strong> ${opt.id === bvb.recommended.id ? '🏆' : ''}</td>
+                        <td>${fm(opt.bc.grossInitialSpend)}</td>
+                        <td>${fm(opt.tcoUndiscounted)}</td>
+                        <td>${fm(opt.bc.npv)}</td>
+                        <td>${fmtPct(opt.bc.irr)}</td>
+                        <td>${opt.bc.simplePaybackYears !== null ? `${opt.bc.simplePaybackYears.toFixed(1)} ${bc.periodPlural}` : `>${bc.horizonYears}`}</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2158,6 +2827,26 @@ export function renderConsultingWorkbench(root) {
           </div>
         </div>
 
+        <div class="wb-panel" style="margin-bottom:20px;">
+          <div class="wb-panel__header">
+            <div>
+              <h3 class="wb-panel__title">🎲 1,000-Trial Monte Carlo Project Risk Simulation (${unitLabel})</h3>
+              <div class="wb-panel__subtitle">Simulates 1,000 random project paths varying CapEx (±${Math.round(scen.capexShockPct * 100)}%), Benefits (±${Math.round(scen.benefitShockPct * 100)}%), and Hurdle Rate (±${scen.hurdleShockBps} bps)</div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+              <span class="wb-badge" style="background:${mc.probPositiveNpv >= 0.75 ? 'rgba(52,211,153,0.16)' : 'rgba(248,113,113,0.16)'};color:${mc.probPositiveNpv >= 0.75 ? '#34d399' : '#f87171'};padding:6px 12px;border-radius:6px;font-weight:700;">
+                Pr(NPV &gt; 0): ${(mc.probPositiveNpv * 100).toFixed(1)}%
+              </span>
+              <span style="font-size:0.78rem;color:var(--text-secondary);">P10 (Downside): <strong class="${mc.p10Npv < 0 ? 'num-neg' : 'num-pos'}">${fm(mc.p10Npv)}</strong></span>
+              <span style="font-size:0.78rem;color:var(--text-secondary);">P50 (Median): <strong class="${mc.p50Npv < 0 ? 'num-neg' : 'num-pos'}">${fm(mc.p50Npv)}</strong></span>
+              <span style="font-size:0.78rem;color:var(--text-secondary);">P90 (Upside): <strong class="${mc.p90Npv < 0 ? 'num-neg' : 'num-pos'}">${fm(mc.p90Npv)}</strong></span>
+            </div>
+          </div>
+          <div class="wb-canvas-wrap">
+            <canvas id="consulting-mc-canvas" class="wb-canvas" style="height:260px;"></canvas>
+          </div>
+        </div>
+
         <div class="wb-panel">
           <div class="wb-panel__header">
             <div>
@@ -2204,6 +2893,7 @@ export function renderConsultingWorkbench(root) {
     requestAnimationFrame(() => {
       if (activeTab === 'business-case') {
         drawJCurveChart(root.querySelector('#consulting-jcurve-canvas'), bc, unit);
+        drawBuildVsBuyChart(root.querySelector('#consulting-bvb-canvas'), bvb, unit);
       } else if (activeTab === 'ebitda-bridge') {
         drawWaterfallChart(root.querySelector('#consulting-waterfall-canvas'), bridge, unit);
       } else if (activeTab === 'pricing-unit') {
@@ -2211,8 +2901,57 @@ export function renderConsultingWorkbench(root) {
         drawLtvCacCurveChart(root.querySelector('#consulting-ltv-canvas'), unitEcon);
       } else if (activeTab === 'scenarios-fees') {
         drawTornadoChart(root.querySelector('#consulting-tornado-canvas'), scen, unit);
+        drawMonteCarloChart(root.querySelector('#consulting-mc-canvas'), mc, unit);
       }
     });
+
+    // Wire Executive Business Case Memo Toggle & Print
+    const toggleMemoBtn = root.querySelector('#toggle-exec-memo-btn');
+    if (toggleMemoBtn) {
+      toggleMemoBtn.addEventListener('click', () => {
+        state.showExecMemo = !state.showExecMemo;
+        updateView();
+      });
+    }
+    const closeMemoBtn = root.querySelector('#close-exec-memo-btn');
+    if (closeMemoBtn) {
+      closeMemoBtn.addEventListener('click', () => {
+        state.showExecMemo = false;
+        updateView();
+      });
+    }
+    const printMemoBtn = root.querySelector('#print-exec-memo-btn');
+    if (printMemoBtn) {
+      printMemoBtn.addEventListener('click', () => {
+        if (typeof window !== 'undefined' && typeof window.print === 'function') {
+          window.print();
+        }
+      });
+    }
+
+    // Wire Bottom-Up FTE Estimator Push Button
+    const applyFteBtn = root.querySelector('#apply-fte-btn');
+    if (applyFteBtn) {
+      applyFteBtn.addEventListener('click', () => {
+        state.upfrontCapex = Math.round(fte.impliedUpfrontCapex * 100) / 100;
+        state.yr1Benefit = Math.round(fte.impliedPeriod1Benefit * 100) / 100;
+        state.customYearlyBenefits = null;
+        updateView();
+      });
+    }
+
+    // Wire Adopt Option B Button
+    const adoptOptBBtn = root.querySelector('#adopt-opt-b-btn');
+    if (adoptOptBBtn) {
+      adoptOptBBtn.addEventListener('click', () => {
+        state.upfrontCapex = state.buyUpfrontCapex;
+        state.consultingFee = state.buyConsultingFee;
+        state.yr1Benefit = state.buyYr1Benefit;
+        state.ongoingOpex = state.buyOngoingOpex;
+        state.customYearlyBenefits = null;
+        updateView();
+      });
+    }
 
     // Wire Project Identity & Unit Controls
     const nameInput = root.querySelector('#proj-name-input');
@@ -2350,6 +3089,18 @@ export function renderConsultingWorkbench(root) {
     bindNum('#num-horizon', 'horizonYears');
     bindNum('#num-hurdle', 'hurdleRate', true);
     bindNum('#num-tax', 'taxRate', true);
+    bindNum('#num-fte-build', 'buildFtes');
+    bindNum('#num-fte-build-rate', 'buildHourlyRate');
+    bindNum('#num-fte-build-wks', 'buildWeeks');
+    bindNum('#num-fte-hw-capex', 'hardwareSoftwareCapex');
+    bindNum('#num-fte-impacted', 'impactedEmployees');
+    bindNum('#num-fte-hrs-saved', 'hoursSavedPerWeek');
+    bindNum('#num-fte-emp-rate', 'employeeHourlyRate');
+    bindNum('#num-fte-retired', 'retiredSpendPerPeriod');
+    bindNum('#num-buy-capex', 'buyUpfrontCapex');
+    bindNum('#num-buy-fee', 'buyConsultingFee');
+    bindNum('#num-buy-benefit', 'buyYr1Benefit');
+    bindNum('#num-buy-opex', 'buyOngoingOpex');
     bindNum('#num-base-rev', 'baseRev');
     bindNum('#num-base-cogs', 'baseCogs');
     bindNum('#num-base-sga', 'baseSga');
