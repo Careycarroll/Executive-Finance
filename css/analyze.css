@@ -1240,3 +1240,29 @@
   justify-content: space-between;
 }
 
+.wb-slider-num-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.wb-slider-num {
+  width: 82px !important;
+  padding: 0.2rem 0.45rem !important;
+  font-family: var(--font-mono);
+  font-size: 0.78rem !important;
+  font-weight: 700;
+  text-align: right;
+  color: #0f172a;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.375rem;
+}
+
+.wb-slider-num:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+

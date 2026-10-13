@@ -1317,7 +1317,11 @@ export function renderConsultingWorkbench(root) {
               <div class="wb-slider-group">
                 <div class="wb-slider-Row">
                   <label>1. Price Realization Uplift (% of Revenue)</label>
-                  <span class="wb-slider-val">+${fmtPct(bridge.priceUpliftPct)} (+${fm(bridge.pricingEbitdaLift)})</span>
+                  <span class="wb-slider-num-wrap">
+                    <span class="wb-slider-val">+${fm(bridge.pricingEbitdaLift)}</span>
+                    <input type="number" id="num-price-lift" class="wb-slider-num" step="0.25" min="0" max="50" value="${(bridge.priceUpliftPct * 100).toFixed(2)}" title="Enter Price Uplift %" />
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                  </span>
                 </div>
                 <input type="range" id="sl-price-lift" min="0" max="0.10" step="0.0025" value="${bridge.priceUpliftPct}" />
               </div>
@@ -1325,7 +1329,11 @@ export function renderConsultingWorkbench(root) {
               <div class="wb-slider-group">
                 <div class="wb-slider-Row">
                   <label>2. Volume / Throughput Expansion (% of Revenue)</label>
-                  <span class="wb-slider-val">+${fmtPct(bridge.volumeGrowthPct)} (+${fm(bridge.volumeEbitdaLift)})</span>
+                  <span class="wb-slider-num-wrap">
+                    <span class="wb-slider-val">+${fm(bridge.volumeEbitdaLift)}</span>
+                    <input type="number" id="num-vol-lift" class="wb-slider-num" step="0.5" min="0" max="100" value="${(bridge.volumeGrowthPct * 100).toFixed(1)}" title="Enter Volume Expansion %" />
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                  </span>
                 </div>
                 <input type="range" id="sl-vol-lift" min="0" max="0.15" step="0.005" value="${bridge.volumeGrowthPct}" />
               </div>
@@ -1333,7 +1341,11 @@ export function renderConsultingWorkbench(root) {
               <div class="wb-slider-group">
                 <div class="wb-slider-Row">
                   <label>3. Procurement &amp; Direct COGS Savings (% of COGS)</label>
-                  <span class="wb-slider-val">−${fmtPct(bridge.cogsSavingsPct)} (+${fm(bridge.cogsEbitdaLift)})</span>
+                  <span class="wb-slider-num-wrap">
+                    <span class="wb-slider-val">+${fm(bridge.cogsEbitdaLift)}</span>
+                    <input type="number" id="num-cogs-save" class="wb-slider-num" step="0.5" min="0" max="50" value="${(bridge.cogsSavingsPct * 100).toFixed(1)}" title="Enter COGS Savings %" />
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                  </span>
                 </div>
                 <input type="range" id="sl-cogs-save" min="0" max="0.15" step="0.005" value="${bridge.cogsSavingsPct}" />
               </div>
@@ -1341,7 +1353,11 @@ export function renderConsultingWorkbench(root) {
               <div class="wb-slider-group">
                 <div class="wb-slider-Row">
                   <label>4. SG&amp;A &amp; Labor Productivity (% of SG&amp;A)</label>
-                  <span class="wb-slider-val">−${fmtPct(bridge.sgaSavingsPct)} (+${fm(bridge.sgaEbitdaLift)})</span>
+                  <span class="wb-slider-num-wrap">
+                    <span class="wb-slider-val">+${fm(bridge.sgaEbitdaLift)}</span>
+                    <input type="number" id="num-sga-save" class="wb-slider-num" step="0.5" min="0" max="60" value="${(bridge.sgaSavingsPct * 100).toFixed(1)}" title="Enter SG&A Savings %" />
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                  </span>
                 </div>
                 <input type="range" id="sl-sga-save" min="0" max="0.25" step="0.005" value="${bridge.sgaSavingsPct}" />
               </div>
@@ -1436,7 +1452,7 @@ export function renderConsultingWorkbench(root) {
             <div class="wb-panel__header">
               <div>
                 <h3 class="wb-panel__title">Cost-Volume-Profit (CVP) &amp; Pricing Elasticity Break-Even</h3>
-                <div class="wb-panel__subtitle">How much volume can you afford to lose when raising prices?</div>
+                <div class="wb-panel__subtitle">Use sliders or type exact figures in the boxes on the right</div>
               </div>
               ${conceptPill('operating-leverage', 'CVP & DOL')}
             </div>
@@ -1444,7 +1460,10 @@ export function renderConsultingWorkbench(root) {
               <div class="wb-slider-group">
                 <div class="wb-slider-Row">
                   <label>Average Unit / Contract Price ($)</label>
-                  <span class="wb-slider-val">$${unitEcon.unitPrice.toFixed(0)}</span>
+                  <span class="wb-slider-num-wrap">
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
+                    <input type="number" id="num-unit-price" class="wb-slider-num" step="any" min="1" value="${unitEcon.unitPrice}" />
+                  </span>
                 </div>
                 <input type="range" id="sl-unit-price" min="20" max="2000" step="10" value="${unitEcon.unitPrice}" />
               </div>
@@ -1452,15 +1471,33 @@ export function renderConsultingWorkbench(root) {
               <div class="wb-slider-group">
                 <div class="wb-slider-Row">
                   <label>Variable Cost per Unit ($)</label>
-                  <span class="wb-slider-val">$${unitEcon.unitVarCost.toFixed(0)} (CM: ${fmtPct(unitEcon.contributionMarginPct)})</span>
+                  <span class="wb-slider-num-wrap">
+                    <span class="wb-slider-val">CM: ${fmtPct(unitEcon.contributionMarginPct)}</span>
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
+                    <input type="number" id="num-unit-vc" class="wb-slider-num" step="any" min="0" value="${unitEcon.unitVarCost}" />
+                  </span>
                 </div>
                 <input type="range" id="sl-unit-vc" min="5" max="${Math.max(15, unitEcon.unitPrice - 5)}" step="5" value="${unitEcon.unitVarCost}" />
               </div>
 
               <div class="wb-slider-group">
                 <div class="wb-slider-Row">
+                  <label>Fixed Operating Costs (${unit})</label>
+                  <span class="wb-slider-num-wrap">
+                    <input type="number" id="num-fixed-costs" class="wb-slider-num" step="any" min="1" value="${unitEcon.fixedCosts}" />
+                  </span>
+                </div>
+                <input type="range" id="sl-fixed-costs" min="10" max="5000" step="10" value="${unitEcon.fixedCosts}" />
+              </div>
+
+              <div class="wb-slider-group">
+                <div class="wb-slider-Row">
                   <label>Proposed Price Increase (%)</label>
-                  <span class="wb-slider-val">+${fmtPct(unitEcon.proposedPriceChangePct)} (&rarr; $${unitEcon.newUnitPrice.toFixed(2)})</span>
+                  <span class="wb-slider-num-wrap">
+                    <span class="wb-slider-val">&rarr; $${unitEcon.newUnitPrice.toFixed(2)}</span>
+                    <input type="number" id="num-price-chg" class="wb-slider-num" step="0.5" min="-50" max="100" value="${(unitEcon.proposedPriceChangePct * 100).toFixed(1)}" />
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                  </span>
                 </div>
                 <input type="range" id="sl-price-chg" min="0.01" max="0.20" step="0.005" value="${unitEcon.proposedPriceChangePct}" />
               </div>
@@ -1479,7 +1516,7 @@ export function renderConsultingWorkbench(root) {
             <div class="wb-panel__header">
               <div>
                 <h3 class="wb-panel__title">Customer Unit Economics (LTV / CAC &amp; Payback)</h3>
-                <div class="wb-panel__subtitle">Cohort lifetime value, acquisition efficiency &amp; payback velocity</div>
+                <div class="wb-panel__subtitle">Use sliders or type exact cohort figures in the boxes on the right</div>
               </div>
               ${conceptPill('capital-budgeting', 'Unit Economics')}
             </div>
@@ -1487,7 +1524,10 @@ export function renderConsultingWorkbench(root) {
               <div class="wb-slider-group">
                 <div class="wb-slider-Row">
                   <label>Annual Revenue per Customer (ARPU / ACV)</label>
-                  <span class="wb-slider-val">$${unitEcon.arpuAnnual.toLocaleString()}</span>
+                  <span class="wb-slider-num-wrap">
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
+                    <input type="number" id="num-arpu" class="wb-slider-num" style="width:96px !important;" step="500" min="100" value="${unitEcon.arpuAnnual}" />
+                  </span>
                 </div>
                 <input type="range" id="sl-arpu" min="1000" max="100000" step="1000" value="${unitEcon.arpuAnnual}" />
               </div>
@@ -1495,7 +1535,10 @@ export function renderConsultingWorkbench(root) {
               <div class="wb-slider-group">
                 <div class="wb-slider-Row">
                   <label>Customer Acquisition Cost (CAC)</label>
-                  <span class="wb-slider-val">$${unitEcon.cac.toLocaleString()}</span>
+                  <span class="wb-slider-num-wrap">
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">$</span>
+                    <input type="number" id="num-cac" class="wb-slider-num" style="width:96px !important;" step="500" min="100" value="${unitEcon.cac}" />
+                  </span>
                 </div>
                 <input type="range" id="sl-cac" min="1000" max="100000" step="1000" value="${unitEcon.cac}" />
               </div>
@@ -1503,7 +1546,11 @@ export function renderConsultingWorkbench(root) {
               <div class="wb-slider-group">
                 <div class="wb-slider-Row">
                   <label>Annual Customer Churn Rate (%)</label>
-                  <span class="wb-slider-val">${fmtPct(unitEcon.annualChurnRate)} (Avg Life: ${unitEcon.avgCustomerLifetimeYears.toFixed(1)} yrs)</span>
+                  <span class="wb-slider-num-wrap">
+                    <span class="wb-slider-val">Life: ${unitEcon.avgCustomerLifetimeYears.toFixed(1)} yrs</span>
+                    <input type="number" id="num-churn" class="wb-slider-num" step="0.5" min="1" max="80" value="${(unitEcon.annualChurnRate * 100).toFixed(1)}" />
+                    <span style="font-size:0.75rem; font-weight:700; color:#64748b;">%</span>
+                  </span>
                 </div>
                 <input type="range" id="sl-churn" min="0.02" max="0.35" step="0.01" value="${unitEcon.annualChurnRate}" />
               </div>
@@ -1796,6 +1843,17 @@ export function renderConsultingWorkbench(root) {
     bindNum('#num-base-rev', 'baseRev');
     bindNum('#num-base-cogs', 'baseCogs');
     bindNum('#num-base-sga', 'baseSga');
+    bindNum('#num-price-lift', 'priceUpliftPct', true);
+    bindNum('#num-vol-lift', 'volumeGrowthPct', true);
+    bindNum('#num-cogs-save', 'cogsSavingsPct', true);
+    bindNum('#num-sga-save', 'sgaSavingsPct', true);
+    bindNum('#num-unit-price', 'unitPrice');
+    bindNum('#num-unit-vc', 'unitVarCost');
+    bindNum('#num-fixed-costs', 'fixedCosts');
+    bindNum('#num-price-chg', 'proposedPriceChangePct', true);
+    bindNum('#num-arpu', 'arpuAnnual');
+    bindNum('#num-cac', 'cac');
+    bindNum('#num-churn', 'annualChurnRate', true);
 
     // Wire Custom Year-by-Year Benefit Inputs
     root.querySelectorAll('.custom-yr-ben-input').forEach(inp => {
@@ -1835,6 +1893,7 @@ export function renderConsultingWorkbench(root) {
     bindSlider('#sl-sga-save', 'sgaSavingsPct');
     bindSlider('#sl-unit-price', 'unitPrice');
     bindSlider('#sl-unit-vc', 'unitVarCost');
+    bindSlider('#sl-fixed-costs', 'fixedCosts');
     bindSlider('#sl-price-chg', 'proposedPriceChangePct');
     bindSlider('#sl-arpu', 'arpuAnnual');
     bindSlider('#sl-cac', 'cac');
