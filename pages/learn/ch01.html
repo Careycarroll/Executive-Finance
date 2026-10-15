@@ -16,14 +16,17 @@
 
   <header class="site-header" role="banner">
     <div class="site-header__inner">
-      <a href="/" class="site-header__logo">
+      <a href="%BASE_URL%" class="site-header__logo">
         <span>&#128200;</span>
         <span>Executive Finance</span>
       </a>
       <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
-        <a href="/pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
-        <a href="/pages/formulas.html" class="site-header__nav-link">Formulas</a>
-        <a href="/pages/glossary.html" class="site-header__nav-link">Glossary</a>
+        <a href="%BASE_URL%pages/learn/" class="site-header__nav-link site-header__nav-link--active">Learn</a>
+        <a href="%BASE_URL%pages/toolbox.html" class="site-header__nav-link">Toolbox</a>
+        <a href="%BASE_URL%pages/analyze/" class="site-header__nav-link">Analyze</a>
+        <a href="%BASE_URL%pages/formulas.html" class="site-header__nav-link">Formulas</a>
+        <a href="%BASE_URL%pages/glossary.html" class="site-header__nav-link">Glossary</a>
+        <a href="%BASE_URL%pages/reference/bibliography.html" class="site-header__nav-link">Bibliography</a>
       </nav>
     </div>
   </header>
@@ -35,11 +38,11 @@
       <div class="container">
         <div class="chapter-nav">
           <div style="display:flex;gap:var(--space-4);align-items:center;">
-            <a href="/pages/learn/" class="chapter-nav__back">&larr; All Chapters</a>
+            <a href="%BASE_URL%pages/learn/" class="chapter-nav__back">&larr; All Chapters</a>
           </div>
           <div class="chapter-nav__position">
             <span>Chapter 1 of 18</span>
-            <a href="/pages/learn/ch02.html" class="chapter-nav__next">Ch. 2 &rarr;</a>
+            <a href="%BASE_URL%pages/learn/ch02.html" class="chapter-nav__next">Ch. 2 &rarr;</a>
           </div>
         </div>
         <div class="chapter-hero__meta">
@@ -460,7 +463,7 @@
           </p>
           <div class="chapter-complete__actions">
             <button class="btn btn--primary" id="mark-complete-btn">Mark as Complete</button>
-            <a href="/pages/learn/ch02.html" class="btn btn--secondary">Next: Ch. 2 &rarr;</a>
+            <a href="%BASE_URL%pages/learn/ch02.html" class="btn btn--secondary">Next: Ch. 2 &rarr;</a>
           </div>
         </div>
       </div>

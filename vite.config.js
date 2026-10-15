@@ -26,8 +26,8 @@ function getPageInputs() {
   return inputs;
 }
 
-export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/Executive-Finance/' : '/',
+export default defineConfig(({ command }) => ({
+  base: process.env.BASE_URL || (command === 'build' ? '/Executive-Finance/' : '/'),
   build: { rollupOptions: { input: getPageInputs() } },
   plugins: [
     VitePWA({
@@ -40,10 +40,10 @@ export default defineConfig({
         background_color: '#ffffff',
         display: 'standalone',
         icons: [
-          { src: '/Executive-Finance/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-          { src: '/Executive-Finance/icons/icon-512.png', sizes: '512x512', type: 'image/png' }
+          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' }
         ]
       }
     })
   ]
-});
+}));

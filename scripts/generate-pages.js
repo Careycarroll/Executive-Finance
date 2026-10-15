@@ -195,17 +195,17 @@ function renderSiteHeader(activeNav = 'learn') {
   return `
   <header class="site-header" role="banner">
     <div class="site-header__inner">
-      <a href="/" class="site-header__logo">
+      <a href="%BASE_URL%" class="site-header__logo">
         <span>📈</span>
         <span>Executive Finance</span>
       </a>
       <nav class="site-header__nav" role="navigation" aria-label="Main navigation">
-        <a href="/pages/learn/" class="site-header__nav-link ${activeNav === 'learn' ? 'site-header__nav-link--active' : ''}">Learn</a>
-        <a href="/pages/toolbox.html" class="site-header__nav-link ${activeNav === 'toolbox' ? 'site-header__nav-link--active' : ''}">Toolbox</a>
-        <a href="/pages/analyze/" class="site-header__nav-link ${activeNav === 'analyze' ? 'site-header__nav-link--active' : ''}">Analyze</a>
-        <a href="/pages/formulas.html" class="site-header__nav-link ${activeNav === 'formulas' ? 'site-header__nav-link--active' : ''}">Formulas</a>
-        <a href="/pages/glossary.html" class="site-header__nav-link ${activeNav === 'glossary' ? 'site-header__nav-link--active' : ''}">Glossary</a>
-        <a href="/pages/reference/bibliography.html" class="site-header__nav-link ${activeNav === 'bibliography' ? 'site-header__nav-link--active' : ''}">Bibliography</a>
+        <a href="%BASE_URL%pages/learn/" class="site-header__nav-link ${activeNav === 'learn' ? 'site-header__nav-link--active' : ''}">Learn</a>
+        <a href="%BASE_URL%pages/toolbox.html" class="site-header__nav-link ${activeNav === 'toolbox' ? 'site-header__nav-link--active' : ''}">Toolbox</a>
+        <a href="%BASE_URL%pages/analyze/" class="site-header__nav-link ${activeNav === 'analyze' ? 'site-header__nav-link--active' : ''}">Analyze</a>
+        <a href="%BASE_URL%pages/formulas.html" class="site-header__nav-link ${activeNav === 'formulas' ? 'site-header__nav-link--active' : ''}">Formulas</a>
+        <a href="%BASE_URL%pages/glossary.html" class="site-header__nav-link ${activeNav === 'glossary' ? 'site-header__nav-link--active' : ''}">Glossary</a>
+        <a href="%BASE_URL%pages/reference/bibliography.html" class="site-header__nav-link ${activeNav === 'bibliography' ? 'site-header__nav-link--active' : ''}">Bibliography</a>
       </nav>
     </div>
   </header>`;
@@ -221,7 +221,7 @@ function renderConceptHero(concept) {
     <header class="concept-hero">
       <div class="concept-container">
         <div class="concept-hero__nav">
-          <a href="/pages/learn/" class="concept-hero__back">← All Concepts</a>
+          <a href="%BASE_URL%pages/learn/" class="concept-hero__back">← All Concepts</a>
           <div class="concept-hero__badges">
             <span class="badge ${tierClass}">${concept.tier}</span>
             <span class="badge ${domainClass}">${concept.domain}</span>
@@ -252,7 +252,7 @@ function renderConceptFooter(concept, sections) {
       const title = rel ? rel.title : relId;
       const domain = rel ? rel.domain : '';
       return `
-        <a href="/pages/learn/${relId}.html" class="related-chip">
+        <a href="%BASE_URL%pages/learn/${relId}.html" class="related-chip">
           <span>${title}</span>
           ${domain ? `<span class="badge badge-domain--${domain}" style="font-size: 0.65rem; padding: 1px 5px;">${domain}</span>` : ''}
         </a>`;
@@ -536,7 +536,7 @@ function generateIndexHtml() {
       ].join(' ').toLowerCase().replace(/"/g, '&quot;');
 
       return `
-        <a href="/pages/learn/${c.id}.html" class="concept-card" data-tier="${c.tier}" data-domain="${c.domain}" data-search="${searchBlob}">
+        <a href="%BASE_URL%pages/learn/${c.id}.html" class="concept-card" data-tier="${c.tier}" data-domain="${c.domain}" data-search="${searchBlob}">
           <div class="concept-card__header">
             ${tierBadge}
             <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--color-text-muted);">${c.template}</span>
